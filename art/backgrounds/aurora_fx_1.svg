@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <g stroke="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 163.0Q170 107.0 350 185T710 158 960 126.0V207.0Q800 165 700 203T350 230 0 204.0Z" fill="#6fd3b5" opacity="0.160" vector-effect="non-scaling-stroke" />
+    <path d="M0 204.41Q170 135.86 350 218T710 191 960 167.41V248.41Q800 198 700 236T350 263 0 245.41Z" fill="#bce9ff" opacity="0.206" vector-effect="non-scaling-stroke" />
+    <path d="M0 238.09Q170 160.25 350 251T710 224 960 201.09V282.09Q800 231 700 269T350 296 0 279.09Z" fill="#d5bce9" opacity="0.210" vector-effect="non-scaling-stroke" />
+    <circle cx="30" cy="128" r="1.3" fill="#fff8ef" opacity="0.300" vector-effect="non-scaling-stroke" />
+    <circle cx="109" cy="175" r="1.3" fill="#fff8ef" opacity="0.468" vector-effect="non-scaling-stroke" />
+    <circle cx="188" cy="222" r="1.3" fill="#fff8ef" opacity="0.482" vector-effect="non-scaling-stroke" />
+    <circle cx="267" cy="269" r="1.3" fill="#fff8ef" opacity="0.328" vector-effect="non-scaling-stroke" />
+    <circle cx="346" cy="316" r="1.3" fill="#fff8ef" opacity="0.149" vector-effect="non-scaling-stroke" />
+    <circle cx="425" cy="153" r="1.3" fill="#fff8ef" opacity="0.108" vector-effect="non-scaling-stroke" />
+    <circle cx="504" cy="200" r="1.3" fill="#fff8ef" opacity="0.244" vector-effect="non-scaling-stroke" />
+    <circle cx="583" cy="247" r="1.3" fill="#fff8ef" opacity="0.431" vector-effect="non-scaling-stroke" />
+    <circle cx="662" cy="294" r="1.3" fill="#fff8ef" opacity="0.498" vector-effect="non-scaling-stroke" />
+    <circle cx="741" cy="131" r="1.3" fill="#fff8ef" opacity="0.382" vector-effect="non-scaling-stroke" />
+    <circle cx="820" cy="178" r="1.3" fill="#fff8ef" opacity="0.191" vector-effect="non-scaling-stroke" />
+    <circle cx="899" cy="225" r="1.3" fill="#fff8ef" opacity="0.100" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

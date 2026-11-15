@@ -279,5 +279,193 @@ window.STARLIT_ITEMS = [
     "h": 60,
     "width": 84,
     "height": 60
+  },
+  {
+    "id": "gold_bed",
+    "name": "Gilded Arch Bed",
+    "zone": "bed",
+    "width": 112,
+    "height": 64,
+    "w": 112,
+    "h": 64,
+    "cost": 840,
+    "decor": 12,
+    "level": 8,
+    "rooms": [
+      "guest"
+    ]
+  },
+  {
+    "id": "gold_chaise",
+    "name": "Golden Chaise Lounge",
+    "zone": "floor",
+    "width": 104,
+    "height": 64,
+    "w": 104,
+    "h": 64,
+    "cost": 1120,
+    "decor": 16,
+    "level": 10
+  },
+  {
+    "id": "gold_lamp",
+    "name": "Golden Glow Floor Lamp",
+    "zone": "floor",
+    "width": 44,
+    "height": 80,
+    "w": 44,
+    "h": 80,
+    "cost": 360,
+    "decor": 6,
+    "level": 6
+  },
+  {
+    "id": "gold_mirror",
+    "name": "Sunburst Gold Mirror",
+    "zone": "wall",
+    "width": 60,
+    "height": 64,
+    "w": 60,
+    "h": 64,
+    "cost": 650,
+    "decor": 10,
+    "level": 9
+  },
+  {
+    "id": "gold_rug",
+    "name": "Champagne Oval Rug",
+    "zone": "floor",
+    "width": 120,
+    "height": 14,
+    "w": 120,
+    "h": 14,
+    "cost": 280,
+    "decor": 5,
+    "level": 5,
+    "back": true
+  },
+  {
+    "id": "gold_chandelier",
+    "name": "Royal Gold Chandelier",
+    "zone": "ceiling",
+    "width": 84,
+    "height": 60,
+    "w": 84,
+    "h": 60,
+    "cost": 1600,
+    "decor": 20,
+    "level": 15
+  },
+  {
+    "id": "pink_bed",
+    "name": "Blush Velvet Bed",
+    "zone": "bed",
+    "width": 112,
+    "height": 64,
+    "w": 112,
+    "h": 64,
+    "cost": 420,
+    "decor": 7,
+    "level": 3,
+    "rooms": [
+      "guest"
+    ]
+  },
+  {
+    "id": "pink_sofa",
+    "name": "Rose Velvet Sofa",
+    "zone": "floor",
+    "width": 96,
+    "height": 64,
+    "w": 96,
+    "h": 64,
+    "cost": 360,
+    "decor": 6,
+    "level": 4
+  },
+  {
+    "id": "pink_lamp",
+    "name": "Petal Shade Floor Lamp",
+    "zone": "floor",
+    "width": 44,
+    "height": 80,
+    "w": 44,
+    "h": 80,
+    "cost": 180,
+    "decor": 5,
+    "level": 3
+  },
+  {
+    "id": "pink_vanity",
+    "name": "Rose Quartz Vanity",
+    "zone": "floor",
+    "width": 80,
+    "height": 68,
+    "w": 80,
+    "h": 68,
+    "cost": 560,
+    "decor": 8,
+    "level": 6
+  },
+  {
+    "id": "pink_rug",
+    "name": "Blush Ribbon Rug",
+    "zone": "floor",
+    "width": 120,
+    "height": 14,
+    "w": 120,
+    "h": 14,
+    "cost": 180,
+    "decor": 5,
+    "level": 2,
+    "back": true
+  },
+  {
+    "id": "pink_wallart",
+    "name": "Rose Hills Wall Picture",
+    "zone": "wall",
+    "width": 60,
+    "height": 44,
+    "w": 60,
+    "h": 44,
+    "cost": 200,
+    "decor": 5,
+    "level": 4
+  },
+  {
+    "id": "pebble_fountain",
+    "name": "Pebble Water Fountain",
+    "zone": "floor",
+    "width": 52,
+    "height": 68,
+    "w": 52,
+    "h": 68,
+    "cost": 560,
+    "decor": 8,
+    "level": 7
+  },
+  {
+    "id": "succulent_shelf",
+    "name": "Succulent Wall Shelf",
+    "zone": "wall",
+    "width": 72,
+    "height": 48,
+    "w": 72,
+    "h": 48,
+    "cost": 240,
+    "decor": 5,
+    "level": 4
+  },
+  {
+    "id": "reading_bench",
+    "name": "Cozy Reading Bench",
+    "zone": "floor",
+    "width": 96,
+    "height": 56,
+    "w": 96,
+    "h": 56,
+    "cost": 300,
+    "decor": 6,
+    "level": 5
   }
 ];

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52" height="68" viewBox="0 0 52 68">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11 56v10.75h30V56Z" fill="#c8915f" vector-effect="non-scaling-stroke" />
+    <ellipse cx="26" cy="53" rx="22" ry="8" fill="#c7bfd1" vector-effect="non-scaling-stroke" />
+    <path d="M5 49q1 12 21 12t21-12Z" fill="#b5a0d6" vector-effect="non-scaling-stroke" />
+    <ellipse cx="26" cy="49" rx="21" ry="6" fill="#7ec8ff" vector-effect="non-scaling-stroke" />
+    <path d="M17 28h18l-3 11H20Z" fill="#c7bfd1" vector-effect="non-scaling-stroke" />
+    <ellipse cx="26" cy="28" rx="12" ry="4" fill="#7ec8ff" vector-effect="non-scaling-stroke" />
+    <path d="M22 15q-6-10 4-12 10 2 4 12v12h-8Z" fill="#9684a3" vector-effect="non-scaling-stroke" />
+    <path d="M26 13v11m-7 11v10m14-10v10" fill="none" stroke="#bce9ff" stroke-width="3" vector-effect="non-scaling-stroke" />
+    <circle cx="12" cy="49" r="3" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <circle cx="36" cy="50" r="3" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

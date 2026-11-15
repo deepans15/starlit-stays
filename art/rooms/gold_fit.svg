@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="168" viewBox="0 0 320 168">
+  <path d="M0 0h320v168H0Z" fill="#fff0c7" vector-effect="non-scaling-stroke" />
+  <path d="M0 135h320v33H0Z" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+  <path d="M0 133h320v5H0Z" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+  <path d="M0 133h320" fill="none" stroke="#2b2340" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="151" y="18" width="148" height="72" rx="6" fill="#ffdc85" vector-effect="non-scaling-stroke" />
+    <rect x="156" y="23" width="138" height="62" rx="3" fill="#fff6dd" vector-effect="non-scaling-stroke" />
+    <path d="m159 64 44-38h21l-65 55Zm76 18 56-50v16l-40 34Z" fill="#fff6dd" stroke="none" vector-effect="non-scaling-stroke" />
+    <path d="M224 24v60" fill="none" stroke="#ffedb6" vector-effect="non-scaling-stroke" />
+    <path d="M30 151h133l-5 6H35Z" fill="#d4a744" vector-effect="non-scaling-stroke" />
+    <path d="M38 140h116q8 0 10 11H26q2-11 12-11Z" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+    <path d="M44 139h101l8 6H35Z" fill="#d4a744" vector-effect="non-scaling-stroke" />
+    <path d="M55 141h11m17 0h11m17 0h11" fill="none" stroke="#eac469" vector-effect="non-scaling-stroke" />
+    <path d="m124 139-14-48 7-3 17 51" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+    <path d="M110 92H82" fill="none" stroke="#d4a744" stroke-width="5" vector-effect="non-scaling-stroke" />
+    <path d="m94 77 25 2-3 13-25-2Z" fill="#d4a744" vector-effect="non-scaling-stroke" />
+    <path d="m98 81 15 1-1 6-15-1Z" fill="#ffedb6" stroke="none" vector-effect="non-scaling-stroke" />
+    <path d="M30 151h125" fill="none" stroke="#ffdc85" vector-effect="non-scaling-stroke" />
+    <path d="M211 107h81l-5 8h-71Z" fill="#ffdc85" vector-effect="non-scaling-stroke" />
+    <path d="m220 114-6 41m67-41 6 41" fill="none" stroke="#d4a744" stroke-width="5" vector-effect="non-scaling-stroke" />
+    <path d="M214 142h72" fill="none" stroke="#d4a744" stroke-width="4" vector-effect="non-scaling-stroke" />
+    <path d="M222 101h19m18 0h19m-48 34h37" fill="none" stroke="#d4a744" stroke-width="5" vector-effect="non-scaling-stroke" />
+    <rect x="219" y="93" width="7" height="15" rx="2" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+    <rect x="238" y="93" width="7" height="15" rx="2" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+    <rect x="256" y="93" width="7" height="15" rx="2" fill="#ffdc85" vector-effect="non-scaling-stroke" />
+    <rect x="275" y="93" width="7" height="15" rx="2" fill="#ffdc85" vector-effect="non-scaling-stroke" />
+    <rect x="226" y="127" width="8" height="16" rx="2" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+    <rect x="263" y="127" width="8" height="16" rx="2" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <g stroke="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#254b58" />
+        <stop offset="1" stop-color="#8ac7c7" />
+      </linearGradient>
+    </defs>
+    <path d="M0 0h960v540H0Z" fill="url(#sky)" vector-effect="non-scaling-stroke" />
+    <path d="M0 458 104 354l89 83 127-78 126 107 146-125 121 101 102-77 145 82v93H0Z" fill="#7ca4af" vector-effect="non-scaling-stroke" />
+    <path d="m104 354-44 80 44-22 32 30 57-5Zm216 5-51 55 51-18 34 30 27-7Zm272-18-52 63 52-22 36 34 28-8Zm223 24-41 55 40-21 26 25 34-5Z" fill="#d7ece8" vector-effect="non-scaling-stroke" />
+    <path d="M0 491q225-45 468-6t492-7v62H0Z" fill="#bddad5" vector-effect="non-scaling-stroke" />
+    <path d="M30 419l-18 32h10l-17 26h50l-17-26h10Z" fill="#497b79" vector-effect="non-scaling-stroke" />
+    <path d="M97 439l-18 32h10l-17 26h50l-17-26h10Z" fill="#497b79" vector-effect="non-scaling-stroke" />
+    <path d="M831 431l-18 32h10l-17 26h50l-17-26h10Z" fill="#497b79" vector-effect="non-scaling-stroke" />
+    <path d="M908 416l-18 32h10l-17 26h50l-17-26h10Z" fill="#497b79" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

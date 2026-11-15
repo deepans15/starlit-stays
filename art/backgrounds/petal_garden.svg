@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <g stroke="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffe6ef" />
+        <stop offset="1" stop-color="#fff8ef" />
+      </linearGradient>
+    </defs>
+    <path d="M0 0h960v540H0Z" fill="url(#sky)" vector-effect="non-scaling-stroke" />
+    <path d="M0 452q175-88 331-20t326-3 303-1v112H0Z" fill="#c7e5d4" vector-effect="non-scaling-stroke" />
+    <path d="M0 494q215-46 442-4t518-9v59H0Z" fill="#9fceb7" vector-effect="non-scaling-stroke" />
+    <path d="M0 405q25-104 106-192M960 410q-37-114-107-199" fill="none" stroke="#c8915f" stroke-width="9" vector-effect="non-scaling-stroke" />
+    <path d="M31 320 4 255m38 43 70-15m794 49 50-40m-59 14-28-58" fill="none" stroke="#c8915f" stroke-width="5" vector-effect="non-scaling-stroke" />
+    <circle cx="22.0" cy="265.0" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="15.78" cy="273.56" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="5.72" cy="270.29" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="5.72" cy="259.71" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="15.78" cy="256.44" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="13" cy="265" r="3" fill="#fff0b5" vector-effect="non-scaling-stroke" />
+    <circle cx="54.0" cy="296.0" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="47.78" cy="304.56" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="37.72" cy="301.29" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="37.72" cy="290.71" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="47.78" cy="287.44" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="45" cy="296" r="3" fill="#fff0b5" vector-effect="non-scaling-stroke" />
+    <circle cx="102.0" cy="226.0" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="95.78" cy="234.56" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="85.72" cy="231.29" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="85.72" cy="220.71" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="95.78" cy="217.44" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="93" cy="226" r="3" fill="#fff0b5" vector-effect="non-scaling-stroke" />
+    <circle cx="107.0" cy="285.0" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="100.78" cy="293.56" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="90.72" cy="290.29" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="90.72" cy="279.71" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="100.78" cy="276.44" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="98" cy="285" r="3" fill="#fff0b5" vector-effect="non-scaling-stroke" />
+    <circle cx="958.0" cy="291.0" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="951.78" cy="299.56" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="941.72" cy="296.29" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="941.72" cy="285.71" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="951.78" cy="282.44" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="949" cy="291" r="3" fill="#fff0b5" vector-effect="non-scaling-stroke" />
+    <circle cx="927.0" cy="324.0" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="920.78" cy="332.56" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="910.72" cy="329.29" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="910.72" cy="318.71" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="920.78" cy="315.44" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="918" cy="324" r="3" fill="#fff0b5" vector-effect="non-scaling-stroke" />
+    <circle cx="873.0" cy="249.0" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="866.78" cy="257.56" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="856.72" cy="254.29" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="856.72" cy="243.71" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="866.78" cy="240.44" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="864" cy="249" r="3" fill="#fff0b5" vector-effect="non-scaling-stroke" />
+    <circle cx="869.0" cy="218.0" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="862.78" cy="226.56" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="852.72" cy="223.29" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="852.72" cy="212.71" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="862.78" cy="209.44" r="7" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <circle cx="860" cy="218" r="3" fill="#fff0b5" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

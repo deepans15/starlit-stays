@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="56" viewBox="0 0 96 56">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 43v11.75h8l3-12m57 0 2 12h8V43" fill="#c8915f" vector-effect="non-scaling-stroke" />
+    <rect x="7" y="6" width="82" height="31" rx="9" fill="#c8915f" vector-effect="non-scaling-stroke" />
+    <rect x="13" y="12" width="70" height="20" rx="5" fill="#e6b481" vector-effect="non-scaling-stroke" />
+    <path d="M24 13v17" fill="none" stroke="#c8915f" stroke-width="2" vector-effect="non-scaling-stroke" />
+    <path d="M40 13v17" fill="none" stroke="#c8915f" stroke-width="2" vector-effect="non-scaling-stroke" />
+    <path d="M56 13v17" fill="none" stroke="#c8915f" stroke-width="2" vector-effect="non-scaling-stroke" />
+    <path d="M72 13v17" fill="none" stroke="#c8915f" stroke-width="2" vector-effect="non-scaling-stroke" />
+    <rect x="5" y="34" width="86" height="13" rx="4" fill="#c8915f" vector-effect="non-scaling-stroke" />
+    <rect x="10" y="31" width="76" height="10" rx="4" fill="#6fd3b5" vector-effect="non-scaling-stroke" />
+    <rect x="18" y="22" width="23" height="14" rx="4" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <path d="M15 35h56" fill="none" stroke="#b6eedc" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

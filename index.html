@@ -187,7 +187,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.30';
+const BUILD = '0.31';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -1735,7 +1735,22 @@ async function pushScores(force){
 window.onFBUser = u => { if(u) onlineSignedIn(); else online.synced = false; if(ui.panelKind==='menu') openMenu(); if(ui.panelKind==='ranks') openRanks(ui.ranksTab); };
 async function signInGoogle(){
   if(!onlineAvailable()){ toast('Sign-in works on the online version of the game'); return; }
-  try{ await FB.signIn(); }catch(e){ toast(e && e.code==='auth/unauthorized-domain' ? 'Sign-in isn\'t allowed on this web address' : 'Sign-in was cancelled'); }
+  try{ await FB.signIn(); }
+  catch(e){
+    const code = (e && e.code) || 'unknown', msg = {
+      'auth/popup-closed-by-user': 'Sign-in window was closed before finishing',
+      'auth/cancelled-popup-request': 'Sign-in window was closed before finishing',
+      'auth/unauthorized-domain': 'This web address isn\'t allowed yet (add it under Authentication → Settings → Authorized domains)',
+      'auth/operation-not-allowed': 'Google sign-in is switched off (Authentication → Sign-in method → Google)',
+      'auth/configuration-not-found': 'Google sign-in isn\'t set up yet (Authentication → Get started → Google)',
+      'auth/api-key-not-valid.-please-pass-a-valid-api-key.': 'The API key restriction is blocking sign-in',
+      'auth/network-request-failed': 'No connection to Google. Check your internet',
+      'auth/internal-error': 'Google sign-in failed (often the API key restriction)'
+    }[code];
+    modal(`<h2 style="margin:0 0 8px">Couldn't sign in</h2><div class="sub">${msg || 'Something went wrong signing in.'}</div>
+      <div class="sub" style="font-family:monospace;background:#f3ece2;border-radius:8px;padding:6px">${esc(code)}${e && e.message && !msg ? '<br>'+esc(String(e.message).slice(0,160)) : ''}</div>
+      <button class="btn" onclick="closeModal()">OK</button>`);
+  }
 }
 async function signOutGoogle(){ await onlineSave(true); try{ await FB.signOut(); }catch(e){} toast('Signed out. Your hotel stays on this device.'); }
 function accountRow(){
