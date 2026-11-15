@@ -1528,7 +1528,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "watch",
           "x": 157,
-          "y": 319,
+          "y": 315,
           "scale": 0.8,
           "phase": 0.8,
           "z": 10
@@ -1629,7 +1629,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "play",
           "x": 30,
-          "y": 153,
+          "y": 147,
           "scale": 0.8,
           "phase": 0,
           "z": 5
@@ -1637,7 +1637,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "play",
           "x": 110,
-          "y": 153,
+          "y": 147,
           "scale": 0.8,
           "phase": 0.31,
           "z": 5
@@ -1645,7 +1645,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "play",
           "x": 190,
-          "y": 153,
+          "y": 147,
           "scale": 0.8,
           "phase": 0.67,
           "z": 5
@@ -1654,23 +1654,23 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "foreground": [
         {
           "x": 13,
-          "y": 104,
+          "y": 113,
           "width": 60,
-          "height": 12,
+          "height": 3,
           "z": 7
         },
         {
           "x": 93,
-          "y": 104,
+          "y": 113,
           "width": 60,
-          "height": 12,
+          "height": 3,
           "z": 7
         },
         {
           "x": 173,
-          "y": 104,
+          "y": 113,
           "width": 60,
-          "height": 12,
+          "height": 3,
           "z": 7
         }
       ]

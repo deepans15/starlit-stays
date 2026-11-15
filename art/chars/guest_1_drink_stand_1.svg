@@ -13,8 +13,8 @@
     <path d="M24 52l5 4 6-5" fill="none" stroke="#fff8ef" stroke-width="2" vector-effect="non-scaling-stroke" />
     <path d="M19 54Q13 65 24 72" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
     <path d="M19 54Q13 65 24 72" fill="none" stroke="#ff7a90" stroke-width="5" vector-effect="non-scaling-stroke" />
-    <path d="M37 54Q43 68 39 67" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
-    <path d="M37 54Q43 68 39 67" fill="none" stroke="#ffb38a" stroke-width="5" vector-effect="non-scaling-stroke" />
+    <path d="M37 54Q43 68 37 67" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
+    <path d="M37 54Q43 68 37 67" fill="none" stroke="#ffb38a" stroke-width="5" vector-effect="non-scaling-stroke" />
     <g transform="translate(0 0) rotate(0 28 35)">
       <path d="M13 23q0-13 16-13 15 0 15 15v7l4 4-5 3q-1 11-15 11-15 0-15-17Z" fill="#ffb38a" vector-effect="non-scaling-stroke" />
       <path d="M13 33q-7-4-7 3 1 6 8 4" fill="#ffb38a" vector-effect="non-scaling-stroke" />
@@ -25,8 +25,8 @@
       <path d="M35 42q3 2 6-1" fill="none" stroke="#2b2340" stroke-width="2" vector-effect="non-scaling-stroke" />
       <ellipse cx="25" cy="39" rx="4" ry="2" fill="#ef8e83" stroke="none" vector-effect="non-scaling-stroke" />
     </g>
-    <path d="M37 64h10v3q0 7-5 7t-5-7Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    <path d="M47 66q7-2 6 3-1 4-6 3" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    <ellipse cx="42" cy="64" rx="5" ry="1.7" fill="#c8915f" vector-effect="non-scaling-stroke" />
+    <path d="M35 64h10v3q0 7-5 7t-5-7Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <path d="M45 66q7-2 6 3-1 4-6 3" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <ellipse cx="40" cy="64" rx="5" ry="1.7" fill="#c8915f" vector-effect="non-scaling-stroke" />
   </g>
 </svg>

@@ -172,6 +172,8 @@
     #goalsBox{display:none} #hud{gap:10px;left:8px} .hnum{font-size:19px;-webkit-text-stroke:4px #2b2340} .hnum.small{font-size:16px} .hic svg{width:28px;height:28px} #xpWrap{width:60px} #lvl{top:13px;font-size:12px} #hudStars{top:46px} #starIcons{font-size:20px} #speedBtn{top:4px}
     /* phones: the menu slides in from the right side, leaving room on the left for the bookmarks and a strip of the hotel */
     #panel, #panel.wide{left:auto;right:4px;top:70px;bottom:4px;height:auto;width:calc(100% - 78px);padding:10px}
+    /* decorating a room on a phone: the room sits on top, the menu is a sheet at the bottom so furniture can be dragged */
+    #panel.sheet, #panel.wide.sheet{left:4px;right:4px;width:auto;top:auto;bottom:4px;height:46%}
     #panel .cat{gap:6px}
     #panel .bcard{padding:6px 4px}
     #panel .bcard .nm{font-size:12px}
@@ -229,7 +231,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.42';
+const BUILD = '0.43';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -1073,7 +1075,15 @@ function sellEdge(x,y,w,h){ if(ui.mode==='sell'){ ctx.strokeStyle = '#ff7a90'; c
 function pulseEdge(r,x,y,w,h){ if(r.pulse>0){ ctx.strokeStyle=`rgba(255,201,77,${Math.min(1,r.pulse)})`; ctx.lineWidth=4; ctx.strokeRect(x+2,y+2,w-4,h-4); ctx.lineWidth=1; } }
 
 /* furniture positions are stored relative to the room's top-left corner */
+/* stacking: small pieces (a vase, a plant, a snow globe) can sit on top of tables, carts, shelves and benches.
+   SURFACE = how far down from the top of the piece its usable top is (in game pixels). ChatGPT can add "surface": n or "stackable": true in items.js. */
+const SURFACE = {bedside_table:2, tea_cart:6, bookshelf:2, aquarium:3, reading_bench:12, tv:4, pink_vanity:14};
+const surfaceTop = def => def ? (def.surface!==undefined ? def.surface : SURFACE[def.id]) : undefined;
+const stackable = def => def && def.zone==='floor' && !def.back && (def.stackable || (def.w <= 28 && def.h <= 34)) && surfaceTop(def)===undefined;
+function supportOf(r, it){ return it.on ? (r.items||[]).find(i=>i.u===it.on && i!==it) : null; }
 function itemY(r, it, def){
+  const sup = supportOf(r, it);
+  if(sup && ITEMS[sup.id] && surfaceTop(ITEMS[sup.id])!==undefined){ const sd = ITEMS[sup.id]; return Math.max(3, itemY(r, sup, sd) + surfaceTop(sd) - def.h); }
   const h = hOf(r.type)*FLOOR;
   if(def.zone==='ceiling') return 3;
   if(def.zone==='wall') return Math.max(22, Math.min(h - FLOOR_PAD - def.h - 8, it.y || 24));
@@ -1081,14 +1091,18 @@ function itemY(r, it, def){
 }
 function clampItemX(r, def, x){ const w = ROOMS[r.type].w*CELL; return Math.max(4, Math.min(w - def.w - 4, x)); }
 function drawItems(r, x, y, w, h, layer){
-  for(const it of (r.items||[])){
+  const list = (r.items||[]).slice().sort((a,b)=>(a.on?1:0)-(b.on?1:0));   // things standing on furniture are drawn last
+  for(const it of list){
     const def = ITEMS[it.id]; if(!def) continue;
     const back = def.back || def.zone==='wall' || def.zone==='ceiling';
     if((layer==='back') !== back) continue;
     if(def.zone==='bed') continue; // beds are drawn with the sleeping guest
     const d = ui.itemDrag;
     let ix, iy;
-    if(d && d.moved && d.item===it){ ix = d.ix; iy = d.iy; } else { ix = it.x; iy = itemY(r, it, def); }
+    const sup = supportOf(r, it);
+    if(d && d.moved && d.item===it){ ix = d.ix; iy = d.iy; }
+    else if(d && d.moved && sup && d.item===sup){ ix = d.ix + (it.x - sup.x); iy = d.iy + surfaceTop(ITEMS[sup.id]) - def.h; }
+    else { ix = it.x; iy = itemY(r, it, def); }
     if(d && d.moved && d.item===it && d.out) ctx.globalAlpha = 0.45;
     drawItem(def, x+ix, y+iy);
     ctx.globalAlpha = 1;
@@ -1286,7 +1300,7 @@ function itemAt(r, p){
   const q = roomRect(r);
   const list = (r.items||[]).slice().reverse();
   // front items first, then back items
-  const order = list.filter(it=>{ const d=ITEMS[it.id]; return d && !(d.back||d.zone==='wall'||d.zone==='ceiling'); }).concat(list.filter(it=>{ const d=ITEMS[it.id]; return d && (d.back||d.zone==='wall'||d.zone==='ceiling'); }));
+  const order = list.filter(it=>it.on).concat(list.filter(it=>{ const d=ITEMS[it.id]; return d && !it.on && !(d.back||d.zone==='wall'||d.zone==='ceiling'); })).concat(list.filter(it=>{ const d=ITEMS[it.id]; return d && (d.back||d.zone==='wall'||d.zone==='ceiling'); }));
   for(const it of order){
     const def = ITEMS[it.id], ix = q.x + it.x, iy = q.y + itemY(r, it, def);
     const pad = 4;
@@ -1330,7 +1344,16 @@ cv.addEventListener('pointermove', ev=>{
       const r = idr.room, q = roomRect(r), def = ITEMS[idr.item.id];
       idr.ix = clampItemX(r, def, p.x - q.x - idr.offX);
       const rawY = p.y - q.y - idr.offY;
-      idr.iy = def.zone==='wall' ? itemY(r, {y:rawY}, def) : itemY(r, idr.item, def);
+      idr.on = null;
+      if(stackable(def)){
+        const floorY = itemY(r, {}, def), cx = idr.ix + def.w/2;
+        if(rawY < floorY - def.h*0.35){   // lifted up: look for a table or shelf under it
+          const sup = (r.items||[]).find(o=>o!==idr.item && !o.on && surfaceTop(ITEMS[o.id])!==undefined && cx >= o.x - 2 && cx <= o.x + ITEMS[o.id].w + 2);
+          if(sup){ const sd = ITEMS[sup.id], y = itemY(r, sup, sd) + surfaceTop(sd) - def.h;
+            if(y >= 3){ idr.on = sup.u; idr.iy = y; idr.ix = Math.max(sup.x - 4, Math.min(sup.x + sd.w - def.w + 4, idr.ix)); } }
+        }
+      }
+      if(!idr.on) idr.iy = def.zone==='wall' ? itemY(r, {y:rawY}, def) : itemY(r, {}, def);
       const m = 8;
       idr.out = p.x < q.x - m || p.x > q.x + q.w + m || p.y < q.y - m || p.y > q.y + q.h + m;
     }
@@ -1419,7 +1442,13 @@ function endItemDrag(cancelled, ev){
     if(problem){ toast(problem); return; }
     r.items = r.items.filter(x=>x!==it); S.inv[it.id] = (S.inv[it.id]||0)+1;
     toast(`${ITEMS[it.id].name} put away in your furniture inventory`);
-  } else { it.x = Math.round(d.ix); if(ITEMS[it.id].zone==='wall') it.y = Math.round(d.iy); S.movedItem = true; checkGoals(); }
+  } else {
+    const dx = Math.round(d.ix) - it.x;
+    it.x = Math.round(d.ix); if(ITEMS[it.id].zone==='wall') it.y = Math.round(d.iy);
+    it.on = d.on || null;
+    for(const c of r.items) if(c.on === it.u && c !== it) c.x = clampItemX(r, ITEMS[c.id], c.x + dx);   // things on top come along
+    if(it.on) toast(`${ITEMS[it.id].name} placed on the ${ITEMS[supportOf(r,it).id].name}`);
+    S.movedItem = true; checkGoals(); }
   save(); if(ui.focus===r.id) openRoom(r); else if(ui.panelKind==='build') openBuild(ui.buildTab);
 }
 function endDrag(ev, cancelled){
@@ -1482,7 +1511,7 @@ const $ = id => document.getElementById(id);
 const panel = $('panel');
 function toast(msg){ const box = $('toasts'); while(box.children.length >= 3) box.firstChild.remove(); const t = document.createElement('div'); t.className='toast'; t.textContent=msg; box.appendChild(t); setTimeout(()=>t.remove(), 3300); }
 function closePanel(){ $('marks').style.display='none'; panel.style.display='none'; ui.panelKind = null; ui.mode = null; if(ui.focus){ ui.focus = null; } }
-function showPanel(html, kind){ $('marks').style.display='none'; ui.panelKind = kind || 'other'; panel.classList.toggle('wide', ui.panelKind==='build'); document.body.classList.toggle('panelWide', ui.panelKind==='build'); const st = panel.scrollTop; panel.innerHTML = '<button class="x" onclick="unfocus()">×</button>' + html; panel.style.display='block'; panel.scrollTop = st; }
+function showPanel(html, kind){ $('marks').style.display='none'; ui.panelKind = kind || 'other'; panel.classList.toggle('sheet', !!ui.focus); panel.classList.toggle('wide', ui.panelKind==='build'); document.body.classList.toggle('panelWide', ui.panelKind==='build'); const st = panel.scrollTop; panel.innerHTML = '<button class="x" onclick="unfocus()">×</button>' + html; panel.style.display='block'; panel.scrollTop = st; }
 function setHint(t){ $('hintText').textContent=t; $('hint').style.display = t ? 'flex' : 'none'; }
 function setMode(m){ ui.mode = m; ui.drag = null; setHint(''); }
 $('hintCancel').onclick = ()=> setMode(null);
@@ -1720,7 +1749,7 @@ function openRoom(r){
     else if(def.kind==='amenity') html += `<div class="sub">Decor ${Math.round(pct*100)}%. Guests who want ${def.name} (${def.icon} bubble) visit after their stay and pay ~🪙${def.pay}, more when it's nicely decorated, plus 🪙${decorCoins(r)} for the furniture. Holds ${def.slots} guests.</div>`;
     else html += `<div class="sub">Decor ${Math.round(pct*100)}%. A beautiful lobby raises your star rating.</div>`;
     html += `<div class="meter"><i style="width:${pct*100}%"></i></div>`;
-    html += `<div class="sub" style="background:#fff3e6;border-radius:10px;padding:8px">✋ <b>Drag furniture</b> in the room to arrange it. Drag it out of the room to put it away.</div>`;
+    html += `<div class="sub" style="background:#fff3e6;border-radius:10px;padding:8px">✋ <b>Drag furniture</b> in the room to arrange it. Drag it out of the room to put it away. Lift small pieces onto tables and shelves.</div>`;
     const cells = cellsOf(r);
     const wallCost = 40*cells, floorCost = 50*cells;
     html += `<h3>Walls and floor</h3>`;
@@ -2012,7 +2041,7 @@ function esc(t){ return String(t).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;
    Each signed-in player shares a read-only copy of their hotel (rooms, furniture, styles, scenery; never coins).
    Visiting swaps that copy in for viewing; nothing is saved while you look around, and Back home restores your own hotel. */
 function hotelSnapshot(){
-  const rooms = S.rooms.map(r=>({type:r.type, f:r.f, c:r.c, wall:!!r.wall, floor:!!r.floor, wallColor:r.wallColor||null, style:r.style||null, items:(r.items||[]).map(i=>({id:i.id, x:Math.round(i.x), y:Math.round(i.y||0)}))}));
+  const rooms = S.rooms.map(r=>({type:r.type, f:r.f, c:r.c, wall:!!r.wall, floor:!!r.floor, wallColor:r.wallColor||null, style:r.style||null, items:(r.items||[]).map(i=>({id:i.id, x:Math.round(i.x), y:Math.round(i.y||0), on: i.on ? r.items.findIndex(o=>o.u===i.on) : -1}))}));
   return {json: JSON.stringify({v:1, name:(S.name||'Hotel').slice(0,30), xp:Math.floor(S.xp), served:S.served|0, plot:S.plot|0, scene:S.scene||null, rooms}), name:(S.name||'Hotel').slice(0,30), level:level(), updated:Date.now()};
 }
 async function visitHotel(uid){
@@ -2028,7 +2057,7 @@ async function visitHotel(uid){
   const st = freshState();
   Object.assign(st, {name:h.name, xp:h.xp||0, served:h.served||0, plot:Math.min(h.plot||0, BLOCK_TIERS.length-1), scene:h.scene||null, shiftEnd:Date.now()+864e5, freeShift:false, helperDone:true, seenLevel:999,
     rooms:(h.rooms||[]).filter(r=>ROOMS[r.type]).map((r,i)=>Object.assign(mkRoom(i+1, r.type, r.f, r.c, 0), {wall:r.wall, floor:r.floor, wallColor:r.wallColor||WALL_COLORS[0], style:r.style||null,
-      items:(r.items||[]).filter(it=>ITEMS[it.id]).map(it=>Object.assign(mkItem(it.id, it.x), {y:it.y||0}))}))});
+      items:(()=>{ const made = (r.items||[]).map(it=>ITEMS[it.id] ? Object.assign(mkItem(it.id, it.x), {y:it.y||0}) : null); (r.items||[]).forEach((it,i)=>{ if(made[i] && it.on>=0 && made[it.on]) made[i].on = made[it.on].u; }); return made.filter(Boolean); })()}))});
   ui.visit = {uid, name:h.name}; S = st; guests = []; spawnTimer = 0.5; closePanel(); closeModal(); resetZoom(); lastTop = '';
   document.body.classList.add('visiting');
   $('visitName').textContent = h.name; $('visitMeta').textContent = `Level ${level()} · ${'★'.repeat(Math.floor(stars()))} · ${st.rooms.length} rooms`;
@@ -2081,7 +2110,7 @@ function showHelp(){
     1. <b>Open the hotel</b> with the button at the top. Guests only come while it's open.<br>
     2. Guests check in at the lobby, ride the elevator and sleep in a free, clean room with a bed.<br>
     3. ✋ <b>Drag rooms</b> to rearrange your hotel. Drop a room onto one of the same shape to swap them.<br>
-    4. 🛋️ <b>Tap a room</b> to zoom in and decorate it. Buy furniture, then <b>drag it</b> where you like. Drag it out of the room to put it away.<br>
+    4. 🛋️ <b>Tap a room</b> to zoom in and decorate it. Buy furniture, then <b>drag it</b> where you like. Drag it out of the room to put it away. Lift small pieces onto tables and shelves.<br>
     5. Better decor means higher pay and more stars, up to ⭐ 7.<br>
     6. Bubbles show what guests want after their stay. <b>Build amenities</b> to match.<br>
     7. <b>Linen Closets</b> clean rooms automatically. Tap messy rooms 💨 to clean by hand.<br>
