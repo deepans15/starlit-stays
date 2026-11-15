@@ -234,14 +234,14 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.56"></script>
-<script src="art/items.js?v=0.56"></script>
-<script src="art/furnished_rooms.js?v=0.56" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.56" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.56" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.56" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.56"></script>
-<script src="art/weather.js?v=0.56" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.57"></script>
+<script src="art/items.js?v=0.57"></script>
+<script src="art/furnished_rooms.js?v=0.57" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.57" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.57" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.57" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.57"></script>
+<script src="art/weather.js?v=0.57" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -251,7 +251,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.56';
+const BUILD = '0.57';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -292,10 +292,12 @@ const ROOMS = {
   grand:  {name:'Grand Room',  kind:'guest',   w:2, h:2, cost:2400, lvl:5,  stay:32, pay:70, xp:12, color:'#d8c8ff'},
   loft:   {name:'Sky Loft',    kind:'guest',   w:3, h:2, cost:5200, lvl:9,  stay:36, pay:120,xp:18, color:'#bfe6ff', minFloor:2},
   closet: {name:'Linen Closet',kind:'service', w:1, h:1, cost:250,  lvl:1,  capacity:5, color:'#5c3a28'},
-  laundry: {name:'Laundry Room', kind:'service', w:1, h:1, cost:900, lvl:6, capacity:4, color:'#9fc9e6', laundry:true},
+
   maintenance: {name:'Maintenance Room', kind:'service', w:1, h:1, cost:600, lvl:4, capacity:6, color:'#5b6b82', repairs:true},
   fit:    {name:'Fit Corner',  kind:'amenity', w:2, h:1, cost:700,  lvl:1,  slots:3, use:9,  pay:8,  xp:3, color:'#ffd1dc', icon:'🏋️'},
   noodle: {name:'Noodle Bar',  kind:'amenity', w:2, h:1, cost:1400, lvl:4,  slots:3, use:10, pay:15, xp:4, color:'#ffcf9e', icon:'🍜'},
+  chill:  {name:'Chill Room',  kind:'amenity', w:2, h:1, cost:1600, lvl:5,  slots:3, use:14, pay:11, xp:3, color:'#ffe0c2', icon:'😌'},
+  laundry:{name:'Laundry Room',kind:'amenity', w:2, h:1, cost:1200, lvl:4,  slots:3, use:12, pay:9,  xp:3, color:'#9fc9e6', icon:'🧺', laundry:true, capacity:4},
   lounge: {name:'Tea Lounge',  kind:'amenity', w:2, h:1, cost:2200, lvl:6,  slots:4, use:11, pay:14, xp:4, color:'#d9f2c4', icon:'🫖'},
   cinema: {name:'Mini Cinema', kind:'amenity', w:2, h:2, cost:4500, lvl:7,  slots:5, use:14, pay:22, xp:6, color:'#3d3a5c', icon:'🎬'},
   games:  {name:'Game Nook',   kind:'amenity', w:2, h:1, cost:3000, lvl:8,  slots:3, use:8,  pay:20, xp:5, color:'#c9d4ff', icon:'🕹️'},
@@ -385,12 +387,13 @@ const GUEST_COLORS = ['#ff8fa3','#7cc6fe','#ffd166','#95e06c','#c77dff','#ff9f68
 
 /* ---------------- progression ---------------- */
 // The build area is open land; what limits the hotel is how many blocks (cells) it may use.
-const WORLD_C = 14, WORLD_F = 10;
+const WORLD_C = 14, WORLD_F = 20;   // up to 20 floors
 const BLOCK_TIERS = [
   {blocks:12,lvl:1,cost:0},{blocks:16,lvl:2,cost:400},{blocks:20,lvl:3,cost:900},{blocks:24,lvl:4,cost:1600},
   {blocks:28,lvl:5,cost:2500},{blocks:32,lvl:6,cost:3600},{blocks:40,lvl:8,cost:6000},{blocks:50,lvl:10,cost:10000},
   {blocks:60,lvl:12,cost:16000},{blocks:77,lvl:14,cost:25000},{blocks:96,lvl:17,cost:40000},{blocks:120,lvl:20,cost:60000},
-  {blocks:150,lvl:24,cost:90000},
+  {blocks:150,lvl:24,cost:90000},{blocks:180,lvl:28,cost:130000},{blocks:210,lvl:32,cost:180000},{blocks:240,lvl:36,cost:240000},
+  {blocks:270,lvl:40,cost:320000},
 ];
 const SHIFTS = [{mins:5,cost:30},{mins:15,cost:120},{mins:60,cost:450},{mins:240,cost:1500}];
 const GOALS = [
@@ -480,6 +483,15 @@ function migrate(s){
   s.rooms = (s.rooms||[]).filter(r=>ROOMS[r.type]);
   for(const r of s.rooms){ r.items = (r.items||[]).filter(it=>ITEMS[it.id]); for(const it of r.items) itemUid = Math.max(itemUid, (it.u||0)+1); }
   s.storage = s.storage || []; s.inv = s.inv || {};
+  // a room whose size changed (Laundry Room 1x1 -> 2x1) and now overlaps another room goes to storage instead
+  const taken = new Map();
+  const resized = new Set(['laundry']);   // rooms whose size changed give way to everything else
+  for(const r of [...s.rooms].sort((a,b)=>resized.has(a.type)-resized.has(b.type))){ const d = ROOMS[r.type], h = d.h; let clash = false;
+    for(let i=0;i<d.w;i++) for(let j=0;j<h;j++){ const k = (r.f+j)+','+(r.c+i); if(taken.has(k) || r.c+i >= WORLD_C) clash = true; }
+    if(clash && d.kind!=='lobby'){ r._clash = true; continue; }
+    for(let i=0;i<d.w;i++) for(let j=0;j<h;j++) taken.set((r.f+j)+','+(r.c+i), r.id); }
+  for(const r of s.rooms.filter(r=>r._clash)) s.storage.push({type:r.type, wall:r.wall, floor:r.floor, wallColor:r.wallColor, wallPattern:r.wallPattern||'stripes', items:r.items||[], style:r.style||null, ownedStyles:r.ownedStyles||[]});
+  s.rooms = s.rooms.filter(r=>!r._clash);
   return s;
 }
 function load(){
@@ -2004,7 +2016,7 @@ function openBuild(tab){
       const fit = Math.min(130/(d.w*1.3), 96/d.h), sw = d.w*fit*1.3, sh = d.h*fit;   // as big as the card allows
       const key = t && !bed ? 'rooms/'+t+'_'+k : 'rooms/'+k;
       const inner = bed && art('decor/'+bed) ? `<img src="${art('decor/'+bed).src}" style="width:70%;height:auto;margin-top:auto">` : art(key) ? `<img src="${art(key).src}">` : (d.icon || (d.kind==='guest'?'🛏️':'🧺'));
-      const rate = d.kind==='guest' || d.kind==='amenity' ? `🪙${perHour(k).toLocaleString()}/h` : d.repairs ? `🔧 ${d.capacity}` : d.laundry ? `🧺 +${d.capacity}` : `🧹 ${d.capacity}`;
+      const rate = d.kind==='guest' || d.kind==='amenity' ? `🪙${perHour(k).toLocaleString()}/h` : d.repairs ? `🔧 ${d.capacity}` : `🧹 ${d.capacity}`;
       const nm = t ? `${themeIcon(t)} ${themeName(t)} ${d.name}` : d.name;
       html += `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-room="${k}"${t?` data-style="${t}"`:''}`} title="${nm}">
         ${locked?`<span class="lock">🔒 ${need}</span>`:''}
@@ -2118,6 +2130,7 @@ function openRoom(r){
     const pct = decorPct(r), lv = level();
     let html = `<h2 style="position:relative;padding-right:96px">${def.icon||''} ${def.name}${def.kind!=='lobby' ? `<span class="roomRate">🪙${roomRate(r).toLocaleString()}/h</span>` : ''}</h2>`;
     if(def.kind==='guest') html += `<div class="sub">Decor ${Math.round(pct*100)}% (${decorPoints(r)}/${decorCapacity(r)} points). Guests pay ${Math.round((0.6+0.9*pct)*100)}% of the base price <b>plus 🪙${decorCoins(r)} for the furniture</b>${beautiful(r) ? ' · ✨ <b>Beautiful room: +25% and more tips</b>' : ' · reach 100% decor for ✨ +25% pay'}. VIP guests need 70% or more.</div>`;
+    if(def.laundry) html += `<div class="sub" style="background:#e6f3fb;border-radius:10px;padding:8px">🫧 Guests wash their clothes here, and the clean linen lets your Linen Closets look after ${def.capacity} more rooms and clean twice as fast.</div>`;
     else if(def.kind==='amenity') html += `<div class="sub">Guests who want ${def.name} (${def.icon} bubble) visit after their stay and pay ~🪙${def.pay}. Holds ${def.slots} guests, each on their own timer. Amenities never get dirty and don't need decor, but every piece of furniture you add pays a little extra (now +🪙${decorCoins(r)} per visit).</div>`;
     else html += `<div class="sub">Decor ${Math.round(pct*100)}%. A beautiful lobby raises your star rating.</div>`;
     html += `<div class="meter"><i style="width:${pct*100}%"></i></div>`;
@@ -2327,7 +2340,13 @@ function openExpand(){
 function doExpand(){
   const next = BLOCK_TIERS[S.plot+1]; if(!next || S.coins<next.cost || next.lvl>level()) return;
   S.coins -= next.cost; S.plot++;
-  save(); checkGoals(); closePanel(); toast(`🧱 Expanded to ${next.blocks} blocks!`);
+  save(); checkGoals(); closePanel(); burstConfetti(); addXP(10 + 5*S.plot);
+  const after = BLOCK_TIERS[S.plot+1];
+  modal(`<div style="text-align:center"><div style="font-size:54px;line-height:1">🏗️🎉</div><div style="font-weight:800;color:#7a6e86;margin-top:6px">HOTEL EXPANDED!</div>
+    <div class="lvlBig">${next.blocks} blocks</div><div class="sub">+${next.blocks - BLOCK_TIERS[S.plot-1].blocks} new blocks to build on. Time to dream bigger!</div>
+    ${after ? `<div style="color:#7a6e86;font-size:13px;margin-top:8px">Next: ${after.blocks} blocks at level ${after.lvl}</div>` : '<div style="color:#3fae8c;font-weight:800;margin-top:8px">Maximum size reached!</div>'}
+    <button class="btn" style="margin-top:14px" onclick="closeModal()">Woohoo!</button><div style="font-size:11px;color:#7a6e86;margin-top:6px">Tap anywhere to close</div></div>`);
+  ui.lvlModal = true; clearTimeout(ui.lvlT); ui.lvlT = setTimeout(()=>{ if(ui.lvlModal) closeModal(); }, 5000);
 }
 function openGoals(){
   unfocus();
