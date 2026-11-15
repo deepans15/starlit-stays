@@ -250,7 +250,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.52';
+const BUILD = '0.53';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -335,7 +335,8 @@ const ITEMS = {};
     return { id:d.id, name:String(d.name||d.id).slice(0,30), zone,
       w: num(d.width,64,8,320)/2, h: num(d.height,64,8,320)/2,
       cost: Math.round(num(d.cost,100,0,100000)), decor: Math.round(num(d.decor,3,0,60)), lvl: Math.round(num(d.level,1,1,60)),
-      rooms, emoji: typeof d.emoji==='string' && d.emoji && !d.emoji.includes('?') ? d.emoji.slice(0,4) : '✨', back: !!d.back || d.id.includes('rug') };
+      rooms, emoji: typeof d.emoji==='string' && d.emoji && !d.emoji.includes('?') ? d.emoji.slice(0,4) : '✨', back: !!d.back || d.id.includes('rug'),
+      category: typeof d.category==='string' ? d.category : undefined, climate: ['cool','warm','both'].includes(d.climate) ? d.climate : undefined };
   };
   for(const d of ITEM_DEFAULTS){ const n = norm(d); if(n) ITEMS[n.id] = n; }
   const extra = Array.isArray(window.STARLIT_ITEMS) ? window.STARLIT_ITEMS : [];
@@ -752,6 +753,9 @@ const ISSUES = {
   dark: {icon:'💡', name:'Lights out',  fix:'💡 Lights back on!', tint:'rgba(20,16,40,.45)',   msg:'The lights went out!'}
 };
 const ISSUE_KEYS = Object.keys(ISSUES);
+// an air-con / fan stops 'too hot', a radiator / fireplace stops 'too cold', a smart thermostat stops both
+function climateGuards(r, k){ if(k!=='hot' && k!=='cold') return false; const want = k==='hot' ? 'cool' : 'warm';
+  return (r.items||[]).some(it=>{ const c = ITEMS[it.id] && ITEMS[it.id].climate; return c===want || c==='both'; }); }
 function maybeIssue(dt){
   if(ui.visit || !isOpen()) return;
   const rooms = S.rooms.filter(r=>ROOMS[r.type].kind==='guest');
@@ -764,7 +768,8 @@ function maybeIssue(dt){
   const pool = rooms.filter(r=>!r.issue && !r.fixT && !r.broken), busy = pool.filter(r=>r.guest);
   const r = (busy.length && Math.random()<0.7 ? busy : pool)[Math.floor(Math.random()*(busy.length && Math.random()<0.7 ? busy.length : pool.length))] || pool[0];
   if(!r) return;
-  const type = ISSUE_KEYS[Math.floor(Math.random()*ISSUE_KEYS.length)];
+  const safe = ISSUE_KEYS.filter(k=>!climateGuards(r, k)); if(!safe.length) return;
+  const type = safe[Math.floor(Math.random()*safe.length)];
   r.issue = {type, t:0}; r.pulse = 2;
   toast(`${ISSUES[type].icon} ${roomLabel(r)}: ${ISSUES[type].msg} Tap it to fix.`);
 }
@@ -1791,7 +1796,7 @@ function decorShop(lv, cat){
       const locked = it.lvl > lv, poor = S.coins < it.cost, own = S.inv[it.id]||0;
       h += `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-item="${it.id}"`} title="${it.name}">${locked?`<span class="lock">🔒 ${it.lvl}</span>`:''}
         <div class="thumb"><div class="shape" style="width:110px;height:84px;background:#fff8ef;border:none">${art('decor/'+it.id)?`<img src="${art('decor/'+it.id).src}" style="object-fit:contain">`:(it.emoji||'🪑')}</div></div>
-        <span class="rate">✨+${it.decor}</span><div class="nm">${it.name}${own?` <span style="color:#7a6e86">×${own}</span>`:''}</div><div class="pr">🪙${it.cost.toLocaleString()}</div></div>`;
+        <span class="rate">${it.climate ? ({cool:"❄️",warm:"🔥",both:"🌡️"})[it.climate]+" " : ""}✨+${it.decor}</span><div class="nm">${it.name}${own?` <span style="color:#7a6e86">×${own}</span>`:''}</div><div class="pr">🪙${it.cost.toLocaleString()}</div></div>`;
     }
     h += `</div>`;
   }

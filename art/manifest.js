@@ -1307,5 +1307,19 @@ window.STARLIT_ART = {
   "ui/face_2": "ui/face_2.svg",
   "ui/face_3": "ui/face_3.svg",
   "ui/face_4": "ui/face_4.svg",
-  "ui/face_5": "ui/face_5.svg"
+  "ui/face_5": "ui/face_5.svg",
+  "rooms/comfy": "rooms/comfy.svg",
+  "rooms/tall": "rooms/tall.svg",
+  "rooms/grand": "rooms/grand.svg",
+  "rooms/loft": "rooms/loft.svg",
+  "decor/log_cabin_bed": "decor/log_cabin_bed.svg",
+  "decor/cloud_bed": "decor/cloud_bed.svg",
+  "decor/race_car_bed": "decor/race_car_bed.svg",
+  "decor/round_bed": "decor/round_bed.svg",
+  "decor/boat_bed": "decor/boat_bed.svg",
+  "decor/bunk_bed": "decor/bunk_bed.svg",
+  "decor/hammock_bed": "decor/hammock_bed.svg",
+  "decor/canopy_bed": "decor/canopy_bed.svg",
+  "decor/rocket_bed": "decor/rocket_bed.svg",
+  "decor/royal_bed": "decor/royal_bed.svg"
 };

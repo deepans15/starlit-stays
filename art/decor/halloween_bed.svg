@@ -1,19 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="112" height="64" viewBox="0 0 112 64">
   <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M4 47V16q0-10 11-10h22q11 0 11 10v31" fill="#514965" vector-effect="non-scaling-stroke" />
-    <path d="M12 24q0-15 13-15t13 15v9H12Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    <circle cx="21" cy="21" r="1.7" fill="#2b2340" stroke="none" vector-effect="non-scaling-stroke" />
-    <circle cx="30" cy="21" r="1.7" fill="#2b2340" stroke="none" vector-effect="non-scaling-stroke" />
-    <path d="M23 27q3 2 5-1" fill="none" stroke="#2b2340" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <path d="M7 46v16.75h8l3-17m78 0 2 17h8V46" fill="#c8915f" vector-effect="non-scaling-stroke" />
-    <rect x="10" y="24" width="95" height="19" rx="6" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    <path d="M17 15q10-3 23 0l4 9H13Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    <path d="M43 24h56q7 0 7 8v14H43Z" fill="#b5a0d6" vector-effect="non-scaling-stroke" />
-    <rect x="7" y="44" width="102" height="10" rx="3" fill="#c8915f" vector-effect="non-scaling-stroke" />
-    <path d="M13 48h85" fill="none" stroke="#e6b481" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <rect x="101" y="30" width="8" height="24" rx="3" fill="#c8915f" vector-effect="non-scaling-stroke" />
-    <path d="M94 25q12 0 12 10v8H94Z" fill="#9580b7" stroke="none" vector-effect="non-scaling-stroke" />
-    <path d="M44 25h9v18h-9Z" fill="#fff8ef" stroke="none" vector-effect="non-scaling-stroke" />
-    <path d="m61 33 6 2 6-5 6 5 6-2-3 8-9-3-9 3Z" fill="#514965" stroke="none" vector-effect="non-scaling-stroke" />
+    <path d="m11 23-8-10 12 2 3-10 10 10 11-5-2 15m52 1 11-14 3 10 7-2-2 15" fill="#776783" />
+    <path d="m7 34 15-15h62l22 15-8 22H15Z" fill="#514965" />
+    <rect x="20" y="28" width="75" height="16" rx="5" fill="#fff8ef" />
+    <rect x="21" y="23" width="23" height="10" rx="5" fill="#fff8ef" />
+    <path d="M25 27h15" stroke="#e6ddd3" fill="none" stroke-width="1.5" />
+    <path d="M46 28h43q6 0 6 6v12H46Z" fill="#b5a0d6" />
+    <path d="M51 31v12" fill="none" stroke="#fff8ef" opacity=".6" stroke-width="3" />
+    <path d="m7 34 13 10h73l13-10M20 45v17.75h8V49m56 0v13.75h8V45" fill="#776783" />
+    <path d="m60 32 5 5 5-5" fill="none" stroke="#6fd3b5" />
   </g>
 </svg>

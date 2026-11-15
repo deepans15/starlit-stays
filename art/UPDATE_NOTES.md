@@ -1,32 +1,38 @@
-# Gym, Temp Staff, maintenance and ratings art batch
+# Empty guest rooms and distinct beds
 
-## Scope and preservation
-All changes are inside art/. No writes to index.html. Every existing manifest entry, SVG name and canvas size is retained. items.js and all 42 existing category/placement entries are preserved without changes. SVGs are self-contained vectors using rounded #2b2340 ink outlines, no text elements, embedded images, external links, scripts or SVG animation. No raster assets were created.
+## Scope
+Art folder only. No game-code edits. The four new guest-room backgrounds are explicitly requested exceptions to the older no-guest-room-art rule. Existing rooms/nook.svg is preserved. Every existing manifest key and SVG canvas size remains. Five existing theme beds retain 112 x 64, along with their previous prices, unlock levels and decor values.
 
-## Three-station gym
-Redrawn rooms/fit.svg, gold_fit.svg, pink_fit.svg: 320 x 168. Empty treadmill at left, bench with spare barbell rack in the middle, stretching mat at right. Every room keeps the label zone clear. Gym room effects fit_fx_1..3 are aligned to the new treadmill belt, with matching 320 x 168 transparent canvases.
-fit has exactly three slots in Classic, Gold and Pink metadata: run x45,y149; lift x153,y157; stretch x262,y155. All use scale 0.8 and feet anchor {28,96}. The belt and floor are in the room, not in guest sprites. A foreground crop restores the treadmill rail. The bench/rack stay behind the standing lifter, so the low barbell is not erased by a seat crop.
-- run_1..4 for guest_1 through guest_12 and inspector: clearly jogging in place, soles kept on one low baseline with no head bob or vertical hopping. Four frames at 8 fps.
-- lift_1..4 for all 13 identities: one horizontal barbell held with both hands, moving through a planted-foot curl. Four frames at 4 fps.
-- Existing run/lift_5..8 filenames/keys remain and have matching repeated poses; metadata now plays the requested four-frame loops.
-- New stretch_1..4 for all 13 identities: 56 x 96, calm reach-up, left bend, toe touch, right bend. Four frames at 2 fps; feet fixed at anchor {28,96}. Faces, skin tones and hair match each identity; hats remain removed for exercise.
+## Empty backgrounds
+- rooms/comfy.svg: 320 x 168, warm yellow ribbon stripes and a right-side window. Floor baseline y156; 12 px floor band.
+- rooms/tall.svg: 160 x 336, soft pink pinstripes and a tall arched window. Baseline y324.
+- rooms/grand.svg: 320 x 336, lilac damask and a simple ceiling hook, with a high window. Baseline y324; no chandelier is baked in.
+- rooms/loft.svg: 480 x 336, sky-blue walls, tall glass windows and a short architectural gallery rail. Baseline y324.
+All contain only wallpaper, windows/structural details, skirting and floor. No beds or furniture. Double-height rooms remain open wall/window space above one bottom floor, without an intermediate floor.
 
-## Readable Temp Staff
-All existing 40 staff SVGs (eight identities, base plus _1..4) keep 56 x 96 canvases and four-frame 4 fps loops. STAFF badges and lettering were removed. Uniforms: red chef jacket, teal apron over dark barista shirt, orange trainer top, burgundy usher vest, purple games polo, red lifeguard top with yellow shorts, khaki-green guide shirt, lavender housekeeper dress. Hats and working tools remain.
-Staff scale: gym/games/pool/closet 0.8, noodle 1.0, lounge 0.6, cinema 0.72, both treehouses 0.55, maintenance 0.8. Coordinates and all theme overrides updated. Larger staff occupy aisles/edges rather than guest stations, with feet on the room or cabin floor. Some small-room source canvases share broad transparent bounding rectangles, but character silhouettes are separated from diners.
-Clerk, clerk_blink, clerk_blink_1 and clerk_blink_2 now wear a navy blazer, gold trim and navy cap; face/eye differences and anchors are preserved. Classic lobby remains 480 x 168, with warm peach wallpaper and soft stripes; the rightmost 120 px elevator wall stays plain peach.
+## New bed items (cheapest first)
+| Item | Canvas | Level | Coins | Decor |
+|---|---|---:|---:|---:|
+| log_cabin_bed | 112 x 64 | 1 | 110 | 3 |
+| cloud_bed | 120 x 60 | 2 | 200 | 4 |
+| race_car_bed | 128 x 60 | 3 | 320 | 6 |
+| round_bed | 120 x 56 | 4 | 440 | 7 |
+| boat_bed | 128 x 64 | 5 | 580 | 9 |
+| bunk_bed | 88 x 112 | 6 | 760 | 11 |
+| hammock_bed | 128 x 72 | 7 | 900 | 12 |
+| canopy_bed | 112 x 112 | 9 | 1200 | 16 |
+| rocket_bed | 96 x 100 | 12 | 1800 | 22 |
+| royal_bed | 136 x 96 | 15 | 2400 | 28 |
 
-## Maintenance
-- rooms/maintenance.svg, gold_maintenance.svg, pink_maintenance.svg: 160 x 168 service-workshop interiors with a tool wall, wooden workbench and toolbox; no baked-in worker.
-- chars/staff_maintenance.svg and _1..4.svg: 56 x 96 repair person in blue overalls with a moving wrench. 4 fps. New maintenance metadata room has slots=[], a staff descriptor and Gold/Pink overrides.
-- ui/broken.svg: 40 x 40 red repair-status circle with white X and a small wrench.
-- ui/broken_overlay_1..4.svg: 160 x 168, stable grey tint at 25% alpha plus loose wires, a faint drop and puddle. Four gently cycling frames at 4 fps. Furniture remains visible.
+All are zone bed, category beds, rooms [guest], with matching width/height and w/h fields. New entries are in ascending cost/unlock order. Existing catalog fields and values are preserved. New side-view silhouettes feature wheels/spoiler/roundel, two bunks and ladder, four canopy posts with drapes, circular tufted upholstery, rocket cabin/porthole/fins, rowboat and oar, cloud upholstery, a suspended hammock, rustic log construction, and a crowned gilded headboard. All floor contacts reach the bottom of their own canvas. Number-roundel marking is drawn as paths, not text.
 
-## Guest rating faces
-ui/face_1.svg through face_5.svg: 48 x 48, designed for 28 px. Red angry, orange frown, yellow neutral, light-green smile, bright-green big grin. Each has an ink outline and white top-left highlight.
+## Theme bed redraws
+Love: heart headboard and heart foot detail. Halloween: octagonal coffin frame and bat-wing ends. Winter: curved sleigh ends and runners. Gold: sculpted rococo shell/scrollwork and curved apron. Pink: scalloped princess headboard, ruffled skirt and bow. All use the existing decor/<theme>_bed keys and 112 x 64 canvases.
 
-## Preview and handoff
-preview.html now includes ten room studios, the three occupied gym stations, nine staff loops including maintenance, separate run/lift/stretch players, a maintenance-overlay player and a 28 px face strip. Guest identity, room style, occupancy and global pause/scale controls remain. CODE_NOTES.md describes changes Claude must make to capacity, label rendering and the new service room. Art metadata alone does not change gameplay capacity or create the maintenance room type.
+## Placement and sleep metadata
+Each new/redesigned bed has bedLayout metadata in items.js: mode, pillow centre, mattressTop and sleep bounds in file pixels. Bunk specifies the lower mattress for the current one-guest room and records upperMattressTop for possible future use. Rocket mode is upright and hammock mode is curved; these must not stretch a normal full-bed sleeping overlay across the entire tall canvas. See CODE_NOTES.md for integration details.
 
-## Validation
-Added 73 SVG keys, including the three newly registered belt-effect files. All 1309 SVGs passed XML, exact width/height/viewBox, safe vector markup, manifest path and preview dimension checks. Every original manifest entry and canvas size was retained. Largest file: 9727 bytes. Preview initialization checked 1309 assets with zero failures, and 234 identity/theme/occupancy combinations passed with three gym activities and ten persistent staff placements. items.js is byte-for-byte unchanged. Code was not edited by this task; index.html changed independently during this art batch. Browser gameplay was not verified.
+## Preview / validation
+preview.html has a dedicated fifteen-bed comparison and four-room architecture gallery, plus the normal asset galleries. Global display size controls apply. All 1323 registered SVGs passed XML, exact dimensions/viewBox, self-contained markup, manifest and preview registration checks. Every original catalog value was retained; new entries have valid guest-only bed categories. Browser gameplay was not verified.
+
+Preview script verification: 1323 assets initialized with zero failures; the dedicated gallery contains all 15 bed designs and four room backgrounds, and the existing animation clock still runs. Mattress continuity and each structural silhouette were inspected using local SVG renders.

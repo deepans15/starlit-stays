@@ -77,7 +77,23 @@ window.STARLIT_ITEMS = [
     "rooms": [
       "guest"
     ],
-    "category": "beds"
+    "category": "beds",
+    "w": 112,
+    "h": 64,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 31,
+        "y": 27
+      },
+      "mattressTop": 32,
+      "bounds": {
+        "x": 18,
+        "y": 18,
+        "width": 84,
+        "height": 29
+      }
+    }
   },
   {
     "id": "love_loveseat",
@@ -147,7 +163,23 @@ window.STARLIT_ITEMS = [
     "rooms": [
       "guest"
     ],
-    "category": "beds"
+    "category": "beds",
+    "w": 112,
+    "h": 64,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 31,
+        "y": 27
+      },
+      "mattressTop": 32,
+      "bounds": {
+        "x": 18,
+        "y": 18,
+        "width": 84,
+        "height": 29
+      }
+    }
   },
   {
     "id": "halloween_pumpkin_lamp",
@@ -219,7 +251,21 @@ window.STARLIT_ITEMS = [
     "rooms": [
       "guest"
     ],
-    "category": "beds"
+    "category": "beds",
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 35,
+        "y": 27
+      },
+      "mattressTop": 32,
+      "bounds": {
+        "x": 18,
+        "y": 18,
+        "width": 84,
+        "height": 29
+      }
+    }
   },
   {
     "id": "winter_armchair",
@@ -301,7 +347,21 @@ window.STARLIT_ITEMS = [
     "rooms": [
       "guest"
     ],
-    "category": "beds"
+    "category": "beds",
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 35,
+        "y": 27
+      },
+      "mattressTop": 32,
+      "bounds": {
+        "x": 18,
+        "y": 18,
+        "width": 84,
+        "height": 29
+      }
+    }
   },
   {
     "id": "gold_chaise",
@@ -383,7 +443,21 @@ window.STARLIT_ITEMS = [
     "rooms": [
       "guest"
     ],
-    "category": "beds"
+    "category": "beds",
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 31,
+        "y": 27
+      },
+      "mattressTop": 32,
+      "bounds": {
+        "x": 18,
+        "y": 18,
+        "width": 84,
+        "height": 29
+      }
+    }
   },
   {
     "id": "pink_sofa",
@@ -522,5 +596,306 @@ window.STARLIT_ITEMS = [
     "decor": 6,
     "level": 4,
     "category": "lighting"
+  },
+  {
+    "id": "log_cabin_bed",
+    "name": "Log Cabin Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 112,
+    "height": 64,
+    "w": 112,
+    "h": 64,
+    "cost": 110,
+    "level": 1,
+    "decor": 3,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 31,
+        "y": 25
+      },
+      "mattressTop": 31,
+      "bounds": {
+        "x": 19,
+        "y": 18,
+        "width": 84,
+        "height": 27
+      }
+    }
+  },
+  {
+    "id": "cloud_bed",
+    "name": "Cloud Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 120,
+    "height": 60,
+    "w": 120,
+    "h": 60,
+    "cost": 200,
+    "level": 2,
+    "decor": 4,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 36,
+        "y": 26
+      },
+      "mattressTop": 30,
+      "bounds": {
+        "x": 20,
+        "y": 18,
+        "width": 84,
+        "height": 29
+      }
+    }
+  },
+  {
+    "id": "race_car_bed",
+    "name": "Race Car Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 128,
+    "height": 60,
+    "w": 128,
+    "h": 60,
+    "cost": 320,
+    "level": 3,
+    "decor": 6,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 36,
+        "y": 22
+      },
+      "mattressTop": 24,
+      "bounds": {
+        "x": 21,
+        "y": 17,
+        "width": 73,
+        "height": 18
+      }
+    }
+  },
+  {
+    "id": "round_bed",
+    "name": "Round Tufted Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 120,
+    "height": 56,
+    "w": 120,
+    "h": 56,
+    "cost": 440,
+    "level": 4,
+    "decor": 7,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 36,
+        "y": 23
+      },
+      "mattressTop": 28,
+      "bounds": {
+        "x": 19,
+        "y": 13,
+        "width": 86,
+        "height": 28
+      }
+    }
+  },
+  {
+    "id": "boat_bed",
+    "name": "Rowboat Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 128,
+    "height": 64,
+    "w": 128,
+    "h": 64,
+    "cost": 580,
+    "level": 5,
+    "decor": 9,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 34,
+        "y": 29
+      },
+      "mattressTop": 34,
+      "bounds": {
+        "x": 18,
+        "y": 20,
+        "width": 88,
+        "height": 25
+      }
+    }
+  },
+  {
+    "id": "bunk_bed",
+    "name": "Ladder Bunk Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 88,
+    "height": 112,
+    "w": 88,
+    "h": 112,
+    "cost": 760,
+    "level": 6,
+    "decor": 11,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 25,
+        "y": 84
+      },
+      "mattressTop": 90,
+      "bounds": {
+        "x": 15,
+        "y": 76,
+        "width": 57,
+        "height": 20
+      },
+      "upperMattressTop": 37
+    }
+  },
+  {
+    "id": "hammock_bed",
+    "name": "Hammock Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 128,
+    "height": 72,
+    "w": 128,
+    "h": 72,
+    "cost": 900,
+    "level": 7,
+    "decor": 12,
+    "bedLayout": {
+      "mode": "curved",
+      "pillow": {
+        "x": 41,
+        "y": 34
+      },
+      "mattressTop": 41,
+      "bounds": {
+        "x": 27,
+        "y": 27,
+        "width": 74,
+        "height": 31
+      }
+    }
+  },
+  {
+    "id": "canopy_bed",
+    "name": "Draped Canopy Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 112,
+    "height": 112,
+    "w": 112,
+    "h": 112,
+    "cost": 1200,
+    "level": 9,
+    "decor": 16,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 32,
+        "y": 72
+      },
+      "mattressTop": 78,
+      "bounds": {
+        "x": 19,
+        "y": 63,
+        "width": 75,
+        "height": 33
+      }
+    }
+  },
+  {
+    "id": "rocket_bed",
+    "name": "Rocket Cabin Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 96,
+    "height": 100,
+    "w": 96,
+    "h": 100,
+    "cost": 1800,
+    "level": 12,
+    "decor": 22,
+    "bedLayout": {
+      "mode": "upright",
+      "pillow": {
+        "x": 48,
+        "y": 54
+      },
+      "mattressTop": 61,
+      "bounds": {
+        "x": 33,
+        "y": 46,
+        "width": 30,
+        "height": 33
+      }
+    }
+  },
+  {
+    "id": "royal_bed",
+    "name": "Royal Crown Bed",
+    "zone": "bed",
+    "category": "beds",
+    "rooms": [
+      "guest"
+    ],
+    "width": 136,
+    "height": 96,
+    "w": 136,
+    "h": 96,
+    "cost": 2400,
+    "level": 15,
+    "decor": 28,
+    "bedLayout": {
+      "mode": "horizontal",
+      "pillow": {
+        "x": 39,
+        "y": 60
+      },
+      "mattressTop": 66,
+      "bounds": {
+        "x": 23,
+        "y": 51,
+        "width": 99,
+        "height": 29
+      }
+    }
   }
 ];
