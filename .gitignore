@@ -1,3 +1,5 @@
 Thumbs.db
 .DS_Store
 *.tmp
+# local helper scripts stay on this PC
+*.ps1
