@@ -53,3 +53,6 @@ chars/helper.svg retains its 144 x 208 dimensions and welcoming pose. The teal s
 
 ## Validation
 Game scripts compile. Renderer checks passed for 624 room/identity/style combinations, duplicate seats, dragged rooms, missing frames and frame playback. Actual draw calls were composited for visual inspection. Browser gameplay was not verified.
+
+## Staff and occupied props update
+See UPDATE_NOTES.md for the corrected cinema seat anchors, new centred treehouse slots, permanent staff metadata and conditional bowl/cup/popcorn props. The preview now includes a ninth room (closet, with staff only) and occupancy controls. Held cups/popcorn have moved out of the guest frames into slot props, so Claude must consume the new prop fields together with the updated actor art. This batch does not edit index.html.

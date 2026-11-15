@@ -26,8 +26,5 @@
       <rect x="8" y="28" width="9" height="14" rx="4.5" fill="#7ec8ff" vector-effect="non-scaling-stroke" />
       <path d="M12 32v5" fill="none" stroke="#c9eaff" stroke-width="2" vector-effect="non-scaling-stroke" />
     </g>
-    <path d="M38 53h10v3q0 7-5 7t-5-7Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    <path d="M48 55q7-2 6 3-1 4-6 3" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    <ellipse cx="43" cy="53" rx="5" ry="1.7" fill="#c8915f" vector-effect="non-scaling-stroke" />
   </g>
 </svg>

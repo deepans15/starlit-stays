@@ -77,6 +77,7 @@
   #visitBar .vb span{font-size:12px;color:var(--muted);font-weight:700}
   body.visiting #dock, body.visiting #hud, body.visiting #hudStars, body.visiting #goalsBox, body.visiting #speedBtn, body.visiting #helper, body.visiting #helperArrow, body.visiting #openPrompt, body.visiting #blockCount{display:none!important}
   #tipsBtn{position:absolute;right:78px;top:12px;display:none;z-index:6;border:2px solid var(--ink);background:#fff6d6;color:var(--ink);font-weight:900;font-size:13px;border-radius:999px;padding:4px 10px;cursor:pointer;box-shadow:0 2px 0 var(--ink)}
+  #tipsBtn .hic img{width:18px;height:18px}
   #tipsBtn:active{transform:translateY(2px);box-shadow:none}
   body.visiting #tipsBtn{display:none!important}
   body.panelOpen #tipsBtn{display:none!important}
@@ -108,7 +109,7 @@
   #marks.top{flex-direction:row}
   #marks.top button{border:3px solid var(--line);border-bottom:none;border-radius:14px 14px 0 0;width:auto;flex:1;box-shadow:0 -3px 8px rgba(0,0,0,.15)}
   #marks.top button.on{width:auto;transform:translateY(-6px)}
-  .bsec{scroll-margin-top:6px}
+  .bsec{scroll-margin-top:6px;display:none} .bsec.show{display:block}
   .bsec h3.big{margin:6px 0 8px;font-size:15px;border-bottom:2px dashed var(--line);padding-bottom:4px}
   .tabs button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:7px 4px;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink)}
   .tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}  #hint{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 14px;border-radius:999px;font-weight:700;font-size:13px;display:none;gap:10px;align-items:center;z-index:5;white-space:nowrap}
@@ -207,7 +208,7 @@
     <div id="zoomCtl"><button onclick="setZoom((ui.zoom||1)*1.25)" title="Zoom in">+</button><button onclick="setZoom((ui.zoom||1)/1.25)" title="Zoom out">−</button><button id="zoomReset" onclick="resetZoom()" title="Fit hotel" style="visibility:hidden">⤢</button></div>
     <div id="openPrompt"><div class="op"><div class="opt">🛎️ Your hotel is closed</div><div class="ops" id="opSub">Open the doors and guests will start arriving.</div><button class="btn big" id="opGo">Open</button><label class="opa"><input type="checkbox" id="opAuto"> Reopen automatically</label><button class="oplink" id="opMore">More opening times</button></div></div>
     <div id="visitBar"><button class="btn alt" onclick="goHome()">← Back home</button><div class="vb"><b id="visitName"></b><span id="visitMeta"></span></div><button class="btn" id="visitLike" onclick="likeHotel()">❤️ Like</button></div>
-    <button id="tipsBtn" onclick="collectAllTips()" title="Collect all tips">💰 <b id="tipsN">0</b></button>
+    <button id="tipsBtn" onclick="collectAllTips()" title="Collect all tips"><span class="hic" data-art="ui/tips" style="display:inline-flex;vertical-align:middle;width:18px;height:18px">💰</span> <b id="tipsN">0</b></button>
     <button id="crateBtn" onclick="openCrate()" title="Golden Mystery Crate"><span class="ic" data-art="ui/crate">🎁</span><span class="dlab">Crate</span></button>
     <div id="marks"></div>
     <div id="dropZones"><div class="zone" id="zoneStore"><span class="e">📦</span>Storage</div><div class="zone sell" id="zoneSell"><span class="e">🪙</span><span id="zoneSellTxt">Sell</span></div></div>
@@ -245,7 +246,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.47';
+const BUILD = '0.49';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -1261,6 +1262,7 @@ function drawAmenityCount(r,x,y,w){
 }
 // every amenity (and the linen closet) has a staff member; ChatGPT's amenity_animations.js says where they stand
 function drawStaff(r,x,y,w,h){
+  if(AMENITY_ACTIVITY_ROOMS.get(r.type)?.staff && art((AMENITY_ACTIVITY_ROOMS.get(r.type).staff.key))) return;   // drawn in the sorted amenity layer instead
   const data = window.STARLIT_AMENITY_ANIMATIONS, room = data && (data.rooms||[]).find(o=>o.id===r.type);
   const sid = r.type.startsWith('treehouse') ? 'treehouse' : r.type;
   const st = room && ((r.style && room.styleOverrides && room.styleOverrides[r.style] && room.styleOverrides[r.style].staff) || room.staff);
@@ -1323,6 +1325,9 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
     if(!groups.has(g.amen)) groups.set(g.amen, []);
     groups.get(g.amen).push(g);
   }
+  // every amenity / closet with layout data is drawn here (even empty) so its staff sorts with guests, props and seat backs
+  for(const r of S.rooms){ if(groups.has(r.id) || !AMENITY_ACTIVITY_ROOMS.has(r.type) || r.dirty || (onlyRoomId!==undefined && r.id!==onlyRoomId) || (excludedRoomId!==undefined && r.id===excludedRoomId)) continue;
+    const L = AMENITY_ACTIVITY_ROOMS.get(r.type); if(L.staff) groups.set(r.id, []); }
   for(const [roomId, visitors] of groups){
     const room = S.rooms.find(r=>r.id===roomId); if(!room) continue;
     const layout = AMENITY_ACTIVITY_ROOMS.get(room.type);
@@ -1331,8 +1336,8 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
     const roomImage = styledImage || art('rooms/'+room.type);
     if(!layout || !roomImage){ visitors.forEach(drawAmenGuest); continue; }
     const variant = (styledImage && layout.styleOverrides?.[room.style]) || layout;
-    const slots = variant.slots || layout.slots;
-    if(!slots?.length){ visitors.forEach(drawAmenGuest); continue; }
+    const slots = variant.slots || layout.slots || [];
+    if(!slots.length && visitors.length){ visitors.forEach(drawAmenGuest); continue; }
     const q = visRect(room), sx = q.w/layout.width, sy = q.h/layout.height;
     // Rendering never mutates saved slots. Duplicate gameplay slots get a free visual seat.
     const used = new Set(), assigned = [], waiting = [];
@@ -1351,8 +1356,9 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
       if(slot && slot.prop){   // a bowl / teacup / popcorn in front of a guest, only while someone is there
         const pr = typeof slot.prop==='string' ? {key:slot.prop} : slot.prop, fr = pr.frames||1;
         const pkey = fr>1 ? pr.key+'_'+(1+Math.floor((time+(slot.phase||0))*(pr.fps||4))%fr) : pr.key, pimg = art(pkey) || art(pr.key) || art(pr.key+'_1');
-        if(pimg){ const pw = (pr.width||pimg.width), ph = (pr.height||pimg.height), px = pr.x!==undefined ? pr.x : slot.x - pw/2, py = pr.y!==undefined ? pr.y : slot.y - ph;
-          draws.push({z:pr.z || (slot.z||5)+1, g, image:pimg, x:q.x+px*sx, y:q.y+py*sy, w:pw*sx, h:ph*sy}); }
+        if(pimg){ const sc = pr.scale||1, pw = (pr.width||pimg.width)*sc, ph = (pr.height||pimg.height)*sc, an = pr.anchor || {x:(pr.width||pimg.width)/2, y:(pr.height||pimg.height)};
+          const ax = pr.x!==undefined ? pr.x : slot.x, ay = pr.y!==undefined ? pr.y : slot.y;
+          draws.push({z:pr.z || (slot.z||5)+1, g, image:pimg, x:q.x+(ax-an.x*sc)*sx, y:q.y+(ay-an.y*sc)*sy, w:pw*sx, h:ph*sy}); }
       }
       const activity = slot && AMENITY_ACTIVITY_TYPES.get(slot.activity);
       const character = g.inspector ? 'inspector' : 'guest_'+g.skin;
@@ -1370,6 +1376,10 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
         y:q.y+(slot.y-activity.anchor.y*slot.scale+dy)*sy,
         w:activity.width*slot.scale*sx, h:activity.height*slot.scale*sy});
     }
+    const st = (styledImage && variant.staff) || layout.staff;
+    if(st){ const fr = st.frames||1, k = fr>1 ? st.key+'_'+(1+Math.floor(time*(st.fps||4))%fr) : st.key, img = art(k) || art(st.key);
+      if(img){ const sc = st.scale||1, an = st.anchor||{x:28,y:96};
+        draws.push({z:st.z||9, staff:true, image:img, x:q.x+(st.x-an.x*sc)*sx, y:q.y+(st.y-an.y*sc)*sy, w:56*sc*sx, h:96*sc*sy}); } }
     for(const f of (variant.foreground || layout.foreground || [])) draws.push({z:f.z || 7, crop:f});
     draws.sort((a,b)=>a.z-b.z);
     ctx.save();
@@ -1379,6 +1389,7 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
         const f=d.crop;
         ctx.drawImage(roomImage, f.x,f.y,f.width,f.height, q.x+f.x*sx,q.y+f.y*sy,f.width*sx,f.height*sy);
       } else if(d.fallback){ drawAmenGuest(d.g); }
+      else if(d.staff){ ctx.drawImage(d.image,d.x,d.y,d.w,d.h); }
       else {
         ctx.save(); ctx.globalAlpha *= Math.max(0,Math.min(1,d.g.alpha===undefined?1:d.g.alpha));
         ctx.drawImage(d.image,d.x,d.y,d.w,d.h); ctx.restore();
@@ -1726,8 +1737,8 @@ function perHour(k){ const d = ROOMS[k]; if(d.kind==='guest') return Math.round(
 function decorShop(lv, cat){
   const where = it => it.rooms.map(k=>({guest:'guest rooms', amenity:'amenities', lobby:'lobby'})[k]||k).join(', ');
   const inSet = new Set(Object.values(COLLECTIONS).flat()), all = Object.values(ITEMS).filter(it=>!cat || itemCat(it)===cat).sort((a,b)=>a.lvl-b.lvl || a.cost-b.cost);
-  const groups = [['', all.filter(it=>!inSet.has(it.id))]].concat(Object.entries(COLLECTIONS).map(([t,ids])=>[`${themeIcon(t)} ${themeName(t)}`, all.filter(it=>ids.includes(it.id))]));
-  let h = cat==='beds' ? `<div class="sub">Drag a piece onto a room to put it there, or tap to buy it into storage. 3+ pieces of one theme in a room give bonus decor.</div>` : '';
+  const groups = [['', all]];   // one flat list per category, cheapest first
+  let h = `<div class="sub">Drag a piece onto a room to put it there, or tap to buy it into storage. 3+ pieces of one theme in a room give bonus decor.</div>`;
   for(const [title, list] of groups){ if(!list.length) continue;
     h += `${title?`<h3>${title}</h3>`:''}<div class="cat">`;
     for(const it of list){
@@ -1830,7 +1841,8 @@ function drawNewItemDrag(){
   if(r){ const q = visRect(r); ctx.strokeStyle = ok ? '#3fae8c' : '#ff7a90'; ctx.lineWidth = 3; ctx.setLineDash([6,4]); ctx.strokeRect(q.x+2, q.y+2, q.w-4, q.h-4); ctx.setLineDash([]); ctx.lineWidth = 1; }
   ctx.globalAlpha = ok ? 1 : 0.6; drawItem(def, d.px - def.w/2, d.py - def.h/2); ctx.globalAlpha = 1;
 }
-function jumpBuild(id){ const el = document.getElementById('bsec-'+id); if(!el) return; panel.scrollTo({top: el.offsetTop - 8, behavior:'smooth'}); ui.markLock = id; syncMarks(); setTimeout(()=>{ ui.markLock = null; }, 600); }
+// each bookmark is its own page: show only that section
+function jumpBuild(id){ const el = document.getElementById('bsec-'+id); if(!el) return; ui.buildSec = id; panel.querySelectorAll('.bsec').forEach(s=>s.classList.toggle('show', s===el)); panel.scrollTop = 0; syncMarks(); }
 // bookmarks hang off the left edge of the Build menu (or off its top edge on phones, where the menu sits at the bottom)
 function placeMarks(){
   const m = $('marks'), show = panel.style.display==='block' && ui.panelKind==='build' && (ui.buildTab||'rooms')==='rooms' && !!panel.querySelector('.bsec');
@@ -1844,12 +1856,9 @@ function placeMarks(){
 window.addEventListener('resize', placeMarks);
 function syncMarks(){
   const marks = $('marks').querySelectorAll('[data-mark]'); if(!marks.length) return;
-  let cur = ui.markLock;
-  if(!cur){ cur = 'guest'; for(const sec of panel.querySelectorAll('.bsec')) if(sec.offsetTop - 30 <= panel.scrollTop) cur = sec.id.slice(5);
-    if(panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 4) cur = 'd_' + DECOR_CATS[DECOR_CATS.length-1][0]; }
+  const cur = (panel.querySelector('.bsec.show')||{id:'bsec-guest'}).id.slice(5);
   marks.forEach(b=>b.classList.toggle('on', b.dataset.mark===cur));
 }
-panel.addEventListener('scroll', ()=>{ if(!ui.markLock) syncMarks(); });
 function buildTabs(active){
   const t = (id, label) => `<button class="${active===id?'on':''}" onclick="openBuild('${id}')">${label}</button>`;
   return `<div class="tabs">${t('rooms','🏨 Rooms')}${t('storage','📦 Storage')}${t('sell','💱 Sell')}</div>`;
@@ -1869,7 +1878,7 @@ function openBuild(tab){
   $('marks').innerHTML = SECTIONS.map(mark).join('');
   html += `<div>`;
   for(const [cat, , , title, groups, dc] of SECTIONS){
-  html += `<div class="bsec" id="bsec-${cat}"><h3 class="big">${title}</h3>`;
+  html += `<div class="bsec${(SECTIONS.some(x=>x[0]===ui.buildSec) ? ui.buildSec : 'guest')===cat ? ' show' : ''}" id="bsec-${cat}"><h3 class="big">${title}</h3>`;
   if(dc) html += decorShop(lv, dc);
   for(const [label,kind] of groups){
     html += `${label?`<h3>${label}</h3>`:''}<div class="cat">`;

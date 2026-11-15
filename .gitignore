@@ -3,3 +3,5 @@ Thumbs.db
 *.tmp
 # local helper scripts stay on this PC
 *.ps1
+
+_art_*
