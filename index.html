@@ -60,6 +60,16 @@
   #loading .b{width:min(260px,70vw);height:12px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}
   #loading .b i{display:block;height:100%;width:0;background:#ffc94d;border-radius:99px;transition:width .2s}
   #loading .s{font-size:13px;color:#cfc6ef;font-weight:700}
+  #openPrompt{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:6;pointer-events:none}
+  #openPrompt.show{display:flex}
+  #openPrompt .op{pointer-events:auto;background:rgba(255,253,248,.97);border:3px solid var(--ink);border-radius:22px;padding:18px 22px;text-align:center;box-shadow:0 10px 0 rgba(43,35,64,.3);max-width:min(330px,86vw);animation:popIn .35s ease-out}
+  #openPrompt .opt{font-size:20px;font-weight:900}
+  #openPrompt .ops{color:var(--muted);font-size:13px;margin:4px 0 12px}
+  #openPrompt .btn.big{font-size:20px;padding:12px 26px;border-radius:16px;animation:pulseBtn 1.4s ease-in-out infinite}
+  #openPrompt .opa{display:flex;gap:6px;justify-content:center;align-items:center;font-size:12px;font-weight:700;margin-top:10px;color:var(--muted)}
+  #openPrompt .oplink{background:none;border:none;color:#6a5acd;font-weight:800;font-size:12px;margin-top:4px;cursor:pointer;text-decoration:underline}
+  @keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+  @keyframes pulseBtn{50%{transform:scale(1.06)}}
   #zoomCtl{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:4}
   #zoomCtl button{width:40px;height:40px;border-radius:12px;border:3px solid #2b2340;background:#fff;color:#2b2340;font-size:22px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 3px 0 #2b2340}
   #zoomCtl button:active{transform:translateY(2px);box-shadow:0 1px 0 #2b2340}
@@ -130,7 +140,9 @@
   #helperPic{width:72px;height:104px;flex:none;display:flex;align-items:flex-end;justify-content:center;font-size:54px}
   #helperPic img{width:72px;height:104px;object-fit:contain}
   #helperBubble{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:10px 12px;font-weight:700;font-size:14px;box-shadow:0 6px 0 rgba(43,35,64,.25);pointer-events:auto;position:relative}
-  #helperBubble button{display:block;margin-top:8px;border:none;background:var(--mint);border-radius:10px;padding:5px 10px;font-weight:800;cursor:pointer}
+  #helperBubble .hb{display:flex;gap:6px;margin-top:8px}
+  #helperBubble #helperGo{background:#ffc94d}
+  #helperBubble button{display:block;border:none;background:var(--mint);border-radius:10px;padding:5px 10px;font-weight:800;cursor:pointer}
   #helperArrow{position:fixed;z-index:8;font-size:34px;pointer-events:none;display:none;animation:bob 0.8s ease-in-out infinite alternate;filter:drop-shadow(0 3px 0 rgba(43,35,64,.4))}
   @keyframes bob{from{transform:translate(-50%,0)}to{transform:translate(-50%,-10px)}}
   #toasts{position:absolute;left:50%;top:56px;transform:translateX(-50%);display:flex;flex-direction:column;gap:6px;align-items:center;z-index:7;pointer-events:none}
@@ -171,6 +183,7 @@
     <div id="hint"><span id="hintText"></span><button id="hintCancel">Done</button></div>
     <div id="goalsBox"></div>
     <div id="zoomCtl"><button onclick="setZoom((ui.zoom||1)*1.25)" title="Zoom in">+</button><button onclick="setZoom((ui.zoom||1)/1.25)" title="Zoom out">−</button><button id="zoomReset" onclick="resetZoom()" title="Fit hotel" style="visibility:hidden">⤢</button></div>
+    <div id="openPrompt"><div class="op"><div class="opt">🛎️ Your hotel is closed</div><div class="ops" id="opSub">Open the doors and guests will start arriving.</div><button class="btn big" id="opGo">Open</button><label class="opa"><input type="checkbox" id="opAuto"> Reopen automatically</label><button class="oplink" id="opMore">More opening times</button></div></div>
     <div id="marks"></div>
     <div id="dropZones"><div class="zone" id="zoneStore"><span class="e">📦</span>Storage</div><div class="zone sell" id="zoneSell"><span class="e">🪙</span><span id="zoneSellTxt">Sell</span></div></div>
     <div id="panel"></div>
@@ -184,7 +197,7 @@
       <button class="dbtn mid" id="btnExpand" title="Expand"><span class="ic" data-art="ui/expand"><svg viewBox="0 0 48 48" width="32" height="32"><rect x="12" y="12" width="24" height="24" rx="3" fill="#ffb38a" stroke="#2b2340" stroke-width="3"/><path d="M4 12V4h8M44 12V4h-8M4 36v8h8M44 36v8h-8" fill="none" stroke="#2b2340" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dlab">Expand</span></button>
       <button class="dbtn big" id="btnBuild" title="Build"><span class="ic" data-art="ui/build"><svg viewBox="0 0 48 48" width="40" height="40"><g transform="rotate(-40 24 24)"><rect x="21" y="16" width="7" height="30" rx="3" fill="#c8915f" stroke="#2b2340" stroke-width="3"/><path d="M9 8h26a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4z" fill="#b8bec8" stroke="#2b2340" stroke-width="3"/><rect x="9" y="11" width="8" height="8" rx="2" fill="#dfe3ea"/></g></svg></span><span class="dlab">Build</span></button>
     </div>
-    <div id="helper"><div id="helperPic"></div><div id="helperBubble"><span id="helperText"></span><button id="helperOk">OK</button></div></div>
+    <div id="helper"><div id="helperPic"></div><div id="helperBubble"><span id="helperText"></span><div class="hb"><button id="helperGo" style="display:none"></button><button id="helperOk">OK</button></div></div></div>
   </div>
 </div>
 <div id="modal"><div class="card" id="modalCard"></div></div>
@@ -202,7 +215,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.34';
+const BUILD = '0.35';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -727,11 +740,12 @@ function updateGuests(dt){
           addXP(Math.round(def.xp * gt.xp));
           S.served++; bumpWeek(); if(g.type==='vip') S.vipServed = true;
           r.guest = null; r.dirty = true;
+          if(Math.random() < 0.18 + 0.25*decorPct(r)) r.tip = (r.tip||0) + Math.max(5, Math.round(pay*0.4));   // a happy guest left a tip: tap the coin to collect
           let happy = 0.6 + 0.4*decorPct(r);
           if(g.want){
             const a = amenityFor(g.want);
             if(a){ a.users=(a.users||0)+1; g.state='inAmen'; g.amen=a.id; g.timer=ROOMS[a.type].use; g.slot=a.users-1; happy=Math.min(1,happy+0.3); }
-            else happy *= 0.75;
+            else { happy *= 0.75; if(count(g.want)===0){ S.missed = S.missed||{}; S.missed[g.want] = (S.missed[g.want]||0)+1; } }
           }
           S.sat = S.sat*0.9 + happy*0.1;
           if(g.inspector) toast(`🎩 A hotel inspector loved their stay! Bonus 🪙${pay}`);
@@ -781,8 +795,12 @@ function frame(now){
   const sdt = dt * gameSpeed();   // hotel time runs at the chosen speed
   if(isOpen()){
     spawnTimer -= sdt;
-    if(spawnTimer<=0){ spawnGuest(); spawnTimer = spawnInterval() * (0.7+Math.random()*0.6); }
+    if(spawnTimer<=0){ spawnGuest(); spawnTimer = spawnInterval() * (ui.busT>0 ? 0.25 : 0.7+Math.random()*0.6); }
+    // 🚌 now and then a tour bus brings a rush of guests
+    ui.busCd = (ui.busCd===undefined ? 150 : ui.busCd) - sdt;
+    if(ui.busCd <= 0 && guestRoomCount() >= 3){ ui.busCd = 200 + Math.random()*160; ui.busT = 25; toast('🚌 A tour bus just arrived! Lots of guests for a short while'); spawnTimer = 0.3; }
   }
+  if(ui.busT > 0) ui.busT -= sdt;
   updateGuests(sdt); updateCleaning(sdt);
   for(const r of S.rooms){ if(r.anim){ r.anim.t+=dt; if(r.anim.t>0.2) r.anim=null; } if(r.pulse>0) r.pulse-=dt; }
   doorsOpen = Math.max(0, doorsOpen - sdt);
@@ -970,6 +988,8 @@ function drawRoom(r, covered){
   }
   edge(x,y,w,h);   // same frame on every room, drawn over the art so none look borderless
   ctx.font='bold 10px system-ui'; ctx.textAlign='left'; ctx.textBaseline='middle';
+  if(r.tip){ const by = y + 22 + Math.sin(time*4 + r.id)*3, bx = x + w - 18;   // tip coin waiting to be tapped
+    if(!sprite('ui/coin', bx-10, by-10, 20, 20)){ ctx.fillStyle='#ffc94d'; ctx.strokeStyle='#2b2340'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(bx, by, 9, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.lineWidth=1; ctx.fillStyle='#2b2340'; ctx.font='bold 10px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('$', bx, by+1); } }
   const label = roomLabel(r);
   { const tw = ctx.measureText(label).width; ctx.fillStyle='rgba(255,253,248,.85)'; rr(x+3, y+7, tw+8, 14, 6); ctx.fill(); }
   ctx.fillStyle = '#2b2340'; ctx.fillText(label, x+7, y+14);
@@ -1365,6 +1385,7 @@ function endDrag(ev, cancelled){
 }
 function tapRoom(r, focused){
   const def = ROOMS[r.type];
+  if(r.tip){ const q = roomRect(r); addCoins(r.tip, q.x+q.w-18, q.y+24, '💰+🪙'); r.tip = 0; save(); return; }
   if(r.dirty && !r.guest && !(r.users>0)){ r.dirty=false; r.cleanT=0; addXP(1); const q=roomRect(r); floats.push({x:q.x+q.w/2,y:q.y+30,t:0,text:'✨'}); return; }
   if(def.kind==='guest' && r.guest){ poke(r); return; }
   if(focused) return;
@@ -1736,6 +1757,26 @@ function openShift(){
   for(const sh of SHIFTS){ const c = shiftCost(sh); html += `<div class="item"><div class="info"><b>${sh.mins>=60?sh.mins/60+' hour'+(sh.mins>60?'s':''):sh.mins+' minutes'}</b></div><button class="btn" ${S.coins<c?'disabled':''} onclick="buyShift(${sh.mins},${c})">🪙${c}</button></div>`; }
   showPanel(html);
 }
+// the big "Open" card in the middle of the screen whenever the hotel is closed
+function promptShift(){ if(S.freeShift) return {mins:15, cost:0, free:true, label:'Open free for 15 min'}; const sh = SHIFTS[0], c = shiftCost(sh); return {mins:sh.mins, cost:c, free:false, label:`Open ${sh.mins} min · 🪙${c}`}; }
+let promptKey = '';
+function updateOpenPrompt(){
+  const el = $('openPrompt');
+  const show = !isOpen() && S.name && S.rooms.some(r=>ROOMS[r.type].kind==='guest') && panel.style.display!=='block' && $('modal').style.display!=='flex' && !ui.focus && !ui.drag && !ui.newDrag;
+  el.classList.toggle('show', !!show); if(!show) return;
+  const p = promptShift(), key = p.label + S.coins + (S.autoOpen?1:0);
+  if(key===promptKey) return; promptKey = key;
+  $('opGo').textContent = p.label; $('opGo').disabled = S.coins < p.cost;
+  $('opSub').textContent = S.coins < p.cost ? 'Not enough coins for a shift. Sell or decorate less, or wait for your staff earnings.' : S.served ? 'Guests are waiting outside. Open the doors!' : 'Open the doors and guests will start arriving.';
+  $('opAuto').checked = !!S.autoOpen;
+}
+$('opGo').onclick = ()=>{ const p = promptShift(); buyShift(p.mins, p.cost, p.free); promptKey=''; };
+$('opMore').onclick = ()=>openShift();
+$('opAuto').onchange = e=>{ S.autoOpen = e.target.checked; save(); toast(S.autoOpen ? '🔁 The hotel will reopen by itself when a shift ends' : 'Auto reopen is off'); };
+setInterval(()=>{ updateOpenPrompt();
+  // auto reopen: when a shift ends and the player chose it, buy the shortest shift again
+  if(S.autoOpen && !isOpen() && S.rooms.some(r=>ROOMS[r.type].kind==='guest')){ const p = promptShift(); if(S.coins >= p.cost){ buyShift(p.mins, p.cost, p.free); toast('🔁 Reopened automatically'); } }
+}, 400);
 function buyShift(mins, cost, free){
   if(S.coins<cost) return;
   S.coins -= cost; if(free) S.freeShift=false;
@@ -1953,14 +1994,36 @@ function helperStep(){
   if(!S.boughtItem) return {id:'decor', text:'Tap a room to decorate it. Nicer rooms earn more and raise your stars!', target:null};
   return null;
 }
+/* bellhop tips after the tutorial: point out what the hotel is missing. "Later" hides a tip for a few minutes. */
+const nudgeMute = {};
+function nudgeStep(){
+  const muted = id => (nudgeMute[id]||0) > Date.now();
+  const gr = guestRoomCount(), dirty = S.rooms.filter(r=>r.dirty).length, cov = coverage();
+  if(count('closet') < 1 && (dirty >= 1 || gr >= 2) && !muted('n_closet'))
+    return {id:'n_closet', text:`🧺 ${dirty ? dirty+' room'+(dirty>1?'s are':' is')+' messy' : 'Rooms will get messy'} and you have no cleaners! Build a Linen Closet and it tidies rooms for you.`, go:'Build one', act:()=>{ openBuild('rooms'); jumpBuild('service'); }};
+  if(count('closet') >= 1 && cov.total > cov.cap && !muted('cover'))
+    return {id:'n_cover', text:`🧹 ${cov.total-cov.cap} rooms aren't covered by your cleaners. Build another Linen Closet, or tap messy rooms to clean them.`, go:'Build one', act:()=>{ openBuild('rooms'); jumpBuild('service'); }};
+  const missed = Object.entries(S.missed||{}).filter(([t,n])=>n>=3 && ROOMS[t] && count(t)===0 && ROOMS[t].lvl<=level()).sort((a,b)=>b[1]-a[1])[0];
+  if(missed && !muted('want_'+missed[0])){ const d = ROOMS[missed[0]];
+    return {id:'want_'+missed[0], text:`${d.icon} ${missed[1]} guests asked for a ${d.name} but you don't have one. Build it and they'll pay extra after their stay!`, go:'Build it', act:()=>{ S.missed[missed[0]] = 0; openBuild('rooms'); jumpBuild('amenity'); }}; }
+  const waiting = queue().length;
+  if(isOpen() && waiting >= Math.max(3, gr) && !muted('rooms'))
+    return {id:'n_rooms', text:`🛎️ ${waiting} guests are queuing for rooms. Build more guest rooms to earn more!`, go:'Build rooms', act:()=>{ openBuild('rooms'); jumpBuild('guest'); }};
+  const plain = S.rooms.find(r=>ROOMS[r.type].kind==='guest' && decorPct(r) < 0.3);
+  if(plain && S.served >= 15 && !muted('decor'))
+    return {id:'n_decor', text:`🛋️ The ${roomLabel(plain)} looks a bit bare. Add furniture: decorated rooms pay more and bring VIP guests.`, go:'Decorate', act:()=>focusRoom(plain)};
+  return null;
+}
 let helperShown = '';
 function updateHelper(){
   document.body.classList.toggle('panelOpen', panel.style.display==='block');
-  const st = helperStep(), h = $('helper'), arrow = $('helperArrow');
+  const st = helperStep() || (S.helperDone && !ui.focus && !(ui.drag||ui.newDrag||ui.itemDrag) ? nudgeStep() : null), h = $('helper'), arrow = $('helperArrow');
+  ui.helperNow = st;
   const modalOpen = $('modal').style.display==='flex';
-  if(!st || modalOpen || (st.id===S.helperSkip)){ h.style.display='none'; arrow.style.display='none'; helperShown=''; if(!st && !S.helperDone && S.rooms.length>1){ S.helperDone = true; save(); } return; }
+  if(!st || modalOpen || $('openPrompt').classList.contains('show') || (st.id===S.helperSkip)){ h.style.display='none'; arrow.style.display='none'; helperShown=''; if(!st && !S.helperDone && S.rooms.length>1){ S.helperDone = true; save(); } return; }
   if(helperShown !== st.id){
     helperShown = st.id; $('helperText').textContent = st.text;
+    $('helperGo').style.display = st.go ? 'block' : 'none'; $('helperGo').textContent = st.go || ''; $('helperOk').textContent = st.go ? 'Later' : 'OK';
     $('helperPic').innerHTML = art('chars/helper') ? `<img src="${art('chars/helper').src}">` : (art('chars/clerk') ? `<img src="${art('chars/clerk').src}">` : '🛎️');
   }
   h.style.display = panel.style.display==='block' && window.innerWidth<=640 ? 'none' : 'flex';
@@ -1968,7 +2031,8 @@ function updateHelper(){
   if(t && panel.style.display!=='block'){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
   else arrow.style.display='none';
 }
-$('helperOk').onclick = ()=>{ const st = helperStep(); if(st) S.helperSkip = st.id; save(); updateHelper(); };
+$('helperOk').onclick = ()=>{ const st = ui.helperNow; if(st && st.go){ nudgeMute[st.id] = Date.now() + 4*60000; } else { const t = helperStep(); if(t) S.helperSkip = t.id; save(); } helperShown=''; updateHelper(); };
+$('helperGo').onclick = ()=>{ const st = ui.helperNow; if(st && st.act){ nudgeMute[st.id] = Date.now() + 90000; st.act(); } helperShown=''; updateHelper(); };
 setInterval(updateHelper, 250);
 $('shiftBtn').onclick = openShift;
 function showSpeed(){ $('speedTxt').textContent = gameSpeed() + '×'; }
@@ -2005,8 +2069,26 @@ function openScenery(){
   showPanel(html + `</div>`, 'scenery');
 }
 function setScene(id){ S.scene = id; save(); openScenery(); }
+
+/* ---------------- daily bonus: come back each day, the reward grows for 7 days ---------------- */
+const DAILY_REWARDS = [150, 250, 400, 600, 800, 1200, 2000];
+function checkDaily(){
+  if(!S.name) return;
+  const d = new Date(), key = d.toDateString(), yest = new Date(d - 86400000).toDateString();
+  S.daily = S.daily || {last:'', streak:0};
+  if(S.daily.last === key) return;
+  const streak = S.daily.last === yest ? (S.daily.streak % 7) + 1 : 1;
+  const coins = Math.round(DAILY_REWARDS[streak-1] * (1 + 0.05*(level()-1)));
+  S.daily = {last:key, streak}; S.coins += coins; save();
+  const dots = DAILY_REWARDS.map((v,i)=>`<div style="flex:1;padding:6px 2px;border-radius:10px;font-size:11px;font-weight:800;background:${i<streak?'#ffc94d':'#f3ece2'};color:${i<streak?'#2b2340':'#9a8fa8'}">Day ${i+1}<br>${i===6?'🎁':'🪙'}</div>`).join('');
+  modal(`<h2 style="margin:0 0 6px">🎁 Daily bonus</h2><div class="sub">Day ${streak} in a row! Come back tomorrow for more.</div>
+    <div style="display:flex;gap:4px;margin:10px 0">${dots}</div>
+    <div style="font-size:26px;font-weight:900;margin:6px 0">+🪙${coins.toLocaleString()}</div>
+    <button class="btn" onclick="closeModal()">Collect</button>`);
+  burstConfetti && burstConfetti();
+}
 function swapIcons(){ lastTop=''; document.querySelectorAll('[data-art]').forEach(el=>{ const a = art(el.dataset.art); if(a) el.innerHTML = `<img src="${a.src}" alt="">`; }); }
-artReady.then(()=>{ swapIcons(); const l = document.getElementById('loading'); if(l){ l.classList.add('done'); setTimeout(()=>l.remove(), 500); } });
+artReady.then(()=>{ swapIcons(); setTimeout(()=>{ if($('modal').style.display!=='flex') checkDaily(); }, 1200); const l = document.getElementById('loading'); if(l){ l.classList.add('done'); setTimeout(()=>l.remove(), 500); } });
 setTimeout(swapIcons, 9000);
 setInterval(()=>{ $('btnBuild').classList.toggle('on', ui.panelKind==='build'); }, 200);
 window.addEventListener('resize', resize);
