@@ -76,6 +76,9 @@
   #visitBar .vb b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #visitBar .vb span{font-size:12px;color:var(--muted);font-weight:700}
   body.visiting #dock, body.visiting #hud, body.visiting #hudStars, body.visiting #goalsBox, body.visiting #speedBtn, body.visiting #helper, body.visiting #helperArrow, body.visiting #openPrompt, body.visiting #blockCount{display:none!important}
+  #tipsBtn{position:absolute;left:50%;bottom:104px;transform:translateX(-50%);display:none;z-index:6;border:3px solid var(--ink);background:#ffc94d;color:var(--ink);font-weight:900;font-size:15px;border-radius:999px;padding:9px 18px;cursor:pointer;box-shadow:0 4px 0 var(--ink);animation:pulseBtn 1.6s ease-in-out infinite}
+  #tipsBtn:active{transform:translateX(-50%) translateY(3px);box-shadow:0 1px 0 var(--ink)}
+  body.visiting #tipsBtn, body.panelOpen #tipsBtn{display:none!important}
   #zoomCtl{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:4}
   #zoomCtl button{width:40px;height:40px;border-radius:12px;border:3px solid #2b2340;background:#fff;color:#2b2340;font-size:22px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 3px 0 #2b2340}
   #zoomCtl button:active{transform:translateY(2px);box-shadow:0 1px 0 #2b2340}
@@ -193,6 +196,7 @@
     <div id="zoomCtl"><button onclick="setZoom((ui.zoom||1)*1.25)" title="Zoom in">+</button><button onclick="setZoom((ui.zoom||1)/1.25)" title="Zoom out">−</button><button id="zoomReset" onclick="resetZoom()" title="Fit hotel" style="visibility:hidden">⤢</button></div>
     <div id="openPrompt"><div class="op"><div class="opt">🛎️ Your hotel is closed</div><div class="ops" id="opSub">Open the doors and guests will start arriving.</div><button class="btn big" id="opGo">Open</button><label class="opa"><input type="checkbox" id="opAuto"> Reopen automatically</label><button class="oplink" id="opMore">More opening times</button></div></div>
     <div id="visitBar"><button class="btn alt" onclick="goHome()">← Back home</button><div class="vb"><b id="visitName"></b><span id="visitMeta"></span></div><button class="btn" id="visitLike" onclick="likeHotel()">❤️ Like</button></div>
+    <button id="tipsBtn" onclick="collectAllTips()">💰 Collect tips</button>
     <div id="marks"></div>
     <div id="dropZones"><div class="zone" id="zoneStore"><span class="e">📦</span>Storage</div><div class="zone sell" id="zoneSell"><span class="e">🪙</span><span id="zoneSellTxt">Sell</span></div></div>
     <div id="panel"></div>
@@ -225,7 +229,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.41';
+const BUILD = '0.42';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -532,12 +536,13 @@ function decorPoints(r){
 }
 // every piece of furniture adds coins to each guest's bill (matching sets add more), on top of the decor % bonus
 function decorCoins(r){
-  let c = 0; for(const it of (r.items||[])) c += ITEMS[it.id] ? ITEMS[it.id].decor * 0.3 : 0;
-  for(const b of collectionBonus(r)) c += b.bonus * 0.3;
+  let c = 0; for(const it of (r.items||[])) c += ITEMS[it.id] ? ITEMS[it.id].decor * 0.6 : 0;
+  for(const b of collectionBonus(r)) c += b.bonus * 0.6;
   if(r.style) c += 2*cellsOf(r);
   return Math.round(c);
 }
-const itemCoins = id => Math.max(1, Math.round((ITEMS[id] ? ITEMS[id].decor : 0) * 0.3));
+const itemCoins = id => Math.max(1, Math.round((ITEMS[id] ? ITEMS[id].decor : 0) * 0.6));
+const beautiful = r => ROOMS[r.type].kind!=='lobby' && decorPct(r) >= 1;   // fully decorated rooms earn 25% more and get tipped more
 function decorPct(r){
   const k = ROOMS[r.type].kind;
   if(k==='service') return 0;
@@ -757,13 +762,13 @@ function updateGuests(dt){
         if(!r){ g.state='leaveLift'; g.timer=0.6; break; }
         if(g.timer<=0){
           const def = ROOMS[r.type], gt = GUEST_TYPES[g.type];
-          const pay = Math.max(1, Math.round((def.pay * (0.6+0.9*decorPct(r)) + decorCoins(r)) * starMult() * gt.pay * (g.inspector?3:1)));
+          const pay = Math.max(1, Math.round((def.pay * (0.6+0.9*decorPct(r)) + decorCoins(r)) * (beautiful(r) ? 1.25 : 1) * starMult() * gt.pay * (g.inspector?3:1)));
           const rr2 = roomRect(r);
           addCoins(pay, rr2.x+rr2.w/2, rr2.y+20);
           addXP(Math.round(def.xp * gt.xp));
           S.served++; bumpWeek(); if(g.type==='vip') S.vipServed = true;
           r.guest = null; r.dirty = true;
-          if(Math.random() < 0.18 + 0.25*decorPct(r)) r.tip = (r.tip||0) + Math.max(5, Math.round(pay*0.4));   // a happy guest left a tip: tap the coin to collect
+          if(Math.random() < 0.18 + 0.25*decorPct(r) + (beautiful(r) ? 0.15 : 0)) r.tip = (r.tip||0) + Math.max(5, Math.round(pay*0.4));   // a happy guest left a tip: tap the coin to collect
           let happy = 0.6 + 0.4*decorPct(r);
           if(g.want){
             const a = amenityFor(g.want);
@@ -782,7 +787,7 @@ function updateGuests(dt){
         if(!a){ g.state='leaveLift'; g.timer=0.6; break; }
         if(g.timer<=0){
           const def = ROOMS[a.type], q = roomRect(a);
-          const pay = Math.max(1, Math.round((def.pay * (0.8+0.4*decorPct(a)) + decorCoins(a)) * starMult() * GUEST_TYPES[g.type].pay));
+          const pay = Math.max(1, Math.round((def.pay * (0.8+0.4*decorPct(a)) + decorCoins(a)) * (beautiful(a) ? 1.25 : 1) * starMult() * GUEST_TYPES[g.type].pay));
           addCoins(pay, q.x+q.w/2, q.y+20); addXP(def.xp);
           a.users = Math.max(0,(a.users||1)-1); a.uses = (a.uses||0)+1;
           if(a.uses % 3 === 0) a.dirty = true;
@@ -821,7 +826,7 @@ function frame(now){
     if(spawnTimer<=0){ spawnGuest(); spawnTimer = spawnInterval() * (ui.busT>0 ? 0.25 : 0.7+Math.random()*0.6); }
     // 🚌 now and then a tour bus brings a rush of guests
     ui.busCd = (ui.busCd===undefined ? 150 : ui.busCd) - sdt;
-    if(ui.busCd <= 0 && guestRoomCount() >= 3){ ui.busCd = 200 + Math.random()*160; ui.busT = 25; toast('🚌 A tour bus just arrived! Lots of guests for a short while'); spawnTimer = 0.3; }
+    if(ui.busCd <= 0 && guestRoomCount() >= 3 && !ui.visit){ ui.busCd = 200 + Math.random()*160; ui.busT = 25; toast('🚌 A tour bus just arrived! Lots of guests for a short while'); spawnTimer = 0.3; }
   }
   if(ui.busT > 0) ui.busT -= sdt;
   updateGuests(sdt); updateCleaning(sdt);
@@ -1018,7 +1023,7 @@ function drawRoom(r, covered){
   ctx.font='bold 10px system-ui'; ctx.textAlign='left'; ctx.textBaseline='middle';
   if(r.tip){ const by = y + 22 + Math.sin(time*4 + r.id)*3, bx = x + w - 18;   // tip coin waiting to be tapped
     if(!sprite('ui/coin', bx-10, by-10, 20, 20)){ ctx.fillStyle='#ffc94d'; ctx.strokeStyle='#2b2340'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(bx, by, 9, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.lineWidth=1; ctx.fillStyle='#2b2340'; ctx.font='bold 10px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('$', bx, by+1); } }
-  const label = roomLabel(r);
+  const label = roomLabel(r) + (beautiful(r) ? ' ✨' : '');
   { const tw = ctx.measureText(label).width; ctx.fillStyle='rgba(255,253,248,.85)'; rr(x+3, y+7, tw+8, 14, 6); ctx.fill(); }
   ctx.fillStyle = '#2b2340'; ctx.fillText(label, x+7, y+14);
   if(r.dirty){
@@ -1515,6 +1520,18 @@ function placeInvTo(id, r, wx){
   if(keep==='build' && keepTab==='storage') openStorage(); else if(!ui.placeInv) closePanel();
   return true;
 }
+function collectAllTips(){
+  let total = 0, n = 0;
+  for(const r of S.rooms){ if(r.tip){ const q = roomRect(r); total += r.tip; n++; floats.push({x:q.x+q.w-18, y:q.y+24, t:0, text:'+🪙'+r.tip}); r.tip = 0; } }
+  if(!n) return; S.coins += total; if(isOpen()) rateLog.push([time, total]); save(); lastTop = '';
+  toast(`💰 Collected ${n} tip${n>1?'s':''}: +🪙${total}`); updateTipsBtn();
+}
+function updateTipsBtn(){
+  const list = ui.visit ? [] : S.rooms.filter(r=>r.tip), b = $('tipsBtn');
+  if(list.length < 2){ b.style.display = 'none'; return; }
+  b.style.display = 'block'; b.textContent = `💰 Collect ${list.length} tips · 🪙${list.reduce((a,r)=>a+r.tip,0)}`;
+}
+setInterval(updateTipsBtn, 500);
 function startPlaceInv(id){
   ui.placeInv = id; closePanel(); setMode('placeInv'); ui.placeInv = id;
   setHint(`Tap a room to put the ${ITEMS[id].name} in`);
@@ -1699,7 +1716,7 @@ function openRoom(r){
   if(def.kind==='guest' || def.kind==='amenity' || def.kind==='lobby'){
     const pct = decorPct(r), lv = level();
     let html = `<h2>${def.icon||''} ${def.name}</h2>`;
-    if(def.kind==='guest') html += `<div class="sub">Decor ${Math.round(pct*100)}% (${decorPoints(r)}/${decorCapacity(r)} points). Guests pay ${Math.round((0.6+0.9*pct)*100)}% of the base price <b>plus 🪙${decorCoins(r)} for the furniture</b>. VIP guests need 70% or more.</div>`;
+    if(def.kind==='guest') html += `<div class="sub">Decor ${Math.round(pct*100)}% (${decorPoints(r)}/${decorCapacity(r)} points). Guests pay ${Math.round((0.6+0.9*pct)*100)}% of the base price <b>plus 🪙${decorCoins(r)} for the furniture</b>${beautiful(r) ? ' · ✨ <b>Beautiful room: +25% and more tips</b>' : ' · reach 100% decor for ✨ +25% pay'}. VIP guests need 70% or more.</div>`;
     else if(def.kind==='amenity') html += `<div class="sub">Decor ${Math.round(pct*100)}%. Guests who want ${def.name} (${def.icon} bubble) visit after their stay and pay ~🪙${def.pay}, more when it's nicely decorated, plus 🪙${decorCoins(r)} for the furniture. Holds ${def.slots} guests.</div>`;
     else html += `<div class="sub">Decor ${Math.round(pct*100)}%. A beautiful lobby raises your star rating.</div>`;
     html += `<div class="meter"><i style="width:${pct*100}%"></i></div>`;
@@ -2009,10 +2026,10 @@ async function visitHotel(uid){
   let h; try{ h = JSON.parse(d.json); }catch(e){ toast('That hotel could not be loaded'); return; }
   if(!ui.visit){ save(); ui.home = S; ui.homeGuests = guests; }
   const st = freshState();
-  Object.assign(st, {name:h.name, xp:h.xp||0, served:h.served||0, plot:Math.min(h.plot||0, BLOCK_TIERS.length-1), scene:h.scene||null, shiftEnd:0, freeShift:false, helperDone:true, seenLevel:999,
+  Object.assign(st, {name:h.name, xp:h.xp||0, served:h.served||0, plot:Math.min(h.plot||0, BLOCK_TIERS.length-1), scene:h.scene||null, shiftEnd:Date.now()+864e5, freeShift:false, helperDone:true, seenLevel:999,
     rooms:(h.rooms||[]).filter(r=>ROOMS[r.type]).map((r,i)=>Object.assign(mkRoom(i+1, r.type, r.f, r.c, 0), {wall:r.wall, floor:r.floor, wallColor:r.wallColor||WALL_COLORS[0], style:r.style||null,
       items:(r.items||[]).filter(it=>ITEMS[it.id]).map(it=>Object.assign(mkItem(it.id, it.x), {y:it.y||0}))}))});
-  ui.visit = {uid, name:h.name}; S = st; guests = []; closePanel(); closeModal(); resetZoom(); lastTop = '';
+  ui.visit = {uid, name:h.name}; S = st; guests = []; spawnTimer = 0.5; closePanel(); closeModal(); resetZoom(); lastTop = '';
   document.body.classList.add('visiting');
   $('visitName').textContent = h.name; $('visitMeta').textContent = `Level ${level()} · ${'★'.repeat(Math.floor(stars()))} · ${st.rooms.length} rooms`;
   $('visitLike').textContent = '❤️ Like'; $('visitLike').disabled = !FB.user;
