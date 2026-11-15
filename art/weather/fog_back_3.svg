@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <g stroke="none" stroke-linecap="round" stroke-linejoin="round">
+    <defs>
+      <radialGradient id="mist">
+        <stop offset="0" stop-color="#fff8ef" stop-opacity="0.18" />
+        <stop offset="0.6" stop-color="#fff8ef" stop-opacity="0.1" />
+        <stop offset="1" stop-color="#fff8ef" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <ellipse cx="169.053" cy="474.0" rx="330" ry="46" fill="url(#mist)" />
+    <ellipse cx="541.165" cy="500.083" rx="370" ry="42" fill="url(#mist)" />
+    <ellipse cx="895.439" cy="467.009" rx="290" ry="49" fill="url(#mist)" />
+  </g>
+</svg>

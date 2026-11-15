@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <g stroke="none" stroke-linecap="round" stroke-linejoin="round">
+    <g opacity="0.4">
+      <g transform="translate(146.000 180.000) scale(1.2)">
+        <path d="M-65 14q-12-21 12-26 6-24 27-18 20-23 40-5 28-8 36 15 26-1 28 21 18 9 4 20H-61Z" fill="#b99dbd" />
+      </g>
+    </g>
+    <g opacity="0.4">
+      <g transform="translate(811.843 242.000) scale(1.4)">
+        <path d="M-65 14q-12-21 12-26 6-24 27-18 20-23 40-5 28-8 36 15 26-1 28 21 18 9 4 20H-61Z" fill="#b99dbd" />
+      </g>
+    </g>
+    <circle cx="35" cy="420" r="23" fill="#ffe6a1" opacity="0.0462" />
+    <rect x="29" y="412" width="12" height="17" rx="3" fill="#ffe6a1" opacity="0.3300" />
+    <circle cx="155" cy="446" r="23" fill="#ffe6a1" opacity="0.0000" />
+    <rect x="149" y="438" width="12" height="17" rx="3" fill="#ffe6a1" opacity="0.0000" />
+    <circle cx="799" cy="446" r="23" fill="#ffe6a1" opacity="0.0462" />
+    <rect x="793" y="438" width="12" height="17" rx="3" fill="#ffe6a1" opacity="0.3300" />
+    <circle cx="927" cy="421" r="23" fill="#ffe6a1" opacity="0.0924" />
+    <rect x="921" y="413" width="12" height="17" rx="3" fill="#ffe6a1" opacity="0.6600" />
+    <path d="M212 140.5l0.75 1.75 1.75 0.75-1.75 0.75-0.75 1.75-0.75-1.75-1.75-0.75 1.75-0.75Z" fill="#fff8ef" opacity="0.1800" />
+    <path d="M750 165.5l0.75 1.75 1.75 0.75-1.75 0.75-0.75 1.75-0.75-1.75-1.75-0.75 1.75-0.75Z" fill="#fff8ef" opacity="0.2810" />
+    <path d="M868 121.5l0.75 1.75 1.75 0.75-1.75 0.75-0.75 1.75-0.75-1.75-1.75-0.75 1.75-0.75Z" fill="#fff8ef" opacity="0.2891" />
+  </g>
+</svg>

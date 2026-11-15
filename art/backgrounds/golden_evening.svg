@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <g stroke="none" stroke-linecap="round" stroke-linejoin="round">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffab95" />
+        <stop offset="1" stop-color="#ffe6b6" />
+      </linearGradient>
+    </defs>
+    <path d="M0 0h960v540H0Z" fill="url(#sky)" />
+    <circle cx="116" cy="302" r="50" fill="#ffd58b" />
+    <path d="M0 446q205-87 398-12t562-14v120H0Z" fill="#baadca" />
+    <rect x="0" y="444" width="54" height="96" rx="2" fill="#9587a8" />
+    <path d="M-3 444l30.0 -16 30.0 16Z" fill="#847592" />
+    <rect x="58" y="468" width="57" height="72" rx="2" fill="#9587a8" />
+    <path d="M55 468l31.5 -16 31.5 16Z" fill="#847592" />
+    <rect x="119" y="423" width="48" height="117" rx="2" fill="#9587a8" />
+    <path d="M116 423l27.0 -16 27.0 16Z" fill="#847592" />
+    <rect x="171" y="458" width="54" height="82" rx="2" fill="#9587a8" />
+    <path d="M168 458l30.0 -16 30.0 16Z" fill="#847592" />
+    <rect x="739" y="454" width="52" height="86" rx="2" fill="#9587a8" />
+    <path d="M736 454l29.0 -16 29.0 16Z" fill="#847592" />
+    <rect x="795" y="421" width="49" height="119" rx="2" fill="#9587a8" />
+    <path d="M792 421l27.5 -16 27.5 16Z" fill="#847592" />
+    <rect x="848" y="459" width="51" height="81" rx="2" fill="#9587a8" />
+    <path d="M845 459l28.5 -16 28.5 16Z" fill="#847592" />
+    <rect x="903" y="436" width="57" height="104" rx="2" fill="#9587a8" />
+    <path d="M900 436l31.5 -16 31.5 16Z" fill="#847592" />
+    <path d="M35 492v-75" fill="none" stroke="#655474" stroke-width="4" stroke-linecap="round" opacity="1.0000" />
+    <rect x="25" y="408" width="20" height="24" rx="5" fill="#9f8b9e" />
+    <path d="M20 408l15-9 15 9Z" fill="#655474" />
+    <rect x="23" y="490" width="24" height="5" rx="2" fill="#655474" />
+    <path d="M155 518v-75" fill="none" stroke="#655474" stroke-width="4" stroke-linecap="round" opacity="1.0000" />
+    <rect x="145" y="434" width="20" height="24" rx="5" fill="#9f8b9e" />
+    <path d="M140 434l15-9 15 9Z" fill="#655474" />
+    <rect x="143" y="516" width="24" height="5" rx="2" fill="#655474" />
+    <path d="M799 518v-75" fill="none" stroke="#655474" stroke-width="4" stroke-linecap="round" opacity="1.0000" />
+    <rect x="789" y="434" width="20" height="24" rx="5" fill="#9f8b9e" />
+    <path d="M784 434l15-9 15 9Z" fill="#655474" />
+    <rect x="787" y="516" width="24" height="5" rx="2" fill="#655474" />
+    <path d="M927 493v-75" fill="none" stroke="#655474" stroke-width="4" stroke-linecap="round" opacity="1.0000" />
+    <rect x="917" y="409" width="20" height="24" rx="5" fill="#9f8b9e" />
+    <path d="M912 409l15-9 15 9Z" fill="#655474" />
+    <rect x="915" y="491" width="24" height="5" rx="2" fill="#655474" />
+  </g>
+</svg>

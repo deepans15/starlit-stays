@@ -1,4 +1,3 @@
-// Scenery assets for the art preview and game-code integration.
 window.STARLIT_BACKGROUNDS = [
   {
     "id": "cloud_day",
@@ -20,7 +19,8 @@ window.STARLIT_BACKGROUNDS = [
     ],
     "width": 960,
     "height": 540,
-    "fps": 4
+    "fps": 4,
+    "time": "day"
   },
   {
     "id": "sunset_lanterns",
@@ -42,7 +42,8 @@ window.STARLIT_BACKGROUNDS = [
     ],
     "width": 960,
     "height": 540,
-    "fps": 4
+    "fps": 4,
+    "time": "evening"
   },
   {
     "id": "starlit_night",
@@ -64,7 +65,8 @@ window.STARLIT_BACKGROUNDS = [
     ],
     "width": 960,
     "height": 540,
-    "fps": 4
+    "fps": 4,
+    "time": "night"
   },
   {
     "id": "aurora",
@@ -86,7 +88,8 @@ window.STARLIT_BACKGROUNDS = [
     ],
     "width": 960,
     "height": 540,
-    "fps": 4
+    "fps": 4,
+    "time": "night"
   },
   {
     "id": "petal_garden",
@@ -108,6 +111,99 @@ window.STARLIT_BACKGROUNDS = [
     ],
     "width": 960,
     "height": 540,
-    "fps": 4
+    "fps": 4,
+    "time": "morning"
+  },
+  {
+    "id": "sunrise_meadow",
+    "name": "Sunrise Meadow",
+    "base": "backgrounds/sunrise_meadow",
+    "frames": [
+      "backgrounds/sunrise_meadow_fx_1",
+      "backgrounds/sunrise_meadow_fx_2",
+      "backgrounds/sunrise_meadow_fx_3",
+      "backgrounds/sunrise_meadow_fx_4",
+      "backgrounds/sunrise_meadow_fx_5",
+      "backgrounds/sunrise_meadow_fx_6",
+      "backgrounds/sunrise_meadow_fx_7",
+      "backgrounds/sunrise_meadow_fx_8",
+      "backgrounds/sunrise_meadow_fx_9",
+      "backgrounds/sunrise_meadow_fx_10",
+      "backgrounds/sunrise_meadow_fx_11",
+      "backgrounds/sunrise_meadow_fx_12"
+    ],
+    "width": 960,
+    "height": 540,
+    "fps": 4,
+    "time": "morning"
+  },
+  {
+    "id": "sunny_skyline",
+    "name": "Sunny Skyline",
+    "base": "backgrounds/sunny_skyline",
+    "frames": [
+      "backgrounds/sunny_skyline_fx_1",
+      "backgrounds/sunny_skyline_fx_2",
+      "backgrounds/sunny_skyline_fx_3",
+      "backgrounds/sunny_skyline_fx_4",
+      "backgrounds/sunny_skyline_fx_5",
+      "backgrounds/sunny_skyline_fx_6",
+      "backgrounds/sunny_skyline_fx_7",
+      "backgrounds/sunny_skyline_fx_8",
+      "backgrounds/sunny_skyline_fx_9",
+      "backgrounds/sunny_skyline_fx_10",
+      "backgrounds/sunny_skyline_fx_11",
+      "backgrounds/sunny_skyline_fx_12"
+    ],
+    "width": 960,
+    "height": 540,
+    "fps": 4,
+    "time": "day"
+  },
+  {
+    "id": "golden_evening",
+    "name": "Golden Evening",
+    "base": "backgrounds/golden_evening",
+    "frames": [
+      "backgrounds/golden_evening_fx_1",
+      "backgrounds/golden_evening_fx_2",
+      "backgrounds/golden_evening_fx_3",
+      "backgrounds/golden_evening_fx_4",
+      "backgrounds/golden_evening_fx_5",
+      "backgrounds/golden_evening_fx_6",
+      "backgrounds/golden_evening_fx_7",
+      "backgrounds/golden_evening_fx_8",
+      "backgrounds/golden_evening_fx_9",
+      "backgrounds/golden_evening_fx_10",
+      "backgrounds/golden_evening_fx_11",
+      "backgrounds/golden_evening_fx_12"
+    ],
+    "width": 960,
+    "height": 540,
+    "fps": 4,
+    "time": "evening"
+  },
+  {
+    "id": "moonlit_rooftops",
+    "name": "Moonlit Rooftops",
+    "base": "backgrounds/moonlit_rooftops",
+    "frames": [
+      "backgrounds/moonlit_rooftops_fx_1",
+      "backgrounds/moonlit_rooftops_fx_2",
+      "backgrounds/moonlit_rooftops_fx_3",
+      "backgrounds/moonlit_rooftops_fx_4",
+      "backgrounds/moonlit_rooftops_fx_5",
+      "backgrounds/moonlit_rooftops_fx_6",
+      "backgrounds/moonlit_rooftops_fx_7",
+      "backgrounds/moonlit_rooftops_fx_8",
+      "backgrounds/moonlit_rooftops_fx_9",
+      "backgrounds/moonlit_rooftops_fx_10",
+      "backgrounds/moonlit_rooftops_fx_11",
+      "backgrounds/moonlit_rooftops_fx_12"
+    ],
+    "width": 960,
+    "height": 540,
+    "fps": 4,
+    "time": "night"
   }
 ];

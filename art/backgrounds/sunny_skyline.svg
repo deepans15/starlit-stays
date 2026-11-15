@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <g stroke="none" stroke-linecap="round" stroke-linejoin="round">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7ec8ff" />
+        <stop offset="1" stop-color="#e4f8ff" />
+      </linearGradient>
+    </defs>
+    <path d="M0 0h960v540H0Z" fill="url(#sky)" />
+    <circle cx="831" cy="164" r="37" fill="#ffdc85" />
+    <path d="M0 460q213-72 419-8t541-19v107H0Z" fill="#b9dfd5" />
+    <rect x="0" y="444" width="54" height="96" rx="2" fill="#adcbd4" />
+    <path d="M-3 444l30.0 -16 30.0 16Z" fill="#93b8c5" />
+    <rect x="58" y="468" width="57" height="72" rx="2" fill="#adcbd4" />
+    <path d="M55 468l31.5 -16 31.5 16Z" fill="#93b8c5" />
+    <rect x="119" y="423" width="48" height="117" rx="2" fill="#adcbd4" />
+    <path d="M116 423l27.0 -16 27.0 16Z" fill="#93b8c5" />
+    <rect x="171" y="458" width="54" height="82" rx="2" fill="#adcbd4" />
+    <path d="M168 458l30.0 -16 30.0 16Z" fill="#93b8c5" />
+    <rect x="739" y="454" width="52" height="86" rx="2" fill="#adcbd4" />
+    <path d="M736 454l29.0 -16 29.0 16Z" fill="#93b8c5" />
+    <rect x="795" y="421" width="49" height="119" rx="2" fill="#adcbd4" />
+    <path d="M792 421l27.5 -16 27.5 16Z" fill="#93b8c5" />
+    <rect x="848" y="459" width="51" height="81" rx="2" fill="#adcbd4" />
+    <path d="M845 459l28.5 -16 28.5 16Z" fill="#93b8c5" />
+    <rect x="903" y="436" width="57" height="104" rx="2" fill="#adcbd4" />
+    <path d="M900 436l31.5 -16 31.5 16Z" fill="#93b8c5" />
+  </g>
+</svg>

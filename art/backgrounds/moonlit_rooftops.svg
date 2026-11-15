@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <g stroke="none" stroke-linecap="round" stroke-linejoin="round">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#233357" />
+        <stop offset="1" stop-color="#5b6b91" />
+      </linearGradient>
+    </defs>
+    <path d="M0 0h960v540H0Z" fill="url(#sky)" />
+    <circle cx="832" cy="146" r="43" fill="#fff0c8" />
+    <ellipse cx="818" cy="138" rx="8" ry="6" fill="#f3e1b5" opacity="0.35" />
+    <ellipse cx="845" cy="161" rx="6" ry="4" fill="#f3e1b5" opacity="0.3" />
+    <path d="M0 448q185-65 360-8t600-7v107H0Z" fill="#596381" />
+    <rect x="0" y="444" width="54" height="96" rx="2" fill="#404b6d" />
+    <path d="M-3 444l30.0 -16 30.0 16Z" fill="#303e60" />
+    <rect x="12" y="458" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="34" y="458" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="12" y="482" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="34" y="482" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="58" y="468" width="57" height="72" rx="2" fill="#404b6d" />
+    <path d="M55 468l31.5 -16 31.5 16Z" fill="#303e60" />
+    <rect x="70" y="482" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="95" y="482" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="70" y="506" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="95" y="506" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="119" y="423" width="48" height="117" rx="2" fill="#404b6d" />
+    <path d="M116 423l27.0 -16 27.0 16Z" fill="#303e60" />
+    <rect x="131" y="437" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="147" y="437" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="131" y="461" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="147" y="461" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="171" y="458" width="54" height="82" rx="2" fill="#404b6d" />
+    <path d="M168 458l30.0 -16 30.0 16Z" fill="#303e60" />
+    <rect x="183" y="472" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="205" y="472" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="183" y="496" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="205" y="496" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="739" y="454" width="52" height="86" rx="2" fill="#404b6d" />
+    <path d="M736 454l29.0 -16 29.0 16Z" fill="#303e60" />
+    <rect x="751" y="468" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="771" y="468" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="751" y="492" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="771" y="492" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="795" y="421" width="49" height="119" rx="2" fill="#404b6d" />
+    <path d="M792 421l27.5 -16 27.5 16Z" fill="#303e60" />
+    <rect x="807" y="435" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="824" y="435" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="807" y="459" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="824" y="459" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="848" y="459" width="51" height="81" rx="2" fill="#404b6d" />
+    <path d="M845 459l28.5 -16 28.5 16Z" fill="#303e60" />
+    <rect x="860" y="473" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="879" y="473" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="860" y="497" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="879" y="497" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="903" y="436" width="57" height="104" rx="2" fill="#404b6d" />
+    <path d="M900 436l31.5 -16 31.5 16Z" fill="#303e60" />
+    <rect x="915" y="450" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="940" y="450" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="915" y="474" width="7" height="10" rx="1" fill="#8b8b9c" />
+    <rect x="940" y="474" width="7" height="10" rx="1" fill="#8b8b9c" />
+  </g>
+</svg>

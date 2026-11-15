@@ -82,7 +82,7 @@
   #dropZones .zone.sell{background:rgba(214,51,79,.82)}
   #dropZones .zone.hot{transform:scale(1.12);background:#3fae8c;border-style:solid}
   #dropZones .zone.sell.hot{background:#ff5d78}
-  #marks{position:absolute;display:none;flex-direction:column;gap:6px;z-index:5}
+  #marks{position:absolute;display:none;flex-direction:column;gap:6px;z-index:8}
   #marks button{border:3px solid var(--line);border-right:none;background:#f3ece2;border-radius:14px 0 0 14px;width:64px;padding:8px 2px;font-weight:800;font-size:10.5px;cursor:pointer;color:#7a6e86;line-height:1.15;text-align:center;box-shadow:-4px 4px 10px rgba(0,0,0,.18);transition:transform .12s,background .12s,width .12s}
   #marks button .e{display:block;font-size:19px;margin-bottom:2px}
   #marks button.on{background:var(--panel);color:var(--ink);width:72px;transform:translateX(-8px);border-color:var(--line)}
@@ -206,6 +206,7 @@
 <script src="art/manifest.js"></script>
 <script src="art/items.js"></script>
 <script src="art/backgrounds.js"></script>
+<script src="art/weather.js" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -215,7 +216,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.35';
+const BUILD = '0.36';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -885,6 +886,7 @@ function draw(dt){
   ctx.fillStyle = night ? '#2a2d5e' : 'rgba(120,150,200,.35)';
   for(let i=0;i<14;i++){ const bw=60+((i*37)%50), bh=80+((i*53)%160); ctx.fillRect(i*W/12 - 20, H-bh-SIDEWALK*s, bw, bh); }
   }
+  weatherLayer('back', W, H);
 
   ctx.setTransform(dpr*s,0,0,dpr*s,dpr*ox,dpr*oy);
   const p = plot(), gy = groundY(), bb = buildBounds(0);
@@ -932,6 +934,7 @@ function draw(dt){
   ctx.globalAlpha = 1;
   // confetti in screen space
   ctx.setTransform(dpr,0,0,dpr,0,0);
+  weatherLayer('front', W, H);
   for(const p2 of confetti){ ctx.save(); ctx.translate(p2.x,p2.y); ctx.rotate(p2.r); ctx.globalAlpha=Math.max(0,1-p2.t/3); ctx.fillStyle=p2.c; ctx.fillRect(-4,-2,8,4); ctx.restore(); }
   ctx.globalAlpha=1;
 }
@@ -1214,9 +1217,17 @@ function firstFreeSpot(type){
   for(let f=0; f+h<=p.h; f++) for(let c=0; c+def.w<=p.w; c++) if(canPlace(type,f,c)) return {f,c};
   return null;
 }
+function outOfBlocks(type){
+  const d = ROOMS[type], need = d.w*hOf(type), next = BLOCK_TIERS[S.plot+1], lv = level();
+  let body, btns;
+  if(!next){ body = `Your hotel is at its biggest size. Sell or store a room to make space.`; btns = `<button class="btn" onclick="closeModal();openBuild('sell')">Sell a room</button>`; }
+  else if(next.lvl > lv){ body = `You need ${need} free blocks for the ${d.name} but you've used ${blocksUsed()} of ${blocksMax()}. The next expansion unlocks at level ${next.lvl}. Until then, sell or store a room to make space.`; btns = `<button class="btn alt" onclick="closeModal();openBuild('sell')">Sell a room</button><button class="btn" onclick="closeModal()">OK</button>`; }
+  else { body = `You need ${need} free block${need>1?'s':''} for the ${d.name} but you've used ${blocksUsed()} of ${blocksMax()}. Expand your land to ${next.blocks} blocks for 🪙${next.cost.toLocaleString()}.`; btns = `<button class="btn alt" onclick="closeModal()">Not now</button><button class="btn" onclick="closeModal();openExpand()">🧱 Expand</button>`; }
+  modal(`<h2 style="margin:0 0 6px">🧱 Out of blocks</h2><div class="sub">${body}</div><div style="display:flex;gap:10px;justify-content:center;margin-top:12px">${btns}</div>`);
+}
 function placeNewRoom(type, extra){
   const spot = firstFreeSpot(type);
-  if(!spot){ const need = ROOMS[type].w*hOf(type); toast(blocksUsed()+need > blocksMax() ? `Not enough blocks: ${blocksUsed()}/${blocksMax()} used. Expand to build more.` : `No spot for a ${ROOMS[type].name} right now. Try moving rooms around.`); return null; }
+  if(!spot){ const need = ROOMS[type].w*hOf(type); if(blocksUsed()+need > blocksMax()){ outOfBlocks(type); return null; } toast(blocksUsed()+need > blocksMax() ? `Not enough blocks: ${blocksUsed()}/${blocksMax()} used. Expand to build more.` : `No spot for a ${ROOMS[type].name} right now. Try moving rooms around.`); return null; }
   const r = Object.assign(mkRoom(S.nextId++, type, spot.f, spot.c, Math.floor(Math.random()*WALL_COLORS.length)), extra||{});
   r.pulse = 2.5; S.rooms.push(r); return r;
 }
@@ -1466,6 +1477,7 @@ function jumpBuild(id){ const el = document.getElementById('bsec-'+id); if(!el) 
 function placeMarks(){
   const m = $('marks'), show = panel.style.display==='block' && ui.panelKind==='build' && (ui.buildTab||'rooms')==='rooms' && !!panel.querySelector('.bsec');
   m.style.display = show ? 'flex' : 'none'; if(!show) return;
+  if(document.body.classList.contains('dragOut')) return;   // menu is tucked away; placed again when it comes back
   const st = $('stage').getBoundingClientRect(), pr = panel.getBoundingClientRect(), phone = pr.left - st.left < 60;
   m.classList.toggle('top', phone);
   if(phone){ m.style.left = (pr.left - st.left + 14)+'px'; m.style.width = (pr.width - 28)+'px'; m.style.right = ''; m.style.top = (pr.top - st.top - m.offsetHeight + 3)+'px'; }
@@ -1528,7 +1540,7 @@ function openBuild(tab){
   }
   html += `</div>`;
   showPanel(html, 'build');
-  placeMarks(); syncMarks();
+  placeMarks(); syncMarks(); setTimeout(placeMarks, 220);
 }
 /* ---------------- dragging new rooms out of the build menu ----------------
    Press a room card and drag it onto the hotel to drop it exactly there.
@@ -1579,7 +1591,7 @@ window.addEventListener('pointermove', ev=>{
 });
 window.addEventListener('pointerup', ev=>{
   const ni = ui.newItem;
-  if(ni){ ui.newItem = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut');
+  if(ni){ ui.newItem = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut'); setTimeout(placeMarks, 220);
     if(!ni.moved){ buyItemTo(ni.id, null); return; }
     if(!ni.over) return;   // dragged and let go back over the menu: nothing happens
     const r = roomAt({x:ni.px, y:ni.py});
@@ -1587,7 +1599,7 @@ window.addEventListener('pointerup', ev=>{
     if(!itemFits(r, ni.id)){ const it = ITEMS[ni.id]; toast(it.zone==='bed' && hasBed(r) ? 'That room already has a bed' : `${it.name} can't go in the ${roomLabel(r)}`); return; }
     buyItemTo(ni.id, r, ni.px); return; }
   const nd = ui.newDrag; if(!nd) return;
-  ui.newDrag = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut');
+  ui.newDrag = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut'); setTimeout(placeMarks, 220);
   const def = ROOMS[nd.type];
   if(nd.moved && nd.over){
     const t = newDragTarget(nd);
@@ -1599,6 +1611,7 @@ window.addEventListener('pointercancel', ()=>{ ui.newItem = null; document.body.
 function buyRoom(type, at, style){
   const def = ROOMS[type], cost = roomCost(type, style), bed = style && themeBed(type, style);
   if(def.lvl > level() || (bed && ITEMS[bed].lvl > level())) return;
+  if(blocksUsed() + def.w*hOf(type) > blocksMax()){ outOfBlocks(type); return; }
   if(S.coins < cost){ toast('Not enough coins'); return; }
   let r;
   if(at && canPlace(type, at.f, at.c)){
@@ -1916,7 +1929,7 @@ function openMenu(){
   const cv2 = coverage();
   showPanel(`<h2>Menu</h2>
     ${accountRow()}
-    <div class="item"><div class="info"><b>🌄 Scenery</b><div class="meta">${S.scene ? (SCENES.find(b=>b.id===S.scene)||{}).name||'Custom' : 'Classic city'}</div></div><button class="btn" onclick="openScenery()">Change</button></div>
+    <div class="item"><div class="info"><b>🌄 Scenery</b><div class="meta">${S.scene==='auto' ? 'Auto (follows the clock)' : S.scene ? (SCENES.find(b=>b.id===S.scene)||{}).name||'Custom' : 'Classic city'}</div></div><button class="btn" onclick="openScenery()">Change</button></div>
     <div class="item"><div class="info"><b>Guests served</b><div class="meta">${S.served}</div></div></div>
     <div class="item"><div class="info"><b>Guest happiness</b><div class="meta">${Math.round(S.sat*100)}%</div></div></div>
     <div class="item"><div class="info"><b>Cleaning coverage</b><div class="meta">${Math.min(cv2.cap,cv2.total)} of ${cv2.total} rooms</div></div></div>
@@ -2051,7 +2064,7 @@ const SCENE_LVL = {cloud_day:1, petal_garden:3, sunset_lanterns:5, starlit_night
 const sceneLvl = sc => SCENE_LVL[sc.id] || 1;
 const reduceMotion = (()=>{ try{ return matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; } })();
 function drawScene(W, H, groundScreenY){
-  const sc = S.scene && SCENES.find(b=>b.id===S.scene); if(!sc || !art(sc.base)) return false;
+  const sc = currentScene(); if(!sc || !art(sc.base)) return false;
   const bw = sc.width||960, bh = sc.height||540, gy = Math.max(H*0.5, Math.min(H, groundScreenY));
   const k = Math.max(W/bw, gy/bh), dw = bw*k, dh = bh*k, dx = (W-dw)/2, dy = gy - dh;
   ctx.drawImage(art(sc.base), dx, dy, dw, dh);
@@ -2059,15 +2072,54 @@ function drawScene(W, H, groundScreenY){
   if(!reduceMotion && sc.frames && sc.frames.length){ const f = sc.frames[Math.floor(time * (sc.fps||4)) % sc.frames.length]; if(art(f)) ctx.drawImage(art(f), dx, dy, dw, dh); }
   return true;
 }
+/* weather and time of day (art/weather.js from ChatGPT). Scenery "Auto" follows the real clock and changes the weather now and then. */
+const WEATHER = (window.STARLIT_WEATHER || []).filter(w=>w && w.id);
+function timeOfDay(){ const h = new Date().getHours() + new Date().getMinutes()/60; return h>=6 && h<10 ? 'morning' : h>=10 && h<17 ? 'day' : h>=17 && h<19.5 ? 'evening' : 'night'; }
+const weatherState = {id:'clear', until:0, fade:1};
+function currentScene(){
+  if(S.scene !== 'auto') return S.scene && SCENES.find(b=>b.id===S.scene);
+  const t = timeOfDay(), list = SCENES.filter(b=>b.time===t && sceneLvl(b) <= level());
+  const pool = list.length ? list : SCENES.filter(b=>sceneLvl(b) <= level());
+  if(!pool.length) return null;
+  const day = Math.floor(Date.now()/86400000); return pool[day % pool.length];   // same scene all through one time of day
+}
+function currentWeather(sc){
+  if(!WEATHER.length) return null;
+  if(S.weather && S.weather !== 'auto') return WEATHER.find(w=>w.id===S.weather) || null;
+  if(Date.now() > weatherState.until){
+    const t = timeOfDay(), ok = WEATHER.filter(w=>!w.times || w.times.includes(t));
+    const total = ok.reduce((a,w)=>a+(w.chance||1),0); let r = Math.random()*(total + 3);   // +3: clear skies are the most common
+    weatherState.id = 'clear'; for(const w of ok){ r -= (w.chance||1); if(r < 0){ weatherState.id = w.id; break; } }
+    weatherState.until = Date.now() + (4 + Math.random()*5)*60000;
+  }
+  return WEATHER.find(w=>w.id===weatherState.id) || null;
+}
+function weatherLayer(which, W, H){
+  const sc = currentScene(), w = currentWeather(sc); if(!w) return;
+  const frames = w[which]; if(!frames || !frames.length) return;
+  const f = reduceMotion ? frames[0] : frames[Math.floor(time * (w.fps||8)) % frames.length]; if(!art(f)) return;
+  const bw = w.width||960, bh = w.height||540, k = Math.max(W/bw, H/bh);
+  ctx.drawImage(art(f), (W-bw*k)/2, (H-bh*k)/2, bw*k, bh*k);
+}
 function openScenery(){
   unfocus(); const lv = level();
   let html = `<h2>🌄 Scenery</h2><div class="sub">Pick the view behind your hotel. New scenes unlock as you level up.</div><div class="cat">`;
   const card = (id, name, thumb, need) => { const on = (S.scene||null)===id, locked = need > lv;
     return `<div class="bcard ${locked?'locked':''}" style="${on?'border-color:#3fae8c;border-width:3px':''}" ${locked?'':`onclick="setScene(${id?`'${id}'`:'null'})"`}>${locked?`<span class="lock">🔒 ${need}</span>`:''}<div class="thumb"><div class="shape" style="width:120px;height:68px;background:#2b2a5c">${thumb}</div></div><div class="nm">${name}</div><div class="ea">${on?'✓ In use':''}</div></div>`; };
+  html += card('auto', '🕒 Auto (follows the clock)', '🌗', 1);
   html += card(null, 'Classic city', '🏙️', 1);
   for(const sc of SCENES) html += card(sc.id, sc.name, art(sc.base) ? `<img src="${art(sc.base).src}" style="object-fit:cover;width:100%;height:100%">` : '🌄', sceneLvl(sc));
-  showPanel(html + `</div>`, 'scenery');
+  html += `</div>`;
+  if(WEATHER.length){
+    html += `<h3>Weather</h3><div class="cat">`;
+    const wc = (id, name, icon) => { const on = (S.weather||'auto')===id; return `<div class="bcard" style="${on?'border-color:#3fae8c;border-width:3px':''}" onclick="setWeather('${id}')"><div class="thumb" style="font-size:30px">${icon}</div><div class="nm">${name}</div><div class="ea">${on?'✓ In use':''}</div></div>`; };
+    const WICON = {rain:'🌧️', drizzle:'🌦️', storm:'⛈️', snow:'❄️', sunny:'🌞', sun_rays:'🌞', fog:'🌫️', mist:'🌫️', wind:'🍃', leaves:'🍂', fireflies:'✨', petals:'🌸', rainbow:'🌈'};
+    html += wc('auto','Changes by itself','🎲') + wc('clear','Clear','☀️') + WEATHER.map(w=>wc(w.id, w.name||w.id, WICON[w.id]||'🌦️')).join('');
+    html += `</div>`;
+  }
+  showPanel(html, 'scenery');
 }
+function setWeather(id){ S.weather = id; weatherState.until = 0; save(); openScenery(); }
 function setScene(id){ S.scene = id; save(); openScenery(); }
 
 /* ---------------- daily bonus: come back each day, the reward grows for 7 days ---------------- */

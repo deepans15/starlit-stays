@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <g stroke="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.32">
+    <defs>
+      <radialGradient id="glow">
+        <stop offset="0" stop-color="#e4f7a4" stop-opacity="0.5" />
+        <stop offset="1" stop-color="#e4f7a4" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <g opacity="0.4400">
+      <circle cx="28.5" cy="258.464" r="6" fill="url(#glow)" />
+      <circle cx="28.5" cy="258.464" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.5597">
+      <circle cx="801.994" cy="314.189" r="6" fill="url(#glow)" />
+      <circle cx="801.994" cy="314.189" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.1377">
+      <circle cx="498.897" cy="369.74" r="6" fill="url(#glow)" />
+      <circle cx="498.897" cy="369.74" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.2305">
+      <circle cx="51.136" cy="428.288" r="6" fill="url(#glow)" />
+      <circle cx="51.136" cy="428.288" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.0843">
+      <circle cx="789.089" cy="265.249" r="6" fill="url(#glow)" />
+      <circle cx="789.089" cy="265.249" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.0464">
+      <circle cx="421.557" cy="327.9" r="6" fill="url(#glow)" />
+      <circle cx="421.557" cy="327.9" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.3771">
+      <circle cx="81.191" cy="387.885" r="6" fill="url(#glow)" />
+      <circle cx="81.191" cy="387.885" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.5470">
+      <circle cx="795.73" cy="444.298" r="6" fill="url(#glow)" />
+      <circle cx="795.73" cy="444.298" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.1525">
+      <circle cx="357.92" cy="274.517" r="6" fill="url(#glow)" />
+      <circle cx="357.92" cy="274.517" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.2963">
+      <circle cx="106.507" cy="332.02" r="6" fill="url(#glow)" />
+      <circle cx="106.507" cy="332.02" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.1062">
+      <circle cx="783.547" cy="393.181" r="6" fill="url(#glow)" />
+      <circle cx="783.547" cy="393.181" r="1.5" fill="#eff9bc" />
+    </g>
+    <g opacity="0.0338">
+      <circle cx="278.681" cy="456.015" r="6" fill="url(#glow)" />
+      <circle cx="278.681" cy="456.015" r="1.5" fill="#eff9bc" />
+    </g>
+  </g>
+</svg>
