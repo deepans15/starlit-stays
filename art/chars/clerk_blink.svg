@@ -3,15 +3,15 @@
     <path d="M18 71v19h10l3-19m1 0 1 19h10l-3-20" fill="#514965" />
     <path d="M18 89h10l5 3v2.75H16v-4Z" fill="#2b2340" />
     <path d="M33 89h9l5 3v2.75H32v-4Z" fill="#2b2340" />
-    <path d="M19 49q11-7 21 1l3 25H16Z" fill="#fff8ef" />
-    <path d="M35 51l7 23h-9Z" fill="#eadfd9" stroke="none" />
+    <path d="M19 49q11-7 21 1l3 25H16Z" fill="#344d72" />
+    <path d="M35 51l7 23h-9Z" fill="#253858" stroke="none" />
     <path d="M24 44v7q5 4 10-1v-7" fill="#d69872" />
-    <path d="M19 54l-5 12 4 5" fill="none" stroke="#fff8ef" stroke-width="8" />
+    <path d="M19 54l-5 12 4 5" fill="none" stroke="#344d72" stroke-width="8" />
     <path d="M18 70l3 2" fill="none" stroke="#d69872" stroke-width="6" />
-    <path d="M37 54l6 12-4 5" fill="none" stroke="#fff8ef" stroke-width="8" />
+    <path d="M37 54l6 12-4 5" fill="none" stroke="#344d72" stroke-width="8" />
     <path d="M39 70l-3 2" fill="none" stroke="#d69872" stroke-width="6" />
-    <path d="M20 49l7 6 2 20H16Z" fill="#43aa8b" />
-    <path d="M36 49l-5 6-2 20h14Z" fill="#6fd3b5" />
+    <path d="M20 49l7 6 2 20H16Z" fill="#253858" />
+    <path d="M36 49l-5 6-2 20h14Z" fill="#344d72" />
     <path d="m27 54-4-3v7l5-2 5 2v-7l-4 3" fill="#ff7a90" />
     <circle cx="29" cy="63" r="1.4" fill="#ffc94d" stroke="none" />
     <circle cx="29" cy="69" r="1.4" fill="#ffc94d" stroke="none" />
@@ -24,8 +24,9 @@
     <path d="M37.5 31.5q2.5 3 5 0" fill="none" stroke="#2b2340" stroke-width="2" />
     <path d="M35 42q3 2 6-1" fill="none" stroke="#2b2340" stroke-width="2" />
     <ellipse cx="25" cy="39" rx="4" ry="2" fill="#eaa18c" stroke="none" />
-    <path d="M14 12l3-6h21l4 7-13 5Z" fill="#43aa8b" />
+    <path d="M14 12l3-6h21l4 7-13 5Z" fill="#253858" />
     <path d="M17 8h20" fill="none" stroke="#b6eedc" stroke-width="2" />
     <path d="m29 9 1 2 2 1-2 1-1 2-1-2-2-1 2-1Z" fill="#ffc94d" stroke="none" />
+    <path d="m21 51 6 5 2 18 2-18 5-5" fill="none" stroke="#ffc94d" stroke-width="1.7" />
   </g>
 </svg>

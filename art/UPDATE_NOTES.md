@@ -1,46 +1,32 @@
-# Room, staff and reward art update
+# Gym, Temp Staff, maintenance and ratings art batch
 
-## Scope
-All work is inside art/. No edits were made to index.html. gold_closet.svg and pink_closet.svg are unchanged. Existing SVG file names and dimensions are retained. All original manifest entries remain. New text requested for STAFF, JACKPOT! and the crate question mark is hand-drawn vector paths, without fonts or text elements; this is the explicit exception to the brief's general no-lettering rule.
+## Scope and preservation
+All changes are inside art/. No writes to index.html. Every existing manifest entry, SVG name and canvas size is retained. items.js and all 42 existing category/placement entries are preserved without changes. SVGs are self-contained vectors using rounded #2b2340 ink outlines, no text elements, embedded images, external links, scripts or SVG animation. No raster assets were created.
 
-## Rooms
-- rooms/closet.svg: 160 x 168; warm chocolate wood-panel wallpaper. Original shelves, towels and laundry cart retained.
-- Cinema metadata: all five viewers use actual chair centres; four sit in back-row cushions (y=239) and one in the second front chair (x=120.5, y=303), at 0.72 scale. Classic, Love, Halloween, Gold and Pink share matching seat geometry, with explicit overrides. Back-row cushions draw at z7, front seat backs at z8, front viewer at z10, and front cushions at z12. Each viewer has an occupied-slot popcorn prop. No viewer occupies the gap between chairs.
-- rooms/treehouse_2x2.svg (320 x 336), rooms/treehouse_2x3.svg (320 x 504) and their four building/ branch/cabin layers: centred, load-bearing trunks from the bottom middle; cabins rest on top, with balanced branches/leaves and a ladder up each trunk. The taller tree has a second pair of branches. Outside the cabin and tree is transparent.
-- room_layouts.js: walls x36,y64,w248,h132; floor x32,y196,w256,h12; frame x32,y64,w256,h144; guestBaseline=196. All bounds are file pixels. Four/six reading slots and guide placements now stay inside the cabin.
+## Three-station gym
+Redrawn rooms/fit.svg, gold_fit.svg, pink_fit.svg: 320 x 168. Empty treadmill at left, bench with spare barbell rack in the middle, stretching mat at right. Every room keeps the label zone clear. Gym room effects fit_fx_1..3 are aligned to the new treadmill belt, with matching 320 x 168 transparent canvases.
+fit has exactly three slots in Classic, Gold and Pink metadata: run x45,y149; lift x153,y157; stretch x262,y155. All use scale 0.8 and feet anchor {28,96}. The belt and floor are in the room, not in guest sprites. A foreground crop restores the treadmill rail. The bench/rack stay behind the standing lifter, so the low barbell is not erased by a seat crop.
+- run_1..4 for guest_1 through guest_12 and inspector: clearly jogging in place, soles kept on one low baseline with no head bob or vertical hopping. Four frames at 8 fps.
+- lift_1..4 for all 13 identities: one horizontal barbell held with both hands, moving through a planted-foot curl. Four frames at 4 fps.
+- Existing run/lift_5..8 filenames/keys remain and have matching repeated poses; metadata now plays the requested four-frame loops.
+- New stretch_1..4 for all 13 identities: 56 x 96, calm reach-up, left bend, toe touch, right bend. Four frames at 2 fps; feet fixed at anchor {28,96}. Faces, skin tones and hair match each identity; hats remain removed for exercise.
 
-## Staff (40 new SVGs)
-For noodle, lounge, fit, cinema, games, pool, treehouse and closet: chars/staff_<id>.svg and chars/staff_<id>_1.svg through _4.svg. All 56 x 96. Four frames at 4 fps; fixed heads and feet, with working arms/props.
-- Noodle: chef stirring a small pot.
-- Lounge: barista pouring tea.
-- Fit: trainer clapping encouragement.
-- Cinema: usher holding popcorn.
-- Games: attendant wiping with a cloth and holding a spray bottle.
-- Pool: lifeguard using a whistle.
-- Treehouse: guide holding a folded map.
-- Closet: housekeeper folding a towel.
-Each has a white STAFF name badge drawn as vector strokes. Both treehouse sizes use the same guide identity. amenity_animations.js gives every room and applicable style override a permanent staff descriptor. Closet is a new metadata-only room entry with no guest slots.
+## Readable Temp Staff
+All existing 40 staff SVGs (eight identities, base plus _1..4) keep 56 x 96 canvases and four-frame 4 fps loops. STAFF badges and lettering were removed. Uniforms: red chef jacket, teal apron over dark barista shirt, orange trainer top, burgundy usher vest, purple games polo, red lifeguard top with yellow shorts, khaki-green guide shirt, lavender housekeeper dress. Hats and working tools remain.
+Staff scale: gym/games/pool/closet 0.8, noodle 1.0, lounge 0.6, cinema 0.72, both treehouses 0.55, maintenance 0.8. Coordinates and all theme overrides updated. Larger staff occupy aisles/edges rather than guest stations, with feet on the room or cabin floor. Some small-room source canvases share broad transparent bounding rectangles, but character silhouettes are separated from diners.
+Clerk, clerk_blink, clerk_blink_1 and clerk_blink_2 now wear a navy blazer, gold trim and navy cap; face/eye differences and anchors are preserved. Classic lobby remains 480 x 168, with warm peach wallpaper and soft stripes; the rightmost 120 px elevator wall stays plain peach.
 
-## Occupied-slot props (9 new SVGs)
-- chars/prop_noodle_bowl_1.svg through _3.svg: 40 x 40, bowl/noodles and soft periodic steam.
-- chars/prop_teacup_1.svg through _3.svg: 32 x 32, cup/saucer and soft steam.
-- chars/prop_popcorn_1.svg through _3.svg: 32 x 36, striped popcorn carton with subtle settling.
-All play at 4 fps. Each applicable slot has prop metadata (key, frames, fps, width, height, anchor, room-local x/y, scale and z). Props must only be drawn for occupied slots. Empty-room noodle bowls/food/steam and lounge teacups were removed in every supplied theme; counter/stools and permanent teapots remain. Noodle ambient frames now animate only lantern details. Guest watch/drink/drink_stand frames no longer contain duplicate held popcorn/cups; the conditional props replace them. All existing character dimensions and identities remain.
+## Maintenance
+- rooms/maintenance.svg, gold_maintenance.svg, pink_maintenance.svg: 160 x 168 service-workshop interiors with a tool wall, wooden workbench and toolbox; no baked-in worker.
+- chars/staff_maintenance.svg and _1..4.svg: 56 x 96 repair person in blue overalls with a moving wrench. 4 fps. New maintenance metadata room has slots=[], a staff descriptor and Gold/Pink overrides.
+- ui/broken.svg: 40 x 40 red repair-status circle with white X and a small wrench.
+- ui/broken_overlay_1..4.svg: 160 x 168, stable grey tint at 25% alpha plus loose wires, a faint drop and puddle. Four gently cycling frames at 4 fps. Furniture remains visible.
 
-## Furniture categories and tabs
-Every one of the 42 entries in items.js now has category: beds, seating, tables, lighting, wall, rugs or plants. All ceiling mobiles/chandeliers use lighting consistently. Tabletop display ornaments use tables, along with tables/carts/vanities. Existing item fields, costs and unlock levels are preserved.
-New 48 x 48 tabs: ui/cat_beds.svg, cat_seating.svg, cat_tables.svg, cat_lighting.svg, cat_wall.svg, cat_rugs.svg and cat_plants.svg.
+## Guest rating faces
+ui/face_1.svg through face_5.svg: 48 x 48, designed for 28 px. Red angry, orange frown, yellow neutral, light-green smile, bright-green big grin. Each has an ink outline and white top-left highlight.
 
-## Occupancy and rewards
-- ui/slot_full.svg, ui/slot_empty.svg: 24 x 32. White person silhouette with ink outline; full is filled, empty is hollow with a softer outline.
-- ui/crate.svg: 96 x 96 golden wooden crate with a question mark and star brace.
-- ui/crate_open_1.svg through _4.svg: 96 x 96 progressive lid opening, warm burst and sparkles. Suggested one-shot playback at 8 fps, holding frame 4 after opening. Preview repeats with closed/open holds.
-- ui/jackpot.svg: 360 x 90 gold ribbon with original drawn JACKPOT! lettering and sparkles.
-- ui/coin_bag.svg: 96 x 96 warm sack of coins with a gold star emblem and sparkles.
-
-## Preview / handoff
-preview.html registers all dimensions, includes standalone working staff/prop/crate players, and shows nine room studios. Switch Guest and Room style to check every identity/theme. Occupancy has All seats, First seat only and Empty: staff remain while guest props disappear. Existing previews and global controls remain.
-See CODE_NOTES.md for the new staff/prop/category/slot/reward rendering handoff. No game-code changes are included in this art batch.
+## Preview and handoff
+preview.html now includes ten room studios, the three occupied gym stations, nine staff loops including maintenance, separate run/lift/stretch players, a maintenance-overlay player and a 28 px face strip. Guest identity, room style, occupancy and global pause/scale controls remain. CODE_NOTES.md describes changes Claude must make to capacity, label rendering and the new service room. Art metadata alone does not change gameplay capacity or create the maintenance room type.
 
 ## Validation
-All 1236 registered SVGs passed XML, exact dimensions, local-reference-only markup, manifest and preview-dimension checks. The largest file is 9727 bytes. The preview script passed initialization and 234 identity/theme/occupancy combinations; all nine staff remain visible when empty, and slot props disappear. Cinema chair bounds and layer ordering passed for all five styles. The two protected closet theme files match their initial hashes. Game code was not edited by this task; it changed independently while this art batch was running. Browser gameplay was not verified.
+Added 73 SVG keys, including the three newly registered belt-effect files. All 1309 SVGs passed XML, exact width/height/viewBox, safe vector markup, manifest path and preview dimension checks. Every original manifest entry and canvas size was retained. Largest file: 9727 bytes. Preview initialization checked 1309 assets with zero failures, and 234 identity/theme/occupancy combinations passed with three gym activities and ten persistent staff placements. items.js is byte-for-byte unchanged. Code was not edited by this task; index.html changed independently during this art batch. Browser gameplay was not verified.

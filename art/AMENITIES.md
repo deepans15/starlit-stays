@@ -9,8 +9,8 @@ Every guest identity (guest_1 through guest_12 and inspector) has the following 
 | Activity | Canvas | Frames | FPS | Anchor in file pixels |
 |---|---|---:|---:|---|
 | swim | 96 x 56 | 8 | 8 | x48, y44, waterline |
-| run | 56 x 96 | 8 | 10 | x28, y96, belt/floor |
-| lift | 56 x 96 | 8 | 4 | x28, y96, floor |
+| run | 56 x 96 | 4 | 8 | x28, y96, belt/floor |
+| lift | 56 x 96 | 4 | 4 | x28, y96, floor |
 | eat | 56 x 112 | 4 | 3 | x28, y88, seat |
 | drink | 56 x 112 | 4 | 2 | x28, y88, seat |
 | watch | 56 x 112 | 4 | 2 | x28, y88, seat |
@@ -56,3 +56,6 @@ Game scripts compile. Renderer checks passed for 624 room/identity/style combina
 
 ## Staff and occupied props update
 See UPDATE_NOTES.md for the corrected cinema seat anchors, new centred treehouse slots, permanent staff metadata and conditional bowl/cup/popcorn props. The preview now includes a ninth room (closet, with staff only) and occupancy controls. Held cups/popcorn have moved out of the guest frames into slot props, so Claude must consume the new prop fields together with the updated actor art. This batch does not edit index.html.
+
+## Latest gym / service-room art metadata
+The gym now has three distinct run, lift and stretch slots at scale 0.8 (Classic, Gold, Pink). Stretch is 56 x 96, four frames at 2 fps with feet anchor {28,96}. Staff uniforms no longer contain badges; the game supplies Temp Staff labels. Maintenance is the tenth metadata room, with permanent staff and no guest slots. See UPDATE_NOTES.md and CODE_NOTES.md for current placements and required capacity change.

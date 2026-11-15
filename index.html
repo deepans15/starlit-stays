@@ -26,6 +26,7 @@
   #xpWrap{width:110px;height:14px;background:#5a4e72;border:3px solid #2b2340;border-radius:8px;overflow:hidden;margin-left:-4px}
   #xpBar{display:block;height:100%;width:0;background:linear-gradient(180deg,#ffe08a,#ffc94d)}
   #hudStars{position:absolute;left:50%;top:10px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;z-index:4;pointer-events:none}
+  #faceIcon{display:inline-flex;width:30px;height:30px;margin-left:4px} #faceIcon img,#faceIcon svg{width:30px;height:30px}
   #starIcons{display:flex;gap:1px;font-size:28px;color:#ffc94d;-webkit-text-stroke:2.5px #2b2340;paint-order:stroke fill;line-height:1}
   #starIcons .off{color:#fff8ef;opacity:.85}
   #starIcons img{width:28px;height:28px}
@@ -97,6 +98,8 @@
   #dropZones .zone{min-width:118px;padding:12px 16px;border-radius:18px;border:3px dashed #fff;background:rgba(43,35,64,.82);color:#fff;font-weight:900;font-size:14px;text-align:center;line-height:1.2;transition:transform .12s, background .12s}
   #dropZones .zone .e{display:block;font-size:24px}
   #dropZones .zone.sell{background:rgba(214,51,79,.82)}
+  #dropZones .zone.cancel{display:none;background:rgba(122,110,134,.9)} #dropZones.buying .zone{display:none} #dropZones.buying .zone.cancel{display:block}
+  #dropZones .zone.cancel.hot{background:#d6334f}
   #dropZones .zone.hot{transform:scale(1.12);background:#3fae8c;border-style:solid}
   #dropZones .zone.sell.hot{background:#ff5d78}
   #marks{position:absolute;display:none;flex-direction:column;gap:3px;z-index:8}
@@ -136,17 +139,18 @@
   .btn.warn{background:var(--rose);color:#fff}
   .btn.alt{background:#e9e1ff;color:#3b2f7a}
   .cat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .bcard{position:relative;touch-action:pan-y;background:#fff;border:2px solid var(--line);border-radius:14px;padding:8px;cursor:pointer;text-align:center}
+  .bcard{position:relative;touch-action:pan-y;background:#fff;border:2px solid var(--line);border-radius:14px;padding:26px 6px 6px;cursor:pointer;text-align:center;display:flex;flex-direction:column}
   .bcard:hover{border-color:#f19a6c}
   .bcard.locked{cursor:not-allowed;opacity:.75}
   .bcard.poor{opacity:.6}
-  .thumb{touch-action:none;cursor:grab;height:64px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:6px}
+  .thumb{touch-action:none;cursor:grab;height:104px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
   .thumb .shape{border:3px solid var(--ink);border-top-width:6px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden}
   .thumb img{width:100%;height:100%;object-fit:cover}
-  .bcard .nm{font-weight:800;font-size:13px}
-  .bcard .pr{font-weight:900;color:#b07a00;font-size:14px}
+  .bcard .nm{font-weight:800;font-size:12px;line-height:1.2;margin-top:auto}
+  .bcard .rate{position:absolute;right:6px;top:5px;background:#e8f7f0;border:2px solid #3fae8c;color:#1f6e55;border-radius:9px;font-weight:900;font-size:11px;padding:1px 6px;white-space:nowrap}
+  .bcard .pr{font-weight:900;color:#b07a00;font-size:15px;margin-top:4px;background:#fff6d6;border-radius:9px;padding:2px 0}
   .bcard .ea{color:var(--muted);font-size:11px}
-  .lock{position:absolute;right:6px;top:6px;background:#ffc94d;border:2px solid var(--ink);border-radius:8px;font-weight:900;font-size:12px;padding:1px 6px}
+  .lock{position:absolute;left:6px;top:5px;z-index:1;background:#ffc94d;border:2px solid var(--ink);border-radius:8px;font-weight:900;font-size:12px;padding:1px 6px}
   .colors{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
   .colors span{width:28px;height:28px;border-radius:8px;cursor:pointer;border:3px solid transparent}
   .colors span.on{border-color:var(--ink)}
@@ -201,7 +205,7 @@
       <div class="hg" title="Level"><span class="hbadge"><span class="hic" data-art="ui/level"><svg viewBox="0 0 48 48" width="46" height="46"><path d="M6 24 24 7l18 17v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5" stroke-linejoin="round"/><path d="M2 26 24 5l22 21" fill="none" stroke="#2b2340" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span id="lvl">1</span></span><span id="xpWrap"><span id="xpBar"></span></span></div>
       <div class="hg" title="Blocks used / available"><span class="hic" data-art="ui/blocks"><svg viewBox="0 0 48 48" width="30" height="30"><rect x="6" y="10" width="36" height="28" rx="3" fill="#ff9f68" stroke="#2b2340" stroke-width="3.5"/><path d="M6 24h36M18 10v14M30 24v14" stroke="#2b2340" stroke-width="3"/></svg></span><span class="hnum small" id="blocks">0/12</span></div>
     </div>
-    <div id="hudStars" title="Star rating (up to 7)"><span id="starIcons"></span><span class="hnum small" id="starNum">1</span></div>
+    <div id="hudStars" title="Star rating (up to 5)"><span id="starIcons"></span><span class="hnum small" id="starNum">1</span><span id="faceIcon" title="Guest happiness"></span></div>
     <button id="speedBtn" title="Game speed"><span class="hic" data-art="ui/speed">⏩</span><span class="hnum small" id="speedTxt">2×</span></button>
     <div id="hint"><span id="hintText"></span><button id="hintCancel">Done</button></div>
     <div id="goalsBox"></div>
@@ -211,7 +215,7 @@
     <button id="tipsBtn" onclick="collectAllTips()" title="Collect all tips"><span class="hic" data-art="ui/tips" style="display:inline-flex;vertical-align:middle;width:18px;height:18px">💰</span> <b id="tipsN">0</b></button>
     <button id="crateBtn" onclick="openCrate()" title="Golden Mystery Crate"><span class="ic" data-art="ui/crate">🎁</span><span class="dlab">Crate</span></button>
     <div id="marks"></div>
-    <div id="dropZones"><div class="zone" id="zoneStore"><span class="e">📦</span>Storage</div><div class="zone sell" id="zoneSell"><span class="e">🪙</span><span id="zoneSellTxt">Sell</span></div></div>
+    <div id="dropZones"><div class="zone cancel" id="zoneCancel"><span class="e">✖️</span>Cancel</div><div class="zone" id="zoneStore"><span class="e">📦</span>Storage</div><div class="zone sell" id="zoneSell"><span class="e">🪙</span><span id="zoneSellTxt">Sell</span></div></div>
     <div id="panel"></div>
     <div id="toasts"></div>
     <div id="blockCount"></div>
@@ -246,7 +250,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.49';
+const BUILD = '0.52';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -287,7 +291,8 @@ const ROOMS = {
   grand:  {name:'Grand Room',  kind:'guest',   w:2, h:2, cost:2400, lvl:5,  stay:32, pay:70, xp:12, color:'#d8c8ff'},
   loft:   {name:'Sky Loft',    kind:'guest',   w:3, h:2, cost:5200, lvl:9,  stay:36, pay:120,xp:18, color:'#bfe6ff', minFloor:2},
   closet: {name:'Linen Closet',kind:'service', w:1, h:1, cost:250,  lvl:1,  capacity:5, color:'#5c3a28'},
-  fit:    {name:'Fit Corner',  kind:'amenity', w:2, h:1, cost:700,  lvl:1,  slots:2, use:9,  pay:8,  xp:3, color:'#ffd1dc', icon:'🏋️'},
+  maintenance: {name:'Maintenance Room', kind:'service', w:1, h:1, cost:600, lvl:4, capacity:6, color:'#5b6b82', repairs:true},
+  fit:    {name:'Fit Corner',  kind:'amenity', w:2, h:1, cost:700,  lvl:1,  slots:3, use:9,  pay:8,  xp:3, color:'#ffd1dc', icon:'🏋️'},
   noodle: {name:'Noodle Bar',  kind:'amenity', w:2, h:1, cost:1400, lvl:4,  slots:3, use:10, pay:15, xp:4, color:'#ffcf9e', icon:'🍜'},
   lounge: {name:'Tea Lounge',  kind:'amenity', w:2, h:1, cost:2200, lvl:6,  slots:4, use:11, pay:14, xp:4, color:'#d9f2c4', icon:'🫖'},
   cinema: {name:'Mini Cinema', kind:'amenity', w:2, h:2, cost:4500, lvl:7,  slots:5, use:14, pay:22, xp:6, color:'#3d3a5c', icon:'🎬'},
@@ -404,8 +409,8 @@ const GOALS = [
   {t:'Serve 500 guests',           r:2000, ok:s=>s.served>=500},
   {t:'Reach 5 stars',              r:2500, ok:s=>stars()>=5},
   {t:'Build a Splash Pool',        r:3000, ok:s=>count('pool')>=1},
-  {t:'Reach 6 stars',              r:4000, ok:s=>stars()>=6},
-  {t:'Reach 7 stars',              r:8000, ok:s=>stars()>=7},
+  {t:'Build a Maintenance Room',   r:1500, ok:s=>count('maintenance')>=1},
+  {t:'Keep guests delighted (green face)', r:4000, ok:s=>s.sat>=0.85},
 ];
 
 /* ---------------- art ----------------
@@ -700,7 +705,8 @@ function levelUp(fromLv, toLv){
     ${gifts.map(g=>`<div class="unlock"><span class="ic">🎁</span><span>Gift: <b>${g.name}</b> (in your furniture inventory)</span></div>`).join('')}
     ${unlocks.map(u=>`<div class="unlock"><span class="ic">${u.ic}</span><span>${u.t}</span></div>`).join('')}
     ${next ? `<div style="color:#7a6e86;font-size:13px;margin-top:10px">Next: ${next.t} at level ${next.lv}</div>` : ''}
-    <button class="btn" style="margin-top:14px" onclick="closeModal()">Awesome!</button>`);
+    <button class="btn" style="margin-top:14px" onclick="closeModal()">Awesome!</button><div style="font-size:11px;color:#7a6e86;margin-top:6px">Tap anywhere to close</div>`);
+  ui.lvlModal = true; clearTimeout(ui.lvlT); ui.lvlT = setTimeout(()=>{ if(ui.lvlModal) closeModal(); }, 4500);
   save();
 }
 function nextUnlock(){
@@ -755,7 +761,7 @@ function maybeIssue(dt){
   ui.issueCd = 50 + Math.random()*70;
   const open = rooms.filter(r=>r.issue).length;
   if(open >= 1 + Math.floor(rooms.length/6)) return;
-  const pool = rooms.filter(r=>!r.issue && !r.fixT), busy = pool.filter(r=>r.guest);
+  const pool = rooms.filter(r=>!r.issue && !r.fixT && !r.broken), busy = pool.filter(r=>r.guest);
   const r = (busy.length && Math.random()<0.7 ? busy : pool)[Math.floor(Math.random()*(busy.length && Math.random()<0.7 ? busy.length : pool.length))] || pool[0];
   if(!r) return;
   const type = ISSUE_KEYS[Math.floor(Math.random()*ISSUE_KEYS.length)];
@@ -769,9 +775,23 @@ function updateIssues(dt){
   }
 }
 function fixIssue(r){ if(!r.issue || r.fixT) return; r.fixT = 1.6; }
+// ❌ broken rooms: a Maintenance Room repairs them by itself, otherwise tap to pay for a repair
+const repairCost = () => 40 + 10*level();
+function repairRoom(r, free){
+  if(!r.broken || r.repT) return;
+  if(!free){ const c = repairCost(); if(S.coins < c){ toast(`A repair costs 🪙${c}`); return; } S.coins -= c; lastTop=''; }
+  r.repT = free ? 6 : 2;
+}
+function updateRepairs(dt){
+  const crews = count('maintenance') * ROOMS.maintenance.capacity; let busy = S.rooms.filter(r=>r.repT && r.repFree).length;
+  for(const r of S.rooms){
+    if(r.broken && !r.repT && busy < crews){ r.repT = 6; r.repFree = true; busy++; }
+    if(r.repT){ r.repT -= dt; if(r.repT <= 0){ r.repT = 0; r.repFree = false; r.broken = false; const q = roomRect(r); floats.push({x:q.x+q.w/2, y:q.y+30, t:0, text:'🔧 Fixed!'}); addXP(2); save(); } }
+  }
+}
 function freeGuestRoom(g){
   const need = GUEST_TYPES[g.type].needsDecor || 0;
-  const opts = S.rooms.filter(r=>ROOMS[r.type].kind==='guest' && !r.guest && !r.reserved && !r.dirty && !r.issue && hasBed(r) && decorPct(r) >= need);
+  const opts = S.rooms.filter(r=>ROOMS[r.type].kind==='guest' && !r.guest && !r.reserved && !r.dirty && !r.issue && !r.broken && hasBed(r) && decorPct(r) >= need);
   if(!opts.length) return null;
   opts.sort((a,b)=> (ROOMS[b.type].pay*(0.6+0.9*decorPct(b))) - (ROOMS[a.type].pay*(0.6+0.9*decorPct(a))));
   return opts[0];
@@ -820,12 +840,15 @@ function updateGuests(dt){
           addXP(Math.round(def.xp * gt.xp));
           S.served++; bumpWeek(); if(g.type==='vip') S.vipServed = true;
           r.guest = null; r.dirty = true;
+          if(r.issue && (r.issue.type==='leak' || r.issue.type==='dark') && !r.fixT){ r.broken = true; r.issue = null; toast(`❌ A room was left broken. ${count('maintenance') ? 'Your maintenance crew is on it.' : 'Tap it to repair, or build a Maintenance Room.'}`); }
+          else if(r.issue && !r.fixT) r.issue = null;   // too hot / too cold just pass when the guest leaves
           if(!r.lost && Math.random() < 0.06) r.lost = true;   // 🧳 the guest forgot their suitcase: tap it to send it back
           if(Math.random() < 0.18 + 0.25*decorPct(r) + (beautiful(r) ? 0.15 : 0)) r.tip = (r.tip||0) + Math.max(5, Math.round(pay*0.4));   // a happy guest left a tip: tap the coin to collect
           let happy = 0.6 + 0.4*decorPct(r);
           if(g.want){
             const a = amenityFor(g.want);
-            if(a){ a.users=(a.users||0)+1; g.state='inAmen'; g.amen=a.id; g.timer=ROOMS[a.type].use; g.slot=a.users-1; happy=Math.min(1,happy+0.3); }
+            if(a){ a.users=(a.users||0)+1; const taken = new Set(guests.filter(o=>o.state==='inAmen' && o.amen===a.id).map(o=>o.slot)); let sl = 0; while(taken.has(sl)) sl++;
+              g.state='inAmen'; g.amen=a.id; g.timer=ROOMS[a.type].use; g.slot=sl; happy=Math.min(1,happy+0.3); }
             else { happy *= 0.75; if(count(g.want)===0){ S.missed = S.missed||{}; S.missed[g.want] = (S.missed[g.want]||0)+1; } }
           }
           S.sat = S.sat*0.9 + happy*0.1;
@@ -881,7 +904,7 @@ function frame(now){
     if(ui.busCd <= 0 && guestRoomCount() >= 3 && !ui.visit){ ui.busCd = 200 + Math.random()*160; ui.busT = 25; toast('🚌 A tour bus just arrived! Lots of guests for a short while'); spawnTimer = 0.3; }
   }
   if(ui.busT > 0) ui.busT -= sdt;
-  updateGuests(sdt); updateCleaning(sdt); maybeIssue(sdt); updateIssues(sdt);
+  updateGuests(sdt); updateCleaning(sdt); maybeIssue(sdt); updateIssues(sdt); updateRepairs(sdt);
   for(const r of S.rooms){ if(r.anim){ r.anim.t+=dt; if(r.anim.t>0.2) r.anim=null; } if(r.pulse>0) r.pulse-=dt; }
   doorsOpen = Math.max(0, doorsOpen - sdt);
   floats.forEach(f=>f.t+=dt); floats = floats.filter(f=>f.t<1.4);
@@ -1075,7 +1098,7 @@ function drawRoom(r, covered){
   if(r.floor){ ctx.fillStyle='#c8915f'; ctx.fillRect(x,y+h-FLOOR_PAD,w,10); ctx.fillStyle='#a8743f'; for(let i=0;i<w;i+=20) ctx.fillRect(x+i+2, y+h-FLOOR_PAD, 2, 10); }
   else { ctx.fillStyle='#bcaaa4'; ctx.fillRect(x,y+h-FLOOR_PAD,w,10); }
   // guest rooms are plain: just walls, floor and whatever furniture the player puts in (a new room only has its bed)
-  if(def.kind==='guest'){ drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,h); drawItems(r,x,y,w,h,'front'); }
+  if(def.kind==='guest'){ drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,h,'bed'); drawItems(r,x,y,w,h,'front'); drawGuestRoom(r,x,y,w,h,'guest'); }   // the sleeping guest stays in front of the furniture
   else if(def.kind==='service'){ if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawCloset(r,x,y,w,h); if(!r.dirty) drawStaff(r,x,y,w,h); }
   else {
     const styled = r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h);
@@ -1102,6 +1125,17 @@ function drawRoom(r, covered){
     if(!sprite('ui/issue_'+r.issue.type, bx-11, by-11, 22, 22)){ ctx.font='15px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(r.fixT ? '🔧' : I.icon, bx, by+1); }
     if(r.fixT){ ctx.fillStyle='#3fae8c'; ctx.fillRect(x+10, y+h-6, (w-20)*(1-r.fixT/1.6), 3);
       if(!sprite(animFrame('chars/handyman','fix',4,6), x+w-40, y+h-58, 28, 48)){ ctx.font='18px system-ui'; ctx.textAlign='center'; ctx.fillText('🧑‍🔧', x+w-26, y+h-30); } }
+  }
+  if(r.broken){   // ❌ needs maintenance before the next guest can use it
+    const ov = art('ui/broken_overlay_'+(1+Math.floor(time*5)%4)); if(ov) ctx.drawImage(ov, x, y, w, h); else { ctx.fillStyle='rgba(60,60,70,.28)'; ctx.fillRect(x, y, w, h); }
+    const bx = x + w/2, by = y + h/2 - 6, R = 15;
+    if(!sprite('ui/broken', bx-R, by-R, R*2, R*2)){ ctx.fillStyle='#d6334f'; ctx.strokeStyle='#2b2340'; ctx.lineWidth=2.5; ctx.beginPath(); ctx.arc(bx, by, R, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=4; ctx.lineCap='round'; ctx.beginPath(); ctx.moveTo(bx-6,by-6); ctx.lineTo(bx+6,by+6); ctx.moveTo(bx+6,by-6); ctx.lineTo(bx-6,by+6); ctx.stroke(); ctx.lineWidth=1; ctx.lineCap='butt'; }
+    if(r.repT){ const tot = r.repFree ? 6 : 2; ctx.fillStyle='#3fae8c'; ctx.fillRect(x+10, y+h-6, (w-20)*(1-r.repT/tot), 3);
+      const hk = art('chars/staff_maintenance_'+(1+Math.floor(time*4)%4)) || art('chars/handyman_fix_'+(1+Math.floor(time*6)%4)) || art('chars/handyman');
+      if(hk) ctx.drawImage(hk, x+w-44, y+h-FLOOR_PAD-50, 29, 50); else { ctx.font='18px system-ui'; ctx.textAlign='center'; ctx.fillText('🧑‍🔧', x+w-26, y+h-30); } }
+    else if(!count('maintenance')){ ctx.font='bold 10px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; const t = 'Tap to repair 🪙'+repairCost(), tw = ctx.measureText(t).width+10;
+      ctx.fillStyle='rgba(255,253,248,.92)'; rr(bx-tw/2, by+R+4, tw, 15, 7); ctx.fill(); ctx.fillStyle='#2b2340'; ctx.fillText(t, bx, by+R+12); }
   }
   if(r.lost){ const sy = y + h - 26 + Math.sin(time*3 + r.id)*1.5;
     if(!sprite('ui/suitcase', x+w-30, sy-6, 20, 20)){ ctx.font='15px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('🧳', x+w-20, sy+4); } }
@@ -1212,18 +1246,19 @@ function drawItem(def, x, y){
   ctx.font = `${Math.max(10, Math.min(w,h)*0.7)}px system-ui`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(def.emoji, x+w/2, y+h/2+1);
   ctx.textBaseline='alphabetic';
 }
-function drawGuestRoom(r,x,y,w,h){
+function drawGuestRoom(r,x,y,w,h,part){
   const fy = y+h-FLOOR_PAD;
   const bed = (r.items||[]).find(it=>ITEMS[it.id] && ITEMS[it.id].zone==='bed');
   let bx = x+10, bw = 56;
   if(bed){
     const def = ITEMS[bed.id], d = ui.itemDrag;
     let ix = bed.x, iy = itemY(r, bed, def);
-    if(d && d.moved && d.item===bed){ ix = d.ix; iy = d.iy; if(d.out) ctx.globalAlpha = 0.45; }
+    if(d && d.moved && d.item===bed){ ix = d.ix; iy = d.iy; if(d.out && part!=='guest') ctx.globalAlpha = 0.45; }
     bx = x+ix; bw = def.w;
-    drawItem(def, bx, y+iy);
+    if(part!=='guest') drawItem(def, bx, y+iy);
     ctx.globalAlpha = 1;
   }
+  if(part==='bed') return;
   const g = r.guest ? guests.find(z=>z.id===r.guest) : null;
   if(g){
     const sleepKey = g.inspector ? 'chars/inspector_sleep' : 'chars/guest_'+g.skin+'_sleep';
@@ -1261,6 +1296,12 @@ function drawAmenityCount(r,x,y,w){
   }
 }
 // every amenity (and the linen closet) has a staff member; ChatGPT's amenity_animations.js says where they stand
+// "Temp Staff" name tag over a staff member's head, like the original
+function staffTag(cx, top){
+  ctx.save(); ctx.font='bold 8px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  const t = 'Temp Staff', ty = Math.max(top - 6, 5);
+  ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.strokeStyle = '#2b2340'; ctx.strokeText(t, cx, ty); ctx.fillStyle = '#fff'; ctx.fillText(t, cx, ty); ctx.restore();
+}
 function drawStaff(r,x,y,w,h){
   if(AMENITY_ACTIVITY_ROOMS.get(r.type)?.staff && art((AMENITY_ACTIVITY_ROOMS.get(r.type).staff.key))) return;   // drawn in the sorted amenity layer instead
   const data = window.STARLIT_AMENITY_ANIMATIONS, room = data && (data.rooms||[]).find(o=>o.id===r.type);
@@ -1275,15 +1316,16 @@ function drawStaff(r,x,y,w,h){
   if(img) ctx.drawImage(img, sx, sy, sw, sh);
   else { const cl = art('chars/clerk'); if(cl) ctx.drawImage(cl, sx, sy, sw, sh); else { ctx.font='18px system-ui'; ctx.textAlign='center'; ctx.fillText('🧑‍🍳', sx+sw/2, sy+sh/2); } }
   // little STAFF tag over their head, like the original
-  ctx.font='bold 6px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  const tw = ctx.measureText('STAFF').width + 6; ctx.fillStyle='#d6334f'; rr(sx+sw/2-tw/2, sy-7, tw, 8, 2); ctx.fill(); ctx.fillStyle='#fff'; ctx.fillText('STAFF', sx+sw/2, sy-3);
+  staffTag(sx+sw/2, sy);
 }
 function drawCloset(r,x,y,w,h){
+  if(r.type==='maintenance'){   // fallback workshop until the art arrives
+    ctx.fillStyle='#5b6b82'; ctx.fillRect(x,y,w,h); ctx.fillStyle='#8a6a4a'; ctx.fillRect(x+8, y+h-FLOOR_PAD-26, w-16, 6);
+    ctx.font='22px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('🧰', x+w*0.35, y+h-FLOOR_PAD-40); ctx.fillText('🔧', x+w*0.7, y+40); return; }
   ctx.fillStyle='#5c3a28'; ctx.fillRect(x,y,w,h); ctx.fillStyle='rgba(0,0,0,.18)'; for(let i=6;i<w;i+=12) ctx.fillRect(x+i, y, 2, h-FLOOR_PAD);
   ctx.fillStyle='#8d6e63'; for(let i=0;i<3;i++) ctx.fillRect(x+8, y+26+i*16, w-16, 3);
   const cols=['#ffadad','#a0c4ff','#caffbf','#fdffb6'];
   for(let i=0;i<3;i++) for(let j=0;j<3;j++){ ctx.fillStyle=cols[(i+j)%4]; rr(x+12+j*18, y+16+i*16, 14, 9, 3); ctx.fill(); }
-  ctx.fillStyle='#2b2340'; ctx.font='9px system-ui'; ctx.textAlign='left'; ctx.fillText('cleans '+ROOMS.closet.capacity, x+6, y+h-18);
 }
 function drawAmenity(r,x,y,w,h){
   const fy = y+h-FLOOR_PAD;
@@ -1346,9 +1388,11 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
         used.add(g.slot); assigned.push({g, slot:slots[g.slot]});
       } else waiting.push(g);
     }
+    let extra = 0;
     for(const g of waiting){
       const free = slots.findIndex((_, i)=>!used.has(i));
-      if(free<0){ assigned.push({g, slot:null}); continue; }
+      if(free<0){ const base = slots[extra % slots.length]; extra++;   // more guests than drawn spots (e.g. gym art with 2 stations): share a station beside it
+        assigned.push({g, slot: base ? {...base, x: base.x + 44*extra, prop: null} : null}); continue; }
       used.add(free); assigned.push({g, slot:slots[free]});
     }
     const draws = [];
@@ -1378,7 +1422,8 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
     }
     const st = (styledImage && variant.staff) || layout.staff;
     if(st){ const fr = st.frames||1, k = fr>1 ? st.key+'_'+(1+Math.floor(time*(st.fps||4))%fr) : st.key, img = art(k) || art(st.key);
-      if(img){ const sc = st.scale||1, an = st.anchor||{x:28,y:96};
+      const guestSc = Math.max(0.5, ...slots.map(o=>o.scale||0.8));   // staff should be as tall as the guests in the room
+      if(img){ const sc = Math.max(st.scale||1, guestSc*0.95), an = st.anchor||{x:28,y:96};
         draws.push({z:st.z||9, staff:true, image:img, x:q.x+(st.x-an.x*sc)*sx, y:q.y+(st.y-an.y*sc)*sy, w:56*sc*sx, h:96*sc*sy}); } }
     for(const f of (variant.foreground || layout.foreground || [])) draws.push({z:f.z || 7, crop:f});
     draws.sort((a,b)=>a.z-b.z);
@@ -1389,7 +1434,7 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
         const f=d.crop;
         ctx.drawImage(roomImage, f.x,f.y,f.width,f.height, q.x+f.x*sx,q.y+f.y*sy,f.width*sx,f.height*sy);
       } else if(d.fallback){ drawAmenGuest(d.g); }
-      else if(d.staff){ ctx.drawImage(d.image,d.x,d.y,d.w,d.h); }
+      else if(d.staff){ ctx.drawImage(d.image,d.x,d.y,d.w,d.h); staffTag(d.x+d.w/2, d.y+2); }
       else {
         ctx.save(); ctx.globalAlpha *= Math.max(0,Math.min(1,d.g.alpha===undefined?1:d.g.alpha));
         ctx.drawImage(d.image,d.x,d.y,d.w,d.h); ctx.restore();
@@ -1402,7 +1447,7 @@ function drawAmenGuest(g){
   const a = S.rooms.find(r=>r.id===g.amen); if(!a) return;
   const q = visRect(a), def = ROOMS[a.type];
   const sx = q.x + 22 + (g.slot % def.slots) * Math.max(24,(q.w-40)/Math.max(1,def.slots-1));
-  const bob = a.type==='fit' ? Math.abs(Math.sin(time*6+g.id))*3 : a.type==='pool' ? Math.sin(time*2+g.id)*2 : 0;
+  const bob = a.type==='pool' ? Math.sin(time*2+g.id)*2 : 0;
   drawBean(sx, q.y+q.h-FLOOR_PAD - (a.type==='pool'?8:0) - bob, g, 0.85);
 }
 function drawBean(x, y, g, sc, noLegs){
@@ -1607,7 +1652,7 @@ cv.addEventListener('pointerdown', ev=>{
 });
 /* ---------------- drop zones: while dragging a room or a piece of furniture, drop it on Sell or Storage ---------------- */
 function zoneAt(cx, cy){
-  for(const id of ['zoneSell','zoneStore']){ const z = $(id).getBoundingClientRect(); if(cx>=z.left-8 && cx<=z.right+8 && cy>=z.top-8 && cy<=z.bottom+8) return id==='zoneSell' ? 'sell' : 'store'; }
+  for(const id of ['zoneCancel','zoneSell','zoneStore']){ if($(id).offsetParent===null) continue; const z = $(id).getBoundingClientRect(); if(cx>=z.left-8 && cx<=z.right+8 && cy>=z.top-8 && cy<=z.bottom+8) return id==='zoneSell' ? 'sell' : id==='zoneCancel' ? 'cancel' : 'store'; }
   return null;
 }
 function updateZones(cx, cy){
@@ -1680,6 +1725,7 @@ function endDrag(ev, cancelled){
 function tapRoom(r, focused){
   const def = ROOMS[r.type];
   if(r.issue && !r.fixT){ fixIssue(r); return; }
+  if(r.broken && !r.repT){ repairRoom(r, false); return; }
   if(r.lost){ returnLost(r); return; }
   if(r.tip){ const q = roomRect(r); addCoins(r.tip, q.x+q.w-18, q.y+24, '💰+🪙'); r.tip = 0; save(); return; }
   if(r.dirty && !r.guest && !(r.users>0)){ r.dirty=false; r.cleanT=0; addXP(1); const q=roomRect(r); floats.push({x:q.x+q.w/2,y:q.y+30,t:0,text:'✨'}); return; }
@@ -1738,15 +1784,14 @@ function decorShop(lv, cat){
   const where = it => it.rooms.map(k=>({guest:'guest rooms', amenity:'amenities', lobby:'lobby'})[k]||k).join(', ');
   const inSet = new Set(Object.values(COLLECTIONS).flat()), all = Object.values(ITEMS).filter(it=>!cat || itemCat(it)===cat).sort((a,b)=>a.lvl-b.lvl || a.cost-b.cost);
   const groups = [['', all]];   // one flat list per category, cheapest first
-  let h = `<div class="sub">Drag a piece onto a room to put it there, or tap to buy it into storage. 3+ pieces of one theme in a room give bonus decor.</div>`;
+  let h = '';
   for(const [title, list] of groups){ if(!list.length) continue;
     h += `${title?`<h3>${title}</h3>`:''}<div class="cat">`;
     for(const it of list){
       const locked = it.lvl > lv, poor = S.coins < it.cost, own = S.inv[it.id]||0;
       h += `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-item="${it.id}"`} title="${it.name}">${locked?`<span class="lock">🔒 ${it.lvl}</span>`:''}
-        <div class="thumb"><div class="shape" style="width:64px;height:44px;background:#fff8ef">${art('decor/'+it.id)?`<img src="${art('decor/'+it.id).src}" style="object-fit:contain">`:(it.emoji||'🪑')}</div></div>
-        <div class="nm">${it.name}</div><div class="pr">🪙${it.cost.toLocaleString()}</div>
-        <div class="ea">+${it.decor} decor · +🪙${itemCoins(it.id)} per guest<br>${it.zone==='bed'?'bed':it.zone} · for ${where(it)}${own?`<br>you own ${own}`:''}</div></div>`;
+        <div class="thumb"><div class="shape" style="width:110px;height:84px;background:#fff8ef;border:none">${art('decor/'+it.id)?`<img src="${art('decor/'+it.id).src}" style="object-fit:contain">`:(it.emoji||'🪑')}</div></div>
+        <span class="rate">✨+${it.decor}</span><div class="nm">${it.name}${own?` <span style="color:#7a6e86">×${own}</span>`:''}</div><div class="pr">🪙${it.cost.toLocaleString()}</div></div>`;
     }
     h += `</div>`;
   }
@@ -1874,7 +1919,7 @@ function openBuild(tab){
   const SECTIONS = [['guest','🛏️','Rooms','Guest rooms',[[null,'guest']]], ['amenity','🎡','Amenities','Amenities',[[null,'amenity']]], ['service','🧺','Services','Services',[[null,'service']]]]
     .concat(DECOR_CATS.map(([id,e,label])=>['d_'+id, e, label, label, [], id]));
   const mark = ([id, e, label, , , dc]) => `<button data-mark="${id}" onclick="jumpBuild('${id}')"><span class="e">${dc && art('ui/cat_'+dc) ? `<img src="${art('ui/cat_'+dc).src}" style="width:20px;height:20px">` : e}</span>${label}</button>`;
-  let html = `<h2>🔨 Build</h2>${buildTabs('rooms')}<div class="sub">🧱 <b>${blocksUsed()}/${blocksMax()} blocks used.</b> <b>Drag</b> a room onto your hotel and drop it where you want, or just <b>tap</b> it and it finds a free spot by itself. Rooms stand on the ground or on other rooms. While this menu is open you can also <b>drag furniture</b> inside your rooms to move it, or onto 📦/🪙 to store or sell it.</div>`;
+  let html = `<h2>🔨 Build</h2>${buildTabs('rooms')}<div class="sub">🧱 <b>${blocksUsed()}/${blocksMax()} blocks</b> · drag onto your hotel or tap to place</div>`;
   $('marks').innerHTML = SECTIONS.map(mark).join('');
   html += `<div>`;
   for(const [cat, , , title, groups, dc] of SECTIONS){
@@ -1884,19 +1929,18 @@ function openBuild(tab){
     html += `${label?`<h3>${label}</h3>`:''}<div class="cat">`;
     for(const [k,d] of Object.entries(ROOMS)){
       if(d.kind!==kind) continue;
-      for(const t of [null, ...themesFor(k)]){   // each room, followed by its themed (fully furnished / restyled) versions
+      for(const t of [null, ...(d.kind==='guest' ? themesFor(k) : [])]){   // guest rooms list their furnished theme versions; amenity/service styles are picked in the room's own panel
       const bed = t && themeBed(k,t), cost = roomCost(k,t), need = Math.max(d.lvl, bed ? furnishLvl(k,t) : 0), pieces = bed ? furnishPlan(k,t).length : 0;
       const locked = need > lv, poor = S.coins < cost, blocks = d.w*hOf(k);
-      const unit = 22, sw = d.w*unit*1.3, sh = d.h*unit;
+      const fit = Math.min(130/(d.w*1.3), 96/d.h), sw = d.w*fit*1.3, sh = d.h*fit;   // as big as the card allows
       const key = t && !bed ? 'rooms/'+t+'_'+k : 'rooms/'+k;
       const inner = bed && art('decor/'+bed) ? `<img src="${art('decor/'+bed).src}" style="width:70%;height:auto;margin-top:auto">` : art(key) ? `<img src="${art(key).src}">` : (d.icon || (d.kind==='guest'?'🛏️':'🧺'));
-      const earn = d.kind==='guest' ? `Max 🪙${perHour(k).toLocaleString()}/hour · ⭐${d.xp} XP each` : d.kind==='amenity' ? `Max 🪙${perHour(k).toLocaleString()}/hour · ${d.slots} guests` : `Cleans ${d.capacity} rooms`;
+      const rate = d.kind==='guest' || d.kind==='amenity' ? `🪙${perHour(k).toLocaleString()}/h` : d.repairs ? `🔧 ${d.capacity}` : `🧹 ${d.capacity}`;
       const nm = t ? `${themeIcon(t)} ${themeName(t)} ${d.name}` : d.name;
       html += `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-room="${k}"${t?` data-style="${t}"`:''}`} title="${nm}">
         ${locked?`<span class="lock">🔒 ${need}</span>`:''}
         <div class="thumb"><div class="shape" style="width:${sw}px;height:${sh}px;background:${d.color}">${inner}</div></div>
-        <div class="nm">${nm}</div><div class="pr">🪙${cost.toLocaleString()}</div>
-        <div class="ea">${bed?`✨ Fully furnished: ${pieces} pieces, 15% off<br>`:''}${earn}<br>${blocks} block${blocks>1?'s':''} · ${d.w}×${d.h}${d.minFloor?` · floor ${d.minFloor+1}+`:''}</div></div>`;
+        <span class="rate">${rate}</span><div class="nm">${nm}</div><div class="pr">🪙${cost.toLocaleString()}</div></div>`;
       }
     }
     html += `</div>`;
@@ -1939,7 +1983,7 @@ window.addEventListener('pointermove', ev=>{
   const ni = ui.newItem;
   if(ni){
     if(!ni.moved && Math.hypot(ev.clientX-ni.sx, ev.clientY-ni.sy) > 8){ ni.moved = true; document.body.style.cursor = 'grabbing'; document.body.classList.add('dragOut'); }
-    if(ni.moved){ const p = toWorld(ev); ni.px = p.x; ni.py = p.y; const pr = panel.getBoundingClientRect(), cr = cv.getBoundingClientRect();
+    if(ni.moved){ buyZone(ev); const p = toWorld(ev); ni.px = p.x; ni.py = p.y; const pr = panel.getBoundingClientRect(), cr = cv.getBoundingClientRect();
       ni.over = ev.clientX>=cr.left && ev.clientX<=cr.right && ev.clientY>=cr.top && ev.clientY<=cr.bottom; }
     return;
   }
@@ -1948,15 +1992,20 @@ window.addEventListener('pointermove', ev=>{
     nd.moved = true; document.body.style.cursor = 'grabbing'; document.body.classList.add('dragOut');
   }
   if(nd.moved){
+    buyZone(ev);
     const p = toWorld(ev); nd.px = p.x; nd.py = p.y;
     const pr = panel.getBoundingClientRect(), cr = cv.getBoundingClientRect();
     const inPanel = ev.clientX>=pr.left && ev.clientX<=pr.right && ev.clientY>=pr.top && ev.clientY<=pr.bottom;
     nd.over = ev.clientX>=cr.left && ev.clientX<=cr.right && ev.clientY>=cr.top && ev.clientY<=cr.bottom;
   }
 });
+// ✖️ Cancel zone: drop a room or a piece you're buying there and nothing is bought
+function buyZone(ev){ const dz = $('dropZones'); dz.classList.add('show','buying'); const hot = zoneAt(ev.clientX, ev.clientY)==='cancel'; $('zoneCancel').classList.toggle('hot', hot); return hot; }
+function endBuyZone(ev){ const dz = $('dropZones'), hot = ev && dz.classList.contains('buying') && zoneAt(ev.clientX, ev.clientY)==='cancel'; dz.classList.remove('show','buying'); $('zoneCancel').classList.remove('hot'); return hot; }
 window.addEventListener('pointerup', ev=>{
   const ni = ui.newItem;
   if(ni){ ui.newItem = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut'); setTimeout(placeMarks, 220);
+    if(endBuyZone(ev)){ toast('Cancelled'); return; }
     if(!ni.moved){ if(ni.inv) startPlaceInv(ni.id); else buyItemTo(ni.id, null); return; }
     if(!ni.over) return;   // dragged and let go back over the menu: nothing happens
     const r = roomAt({x:ni.px, y:ni.py});
@@ -1965,6 +2014,7 @@ window.addEventListener('pointerup', ev=>{
     if(ni.inv) placeInvTo(ni.id, r, ni.px); else buyItemTo(ni.id, r, ni.px); return; }
   const nd = ui.newDrag; if(!nd) return;
   ui.newDrag = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut'); setTimeout(placeMarks, 220);
+  if(endBuyZone(ev) && nd.moved){ toast('Cancelled'); return; }
   const def = ROOMS[nd.type];
   if(nd.moved && nd.over){
     const t = newDragTarget(nd);
@@ -1972,7 +2022,7 @@ window.addEventListener('pointerup', ev=>{
   }
   buyRoom(nd.type, null, nd.style);   // a tap, or a drop where it can't stand: find a free spot automatically
 });
-window.addEventListener('pointercancel', ()=>{ ui.newItem = null; document.body.classList.remove('dragOut'); if(ui.newDrag){ ui.newDrag = null; document.body.style.cursor = ''; } });
+window.addEventListener('pointercancel', ()=>{ endBuyZone(); ui.newItem = null; document.body.classList.remove('dragOut'); if(ui.newDrag){ ui.newDrag = null; document.body.style.cursor = ''; } });
 function buyRoom(type, at, style){
   const def = ROOMS[type], cost = roomCost(type, style), bed = style && themeBed(type, style);
   if(def.lvl > level() || (bed && furnishLvl(type, style) > level())) return;
@@ -2035,6 +2085,8 @@ function openRoom(r){
   }
   if(false){ showPanel(`<h2>🛗 Elevator</h2><div class="sub">Guests ride the elevator up to their rooms. It runs the full height of your hotel and grows when you expand. Drag it left or right along the ground floor.</div>`); return; }
   const cv2 = coverage();
+  if(def.repairs){ const crews = count('maintenance')*def.capacity, broken = S.rooms.filter(o=>o.broken).length;
+    showPanel(`<h2>🔧 ${def.name}</h2><div class="sub">Your handymen fix up to ${crews} broken rooms at once. Broken right now: ${broken}.</div>${stylePicker(r)}<div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`); return; }
   showPanel(`<h2>🧺 ${def.name}</h2><div class="sub">Your cleaners look after ${cv2.cap} rooms. You have ${cv2.total} rooms that need cleaning.${cv2.total>cv2.cap?` <b style="color:#d6334f">${cv2.total-cv2.cap} rooms aren't covered. Tap them to clean by hand, or build another closet.</b>`:''}</div>
     ${stylePicker(r)}
     <div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`);
@@ -2146,7 +2198,7 @@ function openSell(r){
   if(def.kind==='lobby'){ toast(`The lobby can't be sold`); return; }
   { const st = strandsOthers(r.id, r.type, null); if(st){ toast(`The ${ROOMS[st.type].name} above needs this room to stand on`); return; } }
   if(r.guest || r.reserved || (r.users||0)>0){ toast('Wait until the room is empty'); return; }
-  if(def.kind==='service' && count('closet')<=1){ toast('Keep at least one Linen Closet'); return; }
+  if(r.type==='closet' && count('closet')<=1){ toast('Keep at least one Linen Closet'); return; }
   const refund = Math.round(def.cost*0.5);
   modal(`<h2 style="margin:0 0 6px">Sell ${def.name}?</h2><div style="color:#7a6e86;font-size:14px">You get back 🪙${refund}. Its furniture goes to your storage. Wallpaper and floors are not refunded.</div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px"><button class="btn alt" onclick="closeModal()">Keep it</button><button class="btn warn" onclick="doSell(${r.id})">Sell for 🪙${refund}</button></div>`);
@@ -2397,8 +2449,10 @@ function showHelp(){
     8. Level up for coin rewards, new rooms, furniture and guests. 💼 Business guests pay more, 👑 VIPs pay double but want well-decorated rooms.</div>
     <button class="btn" style="margin-top:14px" onclick="closeModal()">Let's go</button>`);
 }
-function modal(html){ $('modalCard').innerHTML = html; $('modal').style.display='flex'; }
-function closeModal(){ $('modal').style.display='none'; }
+function modal(html){ ui.lvlModal = false; $('modalCard').innerHTML = html; $('modal').style.display='flex'; }
+function closeModal(){ ui.lvlModal = false; $('modal').style.display='none'; }
+// the level-up card closes when you tap anywhere
+$('modal').addEventListener('pointerdown', ev=>{ if(ui.lvlModal){ ev.preventDefault(); closeModal(); } });
 function askName(){
   modal(`<h2 style="margin:0">Name your hotel</h2><div style="color:#7a6e86;font-size:14px;margin-top:6px">You can change it later.</div>
     <input id="nameIn" maxlength="16" placeholder="e.g. The Lantern Inn" value="${(S.name||'').replace(/"/g,'&quot;')}">
@@ -2413,6 +2467,13 @@ function saveName(){
   if(cloud.profile){ cloud.profile.set({name: S.name}).catch(()=>{}); }
   if(first && !loadProfile().seenHelp){ saveProfile({seenHelp:true}); showHelp(); }
 }
+// guest happiness face: 5 = bright green grin ... 1 = red frown
+const faceLevel = () => { const v = S.sat===undefined ? 0.7 : S.sat; return v>=0.85 ? 5 : v>=0.7 ? 4 : v>=0.55 ? 3 : v>=0.4 ? 2 : 1; };
+function faceHTML(n){
+  if(art('ui/face_'+n)) return `<img src="${art('ui/face_'+n).src}" alt="">`;
+  const col = ['#e5484d','#f08c3a','#f5c542','#8bd16a','#3fae8c'][n-1], m = [-6,-3,0,4,7][n-1];
+  return `<svg viewBox="0 0 48 48" width="30" height="30"><circle cx="24" cy="24" r="20" fill="${col}" stroke="#2b2340" stroke-width="3"/><circle cx="17" cy="20" r="3" fill="#2b2340"/><circle cx="31" cy="20" r="3" fill="#2b2340"/><path d="M14 ${31-m/2} Q24 ${31+m} 34 ${31-m/2}" fill="none" stroke="#2b2340" stroke-width="3" stroke-linecap="round"/></svg>`;
+}
 function fmt(ms){ const s = Math.ceil(ms/1000), h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=s%60; return h? `${h}h ${m}m` : `${m}:${String(x).padStart(2,'0')}`; }
 let lastTop = '';
 function updateTop(){
@@ -2425,9 +2486,11 @@ function updateTop(){
     icons += starImg('ui/star_'+kind) || (kind==='full' ? '<span>★</span>' : kind==='half' ? '<span>✬</span>' : '<span class="off">★</span>');
   }
   const open = isOpen(), left = S.shiftEnd-Date.now();
-  const key = [S.name, st, Math.floor(S.coins), lv, S.xp, open, open?Math.ceil(left/1000):0, blocksUsed(), blocksMax()].join('|');
+  const face = faceLevel();
+  const key = [S.name, st, Math.floor(S.coins), lv, S.xp, open, open?Math.ceil(left/1000):0, blocksUsed(), blocksMax(), face].join('|');
   if(key===lastTop) return; lastTop = key;
   $('starIcons').innerHTML = icons;
+  $('faceIcon').innerHTML = faceHTML(face);
   $('starNum').textContent = (st%1 ? st.toFixed(1) : st);
   $('coins').textContent = Math.floor(S.coins).toLocaleString();
   $('blocks').textContent = `${blocksUsed()}/${blocksMax()}`;
@@ -2486,7 +2549,7 @@ function updateHelper(){
   }
   h.style.display = panel.style.display==='block' && window.innerWidth<=640 ? 'none' : 'flex';
   const t = st.target && document.querySelector(st.target);
-  if(t && panel.style.display!=='block'){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
+  if(false && t){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
   else arrow.style.display='none';
 }
 $('helperOk').onclick = ()=>{ const st = ui.helperNow; if(st && st.go){ nudgeMute[st.id] = Date.now() + 4*60000; } else { const t = helperStep(); if(t) S.helperSkip = t.id; save(); } helperShown=''; updateHelper(); };

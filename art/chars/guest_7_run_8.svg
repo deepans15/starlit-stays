@@ -1,21 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="56" height="96" viewBox="0 0 56 96">
   <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 71L18.02 82L13.05 85.05h10L26.02 82L31 71Z M32 71L35.98 82L38.95 90.00h9L42.98 82L40 70Z" fill="#43aa8b" vector-effect="non-scaling-stroke" />
-    <g transform="translate(-4.95 -4.95)">
-      <path d="M18 89h10l5 3v2.75H16v-4Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    </g>
-    <g transform="translate(4.95 0.00)">
-      <path d="M33 89h9l5 3v2.75H32v-4Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    </g>
-    <path d="M19 49q11-7 21 1l3 25H16Z" fill="#ffc94d" vector-effect="non-scaling-stroke" />
-    <path d="M35 51l7 23h-8Z" fill="#43aa8b" stroke="none" opacity="0.18" vector-effect="non-scaling-stroke" />
-    <path d="M24 44v7q5 4 10-1v-7" fill="#ffb38a" vector-effect="non-scaling-stroke" />
-    <path d="M24 52l5 4 6-5" fill="none" stroke="#fff8ef" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <path d="M19 53Q14.48 62 18.03 65.98" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
-    <path d="M19 53Q14.48 62 18.03 65.98" fill="none" stroke="#ffc94d" stroke-width="5" vector-effect="non-scaling-stroke" />
-    <path d="M37 53Q41.52 62 39.97 62.02" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
-    <path d="M37 53Q41.52 62 39.97 62.02" fill="none" stroke="#ffc94d" stroke-width="5" vector-effect="non-scaling-stroke" />
-    <g transform="translate(0 0) rotate(0 28 35)">
+    <path d="M18 71L20 82L18 90H28L29 81L31 71Z M32 71L34 82L33 90H42L41 81L40 70Z" fill="#43aa8b" />
+    <path d="M17 90h11l5 3v1.75H16v-3Z M33 90h10l5 3v1.75H32v-3Z" fill="#fff8ef" />
+    <path d="M19 49q11-7 21 1l3 25H16Z" fill="#ffc94d" />
+    <path d="M24 44v7q5 4 10-1v-7" fill="#ffb38a" />
+    <path d="m24 52 5 4 6-5" stroke="#fff8ef" fill="none" stroke-width="2" />
+    <path d="M19 54Q12 65 22 65.0M37 54Q44 65 37 65.0" stroke="#2b2340" stroke-width="7.5" fill="none" />
+    <path d="M19 54Q12 65 22 65.0M37 54Q44 65 37 65.0" stroke="#ffc94d" stroke-width="5" fill="none" />
+    <circle cx="22" cy="65.0" r="2.5" fill="#ffb38a" stroke-width="1.5" />
+    <circle cx="37" cy="65.0" r="2.5" fill="#ffb38a" stroke-width="1.5" />
+    <g transform="translate(0 0)">
       <path d="M13 23q0-13 16-13 15 0 15 15v7l4 4-5 3q-1 11-15 11-15 0-15-17Z" fill="#ffb38a" vector-effect="non-scaling-stroke" />
       <path d="M13 33q-7-4-7 3 1 6 8 4" fill="#ffb38a" vector-effect="non-scaling-stroke" />
       <path d="M13 32Q5 15 20 10q18-6 24 10-9 5-16-3-3 10-10 12v7Z" fill="#654239" vector-effect="non-scaling-stroke" />

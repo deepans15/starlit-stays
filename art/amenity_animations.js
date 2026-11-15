@@ -167,8 +167,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "name": "Treadmill running",
       "width": 56,
       "height": 96,
-      "frames": 8,
-      "fps": 10,
+      "frames": 4,
+      "fps": 8,
       "anchor": {
         "x": 28,
         "y": 96
@@ -178,131 +178,79 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "chars/guest_1_run_1",
           "chars/guest_1_run_2",
           "chars/guest_1_run_3",
-          "chars/guest_1_run_4",
-          "chars/guest_1_run_5",
-          "chars/guest_1_run_6",
-          "chars/guest_1_run_7",
-          "chars/guest_1_run_8"
+          "chars/guest_1_run_4"
         ],
         "guest_2": [
           "chars/guest_2_run_1",
           "chars/guest_2_run_2",
           "chars/guest_2_run_3",
-          "chars/guest_2_run_4",
-          "chars/guest_2_run_5",
-          "chars/guest_2_run_6",
-          "chars/guest_2_run_7",
-          "chars/guest_2_run_8"
+          "chars/guest_2_run_4"
         ],
         "guest_3": [
           "chars/guest_3_run_1",
           "chars/guest_3_run_2",
           "chars/guest_3_run_3",
-          "chars/guest_3_run_4",
-          "chars/guest_3_run_5",
-          "chars/guest_3_run_6",
-          "chars/guest_3_run_7",
-          "chars/guest_3_run_8"
+          "chars/guest_3_run_4"
         ],
         "guest_4": [
           "chars/guest_4_run_1",
           "chars/guest_4_run_2",
           "chars/guest_4_run_3",
-          "chars/guest_4_run_4",
-          "chars/guest_4_run_5",
-          "chars/guest_4_run_6",
-          "chars/guest_4_run_7",
-          "chars/guest_4_run_8"
+          "chars/guest_4_run_4"
         ],
         "guest_5": [
           "chars/guest_5_run_1",
           "chars/guest_5_run_2",
           "chars/guest_5_run_3",
-          "chars/guest_5_run_4",
-          "chars/guest_5_run_5",
-          "chars/guest_5_run_6",
-          "chars/guest_5_run_7",
-          "chars/guest_5_run_8"
+          "chars/guest_5_run_4"
         ],
         "guest_6": [
           "chars/guest_6_run_1",
           "chars/guest_6_run_2",
           "chars/guest_6_run_3",
-          "chars/guest_6_run_4",
-          "chars/guest_6_run_5",
-          "chars/guest_6_run_6",
-          "chars/guest_6_run_7",
-          "chars/guest_6_run_8"
+          "chars/guest_6_run_4"
         ],
         "guest_7": [
           "chars/guest_7_run_1",
           "chars/guest_7_run_2",
           "chars/guest_7_run_3",
-          "chars/guest_7_run_4",
-          "chars/guest_7_run_5",
-          "chars/guest_7_run_6",
-          "chars/guest_7_run_7",
-          "chars/guest_7_run_8"
+          "chars/guest_7_run_4"
         ],
         "guest_8": [
           "chars/guest_8_run_1",
           "chars/guest_8_run_2",
           "chars/guest_8_run_3",
-          "chars/guest_8_run_4",
-          "chars/guest_8_run_5",
-          "chars/guest_8_run_6",
-          "chars/guest_8_run_7",
-          "chars/guest_8_run_8"
+          "chars/guest_8_run_4"
         ],
         "guest_9": [
           "chars/guest_9_run_1",
           "chars/guest_9_run_2",
           "chars/guest_9_run_3",
-          "chars/guest_9_run_4",
-          "chars/guest_9_run_5",
-          "chars/guest_9_run_6",
-          "chars/guest_9_run_7",
-          "chars/guest_9_run_8"
+          "chars/guest_9_run_4"
         ],
         "guest_10": [
           "chars/guest_10_run_1",
           "chars/guest_10_run_2",
           "chars/guest_10_run_3",
-          "chars/guest_10_run_4",
-          "chars/guest_10_run_5",
-          "chars/guest_10_run_6",
-          "chars/guest_10_run_7",
-          "chars/guest_10_run_8"
+          "chars/guest_10_run_4"
         ],
         "guest_11": [
           "chars/guest_11_run_1",
           "chars/guest_11_run_2",
           "chars/guest_11_run_3",
-          "chars/guest_11_run_4",
-          "chars/guest_11_run_5",
-          "chars/guest_11_run_6",
-          "chars/guest_11_run_7",
-          "chars/guest_11_run_8"
+          "chars/guest_11_run_4"
         ],
         "guest_12": [
           "chars/guest_12_run_1",
           "chars/guest_12_run_2",
           "chars/guest_12_run_3",
-          "chars/guest_12_run_4",
-          "chars/guest_12_run_5",
-          "chars/guest_12_run_6",
-          "chars/guest_12_run_7",
-          "chars/guest_12_run_8"
+          "chars/guest_12_run_4"
         ],
         "inspector": [
           "chars/inspector_run_1",
           "chars/inspector_run_2",
           "chars/inspector_run_3",
-          "chars/inspector_run_4",
-          "chars/inspector_run_5",
-          "chars/inspector_run_6",
-          "chars/inspector_run_7",
-          "chars/inspector_run_8"
+          "chars/inspector_run_4"
         ]
       }
     },
@@ -311,7 +259,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "name": "Dumbbell curls",
       "width": 56,
       "height": 96,
-      "frames": 8,
+      "frames": 4,
       "fps": 4,
       "anchor": {
         "x": 28,
@@ -322,131 +270,79 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "chars/guest_1_lift_1",
           "chars/guest_1_lift_2",
           "chars/guest_1_lift_3",
-          "chars/guest_1_lift_4",
-          "chars/guest_1_lift_5",
-          "chars/guest_1_lift_6",
-          "chars/guest_1_lift_7",
-          "chars/guest_1_lift_8"
+          "chars/guest_1_lift_4"
         ],
         "guest_2": [
           "chars/guest_2_lift_1",
           "chars/guest_2_lift_2",
           "chars/guest_2_lift_3",
-          "chars/guest_2_lift_4",
-          "chars/guest_2_lift_5",
-          "chars/guest_2_lift_6",
-          "chars/guest_2_lift_7",
-          "chars/guest_2_lift_8"
+          "chars/guest_2_lift_4"
         ],
         "guest_3": [
           "chars/guest_3_lift_1",
           "chars/guest_3_lift_2",
           "chars/guest_3_lift_3",
-          "chars/guest_3_lift_4",
-          "chars/guest_3_lift_5",
-          "chars/guest_3_lift_6",
-          "chars/guest_3_lift_7",
-          "chars/guest_3_lift_8"
+          "chars/guest_3_lift_4"
         ],
         "guest_4": [
           "chars/guest_4_lift_1",
           "chars/guest_4_lift_2",
           "chars/guest_4_lift_3",
-          "chars/guest_4_lift_4",
-          "chars/guest_4_lift_5",
-          "chars/guest_4_lift_6",
-          "chars/guest_4_lift_7",
-          "chars/guest_4_lift_8"
+          "chars/guest_4_lift_4"
         ],
         "guest_5": [
           "chars/guest_5_lift_1",
           "chars/guest_5_lift_2",
           "chars/guest_5_lift_3",
-          "chars/guest_5_lift_4",
-          "chars/guest_5_lift_5",
-          "chars/guest_5_lift_6",
-          "chars/guest_5_lift_7",
-          "chars/guest_5_lift_8"
+          "chars/guest_5_lift_4"
         ],
         "guest_6": [
           "chars/guest_6_lift_1",
           "chars/guest_6_lift_2",
           "chars/guest_6_lift_3",
-          "chars/guest_6_lift_4",
-          "chars/guest_6_lift_5",
-          "chars/guest_6_lift_6",
-          "chars/guest_6_lift_7",
-          "chars/guest_6_lift_8"
+          "chars/guest_6_lift_4"
         ],
         "guest_7": [
           "chars/guest_7_lift_1",
           "chars/guest_7_lift_2",
           "chars/guest_7_lift_3",
-          "chars/guest_7_lift_4",
-          "chars/guest_7_lift_5",
-          "chars/guest_7_lift_6",
-          "chars/guest_7_lift_7",
-          "chars/guest_7_lift_8"
+          "chars/guest_7_lift_4"
         ],
         "guest_8": [
           "chars/guest_8_lift_1",
           "chars/guest_8_lift_2",
           "chars/guest_8_lift_3",
-          "chars/guest_8_lift_4",
-          "chars/guest_8_lift_5",
-          "chars/guest_8_lift_6",
-          "chars/guest_8_lift_7",
-          "chars/guest_8_lift_8"
+          "chars/guest_8_lift_4"
         ],
         "guest_9": [
           "chars/guest_9_lift_1",
           "chars/guest_9_lift_2",
           "chars/guest_9_lift_3",
-          "chars/guest_9_lift_4",
-          "chars/guest_9_lift_5",
-          "chars/guest_9_lift_6",
-          "chars/guest_9_lift_7",
-          "chars/guest_9_lift_8"
+          "chars/guest_9_lift_4"
         ],
         "guest_10": [
           "chars/guest_10_lift_1",
           "chars/guest_10_lift_2",
           "chars/guest_10_lift_3",
-          "chars/guest_10_lift_4",
-          "chars/guest_10_lift_5",
-          "chars/guest_10_lift_6",
-          "chars/guest_10_lift_7",
-          "chars/guest_10_lift_8"
+          "chars/guest_10_lift_4"
         ],
         "guest_11": [
           "chars/guest_11_lift_1",
           "chars/guest_11_lift_2",
           "chars/guest_11_lift_3",
-          "chars/guest_11_lift_4",
-          "chars/guest_11_lift_5",
-          "chars/guest_11_lift_6",
-          "chars/guest_11_lift_7",
-          "chars/guest_11_lift_8"
+          "chars/guest_11_lift_4"
         ],
         "guest_12": [
           "chars/guest_12_lift_1",
           "chars/guest_12_lift_2",
           "chars/guest_12_lift_3",
-          "chars/guest_12_lift_4",
-          "chars/guest_12_lift_5",
-          "chars/guest_12_lift_6",
-          "chars/guest_12_lift_7",
-          "chars/guest_12_lift_8"
+          "chars/guest_12_lift_4"
         ],
         "inspector": [
           "chars/inspector_lift_1",
           "chars/inspector_lift_2",
           "chars/inspector_lift_3",
-          "chars/inspector_lift_4",
-          "chars/inspector_lift_5",
-          "chars/inspector_lift_6",
-          "chars/inspector_lift_7",
-          "chars/inspector_lift_8"
+          "chars/inspector_lift_4"
         ]
       }
     },
@@ -1093,6 +989,98 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "chars/inspector_read_stand_4"
         ]
       }
+    },
+    {
+      "id": "stretch",
+      "name": "Stretch and yoga",
+      "width": 56,
+      "height": 96,
+      "frames": 4,
+      "fps": 2,
+      "anchor": {
+        "x": 28,
+        "y": 96
+      },
+      "characters": {
+        "guest_1": [
+          "chars/guest_1_stretch_1",
+          "chars/guest_1_stretch_2",
+          "chars/guest_1_stretch_3",
+          "chars/guest_1_stretch_4"
+        ],
+        "guest_2": [
+          "chars/guest_2_stretch_1",
+          "chars/guest_2_stretch_2",
+          "chars/guest_2_stretch_3",
+          "chars/guest_2_stretch_4"
+        ],
+        "guest_3": [
+          "chars/guest_3_stretch_1",
+          "chars/guest_3_stretch_2",
+          "chars/guest_3_stretch_3",
+          "chars/guest_3_stretch_4"
+        ],
+        "guest_4": [
+          "chars/guest_4_stretch_1",
+          "chars/guest_4_stretch_2",
+          "chars/guest_4_stretch_3",
+          "chars/guest_4_stretch_4"
+        ],
+        "guest_5": [
+          "chars/guest_5_stretch_1",
+          "chars/guest_5_stretch_2",
+          "chars/guest_5_stretch_3",
+          "chars/guest_5_stretch_4"
+        ],
+        "guest_6": [
+          "chars/guest_6_stretch_1",
+          "chars/guest_6_stretch_2",
+          "chars/guest_6_stretch_3",
+          "chars/guest_6_stretch_4"
+        ],
+        "guest_7": [
+          "chars/guest_7_stretch_1",
+          "chars/guest_7_stretch_2",
+          "chars/guest_7_stretch_3",
+          "chars/guest_7_stretch_4"
+        ],
+        "guest_8": [
+          "chars/guest_8_stretch_1",
+          "chars/guest_8_stretch_2",
+          "chars/guest_8_stretch_3",
+          "chars/guest_8_stretch_4"
+        ],
+        "guest_9": [
+          "chars/guest_9_stretch_1",
+          "chars/guest_9_stretch_2",
+          "chars/guest_9_stretch_3",
+          "chars/guest_9_stretch_4"
+        ],
+        "guest_10": [
+          "chars/guest_10_stretch_1",
+          "chars/guest_10_stretch_2",
+          "chars/guest_10_stretch_3",
+          "chars/guest_10_stretch_4"
+        ],
+        "guest_11": [
+          "chars/guest_11_stretch_1",
+          "chars/guest_11_stretch_2",
+          "chars/guest_11_stretch_3",
+          "chars/guest_11_stretch_4"
+        ],
+        "guest_12": [
+          "chars/guest_12_stretch_1",
+          "chars/guest_12_stretch_2",
+          "chars/guest_12_stretch_3",
+          "chars/guest_12_stretch_4"
+        ],
+        "inspector": [
+          "chars/inspector_stretch_1",
+          "chars/inspector_stretch_2",
+          "chars/inspector_stretch_3",
+          "chars/inspector_stretch_4"
+        ]
+      }
     }
   ],
   "rooms": [
@@ -1165,7 +1153,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "fps": 4,
             "x": 378,
             "y": 157,
-            "scale": 0.6,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -1206,7 +1194,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "fps": 4,
             "x": 378,
             "y": 157,
-            "scale": 0.6,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -1247,7 +1235,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "fps": 4,
             "x": 378,
             "y": 157,
-            "scale": 0.6,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -1288,7 +1276,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "fps": 4,
             "x": 378,
             "y": 157,
-            "scale": 0.6,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -1303,7 +1291,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "fps": 4,
         "x": 378,
         "y": 157,
-        "scale": 0.6,
+        "scale": 0.8,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -1318,29 +1306,45 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "slots": [
         {
           "activity": "run",
-          "x": 80,
-          "y": 141,
+          "x": 45,
+          "y": 149,
           "scale": 0.8,
-          "phase": 0,
+          "phase": 0.0,
           "z": 5
         },
         {
           "activity": "lift",
-          "x": 253,
+          "x": 153,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "stretch",
+          "x": 262,
           "y": 155,
           "scale": 0.8,
-          "phase": 0.4,
+          "phase": 0.62,
           "z": 5
         }
       ],
-      "foreground": [],
+      "foreground": [
+        {
+          "x": 69,
+          "y": 99,
+          "width": 12,
+          "height": 42,
+          "z": 7
+        }
+      ],
       "staff": {
         "key": "chars/staff_fit",
         "frames": 4,
         "fps": 4,
-        "x": 174,
-        "y": 155,
-        "scale": 0.63,
+        "x": 98,
+        "y": 157,
+        "scale": 0.8,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -1352,18 +1356,26 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "slots": [
             {
               "activity": "run",
-              "x": 80,
-              "y": 141,
+              "x": 45,
+              "y": 149,
               "scale": 0.8,
-              "phase": 0,
+              "phase": 0.0,
               "z": 5
             },
             {
               "activity": "lift",
-              "x": 253,
+              "x": 153,
+              "y": 157,
+              "scale": 0.8,
+              "phase": 0.31,
+              "z": 5
+            },
+            {
+              "activity": "stretch",
+              "x": 262,
               "y": 155,
               "scale": 0.8,
-              "phase": 0.4,
+              "phase": 0.62,
               "z": 5
             }
           ],
@@ -1371,32 +1383,49 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_fit",
             "frames": 4,
             "fps": 4,
-            "x": 174,
-            "y": 155,
-            "scale": 0.63,
+            "x": 98,
+            "y": 157,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
               "y": 96
             }
-          }
+          },
+          "foreground": [
+            {
+              "x": 69,
+              "y": 99,
+              "width": 12,
+              "height": 42,
+              "z": 7
+            }
+          ]
         },
         "pink": {
           "slots": [
             {
               "activity": "run",
-              "x": 80,
-              "y": 141,
+              "x": 45,
+              "y": 149,
               "scale": 0.8,
-              "phase": 0,
+              "phase": 0.0,
               "z": 5
             },
             {
               "activity": "lift",
-              "x": 253,
+              "x": 153,
+              "y": 157,
+              "scale": 0.8,
+              "phase": 0.31,
+              "z": 5
+            },
+            {
+              "activity": "stretch",
+              "x": 262,
               "y": 155,
               "scale": 0.8,
-              "phase": 0.4,
+              "phase": 0.62,
               "z": 5
             }
           ],
@@ -1404,15 +1433,24 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_fit",
             "frames": 4,
             "fps": 4,
-            "x": 174,
-            "y": 155,
-            "scale": 0.63,
+            "x": 98,
+            "y": 157,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
               "y": 96
             }
-          }
+          },
+          "foreground": [
+            {
+              "x": 69,
+              "y": 99,
+              "width": 12,
+              "height": 42,
+              "z": 7
+            }
+          ]
         }
       }
     },
@@ -1504,9 +1542,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "key": "chars/staff_noodle",
         "frames": 4,
         "fps": 4,
-        "x": 295,
+        "x": 292,
         "y": 156,
-        "scale": 0.58,
+        "scale": 1.0,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -1590,9 +1628,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_noodle",
             "frames": 4,
             "fps": 4,
-            "x": 295,
+            "x": 292,
             "y": 156,
-            "scale": 0.58,
+            "scale": 1.0,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -1676,9 +1714,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_noodle",
             "frames": 4,
             "fps": 4,
-            "x": 295,
+            "x": 292,
             "y": 156,
-            "scale": 0.58,
+            "scale": 1.0,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -1762,9 +1800,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_noodle",
             "frames": 4,
             "fps": 4,
-            "x": 295,
+            "x": 292,
             "y": 156,
-            "scale": 0.58,
+            "scale": 1.0,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -1848,9 +1886,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_noodle",
             "frames": 4,
             "fps": 4,
-            "x": 295,
+            "x": 292,
             "y": 156,
-            "scale": 0.58,
+            "scale": 1.0,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -2098,8 +2136,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "frames": 4,
             "fps": 4,
             "x": 292,
-            "y": 158,
-            "scale": 0.5,
+            "y": 157,
+            "scale": 0.6,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -2230,8 +2268,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "frames": 4,
             "fps": 4,
             "x": 292,
-            "y": 158,
-            "scale": 0.5,
+            "y": 157,
+            "scale": 0.6,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -2362,8 +2400,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "frames": 4,
             "fps": 4,
             "x": 292,
-            "y": 158,
-            "scale": 0.5,
+            "y": 157,
+            "scale": 0.6,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -2487,8 +2525,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "frames": 4,
             "fps": 4,
             "x": 292,
-            "y": 158,
-            "scale": 0.5,
+            "y": 157,
+            "scale": 0.6,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -2612,8 +2650,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "frames": 4,
             "fps": 4,
             "x": 292,
-            "y": 158,
-            "scale": 0.5,
+            "y": 157,
+            "scale": 0.6,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -2627,8 +2665,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "frames": 4,
         "fps": 4,
         "x": 292,
-        "y": 158,
-        "scale": 0.5,
+        "y": 157,
+        "scale": 0.6,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -2847,9 +2885,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "key": "chars/staff_cinema",
         "frames": 4,
         "fps": 4,
-        "x": 304,
+        "x": 296,
         "y": 332,
-        "scale": 0.45,
+        "scale": 0.72,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -3065,9 +3103,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_cinema",
             "frames": 4,
             "fps": 4,
-            "x": 304,
+            "x": 296,
             "y": 332,
-            "scale": 0.45,
+            "scale": 0.72,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -3283,9 +3321,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_cinema",
             "frames": 4,
             "fps": 4,
-            "x": 304,
+            "x": 296,
             "y": 332,
-            "scale": 0.45,
+            "scale": 0.72,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -3501,9 +3539,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_cinema",
             "frames": 4,
             "fps": 4,
-            "x": 304,
+            "x": 296,
             "y": 332,
-            "scale": 0.45,
+            "scale": 0.72,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -3719,9 +3757,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_cinema",
             "frames": 4,
             "fps": 4,
-            "x": 304,
+            "x": 296,
             "y": 332,
-            "scale": 0.45,
+            "scale": 0.72,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -3788,9 +3826,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "key": "chars/staff_games",
         "frames": 4,
         "fps": 4,
-        "x": 236,
-        "y": 156,
-        "scale": 0.5,
+        "x": 238,
+        "y": 157,
+        "scale": 0.8,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -3829,9 +3867,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_games",
             "frames": 4,
             "fps": 4,
-            "x": 236,
-            "y": 156,
-            "scale": 0.5,
+            "x": 238,
+            "y": 157,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -3870,9 +3908,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_games",
             "frames": 4,
             "fps": 4,
-            "x": 236,
-            "y": 156,
-            "scale": 0.5,
+            "x": 238,
+            "y": 157,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -3947,9 +3985,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "key": "chars/staff_treehouse",
         "frames": 4,
         "fps": 4,
-        "x": 267,
+        "x": 266,
         "y": 196,
-        "scale": 0.5,
+        "scale": 0.55,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -4038,9 +4076,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "key": "chars/staff_treehouse",
         "frames": 4,
         "fps": 4,
-        "x": 267,
+        "x": 266,
         "y": 196,
-        "scale": 0.5,
+        "scale": 0.55,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -4058,9 +4096,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "key": "chars/staff_closet",
         "frames": 4,
         "fps": 4,
-        "x": 79,
+        "x": 114,
         "y": 158,
-        "scale": 0.55,
+        "scale": 0.8,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -4075,9 +4113,9 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_closet",
             "frames": 4,
             "fps": 4,
-            "x": 79,
+            "x": 114,
             "y": 158,
-            "scale": 0.55,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
@@ -4092,9 +4130,65 @@ window.STARLIT_AMENITY_ANIMATIONS = {
             "key": "chars/staff_closet",
             "frames": 4,
             "fps": 4,
-            "x": 79,
+            "x": 114,
             "y": 158,
-            "scale": 0.55,
+            "scale": 0.8,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "maintenance",
+      "width": 160,
+      "height": 168,
+      "slots": [],
+      "foreground": [],
+      "staff": {
+        "key": "chars/staff_maintenance",
+        "frames": 4,
+        "fps": 4,
+        "x": 111,
+        "y": 158,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "styleOverrides": {
+        "gold": {
+          "slots": [],
+          "foreground": [],
+          "staff": {
+            "key": "chars/staff_maintenance",
+            "frames": 4,
+            "fps": 4,
+            "x": 111,
+            "y": 158,
+            "scale": 0.8,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "pink": {
+          "slots": [],
+          "foreground": [],
+          "staff": {
+            "key": "chars/staff_maintenance",
+            "frames": 4,
+            "fps": 4,
+            "x": 111,
+            "y": 158,
+            "scale": 0.8,
             "z": 9,
             "anchor": {
               "x": 28,
