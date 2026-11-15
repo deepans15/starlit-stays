@@ -1,7 +1,7 @@
 # Guests actually using amenities
 
-## Cause of the current visual problem
-The current drawAmenGuest() calls drawBean(), which chooses a standing or walking pose. It adds a little bob for pool and gym visitors. That gives swimmers visible standing bodies and shoes, diners no eating gesture, and visitors no relationship to chairs or controls. These new files are activity-specific replacements. Merely registering them in the manifest will not change that renderer.
+## Corrected visual problem
+The former drawAmenGuest() called drawBean(), which chooses a standing or walking pose. It adds a little bob for pool and gym visitors. That gives swimmers visible standing bodies and shoes, diners no eating gesture, and visitors no relationship to chairs or controls. These new files are activity-specific replacements. The live game now loads these frames and draws activity poses with room-local anchors and foreground furniture crops.
 
 ## Activity art
 Every guest identity (guest_1 through guest_12 and inspector) has the following loops. Keys are chars/<character>_<activity>_<frame>. All frames are original self-contained SVGs, with transparent backgrounds, no scripts/embedded images/external links, and less than 60 KB per file.
@@ -34,8 +34,8 @@ amenity_animations.js defines window.STARLIT_AMENITY_ANIMATIONS. Each activity h
 
 Foreground records are rectangles to copy from the selected room's own loaded image, not new opaque rectangles. This preserves theme colours. Crop with the supplied source x/y/width/height and draw at that same room-local rectangle after actors at a lower z. Do not redraw an entire room on top of the guests.
 
-## Renderer handoff for Claude
-The art brief forbids this art task from editing index.html. To use the activity pack in gameplay:
+## Live game renderer
+The user explicitly authorized an exception to the art-only restriction for the amenity renderer. index.html now implements this integration:
 1. Load art/amenity_animations.js after manifest.js.
 2. Replace the inAmen standing-guest draw path with activity lookup by room type and slot. Character is inspector when g.inspector, otherwise guest_<g.skin>.
 3. Use slot/activity metadata; do not feed the new canvases through drawBean(), which assumes 56 x 96. Each activity supplies a different anchor or posture.
@@ -50,3 +50,6 @@ The Guests using amenities section in preview.html shows all eight amenity types
 
 ## Helper cap correction
 chars/helper.svg retains its 144 x 208 dimensions and welcoming pose. The teal star cap now has a wider fitted lower crown and gold band spanning the whole head. The upper scalp and hair contours were reshaped under it so no side of the head protrudes beside the cap.
+
+## Validation
+Game scripts compile. Renderer checks passed for 624 room/identity/style combinations, duplicate seats, dragged rooms, missing frames and frame playback. Actual draw calls were composited for visual inspection. Browser gameplay was not verified.

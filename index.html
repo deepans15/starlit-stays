@@ -220,6 +220,9 @@
 
 <script src="art/manifest.js"></script>
 <script src="art/items.js"></script>
+<script src="art/furnished_rooms.js" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/amenity_animations.js" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
 <script src="art/backgrounds.js"></script>
 <script src="art/weather.js" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
@@ -231,7 +234,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.43';
+const BUILD = '0.45';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -399,7 +402,7 @@ const ART = {};
 // ?v=BUILD makes browsers fetch fresh art after each update instead of showing old cached copies.
 const artReady = new Promise(done => {
   const all = Object.entries(window.STARLIT_ART || {});
-  const lazy = ([k]) => k.startsWith('weather/') || (k.startsWith('backgrounds/') && k.includes('_fx_'));
+  const lazy = ([k]) => k.startsWith('weather/') || (k.startsWith('backgrounds/') && k.includes('_fx_')) || /^chars\/.+_(swim|run|lift|eat|drink|drink_stand|watch|play|read|read_stand)_\d+$/.test(k);
   const list = all.filter(e=>!lazy(e));
   setTimeout(()=>{ for(const [key, file] of all.filter(lazy)){ const img = new Image(); img.onload = () => { ART[key] = img; }; img.src = 'art/' + file + '?v=' + BUILD; } }, 300);
   let left = list.length; const bar = document.getElementById('loadBar');
@@ -940,7 +943,7 @@ function draw(dt){
     ctx.fillStyle = open ? '#3fae8c' : '#ff7a90'; rr(sx, lq.y+10, 46, 18, 6); ctx.fill();
     ctx.fillStyle='#fff'; ctx.font='bold 10px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(open?'OPEN':'CLOSED', sx+23, lq.y+19); ctx.textBaseline='alphabetic'; }
   for(const g of guests) if(g.state!=='inRoom' && g.state!=='inAmen'){ if(g.state==='ride') g.alpha = Math.max(0, g.timer/g.rideT - 0.2); drawBean(g.x, g.y, g, 1); }
-  for(const g of guests) if(g.state==='inAmen') drawAmenGuest(g);
+  drawAmenityGuests(undefined, dragId);
   if(ui.newDrag && ui.newDrag.moved && ui.newDrag.over) drawNewRoomDrag(cov);
   if(ui.newItem && ui.newItem.moved && ui.newItem.over) drawNewItemDrag();
   if(dragId){
@@ -949,7 +952,7 @@ function draw(dt){
     ctx.save(); ctx.shadowColor='rgba(43,35,64,.45)'; ctx.shadowBlur=24; ctx.shadowOffsetY=10;
     const q = visRect(r); ctx.fillStyle='#fff'; ctx.fillRect(q.x+2,q.y+2,q.w-4,q.h-4); ctx.restore();
     drawRoom(r, cov.covered.has(r.id));
-    for(const g of guests) if(g.state==='inAmen' && g.amen===r.id) drawAmenGuest(g);
+    drawAmenityGuests(r.id);
   }
   // dim everything except the room being decorated
   if(ui.focus){
@@ -1003,8 +1006,23 @@ function drawElevator(x, y){
   }
   ctx.fillStyle = '#ffc94d'; ctx.beginPath(); ctx.arc(dx+dw/2+8, dy+dh/2, 3, 0, Math.PI*2); ctx.fill();
 }
+const ROOM_LAYOUT = {}; for(const l of (window.STARLIT_ROOM_LAYOUTS||[])) if(l && l.id) ROOM_LAYOUT[l.id] = l;
 function drawRoom(r, covered){
   const def = ROOMS[r.type], q = visRect(r), x=q.x, y=q.y, w=q.w, h=q.h;
+  const L = ROOM_LAYOUT[r.type];
+  if(L && L.openAir && art('rooms/'+r.type)){   // treehouses: no walls around the tree, the scenery shows through; only the cabin gets a frame
+    const k = w / L.width, fb = L.frameBounds || L.wallBounds;
+    if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawAmenity(r,x,y,w,h);
+    drawItems(r,x,y,w,h,'back'); drawItems(r,x,y,w,h,'front'); drawAmenityCount(r,x,y,w);
+    if(fb) edge(x + fb.x*k, y + fb.y*k, fb.width*k, fb.height*k);
+    ctx.font='bold 10px system-ui'; ctx.textAlign='left'; ctx.textBaseline='middle';
+    const label = roomLabel(r) + (beautiful(r) ? ' ✨' : ''); { const tw = ctx.measureText(label).width; ctx.fillStyle='rgba(255,253,248,.85)'; rr(x+3, y+7, tw+8, 14, 6); ctx.fill(); }
+    ctx.fillStyle = '#2b2340'; ctx.fillText(label, x+7, y+14);
+    if(r.dirty){ const wb = L.wallBounds || fb; ctx.fillStyle='rgba(120,90,60,.25)'; ctx.fillRect(x+wb.x*k, y+wb.y*k, wb.width*k, wb.height*k);
+      ctx.font='16px system-ui'; ctx.textAlign='center'; ctx.fillText(covered?'💨':'👆💨', x+(wb.x+wb.width/2)*k, y+(wb.y+wb.height/2)*k); }
+    pulseEdge(r,x,y,w,h); sellEdge(x,y,w,h);
+    return;
+  }
   if(def.kind==='lobby'){ drawLobby(r,x,y,w); edge(x,y,w,h); pulseEdge(r,x,y,w,h); sellEdge(x,y,w,h); return; }
   ctx.fillStyle = r.wall ? r.wallColor : def.color; ctx.fillRect(x,y,w,h);
   if(r.wall){ ctx.fillStyle='rgba(255,255,255,.35)'; for(let i=8;i<w-4;i+=14) ctx.fillRect(x+i, y+2, 5, h-14); }
@@ -1046,6 +1064,12 @@ function drawRoom(r, covered){
 // themed versions shown in the Build menu: amenities use a room style, guest rooms come with that theme's bed
 // a Limited guest room comes fully furnished with its theme's pieces, laid out to fit the room (15% cheaper than buying them one by one)
 function furnishPlan(type, t){
+  // ChatGPT's hand-arranged layouts (art/furnished_rooms.js) are used for 2-wide rooms; other sizes are laid out automatically
+  const cur = ROOMS[type].w===2 && (window.STARLIT_FURNISHED_ROOMS||[]).find(f=>f.theme===t && f.type==='comfy');
+  if(cur){ const kind = ROOMS[type].kind, out = [];
+    for(const i of cur.items){ const id = String(i.key||'').replace('decor/',''), d = ITEMS[id]; if(!d || !d.rooms.includes(kind)) continue;
+      const p = {id, x: Math.round(i.x/2)}; if(d.zone==='wall') p.y = Math.round(i.y/2); out.push(p); }
+    if(out.length) return out; }
   const kind = ROOMS[type].kind, RW = ROOMS[type].w*CELL, ids = (COLLECTIONS[t]||[]).filter(id=>ITEMS[id] && ITEMS[id].rooms.includes(kind));
   const out = [], bed = ids.find(id=>ITEMS[id].zone==='bed');
   let left = 8;
@@ -1199,6 +1223,75 @@ function drawAmenity(r,x,y,w,h){
       ctx.strokeStyle='rgba(255,255,255,.8)'; ctx.lineWidth=2; ctx.beginPath();
       for(let i=0;i<w-30;i+=6){ const yy = fy-18 + Math.sin(time*3 + i*0.2)*2; i===0? ctx.moveTo(x+15+i,yy) : ctx.lineTo(x+15+i,yy); } ctx.stroke(); ctx.lineWidth=1;
       ctx.fillStyle='#fff'; ctx.fillRect(x+w-30, fy-56, 3, 30); ctx.fillRect(x+w-30, fy-56, 16, 3); break;
+  }
+}
+// Activity art uses room-local anchors and foreground crops instead of standing guests.
+const AMENITY_ACTIVITY_DATA = window.STARLIT_AMENITY_ANIMATIONS || null;
+const AMENITY_ACTIVITY_TYPES = new Map((AMENITY_ACTIVITY_DATA?.activities || []).map(a => [a.id, a]));
+const AMENITY_ACTIVITY_ROOMS = new Map((AMENITY_ACTIVITY_DATA?.rooms || []).map(r => [r.id, r]));
+function drawAmenityGuests(onlyRoomId, excludedRoomId){
+  const groups = new Map();
+  for(const g of guests){
+    if(g.state!=='inAmen' || (onlyRoomId!==undefined && g.amen!==onlyRoomId) || (excludedRoomId!==undefined && g.amen===excludedRoomId)) continue;
+    if(!groups.has(g.amen)) groups.set(g.amen, []);
+    groups.get(g.amen).push(g);
+  }
+  for(const [roomId, visitors] of groups){
+    const room = S.rooms.find(r=>r.id===roomId); if(!room) continue;
+    const layout = AMENITY_ACTIVITY_ROOMS.get(room.type);
+    const styleKey = room.style && 'rooms/'+room.style+'_'+room.type;
+    const styledImage = styleKey && art(styleKey);
+    const roomImage = styledImage || art('rooms/'+room.type);
+    if(!layout || !roomImage){ visitors.forEach(drawAmenGuest); continue; }
+    const variant = (styledImage && layout.styleOverrides?.[room.style]) || layout;
+    const slots = variant.slots || layout.slots;
+    if(!slots?.length){ visitors.forEach(drawAmenGuest); continue; }
+    const q = visRect(room), sx = q.w/layout.width, sy = q.h/layout.height;
+    // Rendering never mutates saved slots. Duplicate gameplay slots get a free visual seat.
+    const used = new Set(), assigned = [], waiting = [];
+    for(const g of visitors){
+      if(Number.isInteger(g.slot) && g.slot>=0 && g.slot<slots.length && !used.has(g.slot)){
+        used.add(g.slot); assigned.push({g, slot:slots[g.slot]});
+      } else waiting.push(g);
+    }
+    for(const g of waiting){
+      const free = slots.findIndex((_, i)=>!used.has(i));
+      if(free<0){ assigned.push({g, slot:null}); continue; }
+      used.add(free); assigned.push({g, slot:slots[free]});
+    }
+    const draws = [];
+    for(const {g, slot} of assigned){
+      const activity = slot && AMENITY_ACTIVITY_TYPES.get(slot.activity);
+      const character = g.inspector ? 'inspector' : 'guest_'+g.skin;
+      const keys = activity?.characters?.[character];
+      if(!keys?.length){ draws.push({z:5, g, fallback:true}); continue; }
+      const phase = time + (slot.phase || 0) + ((g.id || 0)%13)*0.071;
+      const frame = ((Math.floor(phase*activity.fps)%keys.length)+keys.length)%keys.length;
+      const image = art(keys[frame]) || keys.map(art).find(Boolean);
+      if(!image){ draws.push({z:slot.z || 5, g, fallback:true}); continue; }
+      const motion = activity.id==='swim' && layout.swimMotion;
+      const dx = motion ? motion.x*Math.sin(phase*2) : 0;
+      const dy = motion ? motion.y*Math.cos(phase*2) : 0;
+      draws.push({z:slot.z || 5, g, image,
+        x:q.x+(slot.x-activity.anchor.x*slot.scale+dx)*sx,
+        y:q.y+(slot.y-activity.anchor.y*slot.scale+dy)*sy,
+        w:activity.width*slot.scale*sx, h:activity.height*slot.scale*sy});
+    }
+    for(const f of (variant.foreground || layout.foreground || [])) draws.push({z:f.z || 7, crop:f});
+    draws.sort((a,b)=>a.z-b.z);
+    ctx.save();
+    ctx.beginPath(); ctx.rect(q.x,q.y,q.w,q.h); ctx.clip();
+    for(const d of draws){
+      if(d.crop){
+        const f=d.crop;
+        ctx.drawImage(roomImage, f.x,f.y,f.width,f.height, q.x+f.x*sx,q.y+f.y*sy,f.width*sx,f.height*sy);
+      } else if(d.fallback){ drawAmenGuest(d.g); }
+      else {
+        ctx.save(); ctx.globalAlpha *= Math.max(0,Math.min(1,d.g.alpha===undefined?1:d.g.alpha));
+        ctx.drawImage(d.image,d.x,d.y,d.w,d.h); ctx.restore();
+      }
+    }
+    ctx.restore();
   }
 }
 function drawAmenGuest(g){
@@ -1910,7 +2003,7 @@ setInterval(()=>{ updateOpenPrompt();
 function buyShift(mins, cost, free){
   if(S.coins<cost) return;
   S.coins -= cost; if(free) S.freeShift=false;
-  S.shiftEnd = Math.max(Date.now(), S.shiftEnd) + mins*60000; save(); closePanel(); toast('🔔 Open for business!'); spawnTimer = 1;
+  S.shiftEnd = Math.max(Date.now(), S.shiftEnd) + mins*60000; save(); setTimeout(()=>pushScores(true), 500); closePanel(); toast('🔔 Open for business!'); spawnTimer = 1;
 }
 function openExpand(){
   unfocus();
@@ -2042,7 +2135,7 @@ function esc(t){ return String(t).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;
    Visiting swaps that copy in for viewing; nothing is saved while you look around, and Back home restores your own hotel. */
 function hotelSnapshot(){
   const rooms = S.rooms.map(r=>({type:r.type, f:r.f, c:r.c, wall:!!r.wall, floor:!!r.floor, wallColor:r.wallColor||null, style:r.style||null, items:(r.items||[]).map(i=>({id:i.id, x:Math.round(i.x), y:Math.round(i.y||0), on: i.on ? r.items.findIndex(o=>o.u===i.on) : -1}))}));
-  return {json: JSON.stringify({v:1, name:(S.name||'Hotel').slice(0,30), xp:Math.floor(S.xp), served:S.served|0, plot:S.plot|0, scene:S.scene||null, rooms}), name:(S.name||'Hotel').slice(0,30), level:level(), updated:Date.now()};
+  return {json: JSON.stringify({v:1, name:(S.name||'Hotel').slice(0,30), xp:Math.floor(S.xp), served:S.served|0, plot:S.plot|0, scene:S.scene||null, openUntil: S.shiftEnd||0, rooms}), name:(S.name||'Hotel').slice(0,30), level:level(), updated:Date.now()};
 }
 async function visitHotel(uid){
   if(!onlineAvailable()){ toast('Visiting works on the online version'); return; }
@@ -2055,12 +2148,12 @@ async function visitHotel(uid){
   let h; try{ h = JSON.parse(d.json); }catch(e){ toast('That hotel could not be loaded'); return; }
   if(!ui.visit){ save(); ui.home = S; ui.homeGuests = guests; }
   const st = freshState();
-  Object.assign(st, {name:h.name, xp:h.xp||0, served:h.served||0, plot:Math.min(h.plot||0, BLOCK_TIERS.length-1), scene:h.scene||null, shiftEnd:Date.now()+864e5, freeShift:false, helperDone:true, seenLevel:999,
+  Object.assign(st, {name:h.name, xp:h.xp||0, served:h.served||0, plot:Math.min(h.plot||0, BLOCK_TIERS.length-1), scene:h.scene||null, shiftEnd:(h.openUntil===undefined ? Date.now()+864e5 : h.openUntil), freeShift:false, helperDone:true, seenLevel:999,
     rooms:(h.rooms||[]).filter(r=>ROOMS[r.type]).map((r,i)=>Object.assign(mkRoom(i+1, r.type, r.f, r.c, 0), {wall:r.wall, floor:r.floor, wallColor:r.wallColor||WALL_COLORS[0], style:r.style||null,
       items:(()=>{ const made = (r.items||[]).map(it=>ITEMS[it.id] ? Object.assign(mkItem(it.id, it.x), {y:it.y||0}) : null); (r.items||[]).forEach((it,i)=>{ if(made[i] && it.on>=0 && made[it.on]) made[i].on = made[it.on].u; }); return made.filter(Boolean); })()}))});
   ui.visit = {uid, name:h.name}; S = st; guests = []; spawnTimer = 0.5; closePanel(); closeModal(); resetZoom(); lastTop = '';
   document.body.classList.add('visiting');
-  $('visitName').textContent = h.name; $('visitMeta').textContent = `Level ${level()} · ${'★'.repeat(Math.floor(stars()))} · ${st.rooms.length} rooms`;
+  $('visitName').textContent = h.name; $('visitMeta').textContent = `${isOpen() ? '🟢 Open' : '⚪ Closed right now'} · Level ${level()} · ${'★'.repeat(Math.floor(stars()))} · ${st.rooms.length} rooms`;
   $('visitLike').textContent = '❤️ Like'; $('visitLike').disabled = !FB.user;
   try{ const [n, mine] = await Promise.all([FB.likeCount(uid), FB.user ? FB.hasLiked(uid) : false]); if(ui.visit && ui.visit.uid===uid){ ui.visit.likes = n; ui.visit.liked = mine; showLikes(); } }catch(e){}
   // small thank-you for visiting: once per hotel per day
@@ -2084,7 +2177,8 @@ async function openVisitList(){
   let html = head + (FB.user ? '' : `<div class="item" style="background:#fff6e0"><div class="info"><b>Share your hotel too</b><div class="meta">Sign in with Google so others can visit you.</div></div><button class="btn" onclick="signInGoogle()">Sign in</button></div>`);
   const list = rows.filter(r=>r.id!==me);
   if(!list.length) html += `<div class="sub">No other hotels to visit yet.</div>`;
-  for(const r of list) html += `<div class="item"><div class="info"><b>${esc(r.name||'Hotel')}</b><div class="meta">Level ${r.level||1}${done.includes(r.id)?' · visited today':' · 🎁 gift'}</div></div><button class="btn" onclick="visitHotel('${r.id}')">Visit</button></div>`;
+  list.sort((a,b)=>((b.openUntil||0)>Date.now()) - ((a.openUntil||0)>Date.now()));   // open hotels first
+  for(const r of list) html += `<div class="item"><div class="info"><b>${esc(r.name||'Hotel')}</b><div class="meta">${(r.openUntil||0) > Date.now() ? '🟢 Open' : '⚪ Closed'} · Level ${r.level||1}${done.includes(r.id)?' · visited today':' · 🎁 gift'}</div></div><button class="btn" onclick="visitHotel('${r.id}')">Visit</button></div>`;
   showPanel(html, 'visit');
 }
 function openMenu(){
@@ -2353,7 +2447,7 @@ if(!window.claude && /^https?:$/.test(location.protocol)){
       async top(field, n){ const q = await getDocs(query(collection(db,'leaderboard'), orderBy(field,'desc'), limit(n))); return q.docs.map(d=>({id:d.id, ...d.data()})); },
       putHotel(d){ return setDoc(doc(db,'hotels',FB.user.uid), d); },
       async getHotel(uid){ const s = await getDoc(doc(db,'hotels',uid)); return s.exists() ? s.data() : null; },
-      async recentHotels(n){ const q = await getDocs(query(collection(db,'hotels'), orderBy('updated','desc'), limit(n))); return q.docs.map(d=>({id:d.id, name:d.data().name, level:d.data().level})); },
+      async recentHotels(n){ const q = await getDocs(query(collection(db,'hotels'), orderBy('updated','desc'), limit(n))); return q.docs.map(d=>{ let open = 0; try{ open = JSON.parse(d.data().json).openUntil||0; }catch(e){} return {id:d.id, name:d.data().name, level:d.data().level, openUntil:open}; }); },
       like(uid){ return setDoc(doc(db,'hotels',uid,'likes',FB.user.uid), {at: Date.now()}); },
       async hasLiked(uid){ return (await getDoc(doc(db,'hotels',uid,'likes',FB.user.uid))).exists(); },
       async likeCount(uid){ const c = await fsM.getCountFromServer(collection(db,'hotels',uid,'likes')); return c.data().count; },
