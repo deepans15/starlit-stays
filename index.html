@@ -234,14 +234,14 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js"></script>
-<script src="art/items.js"></script>
-<script src="art/furnished_rooms.js" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js"></script>
-<script src="art/weather.js" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.56"></script>
+<script src="art/items.js?v=0.56"></script>
+<script src="art/furnished_rooms.js?v=0.56" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.56" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.56" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.56" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.56"></script>
+<script src="art/weather.js?v=0.56" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -251,7 +251,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.54';
+const BUILD = '0.56';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -292,6 +292,7 @@ const ROOMS = {
   grand:  {name:'Grand Room',  kind:'guest',   w:2, h:2, cost:2400, lvl:5,  stay:32, pay:70, xp:12, color:'#d8c8ff'},
   loft:   {name:'Sky Loft',    kind:'guest',   w:3, h:2, cost:5200, lvl:9,  stay:36, pay:120,xp:18, color:'#bfe6ff', minFloor:2},
   closet: {name:'Linen Closet',kind:'service', w:1, h:1, cost:250,  lvl:1,  capacity:5, color:'#5c3a28'},
+  laundry: {name:'Laundry Room', kind:'service', w:1, h:1, cost:900, lvl:6, capacity:4, color:'#9fc9e6', laundry:true},
   maintenance: {name:'Maintenance Room', kind:'service', w:1, h:1, cost:600, lvl:4, capacity:6, color:'#5b6b82', repairs:true},
   fit:    {name:'Fit Corner',  kind:'amenity', w:2, h:1, cost:700,  lvl:1,  slots:3, use:9,  pay:8,  xp:3, color:'#ffd1dc', icon:'🏋️'},
   noodle: {name:'Noodle Bar',  kind:'amenity', w:2, h:1, cost:1400, lvl:4,  slots:3, use:10, pay:15, xp:4, color:'#ffcf9e', icon:'🍜'},
@@ -337,7 +338,8 @@ const ITEMS = {};
       w: num(d.width,64,8,320)/2, h: num(d.height,64,8,320)/2,
       cost: Math.round(num(d.cost,100,0,100000)), decor: Math.round(num(d.decor,3,0,60)), lvl: Math.round(num(d.level,1,1,60)),
       rooms, emoji: typeof d.emoji==='string' && d.emoji && !d.emoji.includes('?') ? d.emoji.slice(0,4) : '✨', back: !!d.back || d.id.includes('rug'),
-      category: typeof d.category==='string' ? d.category : undefined, climate: ['cool','warm','both'].includes(d.climate) ? d.climate : undefined };
+      category: typeof d.category==='string' ? d.category : undefined,
+      climate: ['cool','warm','both'].includes(d.climate) ? d.climate : /air_?con|ceiling_fan/.test(d.id) ? 'cool' : /radiator|fireplace|heater/.test(d.id) ? 'warm' : /thermostat/.test(d.id) ? 'both' : undefined };
   };
   for(const d of ITEM_DEFAULTS){ const n = norm(d); if(n) ITEMS[n.id] = n; }
   const extra = Array.isArray(window.STARLIT_ITEMS) ? window.STARLIT_ITEMS : [];
@@ -618,7 +620,7 @@ const lobbyLiftX = () => { const l = lobbyRoom(); return l ? BX + l.c*CELL + ROO
 const worldH = () => groundY() + SIDEWALK;
 function shiftCost(sh){ return Math.round(sh.cost * (1 + 0.1*(level()-1))); }
 function coverage(){
-  const cap = S.rooms.filter(r=>r.type==='closet').length * ROOMS.closet.capacity;
+  const cap = S.rooms.filter(r=>r.type==='closet').length * ROOMS.closet.capacity + (S.rooms.some(r=>r.type==='closet') ? count('laundry') * ROOMS.laundry.capacity : 0);
   const list = S.rooms.filter(r=>ROOMS[r.type].kind==='guest' || ROOMS[r.type].kind==='amenity').sort((a,b)=>a.id-b.id);
   return {cap, covered:new Set(list.slice(0,cap).map(r=>r.id)), total:list.length};
 }
@@ -802,6 +804,17 @@ function freeGuestRoom(g){
   opts.sort((a,b)=> (ROOMS[b.type].pay*(0.6+0.9*decorPct(b))) - (ROOMS[a.type].pay*(0.6+0.9*decorPct(a))));
   return opts[0];
 }
+function updateVisitors(dt){
+  if(ui.visit || !isOpen()) return;
+  ui.visitCd = (ui.visitCd===undefined ? 6 : ui.visitCd) - dt; if(ui.visitCd > 0) return;
+  const free = S.rooms.filter(r=>ROOMS[r.type].kind==='amenity' && !r.dirty && (r.users||0) < ROOMS[r.type].slots);
+  ui.visitCd = Math.max(2, 8 - free.length*1.2) * (0.6 + Math.random()*0.6);
+  if(!free.length) return;
+  const a = free[Math.floor(Math.random()*free.length)], taken = new Set(guests.filter(o=>o.state==='inAmen' && o.amen===a.id).map(o=>o.slot)); let sl = 0; while(taken.has(sl)) sl++;
+  a.users = (a.users||0) + 1;
+  guests.push({id:gid++, state:'inAmen', amen:a.id, slot:sl, timer:ROOMS[a.type].use*(1+Math.random()*0.5), visitor:true, x:liftX(), y:laneY(), skin:1+Math.floor(Math.random()*GUEST_SKINS), dir:-1,
+    type:'regular', color:GUEST_COLORS[Math.floor(Math.random()*GUEST_COLORS.length)], hat:false, want:null, wait:0, room:null, alpha:1});
+}
 function amenityFor(type){ return S.rooms.find(r=>r.type===type && !r.dirty && (r.users||0) < ROOMS[r.type].slots); }
 function moveTo(g, tx, speed, dt){
   g.moving = Math.abs(tx - g.x) > 0.5;
@@ -893,7 +906,7 @@ function updateCleaning(dt){
   const {covered} = coverage();
   for(const r of S.rooms){
     if(!r.dirty || r.guest || (r.users||0)>0){ r.cleanT = 0; continue; }
-    if(covered.has(r.id)){ r.cleanT = (r.cleanT||0) + dt; if(r.cleanT >= 2.5){ r.dirty=false; r.cleanT=0; } }
+    if(covered.has(r.id)){ r.cleanT = (r.cleanT||0) + dt * (count('laundry') ? 2 : 1); if(r.cleanT >= 2.5){ r.dirty=false; r.cleanT=0; } }
   }
 }
 
@@ -910,7 +923,7 @@ function frame(now){
     if(ui.busCd <= 0 && guestRoomCount() >= 3 && !ui.visit){ ui.busCd = 200 + Math.random()*160; ui.busT = 25; toast('🚌 A tour bus just arrived! Lots of guests for a short while'); spawnTimer = 0.3; }
   }
   if(ui.busT > 0) ui.busT -= sdt;
-  updateGuests(sdt); updateCleaning(sdt); maybeIssue(sdt); updateIssues(sdt); updateRepairs(sdt);
+  updateGuests(sdt); updateVisitors(sdt); updateCleaning(sdt); maybeIssue(sdt); updateIssues(sdt); updateRepairs(sdt);
   for(const r of S.rooms){ if(r.anim){ r.anim.t+=dt; if(r.anim.t>0.2) r.anim=null; } if(r.pulse>0) r.pulse-=dt; }
   doorsOpen = Math.max(0, doorsOpen - sdt);
   floats.forEach(f=>f.t+=dt); floats = floats.filter(f=>f.t<1.4);
@@ -1009,6 +1022,7 @@ function draw(dt){
   const cov = coverage();
   const dragId = ui.drag && ui.drag.moved ? ui.drag.room.id : null;
   for(const r of S.rooms) if(r.id!==dragId) drawRoom(r, cov.covered.has(r.id));
+  drawRoofs(dragId);
   // sidewalk
   ctx.fillStyle = '#5f6672'; ctx.fillRect(-2000, gy+SIDEWALK, worldW()+4000, 2000);
   ctx.fillStyle = '#9aa1ad'; ctx.fillRect(-2000, gy, worldW()+4000, SIDEWALK);
@@ -1098,10 +1112,13 @@ function drawRoom(r, covered){
     return;
   }
   if(def.kind==='lobby'){ drawLobby(r,x,y,w); edge(x,y,w,h); pulseEdge(r,x,y,w,h); sellEdge(x,y,w,h); return; }
-  ctx.fillStyle = r.wall ? r.wallColor : def.color; ctx.fillRect(x,y,w,h);
-  if(r.wall){ if(def.kind==='guest') drawWallPattern(r,x,y,w,h);
+  const bgArt = def.kind==='guest' && !r.wall && !r.floor && sprite('rooms/'+r.type, x, y, w, h);   // ChatGPT's room background until the player picks their own wallpaper / floor
+  if(!bgArt){ ctx.fillStyle = r.wall ? r.wallColor : def.color; ctx.fillRect(x,y,w,h); }
+  if(bgArt){}
+  else if(r.wall){ if(def.kind==='guest') drawWallPattern(r,x,y,w,h);
     else { ctx.fillStyle='rgba(255,255,255,.35)'; for(let i=8;i<w-4;i+=14) ctx.fillRect(x+i, y+2, 5, h-14); } }
-  if(r.floor){ ctx.fillStyle='#c8915f'; ctx.fillRect(x,y+h-FLOOR_PAD,w,10); ctx.fillStyle='#a8743f'; for(let i=0;i<w;i+=20) ctx.fillRect(x+i+2, y+h-FLOOR_PAD, 2, 10); }
+  if(bgArt){}
+  else if(r.floor){ ctx.fillStyle='#c8915f'; ctx.fillRect(x,y+h-FLOOR_PAD,w,10); ctx.fillStyle='#a8743f'; for(let i=0;i<w;i+=20) ctx.fillRect(x+i+2, y+h-FLOOR_PAD, 2, 10); }
   else { ctx.fillStyle='#bcaaa4'; ctx.fillRect(x,y+h-FLOOR_PAD,w,10); }
   // guest rooms are plain: just walls, floor and whatever furniture the player puts in (a new room only has its bed)
   if(def.kind==='guest'){ drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,h,'bed'); drawItems(r,x,y,w,h,'front'); drawGuestRoom(r,x,y,w,h,'guest'); }   // the sleeping guest stays in front of the furniture
@@ -1227,7 +1244,7 @@ function itemY(r, it, def){
   if(sup && ITEMS[sup.id] && surfaceTop(ITEMS[sup.id])!==undefined){ const sd = ITEMS[sup.id]; return Math.max(3, itemY(r, sup, sd) + surfaceTop(sd) - def.h); }
   const h = hOf(r.type)*FLOOR;
   if(def.zone==='ceiling') return 3;
-  if(def.zone==='wall') return Math.max(22, Math.min(h - FLOOR_PAD - def.h - 8, it.y || 24));
+  if(def.zone==='wall') return Math.max(4, Math.min(h - FLOOR_PAD - def.h - 8, it.y || 24));
   return h - FLOOR_PAD - def.h + (def.back ? 4 : 0);
 }
 function clampItemX(r, def, x){ const w = ROOMS[r.type].w*CELL; return Math.max(4, Math.min(w - def.w - 4, x)); }
@@ -1307,7 +1324,24 @@ function drawGuestRoom(r,x,y,w,h,part){
 function drawCrown(x,y){ ctx.fillStyle='#ffc94d'; ctx.strokeStyle='#2b2340'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(x-7,y+6); ctx.lineTo(x-7,y-1); ctx.lineTo(x-3,y+3); ctx.lineTo(x,y-4); ctx.lineTo(x+3,y+3); ctx.lineTo(x+7,y-1); ctx.lineTo(x+7,y+6); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.lineWidth=1; }
 // a row of little people above each amenity: filled = in use, each with its own timer ring
 const buildMode = () => panel.style.display==='block' && (ui.panelKind==='build' || !!ui.focus);
+// a thick roof line wherever a room has open sky above it, like the original's dark building outline
+function drawRoofs(skipId){
+  const occ = new Set(); for(const r of S.rooms){ if(r.id===skipId) continue; const d = ROOMS[r.type]; for(let i=0;i<d.w;i++) for(let j=0;j<hOf(r.type);j++) occ.add((r.f+j)+','+(r.c+i)); }
+  for(const r of S.rooms){
+    if(r.id===skipId) continue; const L = ROOM_LAYOUT[r.type]; if(L && L.openAir) continue;
+    const d = ROOMS[r.type], q = roomRect(r), top = r.f + hOf(r.type);
+    for(let i=0;i<d.w;i++){
+      if(occ.has(top+','+(r.c+i))) continue;
+      const left = !occ.has(top+','+(r.c+i-1)) && !occ.has((top-1)+','+(r.c+i-1)), right = !occ.has(top+','+(r.c+i+1)) && !occ.has((top-1)+','+(r.c+i+1));
+      const x0 = q.x + i*CELL - (i===0 && left ? 4 : 0), x1 = q.x + (i+1)*CELL + (i===d.w-1 && right ? 4 : 0);
+      ctx.fillStyle = '#2b2340'; ctx.fillRect(x0, q.y - 9, x1 - x0, 10);
+      ctx.fillStyle = '#4a3f66'; ctx.fillRect(x0, q.y - 9, x1 - x0, 3);
+      ctx.fillStyle = 'rgba(255,255,255,.08)'; for(let k=x0+6;k<x1-2;k+=14) ctx.fillRect(k, q.y - 5, 6, 2);
+    }
+  }
+}
 function drawAmenityCount(r,x,y,w){
+  const L = ROOM_LAYOUT[r.type]; if(L && L.openAir && L.frameBounds){ const k = w / L.width; x += L.frameBounds.x*k; y += L.frameBounds.y*k + 4; }
   const n = ROOMS[r.type].slots, users = guests.filter(g=>g.state==='inAmen' && g.amen===r.id).sort((a,b)=>(a.slot||0)-(b.slot||0));
   const fw = 9, fh = 12, gap = 4, x0 = x + 8;
   for(let i=0;i<n;i++){
@@ -1322,9 +1356,10 @@ function drawAmenityCount(r,x,y,w){
 }
 // every amenity (and the linen closet) has a staff member; ChatGPT's amenity_animations.js says where they stand
 // "Temp Staff" name tag over a staff member's head, like the original
-function staffTag(cx, top){
+function staffTag(cx, top, q){
   ctx.save(); ctx.font='bold 8px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  const t = 'Temp Staff', ty = Math.max(top - 6, 5);
+  const t = 'Temp Staff', ty = Math.max(top - 6, q ? q.y + 6 : 5), half = ctx.measureText(t).width/2 + 2;
+  if(q) cx = Math.max(q.x + half, Math.min(q.x + q.w - half, cx));   // keep the tag inside the room
   ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.strokeStyle = '#2b2340'; ctx.strokeText(t, cx, ty); ctx.fillStyle = '#fff'; ctx.fillText(t, cx, ty); ctx.restore();
 }
 function drawStaff(r,x,y,w,h){
@@ -1344,6 +1379,8 @@ function drawStaff(r,x,y,w,h){
   staffTag(sx+sw/2, sy);
 }
 function drawCloset(r,x,y,w,h){
+  if(r.type==='laundry'){   // fallback until the art arrives
+    ctx.fillStyle='#9fc9e6'; ctx.fillRect(x,y,w,h); ctx.font='24px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('🫧', x+w*0.3, y+h-FLOOR_PAD-28); ctx.fillText('🧺', x+w*0.7, y+h-FLOOR_PAD-24); return; }
   if(r.type==='maintenance'){   // fallback workshop until the art arrives
     ctx.fillStyle='#5b6b82'; ctx.fillRect(x,y,w,h); ctx.fillStyle='#8a6a4a'; ctx.fillRect(x+8, y+h-FLOOR_PAD-26, w-16, 6);
     ctx.font='22px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('🧰', x+w*0.35, y+h-FLOOR_PAD-40); ctx.fillText('🔧', x+w*0.7, y+40); return; }
@@ -1432,11 +1469,11 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
       const activity = slot && AMENITY_ACTIVITY_TYPES.get(slot.activity);
       const character = g.inspector ? 'inspector' : 'guest_'+g.skin;
       const keys = activity?.characters?.[character];
-      if(!keys?.length){ draws.push({z:5, g, fallback:true}); continue; }
+      if(!keys?.length){ draws.push({z:slot?.z || 5, g, fallback:true, slot}); continue; }
       const phase = time + (slot.phase || 0) + ((g.id || 0)%13)*0.071;
       const frame = ((Math.floor(phase*activity.fps)%keys.length)+keys.length)%keys.length;
       const image = art(keys[frame]) || keys.map(art).find(Boolean);
-      if(!image){ draws.push({z:slot.z || 5, g, fallback:true}); continue; }
+      if(!image){ draws.push({z:slot.z || 5, g, fallback:true, slot}); continue; }
       const motion = activity.id==='swim' && layout.swimMotion;
       const dx = motion ? motion.x*Math.sin(phase*2) : 0;
       const dy = motion ? motion.y*Math.cos(phase*2) : 0;
@@ -1458,8 +1495,8 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
       if(d.crop){
         const f=d.crop;
         ctx.drawImage(roomImage, f.x,f.y,f.width,f.height, q.x+f.x*sx,q.y+f.y*sy,f.width*sx,f.height*sy);
-      } else if(d.fallback){ drawAmenGuest(d.g); }
-      else if(d.staff){ ctx.drawImage(d.image,d.x,d.y,d.w,d.h); staffTag(d.x+d.w/2, d.y+2); }
+      } else if(d.fallback){ if(d.slot) drawBean(q.x + d.slot.x*sx, q.y + d.slot.y*sy, d.g, 0.85); else drawAmenGuest(d.g); }   // frames not loaded yet: a plain figure in the right seat
+      else if(d.staff){ ctx.drawImage(d.image,d.x,d.y,d.w,d.h); staffTag(d.x+d.w/2, d.y+2, q); }
       else {
         ctx.save(); ctx.globalAlpha *= Math.max(0,Math.min(1,d.g.alpha===undefined?1:d.g.alpha));
         ctx.drawImage(d.image,d.x,d.y,d.w,d.h); ctx.restore();
@@ -1967,7 +2004,7 @@ function openBuild(tab){
       const fit = Math.min(130/(d.w*1.3), 96/d.h), sw = d.w*fit*1.3, sh = d.h*fit;   // as big as the card allows
       const key = t && !bed ? 'rooms/'+t+'_'+k : 'rooms/'+k;
       const inner = bed && art('decor/'+bed) ? `<img src="${art('decor/'+bed).src}" style="width:70%;height:auto;margin-top:auto">` : art(key) ? `<img src="${art(key).src}">` : (d.icon || (d.kind==='guest'?'🛏️':'🧺'));
-      const rate = d.kind==='guest' || d.kind==='amenity' ? `🪙${perHour(k).toLocaleString()}/h` : d.repairs ? `🔧 ${d.capacity}` : `🧹 ${d.capacity}`;
+      const rate = d.kind==='guest' || d.kind==='amenity' ? `🪙${perHour(k).toLocaleString()}/h` : d.repairs ? `🔧 ${d.capacity}` : d.laundry ? `🧺 +${d.capacity}` : `🧹 ${d.capacity}`;
       const nm = t ? `${themeIcon(t)} ${themeName(t)} ${d.name}` : d.name;
       html += `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-room="${k}"${t?` data-style="${t}"`:''}`} title="${nm}">
         ${locked?`<span class="lock">🔒 ${need}</span>`:''}
@@ -2117,6 +2154,7 @@ function openRoom(r){
   }
   if(false){ showPanel(`<h2>🛗 Elevator</h2><div class="sub">Guests ride the elevator up to their rooms. It runs the full height of your hotel and grows when you expand. Drag it left or right along the ground floor.</div>`); return; }
   const cv2 = coverage();
+  if(def.laundry){ showPanel(`<h2>🫧 ${def.name}</h2><div class="sub">Fresh linen for your Linen Closets: each Laundry Room lets them look after ${def.capacity} more rooms, and rooms get cleaned twice as fast.${count('closet') ? '' : ' <b style="color:#d6334f">Build a Linen Closet first.</b>'}</div>${stylePicker(r)}<div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`); return; }
   if(def.repairs){ const crews = count('maintenance')*def.capacity, broken = S.rooms.filter(o=>o.broken).length;
     showPanel(`<h2>🔧 ${def.name}</h2><div class="sub">Your handymen fix up to ${crews} broken rooms at once. Broken right now: ${broken}.</div>${stylePicker(r)}<div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`); return; }
   showPanel(`<h2>🧺 ${def.name}</h2><div class="sub">Your cleaners look after ${cv2.cap} rooms. You have ${cv2.total} rooms that need cleaning.${cv2.total>cv2.cap?` <b style="color:#d6334f">${cv2.total-cv2.cap} rooms aren't covered. Tap them to clean by hand, or build another closet.</b>`:''}</div>
