@@ -234,14 +234,14 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.60"></script>
-<script src="art/items.js?v=0.60"></script>
-<script src="art/furnished_rooms.js?v=0.60" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.60" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.60" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.60" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.60"></script>
-<script src="art/weather.js?v=0.60" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.61"></script>
+<script src="art/items.js?v=0.61"></script>
+<script src="art/furnished_rooms.js?v=0.61" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.61" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.61" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.61" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.61"></script>
+<script src="art/weather.js?v=0.61" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -251,7 +251,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.60';
+const BUILD = '0.61';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -301,15 +301,16 @@ const ROOMS = {
   lounge: {name:'Tea Lounge',  kind:'amenity', w:2, h:1, cost:2200, lvl:6,  slots:4, use:11, pay:14, xp:4, color:'#d9f2c4', icon:'🫖'},
   cinema: {name:'Mini Cinema', kind:'amenity', w:2, h:2, cost:4500, lvl:7,  slots:5, use:14, pay:22, xp:6, color:'#3d3a5c', icon:'🎬'},
   games:  {name:'Game Nook',   kind:'amenity', w:2, h:1, cost:3000, lvl:8,  slots:3, use:8,  pay:20, xp:5, color:'#c9d4ff', icon:'🕹️'},
-  treehouse_1x2: {name:'Sapling Den', kind:'amenity', w:1, h:2, cost:2000, lvl:6,  slots:2, use:12, pay:16, xp:4,  color:'#cfe8b8', icon:'🌱'},
-  treehouse_2x2: {name:'Canopy Cabin', kind:'amenity', w:2, h:2, cost:3800, lvl:8,  slots:4, use:14, pay:28, xp:6,  color:'#cfe8b8', icon:'🌳'},
-  treehouse_2x3: {name:'Treetop Retreat', kind:'amenity', w:2, h:3, cost:7800, lvl:11, slots:6, use:16, pay:48, xp:10, color:'#bfe0a6', icon:'📚'},
+  treehouse_1x2: {name:'Sapling Den', kind:'guest', w:1, h:2, cost:1600, lvl:4,  stay:24, pay:30, xp:6,  color:'#cfe8b8', icon:'🌱'},
+  treehouse_2x2: {name:'Canopy Cabin', kind:'guest', w:2, h:2, cost:3200, lvl:7,  stay:30, pay:62, xp:11, color:'#cfe8b8', icon:'🌳'},
+  treehouse_2x3: {name:'Treetop Retreat', kind:'guest', w:2, h:3, cost:6800, lvl:11, stay:34, pay:96, xp:16, color:'#bfe0a6', icon:'🌲'},
   pool:   {name:'Splash Pool', kind:'amenity', w:3, h:1, cost:6000, lvl:10, slots:3, use:12, pay:40, xp:8, color:'#bdefff', icon:'🏊'},
 };
 const AMENITY_TYPES = Object.keys(ROOMS).filter(k => ROOMS[k].kind === 'amenity');
 const hOf = type => ROOMS[type].h;
 const WALL_PATTERNS = window.STARLIT_WALL_PATTERNS || [{id:'stripes',name:'Ribbon Stripes',key:null}];
-const WALL_COLORS = ['#ffd6e0','#d4f0ff','#e2f7d4','#fff1b8','#e6dcff','#ffe1c7','#c9f1ea','#f5d0ff'];
+const WALL_COLORS = ['#ffd6e0','#d4f0ff','#e2f7d4','#fff1b8','#e6dcff','#ffe1c7','#c9f1ea','#f5d0ff',
+  '#7a1f2b','#1f3a5f','#2f4a35','#4a2f5c','#5c3a28','#2b2d3a','#1f4d4a','#6b4a1f'];   // deep red, navy, forest, plum, walnut, charcoal, teal, bronze
 
 /* ---------------- furniture ----------------
    Built-in items. ChatGPT can add or change items in art/items.js (see ART_BRIEF.md);
@@ -484,6 +485,7 @@ function migrate(s){
   s.rooms = (s.rooms||[]).filter(r=>ROOMS[r.type]);
   for(const r of s.rooms){ r.items = (r.items||[]).filter(it=>ITEMS[it.id]); for(const it of r.items) itemUid = Math.max(itemUid, (it.u||0)+1); }
   s.storage = s.storage || []; s.inv = s.inv || {};
+  for(const r of s.rooms) if(r.type.startsWith('treehouse') && !(r.items||[]).some(it=>ITEMS[it.id] && ITEMS[it.id].zone==='bed')){ r.items = r.items || []; r.items.unshift(mkItem('bed_basic', 8)); }
   // a room whose size changed (Laundry Room 1x1 -> 2x1) and now overlaps another room goes to storage instead
   const taken = new Map();
   const resized = new Set(['laundry']);   // rooms whose size changed give way to everything else
@@ -1116,7 +1118,12 @@ function drawRoom(r, covered){
   if(L && L.openAir && art('rooms/'+r.type)){   // treehouses: no walls around the tree, the scenery shows through; only the cabin gets a frame
     const k = w / L.width, fb = L.frameBounds || L.wallBounds;
     if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawAmenity(r,x,y,w,h);
-    drawItems(r,x,y,w,h,'back'); drawItems(r,x,y,w,h,'front'); drawAmenityCount(r,x,y,w);
+    if(def.kind==='guest'){ const ch = (L.guestBaseline||156)*k + FLOOR_PAD;   // the cabin is the room; the tree below is just scenery
+      if(r.wall && L.wallBounds){ const wb = L.wallBounds; ctx.save(); ctx.beginPath(); ctx.rect(x+wb.x*k, y+wb.y*k, wb.width*k, wb.height*k); ctx.clip();   // wallpaper paints the inside of the cabin
+        ctx.fillStyle = r.wallColor; ctx.fillRect(x, y, w, h); drawWallPattern(r, x, y, w, h); ctx.restore(); }
+      drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,ch,'bed'); drawItems(r,x,y,w,h,'front'); drawGuestRoom(r,x,y,w,ch,'guest');
+      if(buildMode()){ const pct = decorPct(r); ctx.fillStyle='rgba(0,0,0,.18)'; rr(x+8, y+5, w-16, 5, 3); ctx.fill(); ctx.fillStyle = pct>=1 ? '#3fae8c' : pct>=0.5 ? '#ffc94d' : '#ff7a7a'; rr(x+8, y+5, Math.max(5,(w-16)*pct), 5, 3); ctx.fill(); } }
+    else { drawItems(r,x,y,w,h,'back'); drawItems(r,x,y,w,h,'front'); drawAmenityCount(r,x,y,w); }
     if(fb) edge(x + fb.x*k, y + fb.y*k, fb.width*k, fb.height*k);
     ctx.font='bold 10px system-ui'; ctx.textAlign='left'; ctx.textBaseline='middle';
     if(r.dirty){ const wb = L.wallBounds || fb; ctx.fillStyle='rgba(120,90,60,.25)'; ctx.fillRect(x+wb.x*k, y+wb.y*k, wb.width*k, wb.height*k);
@@ -1444,7 +1451,7 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
     groups.get(g.amen).push(g);
   }
   // every amenity / closet with layout data is drawn here (even empty) so its staff sorts with guests, props and seat backs
-  for(const r of S.rooms){ if(groups.has(r.id) || !AMENITY_ACTIVITY_ROOMS.has(r.type) || r.dirty || (onlyRoomId!==undefined && r.id!==onlyRoomId) || (excludedRoomId!==undefined && r.id===excludedRoomId)) continue;
+  for(const r of S.rooms){ if(groups.has(r.id) || !AMENITY_ACTIVITY_ROOMS.has(r.type) || ROOMS[r.type].kind==='guest' || r.dirty || (onlyRoomId!==undefined && r.id!==onlyRoomId) || (excludedRoomId!==undefined && r.id===excludedRoomId)) continue;
     const L = AMENITY_ACTIVITY_ROOMS.get(r.type); if(L.staff) groups.set(r.id, []); }
   for(const [roomId, visitors] of groups){
     const room = S.rooms.find(r=>r.id===roomId); if(!room) continue;
@@ -2109,6 +2116,17 @@ window.addEventListener('pointerup', ev=>{
   buyRoom(nd.type, null, nd.style);   // a tap, or a drop where it can't stand: find a free spot automatically
 });
 window.addEventListener('pointercancel', ()=>{ endBuyZone(); ui.newItem = null; document.body.classList.remove('dragOut'); if(ui.newDrag){ ui.newDrag = null; document.body.style.cursor = ''; } });
+// treehouses come as an empty room box: give them a cozy starter set (free) so they never look bare
+function starterFurniture(r){
+  const L = ROOM_LAYOUT[r.type]; if(!L || L.interiorMode!=='unfurnished' || r.starter || (r.items||[]).length) return;
+  r.starter = true; r.items = r.items || [];
+  const RW = ROOMS[r.type].w*CELL, wide = RW >= 160;
+  const floor = (wide ? ['bookshelf','beanbag_chair','armchair','brass_cabin_lantern','plant'] : ['bookshelf','beanbag_chair']).filter(id=>ITEMS[id]);
+  const tot = floor.reduce((a,id)=>a+ITEMS[id].w,0), gap = Math.max(2, (RW - 8 - tot) / Math.max(1, floor.length-1));
+  if(ITEMS.rug && ITEMS.rug.w <= RW - 8){ r.items.push(mkItem('rug', Math.round(RW/2 - ITEMS.rug.w/2))); }
+  let x = 4; for(const id of floor){ if(x + ITEMS[id].w > RW - 4) break; r.items.push(mkItem(id, Math.round(x))); x += ITEMS[id].w + gap; }
+  for(const [id, fx] of [['window_round', 0.62], ['branch_display_shelf', 0.2]]){ if(!ITEMS[id] || (!wide && id==='branch_display_shelf')) continue; const it = mkItem(id, Math.round(Math.min(RW - ITEMS[id].w - 4, RW*fx))); it.y = 14; r.items.push(it); }
+}
 function buyRoom(type, at, style){
   const def = ROOMS[type], cost = roomCost(type, style), bed = style && themeBed(type, style);
   if(def.lvl > level() || (bed && furnishLvl(type, style) > level())) return;
