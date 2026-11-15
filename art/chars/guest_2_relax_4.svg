@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="80" viewBox="0 0 112 80">
+<g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M62 52 81 57 98 44l6 6-18 17-26-6Z" fill="#c8915f"/><path d="m100 45.06 8 3-2 6-9-3Z" fill="#fff8ef"/><path d="M30 38q8-5 17 4l25 13-8 13-33-19Z" fill="#ffc94d"/><path d="M39 42Q11 35 13 15.41M45 44Q55 24 40 13.71" fill="none" stroke="#ffc94d" stroke-width="7"/><g xmlns="http://www.w3.org/2000/svg" transform="translate(2 1.28) scale(0.8)">
+      <path d="M13 23q0-13 16-13 15 0 15 15v7l4 4-5 3q-1 11-15 11-15 0-15-17Z" fill="#a96e4b" vector-effect="non-scaling-stroke" />
+      <path d="M13 33q-7-4-7 3 1 6 8 4" fill="#a96e4b" vector-effect="non-scaling-stroke" />
+      <path d="M12 29q-3-17 12-20 16-3 20 11l-8 5-11-3-5 10Z" fill="#392d36" vector-effect="non-scaling-stroke" />
+      <path d="M29.0 32.0q2 2 4 0" fill="none" stroke="#2b2340" stroke-width="1.6" />
+      <path d="M38.0 32.0q2 2 4 0" fill="none" stroke="#2b2340" stroke-width="1.6" />
+      <path d="M35 42q3 2 6-1" fill="none" stroke="#2b2340" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <ellipse cx="25" cy="39" rx="4" ry="2" fill="#c58267" stroke="none" vector-effect="non-scaling-stroke" />
+    </g>
+  </g>
+</svg>

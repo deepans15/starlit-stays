@@ -3,10 +3,6 @@
     <path d="M0 0h480v168H0Z" fill="#ffe8f1" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 133h480v35H0Z" fill="#fff0f6" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 133h480" fill="none" stroke="#2b2340" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <rect x="156" y="17" width="205" height="55" rx="5" fill="#ffc5de" vector-effect="non-scaling-stroke" />
-    <rect x="162" y="23" width="193" height="43" rx="2" fill="#fff0f6" vector-effect="non-scaling-stroke" />
-    <path d="M164 53q42-16 81-3t108-2v16H164Z" fill="#fff0f6" stroke="none" vector-effect="non-scaling-stroke" />
-    <path d="M225 24v40m67-40v40" fill="none" stroke="#fff0f6" stroke-width="3" vector-effect="non-scaling-stroke" />
     <path d="M0 93h480v75H0Z" fill="#fff0f6" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 107h480" fill="none" stroke="#ffe0ee" stroke-width="2" vector-effect="non-scaling-stroke" />
     <path d="M0 127h480" fill="none" stroke="#ffe0ee" stroke-width="2" vector-effect="non-scaling-stroke" />

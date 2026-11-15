@@ -3,10 +3,6 @@
     <path d="M0 0h480v168H0Z" fill="#ded4ed" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 133h480v35H0Z" fill="#c5b9d1" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 133h480" fill="none" stroke="#2b2340" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <rect x="156" y="17" width="205" height="55" rx="5" fill="#776783" vector-effect="non-scaling-stroke" />
-    <rect x="162" y="23" width="193" height="43" rx="2" fill="#776783" vector-effect="non-scaling-stroke" />
-    <path d="M164 53q42-16 81-3t108-2v16H164Z" fill="#514965" stroke="none" vector-effect="non-scaling-stroke" />
-    <path d="M225 24v40m67-40v40" fill="none" stroke="#fff8ef" stroke-width="3" vector-effect="non-scaling-stroke" />
     <path d="M0 93h480v75H0Z" fill="#c5b9d1" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 107h480" fill="none" stroke="#ac9abd" stroke-width="2" vector-effect="non-scaling-stroke" />
     <path d="M0 127h480" fill="none" stroke="#ac9abd" stroke-width="2" vector-effect="non-scaling-stroke" />
@@ -42,7 +38,6 @@
     <path d="M378 116h42l22-32 8 5-24 35h-48Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
     <path d="M384 118h34m8-8 16-24" fill="none" stroke="#ee9258" stroke-width="4" vector-effect="non-scaling-stroke" />
     <g>
-      <circle cx="303" cy="40" r="13" fill="#ffe6a1" stroke="none" vector-effect="non-scaling-stroke" />
       <g transform="translate(200 43) scale(0.8)">
         <path d="M-13-5q8 0 10 5l3-4 3 4q2-5 10-5l-4 12-6-2-3 3-3-3-6 2Z" fill="#514965" vector-effect="non-scaling-stroke" />
       </g>

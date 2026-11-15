@@ -1,43 +1,65 @@
-# Richer classic interiors and branch-built treehouses
+# Alive hotel art batch
 
-## Scope
-User selected all classic interiors. Sixteen classic room SVGs were updated, plus Gold/Pink maintenance and the four treehouse building layers. Existing theme identities and the other theme room files remain intact. Every original filename, canvas size, manifest entry and item value is retained. Six new placeable decor items were added. No game-code files were edited.
+## Scope and preservation
+All changes are inside art/. No edits to index.html. Every original asset key, file name and canvas size is retained. This batch adds 675 SVG keys, for 2004 registered SVGs. Every SVG is a self-contained flat vector with #2b2340 outlines, no text elements, embedded images, external links, scripts or SVG animation. Sleeping Z marks are paths.
 
-## Treehouses: architecture rather than a leaf frame
-Both canvases stay 320 x 336 and 320 x 504. The cabins now have dark teal timber walls, an irregular layered roof, warm timber posts, window and porthole, built-in bookshelves, clock, framed map, AC, brass pendant, string lights, lantern, cushions, reading furniture and a small display table. A clear band remains for guests' faces and bodies.
-The support tree is leafless: irregular tapered forked branches, bark knots, uneven exposed roots and curved timber access steps. Branches visibly spread beyond the cabin frame into transparent open air. A continuous central trunk carries the cabin. The taller tree adds an open curved lookout deck, hammock and telescope; these are decorative rather than extra gameplay slots.
-The two combined room SVGs match their corresponding branch/cabin layers. Main wallBounds x26,y78,w268,h134; floorBounds x17,y212,w286,h16; frameBounds x17,y76,w286,h152. guestBaseline=212. Reading slots, foreground masks and guide anchors were updated. Capacities remain four/six.
+## Eight-frame guest activities
+All twelve guests and the inspector now have eight distinct frames for thirteen actions: 169 loops / 1352 SVG frames. Source identity heads, hairstyles, skin tones and outfit palettes are retained. Actions use changing arm/leg poses, weight shifts, head reactions and smaller follow-through rather than moving an unchanged standing sprite.
+- Swim: alternating front-crawl recovery/pull, horizontal body, low kick, head bob and small surface splash; no standing legs or shoes.
+- Run: low jogging stride on the treadmill, arms pumping through an elbow arc, small body compression; feet remain at the belt.
+- Lift: two-handed barbell curl with planted feet and a brief breathing hold.
+- Stretch: reach up, side bend, toe touch, unfold and return.
+- Watch: seated settling, smile/laugh, reach for popcorn, lean and gasp.
+- Read/read_stand: a visible page turn, nod, hand to temple/glasses, look up and smile.
+- Eat: raise chopsticks/noodles, blow/slurp, chew and lower.
+- Drink/drink_stand: lift, sip with eyes closing, lower cup, glance and sigh.
+- Play: alternating button presses, lean and raised victory fist.
+- NEW wash: load/fold a towel, reach for the washer button and return to folding.
+- NEW relax: reclining arms behind the head, gentle toe movement and breathing, eyes closed with a short dozing Z trail.
 
-## Stronger room palettes
-- Nook/Tall: saturated warm blush with window contrast and dark floor bands.
-- Comfy: golden-ochre stripes, ivory window accents and a walnut floor.
-- Grand: stronger lilac damask, dark floor and a ceiling hook.
-- Loft: slate-blue brickwork, tall glass, black pendant, split AC and a dark floor.
-- Noodle: deep crimson, brass lanterns, warm counter and dark timber floor. Food still appears only for occupied slots.
-- Lounge: deep sage/teal panelling, copper-toned lighting, AC and warm wood under the existing seating.
-- Gym: bright tile with chrome-toned equipment, AC and a charcoal tiled floor. Three stations and guest anchors unchanged.
-- Pool: glazed tiles, more substantial deck colour, AC and a brass light. Pool geometry and swimmers unchanged.
-- Games: deep aubergine, cyan accents, dark floor, black pendant and AC. Cabinet/guest positions unchanged.
-- Cinema: darker plum, charcoal floor and AC. Seats and correctly placed viewers retain their coordinates.
-- Closet: dark chocolate panelling and a dark floor; the shelves and cart remain.
-- Maintenance: full dark timber workshop with overhead task light, wall vent, cabinet, a populated pegboard, workbench, drawers, tool case, oil can, spool, vice, parts boxes and exposed pipe. Gold/Pink versions keep their own hues at the same richer contrast.
-- Lobby: green tree mural/panelling, dark plank floor and a longer brass-trimmed reception desk. The middle remains open and the rightmost 120 px is a plain elevator bay. Gold elevator doors and clerk are separate sprites, demonstrated in the preview composition.
-All boxed rooms fill their scene edge to edge. Trees retain transparent outdoor space. Guest rooms keep their furniture separate; these backgrounds contain architecture/fixtures rather than baked-in beds.
+| Activity | Canvas | Frames | FPS | Anchor x,y |
+|---|---|---:|---:|---|
+| swim | 96 x 56 | 8 | 8 | 48, 44 |
+| run | 56 x 96 | 8 | 10 | 28, 96 |
+| lift | 56 x 96 | 8 | 4 | 28, 96 |
+| eat | 56 x 112 | 8 | 3 | 28, 88 |
+| drink | 56 x 112 | 8 | 2 | 28, 88 |
+| watch | 56 x 112 | 8 | 2 | 28, 88 |
+| play | 56 x 96 | 8 | 6 | 28, 96 |
+| read | 56 x 112 | 8 | 2 | 28, 88 |
+| drink_stand | 56 x 96 | 8 | 2 | 28, 96 |
+| read_stand | 56 x 96 | 8 | 2 | 28, 96 |
+| stretch | 56 x 96 | 8 | 2 | 28, 96 |
+| wash | 56 x 96 | 8 | 3 | 28, 96 |
+| relax | 112 x 80 | 8 | 1.5 | 56, 68 |
 
-## Six placeable pieces
-| ID | Size | Zone/category | Coins | Level | Decor |
-|---|---|---|---:|---:|---:|
-| split_air_conditioner | 84 x 36 | wall/wall | 260 | 4 | 5 |
-| industrial_pendant | 48 x 60 | ceiling/lighting | 240 | 4 | 5 |
-| brass_cabin_lantern | 40 x 60 | floor/lighting | 180 | 3 | 4 |
-| workshop_tool_cabinet | 72 x 88 | floor/tables | 420 | 6 | 7 |
-| woven_storage_basket | 48 x 40 | floor/tables | 130 | 2 | 3 |
-| branch_display_shelf | 88 x 48 | wall/wall | 300 | 5 | 6 |
-Each is registered in manifest.js and items.js. Existing categories and tabletop placement fields are preserved. AC is currently artwork/decor; no cooling or emergency gameplay was added.
+Existing canvases/anchors remain unchanged. New wash is 56 x 96 with feet anchor {28,96}; relax is 112 x 80 with reclining seat anchor {56,68}. Seated actions retain 56 x 112 with seat anchor {28,88}. Cups/popcorn remain separate occupied-slot props, with eight activityOffsets following their guest's hands; no duplicate fixed cup/carton is baked into those guest frames. Food props retain three steam/settling frames at 4 fps.
 
-## Preview and sources
-preview.html includes a sixteen-room comparison, a composed lobby with clerk and golden elevator, six decor cards and the existing occupied-room/empty-room studios. All existing controls remain.
-Contemporary real-world material and lighting references were consulted for the design direction, without using their images, geometry or branded objects: Helen & Hard Woodnest II (https://helenhard.no/work/woodnest-2023/) and Snohetta's 7th Room (https://snohetta.prezly.com/the-7th-room). The resulting graphics, branches, furniture and room layouts are original Starlit Stays designs. The supplied game reference informed colour blocking, not copied artwork.
+## Placeable climate equipment and windows
+Removed baked AC units and actual window assemblies from classic rooms, theme variants and treehouse cabin layers, exposing the original matching wall colour/pattern. Loft gallery rail, gym mirrors and cinema screens remain: these are not windows. Orphaned moon/landscape details inside former window panes were removed too.
+All climate/window items allow rooms [guest,amenity,lobby]. Existing split_air_conditioner keeps its 84 x 36 size and receives climate=cool.
+New climate items: compact_aircon 56 x 28 (cool, wall), retro_window_aircon 48 x 40 (cool, wall), ceiling_fan 72 x 32 (cool, ceiling/lighting), radiator 56 x 36 (warm, floor/wall category), fireplace 88 x 88 (warm, floor/lighting), smart_thermostat 20 x 24 (both, wall).
+Eight new wall/category-wall windows: window_square 56 x 56, window_tall 40 x 96, window_wide 96 x 48, window_arched 56 x 80, window_round 48 x 48, window_bay 112 x 72, window_city_view 88 x 64 (night skyline), window_shuttered 56 x 64. Prices 120-600, levels 1-10, decor 3-7. Existing item values/categories/placement fields are retained.
+
+## Treehouse replacement: flat room box on a trunk
+This replaces the earlier roof-deck/canopy design. All three have a perfectly flat, full-width top at y0, an enclosed 168 px room box, vine/small-leaf trim inside all four edges, and transparent outdoor space below the box. Nothing extends above the top edge.
+- treehouse_2x2: 320 x 336; twisted middle trunk, two short branches supporting corners, spread roots.
+- treehouse_2x3: 320 x 504; same top box, taller trunk, knot and side branch with a rope swing.
+- NEW treehouse_1x2: 160 x 336; slim box and straight central trunk.
+Rich timber walls, lantern, bookshelf, rug, reading seats and fairy lights remain inside. No AC or windows. Each has matching building/<id>_branch.svg and _cabin.svg layers. Main floor is y156, with a 12 px band; frameBounds covers x0,y0,full width,height 168. wallBounds is the wall portion (height 156), floorBounds is the bottom band, and supportBounds is the flat top strip (height 8). Guest/guide anchors stay inside the box. Capacities are 4/6/2.
+
+## Cinema and tea seating
+All five cinema styles have separate rear/front draw depths. Front-row guest z20 is above every rear chair crop (z8), and only that front guest's own lap/arm pieces (z24) overlap them. Each slot has one real chair and forSlot mask identifiers. Usher remains in the right aisle. No entire rear-seat rectangle is restored over a front-row head.
+Tea seat-wide masks were removed, retaining only narrow table lips where needed. Guests remain visible from head to knees. Classic bookshelf now extends to a proper base with floor-contact feet; themed elevated bookcases have visible support feet/brackets.
+
+## Laundry: 2x1 amenity
+rooms/laundry.svg, gold_laundry.svg, pink_laundry.svg: 320 x 168 tiled laundromats, three front-loading washers with glass doors, dryer, folding table/towels, detergent shelf, drying rack and bulbs. laundry_fx_1..3 show rotating suds; matching Gold/Pink effect keys use the same geometry. Three wash slots (x34/102/170,y157,scale 0.8) and staff_laundry (base plus _1..4, 56 x 96, teal smock, folding loop at 4 fps, scale 0.8).
+
+## Chill: new 2x1 amenity
+rooms/chill.svg, gold_chill.svg, pink_chill.svg: 320 x 168, three reclining chairs in terracotta/mustard/teal or theme colours, rug, plants, floor lamp, side table/drinks, record player and lava lamp. chill_fx_1..3 animate lava, record mark and leaf highlights; matching Gold/Pink effect keys are included. Three relax slots at x44/130/216,y142,scale 0.65, with small own-chair armrest crops. staff_chill (base plus _1..4,56 x96) carries a tray of drinks, at 4 fps and scale 0.8.
+
+## Preview / handoff
+preview.html has all thirteen eight-frame players, identity selection, hand-following props, thirteen occupied-room studios, all three box treehouses, cinema/lounge, three-theme laundry/chill and their FX, both staff loops and a fifteen-item climate/window gallery. Existing controls and galleries remain. CODE_NOTES.md describes frame selection, prop following, layer order and required game/catalog changes. Art metadata alone does not change gameplay rules.
 
 ## Validation
-All 1329 registered SVGs passed XML, dimensions/viewBox, local-reference-only markup, file-size, manifest-path and preview-registration checks. Every prior key, canvas size and item entry was preserved. The largest SVG is 9727 bytes. Both treehouse component layers match the combined room geometry exactly. Preview initialized 1329 assets with zero failures; all 234 guest/theme/occupancy combinations passed, including empty-room prop suppression and all ten staff placements. Dedicated galleries include sixteen classic rooms, six new decor cards and a composed lobby. Browser gameplay was not verified.
+All 2004 registered SVGs passed XML, exact width/height/viewBox, self-contained markup, file size, manifest-path and preview-dimension checks. All 675 new keys are registered; every original key/source size/item value was retained. The largest SVG is 9508 bytes. All 169 activity loops have eight distinct frames. Native SVG renders checked the 1352 activity frames for side clipping, and the twelve wide-hair turns were corrected. Both old-size and the new slim treehouse layers match their combined art exactly, with opaque full-width top rows and transparent lower corners. Known baked AC/window assemblies are absent from room/cabin files. Preview initialized all 2004 assets with zero failures, shows all thirteen eight-frame players, and passed 234 guest/theme/occupancy combinations plus all thirteen identity-switch checks. Browser gameplay was not verified.

@@ -1,16 +1,14 @@
-# Branch-built treehouse art
-Both rooms are cutaway cabins carried on continuous central tree trunks, with irregular forked branches visible beyond the cabin frame. No leaf canopy is used. Outdoor air is transparent; no full-footprint wallpaper, background rectangle or room edge belongs behind the tree.
+# Current treehouses: flat room box on a trunk
+This replaces all earlier sloped-roof, canopy and rooftop-deck proposals.
 
-## Assets
-rooms/treehouse_2x2.svg and rooms/treehouse_2x3.svg retain 320 x 336 and 320 x 504. For each size, building/<id>_branch.svg and building/<id>_cabin.svg use that identical full canvas; branch first, cabin second equals the combined room image. Branch layers contain bark, exposed roots, timber access steps and outdoor features. The 2x3 version also has an open lookout deck, hammock and telescope. Cabin layers include the rich teal/warm-timber interior, roof, windows, lights, AC and furniture.
+Each cabin is a normal rectangular room at the top of its canvas, exactly 168 px high and full width. Its top edge is flat at y0, with a solid top strip for flush stacking. Fairy lights and thin vine/leaf trim stay INSIDE all four edges; nothing extends above the box. The rich timber interior includes lantern, bookshelf, rug and reading seats, with no baked AC or windows.
 
-## Current bounds (file pixels)
-wallBounds: x26,y78,width268,height134.
-floorBounds: x17,y212,width286,height16.
-frameBounds: x17,y76,width286,height152.
-guestBaseline: 212. Displayed game coordinates normally halve these values.
-The roof extends above wallBounds and the branches extend outside frameBounds; draw the full combined/layer canvas, not a crop of the cabin bounds.
+- treehouse_2x2:320x336; top 168 px room, lower 168 px open-air tree, twisted central trunk, short corner-support branches and roots.
+- treehouse_2x3:320x504; same top 168 px room, lower 336 px tree with a knot and a side branch supporting a rope swing.
+- treehouse_1x2:160x336; slim room on a straight central trunk.
 
-## Guests and integration
-Existing four/six guest capacities remain. All reading positions and guide anchors use the main cabin floor. Foreground crops restore bench, chair and table fronts from the selected room image. The lower lookout is decorative, with no extra occupants.
-Claude must consume the updated room_layouts.js and amenity_animations.js. Skip generic full-footprint wall/floor/edge rendering for open-air layouts. Restrict wallpaper, dirt, room tints and furniture placement to the cabin. Draw branch/cabin layers at one shared origin/size. Keep the sky visible around the tree. See CODE_NOTES.md and UPDATE_NOTES.md. This art batch does not edit index.html.
+All have rooms/<id>.svg, building/<id>_branch.svg and building/<id>_cabin.svg. Component canvases are identical to the combined art. Draw branch first, cabin second. Outside the cabin/tree/vines is transparent. Room art has no full-footprint outdoor background rectangle.
+
+room_layouts.js: wallBounds x0,y0,width=canvasWidth,height 156; floorBounds x0,y156,width=canvasWidth,height 12; frameBounds x0,y0,width=canvasWidth,height 168; guestBaseline 156; supportBounds x0,y0,width=canvasWidth,height 8. Wall and floor bounds together cover the complete top room box. Guests/guide and furniture must use that box, not the full canvas bottom.
+
+amenity_animations.js keeps4 reading guests for2x2,6 for 2x3, and adds 2 for 1x2. The guide is permanent staff and does not consume a guest slot. The rope swing is decorative. See CODE_NOTES.md for open-air rendering, catalog and stacking handoff. index.html was not edited.

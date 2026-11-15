@@ -3,9 +3,6 @@
     <path d="M0 0h320v168H0Z" fill="#fff0c7" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 133h320v35H0Z" fill="#dfbd6e" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 133h320" fill="none" stroke="#2b2340" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <rect x="181" y="19" width="122" height="53" rx="5" fill="#c8915f" vector-effect="non-scaling-stroke" />
-    <rect x="187" y="25" width="110" height="41" rx="2" fill="#fff6dd" vector-effect="non-scaling-stroke" />
-    <path d="M242 26v39" fill="none" stroke="#fff8ef" stroke-width="3" vector-effect="non-scaling-stroke" />
     <g transform="translate(14 145) scale(2)">
       <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <ellipse cx="60" cy="7" rx="58.75" ry="5.75" fill="#d4a744" vector-effect="non-scaling-stroke" />
@@ -116,5 +113,8 @@
         <path d="M14 85v8" fill="none" stroke="#e6b481" vector-effect="non-scaling-stroke" />
       </g>
     </g>
+  </g>
+  <g stroke="#9a6848" stroke-width="3" fill="none">
+    <path d="M270 145v11m27-11v11M268 145h31" />
   </g>
 </svg>

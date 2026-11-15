@@ -234,14 +234,14 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.57"></script>
-<script src="art/items.js?v=0.57"></script>
-<script src="art/furnished_rooms.js?v=0.57" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.57" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.57" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.57" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.57"></script>
-<script src="art/weather.js?v=0.57" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.59"></script>
+<script src="art/items.js?v=0.59"></script>
+<script src="art/furnished_rooms.js?v=0.59" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.59" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.59" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.59" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.59"></script>
+<script src="art/weather.js?v=0.59" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -251,7 +251,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.57';
+const BUILD = '0.59';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -301,6 +301,7 @@ const ROOMS = {
   lounge: {name:'Tea Lounge',  kind:'amenity', w:2, h:1, cost:2200, lvl:6,  slots:4, use:11, pay:14, xp:4, color:'#d9f2c4', icon:'🫖'},
   cinema: {name:'Mini Cinema', kind:'amenity', w:2, h:2, cost:4500, lvl:7,  slots:5, use:14, pay:22, xp:6, color:'#3d3a5c', icon:'🎬'},
   games:  {name:'Game Nook',   kind:'amenity', w:2, h:1, cost:3000, lvl:8,  slots:3, use:8,  pay:20, xp:5, color:'#c9d4ff', icon:'🕹️'},
+  treehouse_1x2: {name:'Sapling Den', kind:'amenity', w:1, h:2, cost:2000, lvl:6,  slots:2, use:12, pay:16, xp:4,  color:'#cfe8b8', icon:'🌱'},
   treehouse_2x2: {name:'Canopy Cabin', kind:'amenity', w:2, h:2, cost:3800, lvl:8,  slots:4, use:14, pay:28, xp:6,  color:'#cfe8b8', icon:'🌳'},
   treehouse_2x3: {name:'Treetop Retreat', kind:'amenity', w:2, h:3, cost:7800, lvl:11, slots:6, use:16, pay:48, xp:10, color:'#bfe0a6', icon:'📚'},
   pool:   {name:'Splash Pool', kind:'amenity', w:3, h:1, cost:6000, lvl:10, slots:3, use:12, pay:40, xp:8, color:'#bdefff', icon:'🏊'},
@@ -509,7 +510,7 @@ function load(){
 const RUNTIME_KEYS = new Set(['guest','reserved','users','cleanT','anim','pulse','carF','fixT']);
 function serialize(){ return JSON.stringify(S, (k,v)=> RUNTIME_KEYS.has(k) ? undefined : v); }
 function save(){
-  if(ui.visit) return;   // never save someone else's hotel over yours
+  if(ui.visit || ui.loadingCode) return;   // never save someone else's hotel over yours (or over a pasted save code)
   S.savedAt = Date.now();
   try{ localStorage.setItem(SAVE_KEY, serialize()); }catch(e){}
 }
@@ -547,7 +548,7 @@ async function initCloud(){
   }catch(e){ /* cloud save unavailable: browser save still works */ }
 }
 async function cloudSave(){
-  if(ui.visit) return;
+  if(ui.visit || ui.loadingCode) return;
   if(!cloud.ref || cloud.busy || !S.name) return;
   const json = serialize().replace(/"savedAt":\d+,?/,'');
   if(json === cloud.last) return;
@@ -1254,10 +1255,11 @@ function supportOf(r, it){ return it.on ? (r.items||[]).find(i=>i.u===it.on && i
 function itemY(r, it, def){
   const sup = supportOf(r, it);
   if(sup && ITEMS[sup.id] && surfaceTop(ITEMS[sup.id])!==undefined){ const sd = ITEMS[sup.id]; return Math.max(3, itemY(r, sup, sd) + surfaceTop(sd) - def.h); }
-  const h = hOf(r.type)*FLOOR;
+  let h = hOf(r.type)*FLOOR, pad = FLOOR_PAD;
+  const L = ROOM_LAYOUT[r.type]; if(L && L.openAir && L.guestBaseline){ const k = ROOMS[r.type].w*CELL / L.width; h = L.guestBaseline*k; pad = 0; }   // treehouse: the cabin floor
   if(def.zone==='ceiling') return 3;
-  if(def.zone==='wall') return Math.max(4, Math.min(h - FLOOR_PAD - def.h - 8, it.y || 24));
-  return h - FLOOR_PAD - def.h + (def.back ? 4 : 0);
+  if(def.zone==='wall') return Math.max(4, Math.min(h - pad - def.h - 8, it.y || 24));
+  return h - pad - def.h + (def.back ? 4 : 0);
 }
 function clampItemX(r, def, x){ const w = ROOMS[r.type].w*CELL; return Math.max(4, Math.min(w - def.w - 4, x)); }
 function drawItems(r, x, y, w, h, layer){
@@ -1475,8 +1477,11 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
         const pr = typeof slot.prop==='string' ? {key:slot.prop} : slot.prop, fr = pr.frames||1;
         const pkey = fr>1 ? pr.key+'_'+(1+Math.floor((time+(slot.phase||0))*(pr.fps||4))%fr) : pr.key, pimg = art(pkey) || art(pr.key) || art(pr.key+'_1');
         if(pimg){ const sc = pr.scale||1, pw = (pr.width||pimg.width)*sc, ph = (pr.height||pimg.height)*sc, an = pr.anchor || {x:(pr.width||pimg.width)/2, y:(pr.height||pimg.height)};
-          const ax = pr.x!==undefined ? pr.x : slot.x, ay = pr.y!==undefined ? pr.y : slot.y;
-          draws.push({z:pr.z || (slot.z||5)+1, g, image:pimg, x:q.x+(ax-an.x*sc)*sx, y:q.y+(ay-an.y*sc)*sy, w:pw*sx, h:ph*sy}); }
+          let ax = pr.x!==undefined ? pr.x : slot.x, ay = pr.y!==undefined ? pr.y : slot.y, rot = 0;
+          const act = AMENITY_ACTIVITY_TYPES.get(slot.activity), offs = pr.followActivity && pr.activityOffsets;
+          if(act && offs && offs.length){ const ph2 = time + (slot.phase || 0) + ((g.id || 0)%13)*0.071, fi = ((Math.floor(ph2*act.fps)%offs.length)+offs.length)%offs.length, o = offs[fi] || {};
+            ax += o.dx||0; ay += o.dy||0; rot = (o.rotate||0)*Math.PI/180; }   // the cup / popcorn moves with the guest's hand
+          draws.push({z:pr.z || (slot.z||5)+1, g, image:pimg, rot, x:q.x+(ax-an.x*sc)*sx, y:q.y+(ay-an.y*sc)*sy, w:pw*sx, h:ph*sy}); }
       }
       const activity = slot && AMENITY_ACTIVITY_TYPES.get(slot.activity);
       const character = g.inspector ? 'inspector' : 'guest_'+g.skin;
@@ -1511,7 +1516,7 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
       else if(d.staff){ ctx.drawImage(d.image,d.x,d.y,d.w,d.h); staffTag(d.x+d.w/2, d.y+2, q); }
       else {
         ctx.save(); ctx.globalAlpha *= Math.max(0,Math.min(1,d.g.alpha===undefined?1:d.g.alpha));
-        ctx.drawImage(d.image,d.x,d.y,d.w,d.h); ctx.restore();
+        if(d.rot){ ctx.translate(d.x+d.w/2, d.y+d.h); ctx.rotate(d.rot); ctx.drawImage(d.image,-d.w/2,-d.h,d.w,d.h); } else ctx.drawImage(d.image,d.x,d.y,d.w,d.h); ctx.restore();
       }
     }
     ctx.restore();
@@ -2117,7 +2122,7 @@ function buyRoom(type, at, style){
   if(!r) return;
   if(def.kind==='guest'){
     if(bed){ for(const p of furnishPlan(type, style)){ const it = mkItem(p.id, p.x); if(p.y!==undefined) it.y = p.y; r.items.push(it); } S.boughtItem = true; }
-    else r.items.push(mkItem('bed_basic', 8));
+    else { r.items.push(mkItem('bed_basic', 8)); if(ITEMS.window_square){ const wi = mkItem('window_square', Math.round(ROOMS[type].w*CELL*0.62)); wi.y = 22; r.items.push(wi); } }
   }
   else if(style){ r.style = style; r.ownedStyles = [style]; }
   S.coins -= cost; addXP(Math.round(cost/50));
@@ -2392,7 +2397,7 @@ function pickHotel(which){
   online.synced = true; onlineSave(true); pushScores(true);
 }
 async function onlineSave(force){
-  if(ui.visit) return;
+  if(ui.visit || ui.loadingCode) return;
   if(!onlineAvailable() || !FB.user || !online.synced || online.busy || !S.name) return;
   const json = serialize(); if(!force && json === online.last) return;
   online.busy = true;
@@ -2431,6 +2436,25 @@ async function signInGoogle(){
   }
 }
 async function signOutGoogle(){ await onlineSave(true); try{ await FB.signOut(); }catch(e){} toast('Signed out. Your hotel stays on this device.'); }
+// 📋 move a hotel between websites/browsers (e.g. the Claude link -> localhost) with a copy-paste code
+function copySaveCode(){
+  save(); const code = 'STARLIT1:' + btoa(unescape(encodeURIComponent(serialize())));
+  modal(`<h2 style="margin:0 0 6px">📋 Your save code</h2><div class="sub">Copy all of this, then open the game where you want your hotel and choose Menu → Move your hotel → Paste.</div>
+    <textarea id="saveCodeBox" readonly style="width:100%;height:140px;font-size:11px;border-radius:10px;border:2px solid var(--line);padding:6px">${code}</textarea>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:10px"><button class="btn" onclick="const t=$('saveCodeBox'); t.select(); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(()=>toast('Copied!')).catch(()=>{ document.execCommand('copy'); toast('Copied!'); })">Copy code</button><button class="btn alt" onclick="closeModal()">Done</button></div>`);
+}
+function pasteSaveCode(){
+  modal(`<h2 style="margin:0 0 6px">📋 Paste a save code</h2><div class="sub">This replaces the hotel in this browser with the one from the code.</div>
+    <textarea id="saveCodeIn" style="width:100%;height:140px;font-size:11px;border-radius:10px;border:2px solid var(--line);padding:6px" placeholder="STARLIT1:..."></textarea>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:10px"><button class="btn alt" onclick="closeModal()">Cancel</button><button class="btn" onclick="applySaveCode()">Load this hotel</button></div>`);
+}
+function applySaveCode(){
+  const raw = ($('saveCodeIn').value||'').trim();
+  try{ if(!raw.startsWith('STARLIT1:')) throw 0; const st = migrate(JSON.parse(decodeURIComponent(escape(atob(raw.slice(9))))));
+    if(!st || !Array.isArray(st.rooms)) throw 0;
+    st.savedAt = Date.now(); ui.loadingCode = true; localStorage.setItem(SAVE_KEY, JSON.stringify(st)); toast('Hotel loaded!'); setTimeout(()=>location.reload(), 500);
+  }catch(e){ toast("That code didn't work. Copy the whole code and try again."); }
+}
 function accountRow(){
   if(!onlineAvailable()) return `<div class="item"><div class="info"><b>☁️ Online save & leaderboards</b><div class="meta">Available when you play the online version of the game.</div></div></div>`;
   if(FB.user) return `<div class="item"><div class="info"><b>☁️ Signed in with Google</b><div class="meta">Your hotel saves online and follows you to any device.</div></div><button class="btn alt" onclick="signOutGoogle()">Sign out</button></div>`;
@@ -2514,6 +2538,7 @@ function openMenu(){
   const cv2 = coverage();
   showPanel(`<h2>Menu</h2>
     ${accountRow()}
+    <div class="item"><div class="info"><b>📋 Move your hotel</b><div class="meta">Copy a save code here and paste it into the game on another website or browser.</div></div><button class="btn alt" onclick="copySaveCode()">Copy</button><button class="btn alt" onclick="pasteSaveCode()">Paste</button></div>
     <div class="item"><div class="info"><b>🌄 Scenery</b><div class="meta">${S.scene==='auto' ? 'Auto (follows the clock)' : S.scene ? (SCENES.find(b=>b.id===S.scene)||{}).name||'Custom' : 'Classic city'}</div></div><button class="btn" onclick="openScenery()">Change</button></div>
     <div class="item"><div class="info"><b>Guests served</b><div class="meta">${S.served}</div></div></div>
     <div class="item"><div class="info"><b>Guest happiness</b><div class="meta">${Math.round(S.sat*100)}%</div></div></div>

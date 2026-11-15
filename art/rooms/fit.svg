@@ -97,11 +97,6 @@
         <path d="M280 120v20" />
         <path d="M308 120v20" />
       </g>
-      <rect x="10" y="52" width="82" height="24" rx="5" fill="#2b2340" stroke="none" opacity=".15" />
-      <rect x="10" y="49" width="82" height="24" rx="5" fill="#d6e3e4" stroke="#2b2340" stroke-width="2" />
-      <path d="M15 65h72m-72 4h72" stroke="#718b94" fill="none" stroke-width="1.5" />
-      <path d="M16 54h63" stroke="#fff8ef" fill="none" stroke-width="2" />
-      <circle cx="84" cy="55" r="1.5" fill="#43aa8b" stroke="none" />
       <path d="M112 0v29" fill="none" stroke="#2b2340" stroke-width="2.5" />
       <ellipse cx="112" cy="39" rx="19" ry="11" fill="#ffc94d" opacity=".10" stroke="none" />
       <path d="m99 38 4-11h18l4 11Z" fill="#34414a" stroke="#2b2340" stroke-width="2.5" />

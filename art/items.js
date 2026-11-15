@@ -909,7 +909,13 @@ window.STARLIT_ITEMS = [
     "category": "wall",
     "cost": 260,
     "level": 4,
-    "decor": 5
+    "decor": 5,
+    "climate": "cool",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ]
   },
   {
     "id": "industrial_pendant",
@@ -975,5 +981,263 @@ window.STARLIT_ITEMS = [
     "cost": 300,
     "level": 5,
     "decor": 6
+  },
+  {
+    "id": "compact_aircon",
+    "name": "Compact Air Conditioner",
+    "width": 56,
+    "height": 28,
+    "w": 56,
+    "h": 28,
+    "zone": "wall",
+    "category": "wall",
+    "climate": "cool",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 160,
+    "level": 2,
+    "decor": 3
+  },
+  {
+    "id": "retro_window_aircon",
+    "name": "Retro Window Air Conditioner",
+    "width": 48,
+    "height": 40,
+    "w": 48,
+    "h": 40,
+    "zone": "wall",
+    "category": "wall",
+    "climate": "cool",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 230,
+    "level": 4,
+    "decor": 4
+  },
+  {
+    "id": "ceiling_fan",
+    "name": "Ceiling Fan",
+    "width": 72,
+    "height": 32,
+    "w": 72,
+    "h": 32,
+    "zone": "ceiling",
+    "category": "lighting",
+    "climate": "cool",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 300,
+    "level": 5,
+    "decor": 5
+  },
+  {
+    "id": "radiator",
+    "name": "Cast-Iron Radiator",
+    "width": 56,
+    "height": 36,
+    "w": 56,
+    "h": 36,
+    "zone": "floor",
+    "category": "wall",
+    "climate": "warm",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 180,
+    "level": 3,
+    "decor": 4
+  },
+  {
+    "id": "fireplace",
+    "name": "Brick Hearth Fireplace",
+    "width": 88,
+    "height": 88,
+    "w": 88,
+    "h": 88,
+    "zone": "floor",
+    "category": "lighting",
+    "climate": "warm",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 720,
+    "level": 9,
+    "decor": 10
+  },
+  {
+    "id": "smart_thermostat",
+    "name": "Smart Thermostat",
+    "width": 20,
+    "height": 24,
+    "w": 20,
+    "h": 24,
+    "zone": "wall",
+    "category": "wall",
+    "climate": "both",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 360,
+    "level": 6,
+    "decor": 5
+  },
+  {
+    "id": "window_square",
+    "name": "Square Window",
+    "width": 56,
+    "height": 56,
+    "w": 56,
+    "h": 56,
+    "zone": "wall",
+    "category": "wall",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 120,
+    "level": 1,
+    "decor": 3
+  },
+  {
+    "id": "window_tall",
+    "name": "Tall Window",
+    "width": 40,
+    "height": 96,
+    "w": 40,
+    "h": 96,
+    "zone": "wall",
+    "category": "wall",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 260,
+    "level": 4,
+    "decor": 4
+  },
+  {
+    "id": "window_wide",
+    "name": "Wide Window",
+    "width": 96,
+    "height": 48,
+    "w": 96,
+    "h": 48,
+    "zone": "wall",
+    "category": "wall",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 280,
+    "level": 4,
+    "decor": 5
+  },
+  {
+    "id": "window_arched",
+    "name": "Arched Window",
+    "width": 56,
+    "height": 80,
+    "w": 56,
+    "h": 80,
+    "zone": "wall",
+    "category": "wall",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 340,
+    "level": 5,
+    "decor": 5
+  },
+  {
+    "id": "window_round",
+    "name": "Porthole Window",
+    "width": 48,
+    "height": 48,
+    "w": 48,
+    "h": 48,
+    "zone": "wall",
+    "category": "wall",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 180,
+    "level": 2,
+    "decor": 3
+  },
+  {
+    "id": "window_bay",
+    "name": "Bay Window",
+    "width": 112,
+    "height": 72,
+    "w": 112,
+    "h": 72,
+    "zone": "wall",
+    "category": "wall",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 520,
+    "level": 8,
+    "decor": 7
+  },
+  {
+    "id": "window_city_view",
+    "name": "Night City Window",
+    "width": 88,
+    "height": 64,
+    "w": 88,
+    "h": 64,
+    "zone": "wall",
+    "category": "wall",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 600,
+    "level": 10,
+    "decor": 7
+  },
+  {
+    "id": "window_shuttered",
+    "name": "Shuttered Window",
+    "width": 56,
+    "height": 64,
+    "w": 56,
+    "h": 64,
+    "zone": "wall",
+    "category": "wall",
+    "rooms": [
+      "guest",
+      "amenity",
+      "lobby"
+    ],
+    "cost": 220,
+    "level": 3,
+    "decor": 4
   }
 ];

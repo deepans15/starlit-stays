@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="56" height="96" viewBox="0 0 56 96">
-<g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 71v19h10l3-19m1 0 1 19h10l-3-20" fill="#514965"/><path d="M17 90h11l5 3v1.75H16v-3Zm16 0h10l5 3v1.75H32v-3Z" fill="#fff8ef"/><path d="M19 49q11-7 21 1l3 25H16Z" fill="#fff8ef"/><path d="M24 44v7q5 4 10-1v-7" fill="#a96e4b"/><path d="m24 52 5 4 6-5" stroke="#fff8ef" fill="none" stroke-width="2"/><path d="M19 54Q12 65 13 76M37 54Q44 65 42 76" stroke="#2b2340" stroke-width="7.5" fill="none"/><path d="M19 54Q12 65 13 76M37 54Q44 65 42 76" stroke="#fff8ef" stroke-width="5" fill="none"/><circle cx="13" cy="76" r="2.5" fill="#a96e4b" stroke-width="1.5"/><circle cx="42" cy="76" r="2.5" fill="#a96e4b" stroke-width="1.5"/><g xmlns="http://www.w3.org/2000/svg" transform="translate(0 0)">
+<g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 71v19h10l3-19m1 0 1 19h10l-3-20" fill="#514965"/><path d="M17 90h11l5 3v1.75H16v-3Zm16 0h10l5 3v1.75H32v-3Z" fill="#fff8ef"/><path d="M19 49q11-7 21 1l3 25H16Z" fill="#fff8ef"/><path d="M35 51l7 23h-8Z" fill="#2b2340" opacity=".12" stroke="none"/><path d="M24 44v7q5 4 10-1v-7" fill="#a96e4b"/><path d="m24 52 5 4 6-5" fill="none" stroke="#fff8ef" stroke-width="2"/><path d="M19 54Q13 65 13.00 55.00M37 54Q44 65 42.00 55.00" stroke="#2b2340" stroke-width="7" fill="none"/><path d="M19 54Q13 65 13.00 55.00M37 54Q44 65 42.00 55.00" stroke="#fff8ef" stroke-width="4.5" fill="none"/><circle cx="13.00" cy="55.00" r="2.7" fill="#a96e4b" stroke-width="1.5"/><circle cx="42.00" cy="55.00" r="2.7" fill="#a96e4b" stroke-width="1.5"/><g xmlns="http://www.w3.org/2000/svg" transform="translate(0.00 -0.25) rotate(-0.00 28 44)">
       <g>
         <path d="M13 17q10-16 25-6 11 10 9 32l3 14q-20 11-40-1l4-18Z" fill="#43aa8b" vector-effect="non-scaling-stroke" />
       </g>
@@ -14,5 +14,5 @@
       <path d="M12 38q9 14 27 11l-8 10-15-8Z" fill="#6fd3b5" vector-effect="non-scaling-stroke" />
       <path d="M19 44q5 6 13 7" fill="none" stroke="#43aa8b" stroke-width="2.5" vector-effect="non-scaling-stroke" />
     </g>
-  <path d="M6 76h44" fill="none" stroke="#514965" stroke-width="3"/><rect x="4" y="69" width="6" height="14" rx="2" fill="#7ec8ff"/><rect x="46" y="69" width="6" height="14" rx="2" fill="#7ec8ff"/></g>
+  <path d="M6 55h44" fill="none" stroke="#514965" stroke-width="3"/><rect x="4" y="48" width="6" height="14" rx="2" fill="#7ec8ff"/><rect x="46" y="48" width="6" height="14" rx="2" fill="#7ec8ff"/></g>
 </svg>

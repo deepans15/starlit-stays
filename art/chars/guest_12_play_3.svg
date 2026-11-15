@@ -1,21 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="56" height="96" viewBox="0 0 56 96">
-  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 71v19h10l3-19m1 0 1 19h10l-3-20" fill="#7ec8ff" vector-effect="non-scaling-stroke" />
-    <g transform="translate(0 0)">
-      <path d="M18 89h10l5 3v2.75H16v-4Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    </g>
-    <g transform="translate(0 0)">
-      <path d="M33 89h9l5 3v2.75H32v-4Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    </g>
-    <path d="M19 49q11-7 21 1l3 25H16Z" fill="#6fd3b5" vector-effect="non-scaling-stroke" />
-    <path d="M35 51l7 23h-8Z" fill="#7ec8ff" stroke="none" opacity="0.18" vector-effect="non-scaling-stroke" />
-    <path d="M24 44v7q5 4 10-1v-7" fill="#c58b61" vector-effect="non-scaling-stroke" />
-    <path d="M24 52l5 4 6-5" fill="none" stroke="#fff8ef" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <path d="M19 54Q25 62 36 52" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
-    <path d="M19 54Q25 62 36 52" fill="none" stroke="#6fd3b5" stroke-width="5" vector-effect="non-scaling-stroke" />
-    <path d="M37 54Q43 60 49 52" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
-    <path d="M37 54Q43 60 49 52" fill="none" stroke="#c58b61" stroke-width="5" vector-effect="non-scaling-stroke" />
-    <g transform="translate(0 3.061616997868383e-17) rotate(0 28 35)">
+<g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 71v19h10l3-19m1 0 1 19h10l-3-20" fill="#7ec8ff"/><path d="M17 90h11l5 3v1.75H16v-3Zm16 0h10l5 3v1.75H32v-3Z" fill="#fff8ef"/><g transform="translate(0.50 0)"><path d="M19 49q11-7 21 1l3 25H16Z" fill="#6fd3b5"/><path d="M35 51l7 23h-8Z" fill="#2b2340" opacity=".12" stroke="none"/><path d="M24 44v7q5 4 10-1v-7" fill="#c58b61"/><path d="m24 52 5 4 6-5" fill="none" stroke="#fff8ef" stroke-width="2"/><path d="M19 54Q13 65 35.00 57.00M37 54Q44 65 45.00 50.00" stroke="#2b2340" stroke-width="7" fill="none"/><path d="M19 54Q13 65 35.00 57.00M37 54Q44 65 45.00 50.00" stroke="#6fd3b5" stroke-width="4.5" fill="none"/><circle cx="35.00" cy="57.00" r="2.7" fill="#c58b61" stroke-width="1.5"/><circle cx="45.00" cy="50.00" r="2.7" fill="#c58b61" stroke-width="1.5"/><g xmlns="http://www.w3.org/2000/svg" transform="translate(0.30 0.00) rotate(3.00 28 44)">
       <g>
         <path d="M12 21q1-14 16-13 18 0 17 17l-1 24-12 4-20-7Z" fill="#392d36" vector-effect="non-scaling-stroke" />
       </g>
@@ -28,7 +12,5 @@
       <path d="M35 42q3 2 6-1" fill="none" stroke="#2b2340" stroke-width="2" vector-effect="non-scaling-stroke" />
       <ellipse cx="25" cy="39" rx="4" ry="2" fill="#dd9b80" stroke="none" vector-effect="non-scaling-stroke" />
     </g>
-    <circle cx="36" cy="52" r="2" fill="#c58b61" vector-effect="non-scaling-stroke" />
-    <circle cx="49" cy="52" r="2" fill="#c58b61" vector-effect="non-scaling-stroke" />
-  </g>
+    <path d="M47 56h4m-8 3h4" stroke="#ffc94d" stroke-width="1.4" fill="none" opacity="0.70"/></g></g>
 </svg>
