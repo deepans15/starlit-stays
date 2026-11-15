@@ -31,7 +31,9 @@ window.STARLIT_ROOM_LAYOUTS = [
     },
     "branchKey": "building/treehouse_2x2_branch",
     "cabinKey": "building/treehouse_2x2_cabin",
-    "combinedKey": "rooms/treehouse_2x2"
+    "combinedKey": "rooms/treehouse_2x2",
+    "interiorMode": "unfurnished",
+    "wallPalette": "#bfd5c6"
   },
   {
     "id": "treehouse_2x3",
@@ -65,7 +67,9 @@ window.STARLIT_ROOM_LAYOUTS = [
     },
     "branchKey": "building/treehouse_2x3_branch",
     "cabinKey": "building/treehouse_2x3_cabin",
-    "combinedKey": "rooms/treehouse_2x3"
+    "combinedKey": "rooms/treehouse_2x3",
+    "interiorMode": "unfurnished",
+    "wallPalette": "#bfd5c6"
   },
   {
     "id": "treehouse_1x2",
@@ -99,6 +103,8 @@ window.STARLIT_ROOM_LAYOUTS = [
     },
     "branchKey": "building/treehouse_1x2_branch",
     "cabinKey": "building/treehouse_1x2_cabin",
-    "combinedKey": "rooms/treehouse_1x2"
+    "combinedKey": "rooms/treehouse_1x2",
+    "interiorMode": "unfurnished",
+    "wallPalette": "#bfd5c6"
   }
 ];

@@ -1,3 +1,13 @@
+## Latest branch refinement
+The empty pale room boxes are unchanged. Supporting wood now uses uneven, tapered cubic growth curves, unequal forks, fused branch joints, bark grooves and small knots. Outline strokes are drawn beneath a shared fill, removing internal seams that made the old supports look like bent pipes. All keys, dimensions, room bounds, guest/staff slots and the tall version swing are retained. Combined SVGs were synced to the branch/cabin layers. No game-code edits.
+
+# Latest treehouse correction - takes precedence over older treehouse notes
+Only treehouse art/metadata were revised; index.html was not edited. All source dimensions, IDs and 168px box bounds remain unchanged. Treehouse backgrounds are now pale and unfurnished, with sparse vines and slender crooked support wood, matching the clarified silhouette direction.
+Use the updated slots: read_stand at floor156 (not the old seated positions), no seat foreground crops, and the revised guide positions. Capacities remain2/4/6. Do not redraw the old baked seating or the old seat crops; furniture should be placed by the player. room_layouts.js interiorMode=unfurnished describes this choice; existing openAir/box bounds still apply. Keep trunk-space alpha and a flat top edge for stacking. Invalidate caches for all nine treehouse combined/branch/cabin SVGs.
+
+---
+Earlier notes below apply where not superseded above.
+
 # Current art integration requirements: alive hotel
 This file supersedes earlier conflicting frame counts, treehouse bounds and laundry dimensions. Art/ only was edited; index.html is untouched by this task.
 

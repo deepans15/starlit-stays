@@ -6950,66 +6950,44 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "height": 336,
       "slots": [
         {
-          "activity": "read",
-          "x": 66,
-          "y": 135,
-          "scale": 0.56,
-          "phase": 0,
-          "z": 5
-        },
-        {
-          "activity": "read",
-          "x": 108,
-          "y": 135,
-          "scale": 0.56,
-          "phase": 0.25,
-          "z": 5
-        },
-        {
-          "activity": "read",
-          "x": 207,
-          "y": 141,
-          "scale": 0.6,
-          "phase": 0.5,
+          "activity": "read_stand",
+          "x": 40,
+          "y": 156,
+          "scale": 0.58,
+          "phase": 0.0,
           "z": 5
         },
         {
           "activity": "read_stand",
-          "x": 238,
+          "x": 93,
           "y": 156,
-          "scale": 0.5,
-          "phase": 0.7,
+          "scale": 0.58,
+          "phase": 0.27,
+          "z": 5
+        },
+        {
+          "activity": "read_stand",
+          "x": 146,
+          "y": 156,
+          "scale": 0.58,
+          "phase": 0.54,
+          "z": 5
+        },
+        {
+          "activity": "read_stand",
+          "x": 207,
+          "y": 156,
+          "scale": 0.58,
+          "phase": 0.81,
           "z": 5
         }
       ],
-      "foreground": [
-        {
-          "x": 39,
-          "y": 142,
-          "width": 102,
-          "height": 2,
-          "z": 7
-        },
-        {
-          "x": 190,
-          "y": 146,
-          "width": 42,
-          "height": 2,
-          "z": 7
-        },
-        {
-          "x": 141,
-          "y": 140,
-          "width": 41,
-          "height": 2,
-          "z": 7
-        }
-      ],
+      "foreground": [],
       "staff": {
         "key": "chars/staff_treehouse",
         "frames": 4,
         "fps": 4,
-        "x": 270,
+        "x": 279,
         "y": 156,
         "scale": 0.55,
         "z": 9,
@@ -7025,84 +7003,62 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "height": 504,
       "slots": [
         {
-          "activity": "read",
-          "x": 59,
-          "y": 135,
-          "scale": 0.49,
+          "activity": "read_stand",
+          "x": 28,
+          "y": 156,
+          "scale": 0.52,
           "phase": 0.0,
           "z": 5
         },
         {
-          "activity": "read",
-          "x": 88,
-          "y": 135,
-          "scale": 0.49,
-          "phase": 0.2,
-          "z": 5
-        },
-        {
-          "activity": "read",
-          "x": 117,
-          "y": 135,
-          "scale": 0.49,
-          "phase": 0.4,
-          "z": 5
-        },
-        {
-          "activity": "read",
-          "x": 207,
-          "y": 141,
-          "scale": 0.55,
-          "phase": 0.6,
+          "activity": "read_stand",
+          "x": 69,
+          "y": 156,
+          "scale": 0.52,
+          "phase": 0.27,
           "z": 5
         },
         {
           "activity": "read_stand",
-          "x": 164,
+          "x": 110,
           "y": 156,
-          "scale": 0.48,
-          "phase": 0.8,
+          "scale": 0.52,
+          "phase": 0.54,
           "z": 5
         },
         {
           "activity": "read_stand",
-          "x": 238,
+          "x": 151,
           "y": 156,
-          "scale": 0.48,
-          "phase": 1,
+          "scale": 0.52,
+          "phase": 0.81,
+          "z": 5
+        },
+        {
+          "activity": "read_stand",
+          "x": 192,
+          "y": 156,
+          "scale": 0.52,
+          "phase": 1.08,
+          "z": 5
+        },
+        {
+          "activity": "read_stand",
+          "x": 235,
+          "y": 156,
+          "scale": 0.52,
+          "phase": 1.35,
           "z": 5
         }
       ],
-      "foreground": [
-        {
-          "x": 39,
-          "y": 142,
-          "width": 102,
-          "height": 2,
-          "z": 7
-        },
-        {
-          "x": 190,
-          "y": 146,
-          "width": 42,
-          "height": 2,
-          "z": 7
-        },
-        {
-          "x": 141,
-          "y": 140,
-          "width": 41,
-          "height": 2,
-          "z": 7
-        }
-      ],
+      "foreground": [],
       "staff": {
         "key": "chars/staff_treehouse",
         "frames": 4,
         "fps": 4,
-        "x": 270,
+        "x": 283,
         "y": 156,
-        "scale": 0.55,
+        "scale": 0.52,
         "z": 9,
         "anchor": {
           "x": 28,
@@ -7228,36 +7184,28 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "height": 336,
       "slots": [
         {
-          "activity": "read",
-          "x": 45,
-          "y": 135,
-          "scale": 0.46,
-          "phase": 0,
+          "activity": "read_stand",
+          "x": 39,
+          "y": 156,
+          "scale": 0.5,
+          "phase": 0.0,
           "z": 5
         },
         {
-          "activity": "read",
-          "x": 100,
-          "y": 135,
-          "scale": 0.46,
-          "phase": 0.4,
+          "activity": "read_stand",
+          "x": 88,
+          "y": 156,
+          "scale": 0.5,
+          "phase": 0.27,
           "z": 5
         }
       ],
-      "foreground": [
-        {
-          "x": 21,
-          "y": 140,
-          "width": 97,
-          "height": 3,
-          "z": 7
-        }
-      ],
+      "foreground": [],
       "staff": {
         "key": "chars/staff_treehouse",
         "frames": 4,
         "fps": 4,
-        "x": 136,
+        "x": 134,
         "y": 156,
         "scale": 0.5,
         "z": 9,

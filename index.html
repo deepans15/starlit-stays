@@ -234,14 +234,14 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.59"></script>
-<script src="art/items.js?v=0.59"></script>
-<script src="art/furnished_rooms.js?v=0.59" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.59" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.59" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.59" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.59"></script>
-<script src="art/weather.js?v=0.59" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.60"></script>
+<script src="art/items.js?v=0.60"></script>
+<script src="art/furnished_rooms.js?v=0.60" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.60" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.60" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.60" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.60"></script>
+<script src="art/weather.js?v=0.60" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -251,7 +251,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.59';
+const BUILD = '0.60';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -1342,7 +1342,7 @@ const buildMode = () => panel.style.display==='block' && (ui.panelKind==='build'
 function drawRoofs(skipId){
   const occ = new Set(); for(const r of S.rooms){ if(r.id===skipId) continue; const d = ROOMS[r.type]; for(let i=0;i<d.w;i++) for(let j=0;j<hOf(r.type);j++) occ.add((r.f+j)+','+(r.c+i)); }
   for(const r of S.rooms){
-    if(r.id===skipId) continue; const L = ROOM_LAYOUT[r.type]; if(L && L.openAir) continue;
+    if(r.id===skipId) continue;   // treehouse boxes get a roof too: their flat top is the room's top edge
     const d = ROOMS[r.type], q = roomRect(r), top = r.f + hOf(r.type);
     for(let i=0;i<d.w;i++){
       if(occ.has(top+','+(r.c+i))) continue;

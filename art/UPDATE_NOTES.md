@@ -1,3 +1,15 @@
+## Latest branch refinement
+The empty pale room boxes are unchanged. Supporting wood now uses uneven, tapered cubic growth curves, unequal forks, fused branch joints, bark grooves and small knots. Outline strokes are drawn beneath a shared fill, removing internal seams that made the old supports look like bent pipes. All keys, dimensions, room bounds, guest/staff slots and the tall version swing are retained. Combined SVGs were synced to the branch/cabin layers. No game-code edits.
+
+# Latest treehouse silhouette correction
+The supplied reference clarified the intended shape: a spare pale-mint room frame, thin crooked supporting wood and sparse irregular edge vines. The earlier heavy trunks, dark furnished cabins and evenly repeated leaf border were replaced.
+All three sizes and all nine combined/component SVG keys are preserved. The box remains the top168px, perfectly flat at y0, with floor at156 and transparent air below. Interior furniture, lights and decorative fixtures were removed from the treehouse backgrounds. Furniture remains placeable from the existing catalog. Small bevels and a light floor band provide depth without filling the room with baked props.
+The 1x2 has a slim straight/twisting stem with small forks. The 2x2 has a thin crooked central trunk, tapered forks and small roots. The 2x3 has a longer narrow trunk, knot and small rope swing. All branch/cabin layers match the combined assets. These are original vectors interpreting the reference's broad silhouette and proportions; no screenshot tracing, logos, prices or UI artwork was used.
+Because the interiors are now empty, reading visitors use read_stand rather than sitting on invisible chairs. Capacities stay2/4/6, floor anchors remain156, guide positions stay inside, and old seat foreground masks are removed. Updated room_layouts.js adds interiorMode=unfurnished; the actual wall/floor/frame bounds do not change.
+
+---
+Earlier batch notes below remain applicable except for the superseded treehouse interior/silhouette.
+
 # Alive hotel art batch
 
 ## Scope and preservation
