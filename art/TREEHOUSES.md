@@ -1,18 +1,31 @@
-# Treehouse art handoff
+# Rooms resting on exposed tree branches
 
-Coordinate convention: footprint = cells wide x floors tall; each cell is 160 px wide and each floor is 168 px tall. The game renders at half file size.
+## Artwork
+The existing treehouse_2x2 and treehouse_2x3 room IDs now show the requested design: a literal enclosed, furnished cabin sitting on a thick tree branch. The branch area has no wallpaper, room walls, rectangular floor background or enclosing frame. All space outside the cabin/tree/ropes is transparent, so the selected scenery can show through.
 
-## Canopy Cabin: 2 x 2
-Asset and manifest key: rooms/treehouse_2x2.svg / rooms/treehouse_2x2.
-File: 320 x 336. Build footprint: width 2 cells, height 2 floors (4 blocks).
-Leaf-roof cabin, warm window, porch planter, hanging lantern and access ladder.
+- rooms/treehouse_2x2.svg: 320 x 336, two cells wide and two floors tall. Furnished cabin, exposed support branch, trunk, leaf crown, rope ladder and swing.
+- rooms/treehouse_2x3.svg: 320 x 504, two cells wide and three floors tall. Same cabin, longer open trunk and ladder, hammock and second exposed branch with a planter.
 
-## Treetop Reading Retreat: 2 x 3
-Asset and manifest key: rooms/treehouse_2x3.svg / rooms/treehouse_2x3.
-File: 320 x 504. Build footprint: width 2 cells, height 3 floors (6 blocks).
-Larger tree, cabin and porch, second reading deck with a cushioned seat, book and rope swing, full-height ladder, lower hammock terrace and wooden landing.
+The enclosed cabin is a cutaway so its opaque back wall, side posts, roof, floor, bookshelf, framed picture, reading bench, armchair, tea table and pendant lamp are visible.
 
-## Claude integration
-Add these as amenity room types rather than guest-room overlays. Use type IDs treehouse_2x2 and treehouse_2x3 so the existing rooms/<type> sprite lookup can find the files. Set w=2, h=2 or h=3; choose room prices, unlock levels, guest capacity, revenue and XP in the gameplay code. Add guest demand/build-menu support if required by the game. The art has a plain 120 x 44 area at top left for room names. Art-only files do not register new gameplay room types.
+## Separate layers and exact bounds
+For each size, building/treehouse_2xN_branch.svg contains only exposed tree/branch/rope details, while building/treehouse_2xN_cabin.svg contains the furnished enclosed cabin. The combined rooms asset draws branch first, then cabin. All share exactly the same canvas and placement.
 
-The art manifest and preview already include both designs. No game-code changes were made.
+room_layouts.js defines window.STARLIT_ROOM_LAYOUTS. Coordinates are in SVG file pixels and must be halved for the game's normal draw scale:
+- wallBounds: x=20, y=64, width=252, height=140.
+- floorBounds: x=20, y=202, width=252, height=12.
+- frameBounds: x=20, y=64, width=252, height=150.
+- guestBaseline: y=202, the cabin's floor level.
+- Full placement footprint remains 320 x 336 or 320 x 504.
+
+## Required gameplay renderer handoff for Claude
+Current index.html already registers both treehouse room types, but drawRoom() paints a solid wall, floor and edge frame over the full rectangular footprint before/after drawing the sprite. Transparent SVGs alone cannot erase that paint. To make the open branch area visible in gameplay:
+
+1. Load room_layouts.js or copy these art bounds into the room definitions, and mark the treehouse types as open-air layouts.
+2. For these types, skip the full-footprint wall/floor fill and full rectangular edge(). Draw the cabin walls/floor/frame only inside the corresponding bounds, or use the complete cabin art as supplied.
+3. Draw the branch/cabin layers at the same full-footprint origin and size, without any wall behind the branch. The combined rooms SVG can also be used after the generic wall/floor/frame are suppressed.
+4. Place amenity guests and floor furniture on guestBaseline/floorBounds, rather than at the bottom of the whole tree canvas. Restrict wallpaper, wall decorations and ceiling items to the cabin region.
+5. Clip dirt/cleaning tints and room highlighting to the enclosed cabin rather than tinting the exposed sky rectangle. Keep placement/support calculations based on the original footprint unless gameplay design intentionally changes them.
+6. Preserve the clear 120 x 44 top-left label area. Labels may keep their small existing UI badge above the art.
+
+This art batch does not edit index.html. The preview demonstrates actual SVG transparency; the game needs the renderer adjustment above to reproduce it.

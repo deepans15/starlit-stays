@@ -223,7 +223,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.39';
+const BUILD = '0.40';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -1903,16 +1903,8 @@ async function onlineSignedIn(){
     const d = await FB.getSave();
     const remote = d && typeof d.json==='string' ? migrate(JSON.parse(d.json)) : null;
     const localFresh = S.xp < 30 && S.rooms.length <= 1;
-    if(remote && JSON.stringify(remote) !== serialize()){
-      if(localFresh) useHotel(remote, d.savedAt);
-      else { online.asking = true; online.pending = {remote, savedAt: d.savedAt};
-        modal(`<h2 style="margin:0 0 8px">Which hotel do you want to keep?</h2>
-          <div class="sub">Your Google account already has a hotel saved online, and this device has a different one.</div>
-          <div class="item"><div class="info">☁️ Online<br><span class="meta">${hotelSummary(remote)}</span></div><button class="btn" onclick="pickHotel('cloud')">Use this</button></div>
-          <div class="item"><div class="info">📱 This device<br><span class="meta">${hotelSummary(S)}</span></div><button class="btn alt" onclick="pickHotel('device')">Use this</button></div>
-          <div class="sub" style="margin-top:8px">The one you don't pick is replaced.</div>`);
-        return; }
-    }
+    // keep whichever hotel was saved most recently (a brand-new local hotel always gives way to the online one)
+    if(remote && (localFresh || (d.savedAt||0) > (S.savedAt||0) + 2000)) useHotel(remote, d.savedAt);
   }catch(e){ toast('Could not reach your online save. Playing on this device for now.'); }
   online.synced = true; onlineSave(true); pushScores(true);
 }
@@ -1936,8 +1928,8 @@ async function pushScores(force){
   if(!force && Date.now() - online.lastScore < 60000) return;
   online.lastScore = Date.now();
   try{
+    try{ if(FB.putHotel) await FB.putHotel(hotelSnapshot()); online.shareErr = null; }catch(e){ online.shareErr = (e && e.code) || 'error'; }
     await FB.putScore(scoreEntry());
-    if(FB.putHotel) await FB.putHotel(hotelSnapshot());
     if(S.wk && S.wk.id === weekId()) await FB.putWeek(S.wk.id, {name: S.name.slice(0,30), served: S.wk.n|0, updated: Date.now()});
   }catch(e){}
 }
@@ -1999,8 +1991,11 @@ function hotelSnapshot(){
 async function visitHotel(uid){
   if(!onlineAvailable()){ toast('Visiting works on the online version'); return; }
   if(FB.user && uid===FB.user.uid){ toast("That's your own hotel!"); return; }
-  let d; try{ d = await FB.getHotel(uid); }catch(e){ toast("Couldn't open that hotel. Try again."); return; }
-  if(!d || !d.json){ toast("That hotel hasn't been shared yet"); return; }
+  let d; try{ d = await FB.getHotel(uid); }
+  catch(e){ const code = (e && e.code) || 'unknown';
+    modal(`<h2 style="margin:0 0 8px">Couldn't open that hotel</h2><div class="sub">${code==='permission-denied' ? 'Firebase is blocking hotel visits. The Firestore rules need the new <b>hotels</b> section: paste the latest firestore.rules into Firebase → Firestore Database → Rules and click Publish.' : code==='unavailable' ? 'No connection to the server. Check your internet and try again.' : 'Something went wrong loading it.'}</div><div class="sub" style="font-family:monospace;background:#f3ece2;border-radius:8px;padding:6px">${esc(code)}</div><button class="btn" onclick="closeModal()">OK</button>`);
+    return; }
+  if(!d || !d.json){ toast("That player hasn't shared their hotel yet. It appears after they play signed in for a minute."); return; }
   let h; try{ h = JSON.parse(d.json); }catch(e){ toast('That hotel could not be loaded'); return; }
   if(!ui.visit){ save(); ui.home = S; ui.homeGuests = guests; }
   const st = freshState();

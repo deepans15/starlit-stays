@@ -94,11 +94,11 @@
     </g>
     <path d="M145 135l-5 21m43-21 5 21" fill="none" stroke="#c8915f" stroke-width="3" vector-effect="non-scaling-stroke" />
     <ellipse cx="164" cy="132" rx="32" ry="7" fill="#9684a3" vector-effect="non-scaling-stroke" />
-    <path d="M151 121q-6-13 4-15h14q8 5 3 15Z" fill="#6fd3b5" vector-effect="non-scaling-stroke" />
-    <path d="M171 109q12-6 10 3-1 7-9 6" fill="#6fd3b5" vector-effect="non-scaling-stroke" />
-    <path d="M153 111l-11-3 5 9 6 1" fill="#6fd3b5" vector-effect="non-scaling-stroke" />
-    <ellipse cx="161" cy="106" rx="8" ry="3" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    <circle cx="161" cy="102" r="2" fill="#ffc94d" vector-effect="non-scaling-stroke" />
+    <path d="M151 121q-6-13 4-15h14q8 5 3 15Z" fill="#6fd3b5" vector-effect="non-scaling-stroke" transform="translate(0 7)" />
+    <path d="M171 109q12-6 10 3-1 7-9 6" fill="#6fd3b5" vector-effect="non-scaling-stroke" transform="translate(0 7)" />
+    <path d="M153 111l-11-3 5 9 6 1" fill="#6fd3b5" vector-effect="non-scaling-stroke" transform="translate(0 7)" />
+    <ellipse cx="161" cy="106" rx="8" ry="3" fill="#fff8ef" vector-effect="non-scaling-stroke" transform="translate(0 7)" />
+    <circle cx="161" cy="102" r="2" fill="#ffc94d" vector-effect="non-scaling-stroke" transform="translate(0 7)" />
     <path d="M183 123h9q0 8-4 8t-5-8Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
   </g>
 </svg>

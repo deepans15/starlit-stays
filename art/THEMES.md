@@ -33,12 +33,8 @@ Numbered clerk blink files: clerk_blink_1 (half blink), clerk_blink_2 (closed). 
 Cleaner sweep has two poses at 4 fps; feet and body remain aligned to cleaner.svg.
 Noodle, cinema and pool each have three transparent effect frames at 4 fps. They line up with the original amenity art. Their dimensions and occupied areas are unchanged across frames. Effect files contain only steam/tassels, screen content, or water highlights/ripples.
 
-## Treehouse room concepts
-rooms/treehouse_2x2.svg: 320 x 336, two cells wide and two floors tall.
-rooms/treehouse_2x3.svg: 320 x 504, two cells wide and three floors tall.
-These are original amenity/building room designs, not guest-room overlays. Both feature a leafy wooden cabin, porch, lantern and ladder; the taller version adds a reading deck and rope swing. Both preserve the room-name area.
-These are new room types, so Claude must add their gameplay definitions and build-menu entries. They are registered and previewable, but are not a style for an existing room type. index.html was not edited. See TREEHOUSES.md for the art handoff.
-
+## Branch-supported treehouse rooms
+The registered treehouse_2x2 and treehouse_2x3 rooms have been redesigned as enclosed furnished cabins sitting on exposed branches, with transparent open air outside the cabin. The room types now exist in the game; the current renderer still fills the full footprint and must be clipped to the cabin bounds to reveal that transparency. room_layouts.js and TREEHOUSES.md provide exact cabin/branch layer keys, bounds and the renderer handoff. The taller version adds a hammock and another exposed branch, without surrounding walls.
 
 ## Gold
 All-gold room styles: gold_lobby, gold_closet, gold_fit, gold_noodle, gold_lounge, gold_cinema, gold_games, gold_pool. Each uses the corresponding normal room dimensions; the lobby elevator area and all room-name areas remain clear.
@@ -55,3 +51,11 @@ reading_bench: floor, 96 x 56, 300 coins, 6 decor, level 5.
 
 ## Animated scenery
 Five new backgrounds: cloud_day, sunset_lanterns, starlit_night, aurora, petal_garden. Each has a 960 x 540 opaque base and twelve matching transparent motion frames at 4 fps (three-second loop). Every frame is an SVG asset, without animation scripts or embedded images. backgrounds.js describes the sequences; preview.html plays them. Game code currently draws its own procedural sky, so Claude must connect these scenery assets before they appear behind the hotel. See BACKGROUNDS.md.
+
+
+## Fully furnished Limited rooms
+The current game already buys Limited guest rooms with a matching furniture bundle through furnishPlan(), including a 15% furniture discount. This batch leaves gameplay and prices unchanged except for adding three normal catalog pieces: halloween_bat_mobile, winter_wallart and pink_mobile. Their collection prefixes allow the existing bundle system to include them where they fit.
+
+Five themed lounge styles have been furnished more fully: Love, Halloween, Winter, Gold and Pink. Their seating, rugs, lighting, tea setting and matching display/decor are baked into amenity-room art; these interior drawings are not extra movable inventory pieces.
+
+furnished_rooms.js provides five curated 320 x 168 guest-room arrangements for art review, each with a bed, rug, wall/ceiling decorations and fitting floor furniture. preview.html displays them under Furnished Limited-room designs. These are composited previews using normal placeable furniture, not guest-room overlay SVGs. Their colours and placements are visual design recommendations; the game continues to use its existing automatic furnishing placement until Claude chooses to consume the curated layout metadata. Existing hotel saves are not altered.
