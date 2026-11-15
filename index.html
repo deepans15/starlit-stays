@@ -157,6 +157,7 @@
     <div id="blockCount"></div>
     <div id="dock">
       <button class="dbtn small" id="btnGoals" title="Goals"><span class="ic" data-art="ui/goals"><svg viewBox="0 0 48 48" width="30" height="30"><circle cx="24" cy="24" r="19" fill="#fff" stroke="#2b2340" stroke-width="3"/><circle cx="24" cy="24" r="12" fill="#ff7a90" stroke="#2b2340" stroke-width="3"/><circle cx="24" cy="24" r="5" fill="#fff" stroke="#2b2340" stroke-width="3"/></svg></span><span class="dlab">Goals</span></button>
+      <button class="dbtn small" id="btnRanks" title="Leaderboard"><span class="ic" data-art="ui/leaderboard"><svg viewBox="0 0 48 48" width="30" height="30"><path d="M14 8h20v8a10 10 0 0 1-20 0z" fill="#ffc94d" stroke="#2b2340" stroke-width="3" stroke-linejoin="round"/><path d="M14 11H7v3a7 7 0 0 0 7 7M34 11h7v3a7 7 0 0 1-7 7" fill="none" stroke="#2b2340" stroke-width="3"/><path d="M24 26v8M16 40h16l-2-6H18z" fill="#c8915f" stroke="#2b2340" stroke-width="3" stroke-linejoin="round"/></svg></span><span class="dlab">Ranks</span></button>
       <button class="dbtn small" id="btnMenu" title="Settings"><span class="ic" data-art="ui/settings"><svg viewBox="0 0 48 48" width="30" height="30"><circle cx="24" cy="24" r="15" fill="#b8bec8" stroke="#2b2340" stroke-width="10" stroke-dasharray="6 5.8"/><circle cx="24" cy="24" r="14" fill="#dfe3ea" stroke="#2b2340" stroke-width="3"/><circle cx="24" cy="24" r="6" fill="#fff" stroke="#2b2340" stroke-width="3"/></svg></span><span class="dlab">Settings</span></button>
       <button class="dbtn mid" id="shiftBtn" title="Open your hotel"><span class="ic" data-art="ui/open"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M24 8c-8 0-12 6-12 14v8l-4 6h32l-4-6v-8c0-8-4-14-12-14z" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5" stroke-linejoin="round"/><circle cx="24" cy="40" r="4" fill="#2b2340"/><circle cx="24" cy="6" r="3" fill="#2b2340"/></svg></span><span class="dlab" id="shiftLab">Open</span><span class="dtimer" id="shiftTimer"></span></button>
       <button class="dbtn mid" id="btnExpand" title="Expand"><span class="ic" data-art="ui/expand"><svg viewBox="0 0 48 48" width="32" height="32"><rect x="12" y="12" width="24" height="24" rx="3" fill="#ffb38a" stroke="#2b2340" stroke-width="3"/><path d="M4 12V4h8M44 12V4h-8M4 36v8h8M44 36v8h-8" fill="none" stroke="#2b2340" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dlab">Expand</span></button>
@@ -179,7 +180,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.28';
+const BUILD = '0.29';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -695,7 +696,7 @@ function updateGuests(dt){
           const rr2 = roomRect(r);
           addCoins(pay, rr2.x+rr2.w/2, rr2.y+20);
           addXP(Math.round(def.xp * gt.xp));
-          S.served++; if(g.type==='vip') S.vipServed = true;
+          S.served++; bumpWeek(); if(g.type==='vip') S.vipServed = true;
           r.guest = null; r.dirty = true;
           let happy = 0.6 + 0.4*decorPct(r);
           if(g.want){
@@ -760,7 +761,7 @@ function frame(now){
   for(const p of confetti){ p.t+=dt; p.vy += 700*dt; p.x += p.vx*dt; p.y += p.vy*dt; p.r += p.vr*dt; }
   confetti = confetti.filter(p=>p.t<3);
   autosave += dt;
-  if(autosave>5){ autosave=0; updateRate(); checkGoals(); save(); cloudTick=(cloudTick+1)%3; if(cloudTick===0) cloudSave(); }
+  if(autosave>5){ autosave=0; updateRate(); checkGoals(); save(); cloudTick=(cloudTick+1)%3; if(cloudTick===0){ cloudSave(); onlineSave(); pushScores(); } }
   draw(dt); updateTop();
   requestAnimationFrame(frame);
 }
@@ -1667,10 +1668,94 @@ function renderGoalsBox(){
   $('goalsBox').innerHTML = (open.length ? `<b>🎯 Goals</b>` + open.map(o=>`<div class="g"><span>${o.g.t}</span><span class="r">🪙${o.g.r}</span></div>`).join('') : '<b>🎉 All goals done!</b>')
     + (next ? `<div class="next">⭐ Lv ${next.lv}: ${next.t}</div>` : '');
 }
+/* ---------------- online: Google sign-in, cloud save and leaderboards (Firebase, on the public web version) ----------------
+   window.FB is set up by the Firebase module at the bottom of the page. Without it (Claude link, local file, LAN) the game
+   simply plays offline as before. */
+const weekId = () => Math.floor((Date.now()/86400000 + 3) / 7);   // weeks start on Monday (UTC)
+function bumpWeek(){ const w = weekId(); if(!S.wk || S.wk.id !== w) S.wk = {id:w, n:0}; S.wk.n++; }
+const online = {synced:false, busy:false, last:'', lastScore:0, lastWeek:'', asking:false};
+function onlineAvailable(){ return !!(window.FB && window.FB.ok); }
+function scoreEntry(){ return {name: (S.name||'Hotel').slice(0,30), level: level(), xp: Math.floor(S.xp), stars: Math.round(stars()*2)/2, served: S.served|0, rooms: S.rooms.length, updated: Date.now()}; }
+function hotelSummary(st){ const keep = S; S = st; const t = `<b>${st.name||'Unnamed hotel'}</b><br>Level ${level()} · ${st.rooms.length} rooms · ${st.served|0} guests served`; S = keep; return t; }
+async function onlineSignedIn(){
+  online.synced = false;
+  try{
+    const d = await FB.getSave();
+    const remote = d && typeof d.json==='string' ? migrate(JSON.parse(d.json)) : null;
+    const localFresh = S.xp < 30 && S.rooms.length <= 1;
+    if(remote && JSON.stringify(remote) !== serialize()){
+      if(localFresh) useHotel(remote, d.savedAt);
+      else { online.asking = true; online.pending = {remote, savedAt: d.savedAt};
+        modal(`<h2 style="margin:0 0 8px">Which hotel do you want to keep?</h2>
+          <div class="sub">Your Google account already has a hotel saved online, and this device has a different one.</div>
+          <div class="item"><div class="info">☁️ Online<br><span class="meta">${hotelSummary(remote)}</span></div><button class="btn" onclick="pickHotel('cloud')">Use this</button></div>
+          <div class="item"><div class="info">📱 This device<br><span class="meta">${hotelSummary(S)}</span></div><button class="btn alt" onclick="pickHotel('device')">Use this</button></div>
+          <div class="sub" style="margin-top:8px">The one you don't pick is replaced.</div>`);
+        return; }
+    }
+  }catch(e){ toast('Could not reach your online save. Playing on this device for now.'); }
+  online.synced = true; onlineSave(true); pushScores(true);
+}
+function useHotel(remote, savedAt){ S = remote; S.savedAt = savedAt || Date.now(); guests = []; lastTop = ''; checkPokeDay(); renderGoalsBox(); closePanel(); save(); toast('☁️ Loaded your online hotel'); }
+function pickHotel(which){
+  const p = online.pending; online.pending = null; online.asking = false; closeModal();
+  if(which==='cloud' && p) useHotel(p.remote, p.savedAt);
+  online.synced = true; onlineSave(true); pushScores(true);
+}
+async function onlineSave(force){
+  if(!onlineAvailable() || !FB.user || !online.synced || online.busy || !S.name) return;
+  const json = serialize(); if(!force && json === online.last) return;
+  online.busy = true;
+  try{ await FB.putSave({json, savedAt: S.savedAt || Date.now(), name: S.name.slice(0,30), level: level()}); online.last = json; }catch(e){}
+  online.busy = false;
+}
+async function pushScores(force){
+  if(!onlineAvailable() || !FB.user || !online.synced || !S.name) return;
+  if(!force && Date.now() - online.lastScore < 60000) return;
+  online.lastScore = Date.now();
+  try{
+    await FB.putScore(scoreEntry());
+    if(S.wk && S.wk.id === weekId()) await FB.putWeek(S.wk.id, {name: S.name.slice(0,30), served: S.wk.n|0, updated: Date.now()});
+  }catch(e){}
+}
+window.onFBUser = u => { if(u) onlineSignedIn(); else online.synced = false; if(ui.panelKind==='menu') openMenu(); if(ui.panelKind==='ranks') openRanks(ui.ranksTab); };
+async function signInGoogle(){
+  if(!onlineAvailable()){ toast('Sign-in works on the online version of the game'); return; }
+  try{ await FB.signIn(); }catch(e){ toast(e && e.code==='auth/unauthorized-domain' ? 'Sign-in isn\'t allowed on this web address' : 'Sign-in was cancelled'); }
+}
+async function signOutGoogle(){ await onlineSave(true); try{ await FB.signOut(); }catch(e){} toast('Signed out. Your hotel stays on this device.'); }
+function accountRow(){
+  if(!onlineAvailable()) return `<div class="item"><div class="info"><b>☁️ Online save & leaderboards</b><div class="meta">Available when you play the online version of the game.</div></div></div>`;
+  if(FB.user) return `<div class="item"><div class="info"><b>☁️ Signed in with Google</b><div class="meta">Your hotel saves online and follows you to any device.</div></div><button class="btn alt" onclick="signOutGoogle()">Sign out</button></div>`;
+  return `<div class="item"><div class="info"><b>☁️ Save online</b><div class="meta">Sign in to keep your hotel on every device and join the leaderboards.</div></div><button class="btn" onclick="signInGoogle()">Sign in</button></div>`;
+}
+const RANK_TABS = [['level','⭐ Level','Level'],['served','🛎️ Guests','Guests served'],['week','📅 This week','Guests this week']];
+async function openRanks(tab){
+  unfocus(); tab = tab || ui.ranksTab || 'level'; ui.ranksTab = tab;
+  const tabs = `<div class="tabs">${RANK_TABS.map(([id,l])=>`<button class="${tab===id?'on':''}" onclick="openRanks('${id}')">${l}</button>`).join('')}</div>`;
+  const head = `<h2>🏆 Leaderboards</h2>${tabs}`;
+  if(!onlineAvailable()){ showPanel(head + `<div class="sub">Leaderboards work on the online version of Starlit Stays, where you can sign in with Google.</div>`, 'ranks'); return; }
+  showPanel(head + `<div class="sub">Loading…</div>`, 'ranks');
+  if(FB.user) await pushScores(true);
+  let rows = [];
+  try{ rows = tab==='week' ? await FB.topWeek(weekId(), 50) : await FB.top(tab==='level' ? 'xp' : 'served', 50); }
+  catch(e){ if(ui.panelKind==='ranks' && ui.ranksTab===tab) showPanel(head + `<div class="sub">Couldn't load the leaderboard. Check your connection and try again.</div>`, 'ranks'); return; }
+  if(ui.panelKind!=='ranks' || ui.ranksTab!==tab) return;
+  const me = FB.user && FB.user.uid, val = r => tab==='level' ? `Lv ${r.level} · ${'★'.repeat(Math.floor(r.stars||0))}` : `🛎️ ${(r.served||0).toLocaleString()}`;
+  let html = head;
+  if(!FB.user) html += `<div class="item" style="background:#fff6e0"><div class="info"><b>Join the leaderboard</b><div class="meta">Sign in with Google. Only your hotel's name is shown.</div></div><button class="btn" onclick="signInGoogle()">Sign in</button></div>`;
+  if(tab==='week') html += `<div class="sub">Resets every Monday. Serve guests this week to climb.</div>`;
+  if(!rows.length) html += `<div class="sub">No hotels yet. Be the first!</div>`;
+  rows.forEach((r,i)=>{ const medal = ['🥇','🥈','🥉'][i] || `<span style="display:inline-block;width:22px;text-align:center;font-weight:900;color:#7a6e86">${i+1}</span>`;
+    html += `<div class="item" style="${r.id===me?'border-color:#3fae8c;background:#eafaf4':''}"><div style="font-size:20px;width:28px;text-align:center">${medal}</div><div class="info"><b>${esc(r.name||'Hotel')}${r.id===me?' (you)':''}</b><div class="meta">${val(r)}</div></div></div>`; });
+  showPanel(html, 'ranks');
+}
+function esc(t){ return String(t).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
 function openMenu(){
   unfocus(); checkPokeDay();
   const cv2 = coverage();
   showPanel(`<h2>Menu</h2>
+    ${accountRow()}
     <div class="item"><div class="info"><b>Guests served</b><div class="meta">${S.served}</div></div></div>
     <div class="item"><div class="info"><b>Guest happiness</b><div class="meta">${Math.round(S.sat*100)}%</div></div></div>
     <div class="item"><div class="info"><b>Cleaning coverage</b><div class="meta">${Math.min(cv2.cap,cv2.total)} of ${cv2.total} rooms</div></div></div>
@@ -1679,7 +1764,7 @@ function openMenu(){
     <div class="item"><div class="info"><b>Rename hotel</b></div><button class="btn" onclick="askName()">Rename</button></div>
     <div class="item"><div class="info"><b>How to play</b></div><button class="btn" onclick="showHelp()">Show</button></div>
     <div class="item"><div class="info"><b>Start over</b><div class="meta">Deletes this save</div></div><button class="btn warn" onclick="resetGame()">Reset</button></div>
-    <div class="sub" style="margin-top:12px">Starlit Stays is an original fan-made game inspired by classic hotel sims. Not affiliated with Electronic Arts or Playfish. Build ${BUILD}.</div>`);
+    <div class="sub" style="margin-top:12px">Starlit Stays is an original fan-made game inspired by classic hotel sims. Not affiliated with Electronic Arts or Playfish. Build ${BUILD}.</div>`, 'menu');
 }
 function resetGame(){ showPanel(`<h2>Start over?</h2><div class="sub">Your hotel and coins will be deleted. This can't be undone.</div><button class="btn warn" onclick="doReset()">Yes, delete my hotel</button>`); }
 function doReset(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} S = freshState(); guests=[]; closePanel(); askName(); renderGoalsBox(); }
@@ -1773,12 +1858,13 @@ $('btnBuild').onclick = ()=>{ if(ui.panelKind==='build'){ closePanel(); return; 
 $('btnExpand').onclick = ()=>{ openExpand(); };
 $('btnGoals').onclick = ()=>{ openGoals(); };
 $('btnMenu').onclick = ()=>{ openMenu(); };
+$('btnRanks').onclick = ()=>{ if(ui.panelKind==='ranks') closePanel(); else openRanks(); };
 $('goalsBox').onclick = ()=>{ openGoals(); };
 // ChatGPT can replace these icons: art/ui/build.svg, expand.svg, goals.svg, settings.svg
 setTimeout(()=>{ lastTop=''; document.querySelectorAll('[data-art]').forEach(el=>{ const a = art(el.dataset.art); if(a) el.innerHTML = `<img src="${a.src}" alt="">`; }); }, 1500);
 setInterval(()=>{ $('btnBuild').classList.toggle('on', ui.panelKind==='build'); }, 200);
 window.addEventListener('resize', resize);
-document.addEventListener('visibilitychange', ()=>{ if(document.hidden){ save(); cloudSave(); } });
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden){ save(); cloudSave(); onlineSave(); pushScores(true); } });
 window.addEventListener('beforeunload', save);
 
 /* ---------------- start ---------------- */
@@ -1793,6 +1879,44 @@ if(!S.name){
 }
 requestAnimationFrame(t=>{ last=t; requestAnimationFrame(frame); });
 initCloud();
+</script>
+<script type="module">
+/* Firebase: only on the public web version (not inside Claude, not from a local file). The game works without it. */
+const firebaseConfig = {
+  apiKey: "AIzaSyBZyiK2EW9ATMGYeQbZ08IFV3gmjtvuNzU",
+  authDomain: "starlit-stays.firebaseapp.com",
+  projectId: "starlit-stays",
+  storageBucket: "starlit-stays.firebasestorage.app",
+  messagingSenderId: "488694130021",
+  appId: "1:488694130021:web:c9e0f9baa6f68a35b5ad8c",
+  measurementId: "G-EWFR4DE3LY"
+};
+if(!window.claude && /^https?:$/.test(location.protocol)){
+  try{
+    const B = 'https://www.gstatic.com/firebasejs/12.15.0/';
+    const [appM, authM, fsM] = await Promise.all([import(B+'firebase-app.js'), import(B+'firebase-auth.js'), import(B+'firebase-firestore.js')]);
+    const app = appM.initializeApp(firebaseConfig);
+    const auth = authM.getAuth(app), db = fsM.getFirestore(app);
+    const {doc, getDoc, setDoc, collection, query, orderBy, limit, getDocs} = fsM;
+    const FB = window.FB = { ok:true, user:null,
+      async signIn(){ const p = new authM.GoogleAuthProvider();
+        try{ await authM.signInWithPopup(auth, p); }
+        catch(e){ if(e && (e.code==='auth/popup-blocked' || e.code==='auth/operation-not-supported-in-this-environment')) await authM.signInWithRedirect(auth, p); else throw e; } },
+      signOut(){ return authM.signOut(auth); },
+      async getSave(){ const s = await getDoc(doc(db,'saves',FB.user.uid)); return s.exists() ? s.data() : null; },
+      putSave(d){ return setDoc(doc(db,'saves',FB.user.uid), d); },
+      putScore(e){ return setDoc(doc(db,'leaderboard',FB.user.uid), e); },
+      putWeek(w, e){ return setDoc(doc(db,'weekly',String(w),'scores',FB.user.uid), e); },
+      async top(field, n){ const q = await getDocs(query(collection(db,'leaderboard'), orderBy(field,'desc'), limit(n))); return q.docs.map(d=>({id:d.id, ...d.data()})); },
+      async topWeek(w, n){ const q = await getDocs(query(collection(db,'weekly',String(w),'scores'), orderBy('served','desc'), limit(n))); return q.docs.map(d=>({id:d.id, ...d.data()})); }
+    };
+    authM.getRedirectResult(auth).catch(()=>{});
+    authM.onAuthStateChanged(auth, u => { FB.user = u; if(window.onFBUser) window.onFBUser(u); });
+    if(!/^(localhost|127\.|192\.168\.|10\.)/.test(location.hostname)){
+      import(B+'firebase-analytics.js').then(async a => { if(await a.isSupported()) a.getAnalytics(app); }).catch(()=>{});
+    }
+  }catch(e){ console.warn('Online features unavailable', e); }
+}
 </script>
 </body>
 </html>

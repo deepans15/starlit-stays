@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Each player's hotel save: only that player can read or write it.
+    match /saves/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.json is string
+        && request.resource.data.json.size() < 900000;
+    }
+
+    // All-time leaderboard: anyone can read, players can only write their own entry.
+    match /leaderboard/{uid} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['name','level','xp','stars','served','rooms','updated'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 30
+        && request.resource.data.level is int && request.resource.data.level <= 300
+        && request.resource.data.xp is int
+        && request.resource.data.served is int && request.resource.data.served >= 0
+        && request.resource.data.stars is number && request.resource.data.stars <= 7
+        && request.resource.data.rooms is int && request.resource.data.rooms <= 200
+        // no huge jumps between saves
+        && (resource == null || request.resource.data.served <= resource.data.served + 2000);
+    }
+
+    // Weekly leaderboard: weekly/{week}/scores/{uid}
+    match /weekly/{week}/scores/{uid} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['name','served','updated'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 30
+        && request.resource.data.served is int && request.resource.data.served >= 0
+        && (resource == null || request.resource.data.served <= resource.data.served + 2000);
+    }
+  }
+}
