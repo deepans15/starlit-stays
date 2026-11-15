@@ -234,14 +234,14 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.61"></script>
-<script src="art/items.js?v=0.61"></script>
-<script src="art/furnished_rooms.js?v=0.61" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.61" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.61" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.61" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.61"></script>
-<script src="art/weather.js?v=0.61" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.62"></script>
+<script src="art/items.js?v=0.62"></script>
+<script src="art/furnished_rooms.js?v=0.62" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.62" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.62" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.62" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.62"></script>
+<script src="art/weather.js?v=0.62" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -251,7 +251,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.61';
+const BUILD = '0.62';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -1132,14 +1132,12 @@ function drawRoom(r, covered){
     return;
   }
   if(def.kind==='lobby'){ drawLobby(r,x,y,w); edge(x,y,w,h); pulseEdge(r,x,y,w,h); sellEdge(x,y,w,h); return; }
-  const bgArt = def.kind==='guest' && !r.wall && !r.floor && sprite('rooms/'+r.type, x, y, w, h);   // ChatGPT's room background until the player picks their own wallpaper / floor
+  const bgArt = def.kind==='guest' && !r.wall && sprite('rooms/'+r.type, x, y, w, h);   // ChatGPT's room background until the player picks their own wallpaper / floor
   if(!bgArt){ ctx.fillStyle = r.wall ? r.wallColor : def.color; ctx.fillRect(x,y,w,h); }
   if(bgArt){}
   else if(r.wall){ if(def.kind==='guest') drawWallPattern(r,x,y,w,h);
     else { ctx.fillStyle='rgba(255,255,255,.35)'; for(let i=8;i<w-4;i+=14) ctx.fillRect(x+i, y+2, 5, h-14); } }
-  if(bgArt){}
-  else if(r.floor){ ctx.fillStyle='#c8915f'; ctx.fillRect(x,y+h-FLOOR_PAD,w,10); ctx.fillStyle='#a8743f'; for(let i=0;i<w;i+=20) ctx.fillRect(x+i+2, y+h-FLOOR_PAD, 2, 10); }
-  else { ctx.fillStyle='#bcaaa4'; ctx.fillRect(x,y+h-FLOOR_PAD,w,10); }
+  if(def.kind==='guest' || !bgArt) drawFloorBand(r, x, y+h-FLOOR_PAD, w);
   // guest rooms are plain: just walls, floor and whatever furniture the player puts in (a new room only has its bed)
   if(def.kind==='guest'){ drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,h,'bed'); drawItems(r,x,y,w,h,'front'); drawGuestRoom(r,x,y,w,h,'guest'); }   // the sleeping guest stays in front of the furniture
   else if(def.kind==='service'){ if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawCloset(r,x,y,w,h); if(!r.dirty) drawStaff(r,x,y,w,h); }
@@ -1262,7 +1260,7 @@ function supportOf(r, it){ return it.on ? (r.items||[]).find(i=>i.u===it.on && i
 function itemY(r, it, def){
   const sup = supportOf(r, it);
   if(sup && ITEMS[sup.id] && surfaceTop(ITEMS[sup.id])!==undefined){ const sd = ITEMS[sup.id]; return Math.max(3, itemY(r, sup, sd) + surfaceTop(sd) - def.h); }
-  let h = hOf(r.type)*FLOOR, pad = FLOOR_PAD;
+  let h = hOf(r.type)*FLOOR, pad = (ROOMS[r.type].kind!=='guest' && art('rooms/'+r.type)) ? 6 : FLOOR_PAD;
   const L = ROOM_LAYOUT[r.type]; if(L && L.openAir && L.guestBaseline){ const k = ROOMS[r.type].w*CELL / L.width; h = L.guestBaseline*k; pad = 0; }   // treehouse: the cabin floor
   if(def.zone==='ceiling') return 3;
   if(def.zone==='wall') return Math.max(4, Math.min(h - pad - def.h - 8, it.y || 24));
@@ -1870,6 +1868,22 @@ function roomRate(r){ const d = ROOMS[r.type];
   if(d.kind==='guest') return Math.round((d.pay*(0.6+0.9*decorPct(r)) + decorCoins(r)) * (beautiful(r)?1.25:1) * starMult() * 3600 / ((d.stay||20) + 8));
   if(d.kind==='amenity') return Math.round((d.pay + decorCoins(r)) * d.slots * starMult() * 3600 / ((d.use||10) + 4)); return 0; }
 function perHour(k){ const d = ROOMS[k]; if(d.kind==='guest') return Math.round(d.pay * 3600 / ((d.stay||20) + 8)); if(d.kind==='amenity') return Math.round(d.pay * d.slots * 3600 / ((d.use||10) + 4)); return 0; }
+// 🎨 wallpaper colours and floors you drag onto a guest room
+function skinShop(){
+  let h = `<div class="sub">Drag a colour onto a guest room. The first wallpaper costs 🪙40 per block, changing colour after that is free.</div><div class="cat">`;
+  WALL_COLORS.forEach((c,i)=>{ h += `<div class="bcard" data-skin="wall:${c}" title="Wallpaper"><span class="rate">${i>=8?'Dark':'Light'}</span><div class="thumb"><div class="shape" style="width:96px;height:72px;background:${c};border-top-width:3px;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.18) 0 6px,transparent 6px 16px)"></div></div><div class="nm">Wallpaper</div><div class="pr">🪙40/block</div></div>`; });
+  h += `<div class="bcard" data-skin="floor:wood" title="Wooden floor"><span class="rate">Floor</span><div class="thumb"><div class="shape" style="width:96px;height:72px;background:repeating-linear-gradient(90deg,#c8915f 0 20px,#a8743f 20px 22px);border-top-width:3px"></div></div><div class="nm">Polished wooden floor</div><div class="pr">🪙50/block</div></div>`;
+  return h + `</div>`;
+}
+function applySkin(skin, r){
+  if(!r || ROOMS[r.type].kind!=='guest'){ toast('Walls and floors go on guest rooms'); return; }
+  const [kind, val] = skin.split(':'), cells = cellsOf(r);
+  if(kind==='wall'){ const c = r.wall ? 0 : 40*cells; if(S.coins < c){ toast(`Wallpaper costs 🪙${c}`); return; }
+    S.coins -= c; if(c) addXP(Math.round(c/40)); r.wall = true; r.wallColor = val; toast(c ? `Wallpaper added (-🪙${c})` : 'Wallpaper colour changed'); }
+  else { if(r.floor){ toast('This room already has a wooden floor'); return; } const c = 50*cells; if(S.coins < c){ toast(`Wooden floor costs 🪙${c}`); return; }
+    S.coins -= c; addXP(Math.round(c/40)); r.floor = true; toast(`Wooden floor added (-🪙${c})`); }
+  r.pulse = 1.2; lastTop=''; save(); checkGoals();
+}
 function decorShop(lv, cat){
   const where = it => it.rooms.map(k=>({guest:'guest rooms', amenity:'amenities', lobby:'lobby'})[k]||k).join(', ');
   const inSet = new Set(Object.values(COLLECTIONS).flat()), all = Object.values(ITEMS).filter(it=>!cat || itemCat(it)===cat).sort((a,b)=>a.lvl-b.lvl || a.cost-b.cost);
@@ -1975,7 +1989,11 @@ function buyItemTo(id, r, wx){
   toast(`${def.name} bought. It's in Storage: open a room to place it.`); openBuild('rooms');
 }
 function drawNewItemDrag(){
-  const d = ui.newItem, def = ITEMS[d.id], r = roomAt({x:d.px, y:d.py}), ok = itemFits(r, d.id);
+  const d = ui.newItem; if(d.skin){ const r = roomAt({x:d.px, y:d.py}), ok = r && ROOMS[r.type].kind==='guest';
+    if(r){ const q = visRect(r); ctx.save(); ctx.globalAlpha = 0.5; if(d.skin.startsWith('wall:')){ ctx.fillStyle = d.skin.slice(5); ctx.fillRect(q.x, q.y, q.w, q.h - FLOOR_PAD); } else { ctx.fillStyle='#c8915f'; ctx.fillRect(q.x, q.y+q.h-FLOOR_PAD, q.w, FLOOR_PAD); } ctx.restore();
+      ctx.strokeStyle = ok ? '#3fae8c' : '#ff7a90'; ctx.lineWidth = 3; ctx.setLineDash([6,4]); ctx.strokeRect(q.x+2, q.y+2, q.w-4, q.h-4); ctx.setLineDash([]); ctx.lineWidth = 1; }
+    ctx.fillStyle = d.skin.startsWith('wall:') ? d.skin.slice(5) : '#c8915f'; ctx.strokeStyle='#2b2340'; ctx.lineWidth=2; rr(d.px-18, d.py-14, 36, 28, 6); ctx.fill(); ctx.stroke(); ctx.lineWidth=1; return; }
+  const def = ITEMS[d.id], r = roomAt({x:d.px, y:d.py}), ok = itemFits(r, d.id);
   if(r){ const q = visRect(r); ctx.strokeStyle = ok ? '#3fae8c' : '#ff7a90'; ctx.lineWidth = 3; ctx.setLineDash([6,4]); ctx.strokeRect(q.x+2, q.y+2, q.w-4, q.h-4); ctx.setLineDash([]); ctx.lineWidth = 1; }
   ctx.globalAlpha = ok ? 1 : 0.6; drawItem(def, d.px - def.w/2, d.py - def.h/2); ctx.globalAlpha = 1;
 }
@@ -2010,7 +2028,7 @@ function openBuild(tab){
   const lv = level();
   // every section is in one scrolling list; the side bookmarks jump to a section and light up as you scroll past it
   const SECTIONS = [['guest','🛏️','Rooms','Guest rooms',[[null,'guest']]], ['amenity','🎡','Amenities','Amenities',[[null,'amenity']]], ['service','🧺','Services','Services',[[null,'service']]]]
-    .concat(DECOR_CATS.map(([id,e,label])=>['d_'+id, e, label, label, [], id]));
+    .concat([['walls','🎨','Walls','Walls & floors',[]]]).concat(DECOR_CATS.map(([id,e,label])=>['d_'+id, e, label, label, [], id]));
   const mark = ([id, e, label, , , dc]) => `<button data-mark="${id}" onclick="jumpBuild('${id}')"><span class="e">${dc && art('ui/cat_'+dc) ? `<img src="${art('ui/cat_'+dc).src}" style="width:20px;height:20px">` : e}</span>${label}</button>`;
   let html = `<h2>🔨 Build</h2>${buildTabs('rooms')}<div class="sub">🧱 <b>${blocksUsed()}/${blocksMax()} blocks</b> · drag onto your hotel or tap to place</div>`;
   $('marks').innerHTML = SECTIONS.map(mark).join('');
@@ -2018,6 +2036,7 @@ function openBuild(tab){
   for(const [cat, , , title, groups, dc] of SECTIONS){
   html += `<div class="bsec${(SECTIONS.some(x=>x[0]===ui.buildSec) ? ui.buildSec : 'guest')===cat ? ' show' : ''}" id="bsec-${cat}"><h3 class="big">${title}</h3>`;
   if(dc) html += decorShop(lv, dc);
+  if(cat==='walls') html += skinShop();
   for(const [label,kind] of groups){
     html += `${label?`<h3>${label}</h3>`:''}<div class="cat">`;
     for(const [k,d] of Object.entries(ROOMS)){
@@ -2066,6 +2085,8 @@ function drawNewRoomDrag(cov){
 }
 panel.addEventListener('pointerdown', ev=>{
   const ic = ev.target.closest && ev.target.closest('.bcard[data-item]');
+  const sk = ev.target.closest && ev.target.closest('.bcard[data-skin]');
+  if(sk && ev.button<=0){ const p = toWorld(ev); ui.newItem = {skin: sk.dataset.skin, sx: ev.clientX, sy: ev.clientY, px:p.x, py:p.y, moved:false, over:false}; return; }
   if(ic && ev.button<=0){ const p = toWorld(ev); ui.newItem = {id: ic.dataset.item, inv: !!ic.dataset.inv, sx: ev.clientX, sy: ev.clientY, px:p.x, py:p.y, moved:false, over:false}; return; }
   const card = ev.target.closest && ev.target.closest('.bcard[data-room]');
   if(!card || ev.button>0) return;
@@ -2099,6 +2120,7 @@ window.addEventListener('pointerup', ev=>{
   const ni = ui.newItem;
   if(ni){ ui.newItem = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut'); setTimeout(placeMarks, 220);
     if(endBuyZone(ev)){ toast('Cancelled'); return; }
+    if(ni.skin){ if(!ni.moved){ toast('Drag it onto a guest room'); return; } if(ni.over) applySkin(ni.skin, roomAt({x:ni.px, y:ni.py})); return; }
     if(!ni.moved){ if(ni.inv) startPlaceInv(ni.id); else buyItemTo(ni.id, null); return; }
     if(!ni.over) return;   // dragged and let go back over the menu: nothing happens
     const r = roomAt({x:ni.px, y:ni.py});
@@ -2200,6 +2222,14 @@ function openRoom(r){
 function buyWall(id){ const r = S.rooms.find(x=>x.id===id), c = 40*cellsOf(r); if(S.coins<c) return; S.coins-=c; r.wall=true; addXP(Math.round(c/40)); save(); checkGoals(); openRoom(r); }
 function buyFloor(id){ const r = S.rooms.find(x=>x.id===id), c = 50*cellsOf(r); if(S.coins<c) return; S.coins-=c; r.floor=true; addXP(Math.round(c/40)); save(); checkGoals(); openRoom(r); }
 const wallPatternCache = new Map();
+// wooden floor along the bottom of a room: plain planks, or polished parquet once the player buys the wooden floor
+function drawFloorBand(r, x, fy, w){
+  const H = FLOOR_PAD;
+  ctx.fillStyle = r.floor ? '#c8915f' : '#7a5236'; ctx.fillRect(x, fy, w, H);
+  ctx.fillStyle = r.floor ? '#e0ac78' : '#916442'; ctx.fillRect(x, fy, w, 2);            // lit front edge
+  ctx.fillStyle = r.floor ? '#a8743f' : '#5e3e28'; for(let i=(r.id*7)%22; i<w; i+=22) ctx.fillRect(x+i, fy+2, 2, H-2);   // plank joints
+  ctx.fillStyle = 'rgba(0,0,0,.18)'; ctx.fillRect(x, fy-3, w, 3);                         // soft shadow where wall meets floor
+}
 function drawWallPattern(r,x,y,w,h){
   const id=r.wallPattern || 'stripes', option=WALL_PATTERNS.find(p=>p.id===id);
   if(id==='solid') return;
