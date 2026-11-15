@@ -83,6 +83,8 @@
   #dropZones{position:absolute;left:50%;top:78px;transform:translateX(-50%);display:none;gap:14px;z-index:40;pointer-events:none}
   body.dragZones #toasts{opacity:0}
   #dropZones.show{display:flex}
+  body.panelOpen #dropZones{left:calc(50% - 220px)}
+  @media (max-width:640px){ body.panelOpen #dropZones{left:50%} }
   #dropZones .zone{min-width:118px;padding:12px 16px;border-radius:18px;border:3px dashed #fff;background:rgba(43,35,64,.82);color:#fff;font-weight:900;font-size:14px;text-align:center;line-height:1.2;transition:transform .12s, background .12s}
   #dropZones .zone .e{display:block;font-size:24px}
   #dropZones .zone.sell{background:rgba(214,51,79,.82)}
@@ -223,7 +225,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.40';
+const BUILD = '0.41';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -856,7 +858,7 @@ function camTarget(){
     const s = Math.min(aw*0.86/q.w, ah*0.78/q.h, 3.2);
     return {s, ox: ax + aw/2 - (q.x+q.w/2)*s, oy: ay + ah/2 - (q.y+q.h/2)*s};
   }
-  const b = (ui.drag && ui.drag.moved && ui.drag.bounds) || (ui.newDrag && ui.newDrag.moved && ui.newDrag.bounds) || buildBounds();
+  const b = buildBounds();
   const bw = b.x1 - b.x0, bh = b.y1 - b.y0;
   let aw = W, ah = H;
   const hidden = document.body.classList.contains('dragOut');   // menu tucked away while dragging: use the whole screen
@@ -865,7 +867,7 @@ function camTarget(){
   const reserve = (pr && pr.width>0 && pr.width > W*0.8) ? 0 : 92; // room for the icon buttons
   const s = Math.min(aw/bw, (ah-reserve)/bh, 1.6);
   const ox = (aw - bw*s)/2 - b.x0*s, oy = ah - reserve - b.y1*s;
-  const z = (ui.drag && ui.drag.moved) || (ui.newDrag && ui.newDrag.moved) ? 1 : (ui.zoom||1);
+  const z = ui.zoom||1;
   if(z === 1 && !ui.panX && !ui.panY) return {s, ox, oy};
   // player zoom: scale around the middle of the building, then apply the player's pan
   const cx = (b.x0+b.x1)/2, cy = (b.y0+b.y1)/2, sxc = ox + cx*s, syc = oy + cy*s, s2 = s*z;
@@ -877,6 +879,9 @@ const ZMIN = 0.6, ZMAX = 2.5;
 function setZoom(z){ ui.zoom = Math.max(ZMIN, Math.min(ZMAX, z)); if(ui.zoom <= 1.001){ ui.panX *= 0.5; ui.panY *= 0.5; } $('zoomReset').style.visibility = Math.abs(ui.zoom-1)>0.02 || ui.panX || ui.panY ? 'visible' : 'hidden'; }
 function resetZoom(){ ui.zoom = 1; ui.panX = 0; ui.panY = 0; $('zoomReset').style.visibility = 'hidden'; }
 function updateCam(dt){
+  // hold the camera still while anything is being dragged, so the hotel doesn't move under your finger
+  const dragging = (ui.drag && ui.drag.moved) || (ui.newDrag && ui.newDrag.moved) || (ui.newItem && ui.newItem.moved) || (ui.itemDrag && ui.itemDrag.moved);
+  if(dragging && cam.ready){ view = {s:cam.s, ox:cam.ox, oy:cam.oy, dpr:window.devicePixelRatio||1}; return; }
   const t = camTarget();
   if(!cam.ready){ Object.assign(cam, t, {ready:true}); }
   const k = 1 - Math.exp(-(dt||0.016)*10);
@@ -1367,6 +1372,11 @@ cv.addEventListener('pointerdown', ev=>{
   if(ui.mode==='placeInv'){ const id = ui.placeInv; if(r && id){ if(placeInvTo(id, r) !== false){ setMode(null); ui.placeInv = null; } } else { setMode(null); ui.placeInv = null; } return; }
   if(ui.mode==='sell'){ if(r) openSell(r); else closePanel(); return; }  // Sell tab open: tap a room to sell it, tap empty space to close
   if(!r){ ui.pan = {sx:ev.clientX, sy:ev.clientY, x0:ui.panX||0, y0:ui.panY||0, moved:false}; return; }   // drag empty space to look around; a plain tap closes any menu
+  if(ui.panelKind==='build' && ROOMS[r.type].kind!=='lobby'){   // Build menu open: furniture can be moved, stored or sold right from the hotel view
+    const it = itemAt(r, p);
+    if(it){ const q = roomRect(r), def = ITEMS[it.id];
+      ui.itemDrag = {room:r, item:it, sx:ev.clientX, sy:ev.clientY, offX: p.x - q.x - it.x, offY: p.y - q.y - itemY(r,it,def), ix:it.x, iy:itemY(r,it,def), moved:false, out:false, build:true}; return; }
+  }
   ui.drag = {room:r, sx:ev.clientX, sy:ev.clientY, wx0:p.x, wy0:p.y, px:p.x, py:p.y, moved:false, bounds: buildBounds(2.5)};
 });
 /* ---------------- drop zones: while dragging a room or a piece of furniture, drop it on Sell or Storage ---------------- */
@@ -1395,9 +1405,9 @@ function endItemDrag(cancelled, ev){
   if(zone && ui.itemDrag && ui.itemDrag.moved){ const d = ui.itemDrag; ui.itemDrag = null; const r = d.room;
     if(zone==='sell') sellItem(r, d.item);
     else { const problem = canRemoveItem(r, d.item); if(problem) toast(problem); else { r.items = r.items.filter(x=>x!==d.item); S.inv[d.item.id] = (S.inv[d.item.id]||0)+1; toast(`${ITEMS[d.item.id].name} put away in storage`); } }
-    save(); if(ui.focus===r.id) openRoom(r); return; }
+    save(); if(ui.focus===r.id) openRoom(r); else if(ui.panelKind==='build') openBuild(ui.buildTab); return; }
   const d = ui.itemDrag; ui.itemDrag = null;
-  if(!d || !d.moved || cancelled) return;
+  if(!d || !d.moved || cancelled){ if(d && !d.moved && d.build && !cancelled) tapRoom(d.room, false); return; }
   const r = d.room, it = d.item;
   if(d.out){
     const problem = canRemoveItem(r, it);
@@ -1405,7 +1415,7 @@ function endItemDrag(cancelled, ev){
     r.items = r.items.filter(x=>x!==it); S.inv[it.id] = (S.inv[it.id]||0)+1;
     toast(`${ITEMS[it.id].name} put away in your furniture inventory`);
   } else { it.x = Math.round(d.ix); if(ITEMS[it.id].zone==='wall') it.y = Math.round(d.iy); S.movedItem = true; checkGoals(); }
-  save(); if(ui.focus===r.id) openRoom(r);
+  save(); if(ui.focus===r.id) openRoom(r); else if(ui.panelKind==='build') openBuild(ui.buildTab);
 }
 function endDrag(ev, cancelled){
   if(ev && ev.pointerId!==undefined) pointers.delete(ev.pointerId);
@@ -1564,7 +1574,7 @@ function openBuild(tab){
     ['decor','🪴','Decor','Decor',[]],
     ['limited','⏳','Limited','Limited: themed rooms',[['Themed guest rooms','guest'],['Themed amenities','amenity'],['Themed services','service']]]];
   const mark = ([id, e, label]) => `<button data-mark="${id}" class="${id==='limited'?'ltd':''}" onclick="jumpBuild('${id}')"><span class="e">${e}</span>${label}</button>`;
-  let html = `<h2>🔨 Build</h2>${buildTabs('rooms')}<div class="sub">🧱 <b>${blocksUsed()}/${blocksMax()} blocks used.</b> <b>Drag</b> a room onto your hotel and drop it where you want, or just <b>tap</b> it and it finds a free spot by itself. Rooms stand on the ground or on other rooms.</div>`;
+  let html = `<h2>🔨 Build</h2>${buildTabs('rooms')}<div class="sub">🧱 <b>${blocksUsed()}/${blocksMax()} blocks used.</b> <b>Drag</b> a room onto your hotel and drop it where you want, or just <b>tap</b> it and it finds a free spot by itself. Rooms stand on the ground or on other rooms. While this menu is open you can also <b>drag furniture</b> inside your rooms to move it, or onto 📦/🪙 to store or sell it.</div>`;
   $('marks').innerHTML = SECTIONS.map(mark).join('');
   html += `<div>`;
   for(const [cat, , , title, groups] of SECTIONS){
