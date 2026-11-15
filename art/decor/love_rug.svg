@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="14" viewBox="0 0 120 14">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="60" cy="7" rx="58.75" ry="5.75" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+    <ellipse cx="60" cy="7" rx="47" ry="3.6" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <path d="M60 10q-22-4-13-6 8-1 13 1 5-2 13-1 9 2-13 6Z" fill="#fff8ef" stroke="none" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

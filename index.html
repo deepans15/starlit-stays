@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Starlit Stays</title>
+<style>
+  :root{
+    --ink:#2b2340; --paper:#fff8ef; --peach:#ffb38a; --rose:#ff7a90; --mint:#6fd3b5;
+    --sky1:#7ec8ff; --gold:#ffc94d; --panel:#fffdf8; --line:#e8dccb; --muted:#7a6e86;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#1d1830;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden;-webkit-user-select:none;user-select:none}
+  #app{display:flex;flex-direction:column;height:100%}
+  .chip{display:flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--line);border-radius:999px;padding:3px 10px;font-weight:700;font-size:14px;white-space:nowrap}
+
+  /* floating HUD: no boxes, outlined game text over the sky (icons can be replaced by ChatGPT's art/ui files) */
+  #hud{position:absolute;left:12px;top:10px;display:flex;gap:22px;align-items:center;z-index:4;pointer-events:none}
+  .hg{display:flex;align-items:center;gap:6px}
+  .hic{display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 3px 0 rgba(43,35,64,.35))}
+  .hic img{width:40px;height:40px;object-fit:contain}
+  .hnum{font-size:26px;font-weight:900;color:#ffc94d;-webkit-text-stroke:5px #2b2340;paint-order:stroke fill;letter-spacing:.5px;line-height:1}
+  .hnum.small{font-size:20px;-webkit-text-stroke:4px #2b2340}
+  .hbadge{position:relative;display:flex;align-items:center;justify-content:center}
+  #lvl{position:absolute;top:19px;font-size:16px;font-weight:900;color:#2b2340}
+  #xpWrap{width:110px;height:14px;background:#5a4e72;border:3px solid #2b2340;border-radius:8px;overflow:hidden;margin-left:-4px}
+  #xpBar{display:block;height:100%;width:0;background:linear-gradient(180deg,#ffe08a,#ffc94d)}
+  #hudStars{position:absolute;left:50%;top:10px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;z-index:4;pointer-events:none}
+  #starIcons{display:flex;gap:1px;font-size:28px;color:#ffc94d;-webkit-text-stroke:2.5px #2b2340;paint-order:stroke fill;line-height:1}
+  #starIcons .off{color:#fff8ef;opacity:.85}
+  #starIcons img{width:28px;height:28px}
+  #speedBtn{position:absolute;right:12px;top:8px;z-index:4;display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-size:24px;padding:4px}
+  #speedBtn .hic img{width:30px;height:30px}
+  #shiftBtn{background:#ff7a90}
+  #shiftBtn.open{background:#6fd3b5}
+  .dtimer{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#2b2340;color:#fff;font-size:11px;font-weight:800;border-radius:8px;padding:1px 6px;white-space:nowrap;display:none}
+  #shiftBtn.open .dtimer{display:block}
+  #stage{flex:1;position:relative;min-height:0}
+  canvas{display:block;width:100%;height:100%;touch-action:none}
+  #dock{position:absolute;right:14px;bottom:26px;display:flex;gap:12px;align-items:flex-end;z-index:5}
+  body.panelOpen #dock{right:388px}
+  body.panelOpen #blockCount{display:none}
+  .dbtn{position:relative;border:3px solid var(--ink);border-radius:18px;background:#ffc94d;box-shadow:0 5px 0 var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:transform .08s}
+  .dbtn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
+  .dbtn.big{width:76px;height:76px;border-radius:22px}
+  .dbtn.mid{width:60px;height:60px;background:#ffd9b8}
+  .dbtn.small{width:48px;height:48px;border-radius:14px;background:#fff}
+  .dbtn.on{background:var(--mint)}
+  .dbtn .ic{display:flex;align-items:center;justify-content:center}
+  .dbtn .ic img{width:70%;height:70%;object-fit:contain}
+  .dlab{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:900;color:#fff;white-space:nowrap;text-shadow:0 2px 0 var(--ink),0 0 4px rgba(0,0,0,.5)}
+  .tabs{display:flex;gap:6px;margin:8px 0 12px}
+  #panel.wide{width:min(430px,calc(100% - 20px))}
+  body.panelOpen.panelWide #dock{right:458px}
+  body.dragOut #panel, body.dragOut #marks{opacity:0;pointer-events:none;transform:translateX(40px)}
+  #panel, #marks{transition:opacity .15s, transform .15s}
+  #marks{position:absolute;display:none;flex-direction:column;gap:6px;z-index:5}
+  #marks button{border:3px solid var(--line);border-right:none;background:#f3ece2;border-radius:14px 0 0 14px;width:64px;padding:8px 2px;font-weight:800;font-size:10.5px;cursor:pointer;color:#7a6e86;line-height:1.15;text-align:center;box-shadow:-4px 4px 10px rgba(0,0,0,.18);transition:transform .12s,background .12s,width .12s}
+  #marks button .e{display:block;font-size:19px;margin-bottom:2px}
+  #marks button.on{background:var(--panel);color:var(--ink);width:72px;transform:translateX(-8px);border-color:var(--line)}
+  #marks button.ltd:not(.on){background:#ffe6b8;color:#b5651d}
+  #marks.slim button{width:58px;font-size:9.5px;padding:7px 1px}
+  #marks.slim button.on{width:62px;transform:translateX(-4px)}
+  #marks.top{flex-direction:row}
+  #marks.top button{border:3px solid var(--line);border-bottom:none;border-radius:14px 14px 0 0;width:auto;flex:1;box-shadow:0 -3px 8px rgba(0,0,0,.15)}
+  #marks.top button.on{width:auto;transform:translateY(-6px)}
+  .bsec{scroll-margin-top:6px}
+  .bsec h3.big{margin:6px 0 8px;font-size:15px;border-bottom:2px dashed var(--line);padding-bottom:4px}
+  .tabs button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:7px 4px;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink)}
+  .tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}  #hint{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 14px;border-radius:999px;font-weight:700;font-size:13px;display:none;gap:10px;align-items:center;z-index:5;white-space:nowrap}
+  #hint button{border:none;background:var(--rose);color:#fff;border-radius:999px;padding:4px 10px;font-weight:800;cursor:pointer}
+  #goalsBox{cursor:pointer;position:absolute;left:10px;top:64px;background:rgba(255,253,248,.94);border:2px solid var(--line);border-radius:14px;padding:8px 10px;font-size:12px;max-width:240px;z-index:4}
+  #goalsBox b{font-size:12px}
+  #goalsBox .g{margin-top:4px;display:flex;justify-content:space-between;gap:8px}
+  #goalsBox .r{color:#b07a00;font-weight:800;white-space:nowrap}
+  #goalsBox .next{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted)}
+  #panel{position:absolute;right:10px;top:10px;bottom:10px;width:min(360px,calc(100% - 20px));background:var(--panel);border:3px solid var(--line);border-radius:18px;padding:14px;overflow:auto;display:none;z-index:6;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  #panel h2{margin:0 0 4px;font-size:18px;padding-right:24px}
+  #panel h3{margin:14px 0 6px;font-size:14px}
+  #panel .sub{color:var(--muted);font-size:13px;margin-bottom:10px}
+  #panel .x{position:absolute;right:10px;top:8px;border:none;background:none;font-size:22px;cursor:pointer;color:var(--muted)}
+  .item{display:flex;align-items:center;gap:10px;border:2px solid var(--line);border-radius:14px;padding:8px;margin-bottom:8px;background:#fff}
+  .item .sw{width:38px;height:38px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden}
+  .item .sw img{max-width:34px;max-height:34px}
+  .item .info{flex:1;font-size:13px}
+  .item .info b{font-size:14px}
+  .item .meta{color:var(--muted);font-size:12px}
+  .item .btns{display:flex;flex-direction:column;gap:4px}
+  .btn{border:none;border-radius:12px;padding:8px 12px;font-weight:800;cursor:pointer;background:var(--mint);color:#173b31;white-space:nowrap}
+  .btn[disabled]{background:#e6ddd0;color:#9c917f;cursor:not-allowed}
+  .btn.warn{background:var(--rose);color:#fff}
+  .btn.alt{background:#e9e1ff;color:#3b2f7a}
+  .cat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .bcard{position:relative;touch-action:pan-y;background:#fff;border:2px solid var(--line);border-radius:14px;padding:8px;cursor:pointer;text-align:center}
+  .bcard:hover{border-color:#f19a6c}
+  .bcard.locked{cursor:not-allowed;opacity:.75}
+  .bcard.poor{opacity:.6}
+  .thumb{touch-action:none;cursor:grab;height:64px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:6px}
+  .thumb .shape{border:3px solid var(--ink);border-top-width:6px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden}
+  .thumb img{width:100%;height:100%;object-fit:cover}
+  .bcard .nm{font-weight:800;font-size:13px}
+  .bcard .pr{font-weight:900;color:#b07a00;font-size:14px}
+  .bcard .ea{color:var(--muted);font-size:11px}
+  .lock{position:absolute;right:6px;top:6px;background:#ffc94d;border:2px solid var(--ink);border-radius:8px;font-weight:900;font-size:12px;padding:1px 6px}
+  .colors{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+  .colors span{width:28px;height:28px;border-radius:8px;cursor:pointer;border:3px solid transparent}
+  .colors span.on{border-color:var(--ink)}
+  .meter{height:10px;background:#eee3d3;border-radius:6px;overflow:hidden;margin:6px 0 12px}
+  .meter i{display:block;height:100%;background:linear-gradient(90deg,#ff8a7a,#ffc94d,#6fd3b5)}
+  #blockCount{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);color:#fff;font-weight:800;font-size:15px;letter-spacing:.5px;text-shadow:0 2px 0 #2b2340,0 0 6px rgba(0,0,0,.4);pointer-events:none;z-index:3}
+  #helper{position:absolute;left:14px;bottom:14px;display:none;align-items:flex-end;gap:8px;z-index:6;pointer-events:none;max-width:min(340px,90%)}
+  #helperPic{width:72px;height:104px;flex:none;display:flex;align-items:flex-end;justify-content:center;font-size:54px}
+  #helperPic img{width:72px;height:104px;object-fit:contain}
+  #helperBubble{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:10px 12px;font-weight:700;font-size:14px;box-shadow:0 6px 0 rgba(43,35,64,.25);pointer-events:auto;position:relative}
+  #helperBubble button{display:block;margin-top:8px;border:none;background:var(--mint);border-radius:10px;padding:5px 10px;font-weight:800;cursor:pointer}
+  #helperArrow{position:fixed;z-index:8;font-size:34px;pointer-events:none;display:none;animation:bob 0.8s ease-in-out infinite alternate;filter:drop-shadow(0 3px 0 rgba(43,35,64,.4))}
+  @keyframes bob{from{transform:translate(-50%,0)}to{transform:translate(-50%,-10px)}}
+  #toasts{position:absolute;left:50%;top:56px;transform:translateX(-50%);display:flex;flex-direction:column;gap:6px;align-items:center;z-index:7;pointer-events:none}
+  .toast{background:var(--ink);color:#fff;padding:8px 14px;border-radius:999px;font-weight:700;font-size:13px;animation:fade 3.2s forwards;text-align:center}
+  @keyframes fade{0%{opacity:0;transform:translateY(-8px)}10%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0}}
+  #modal{position:fixed;inset:0;background:rgba(20,15,35,.6);display:none;align-items:center;justify-content:center;z-index:10}
+  #modal .card{background:var(--panel);border-radius:20px;padding:22px;width:min(400px,92%);text-align:center;max-height:90%;overflow:auto}
+  #modal input{width:100%;font-size:18px;padding:10px;border-radius:12px;border:2px solid var(--line);margin:12px 0;text-align:center}
+  .lvlBig{font-size:46px;font-weight:900;color:#e8a400;margin:4px 0;text-shadow:0 3px 0 #2b2340}
+  .unlock{display:flex;gap:10px;align-items:center;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px;margin:6px 0;font-size:14px}
+  .unlock .ic{font-size:22px;width:30px;text-align:center}
+  @media (max-width:640px){
+    #blockCount{display:none} body.panelOpen #dock{display:none}
+    #helper{top:84px;bottom:auto} #toasts{top:auto;bottom:112px} .toast{font-size:12px;padding:6px 12px} #helperPic{width:48px;height:70px} #helperPic img{width:48px;height:70px} #helper{max-width:calc(100% - 16px)}
+    #dock{gap:8px;right:8px} .dbtn.big{width:64px;height:64px} .dbtn.mid{width:52px;height:52px} .dbtn.small{width:42px;height:42px} 
+    #goalsBox{display:none} #hud{gap:10px;left:8px} .hnum{font-size:19px;-webkit-text-stroke:4px #2b2340} .hnum.small{font-size:16px} .hic svg{width:28px;height:28px} #xpWrap{width:60px} #lvl{top:13px;font-size:12px} #hudStars{top:46px} #starIcons{font-size:20px} #speedBtn{top:4px}
+    /* phones: the menu slides in from the right side, leaving room on the left for the bookmarks and a strip of the hotel */
+    #panel, #panel.wide{left:auto;right:4px;top:70px;bottom:4px;height:auto;width:calc(100% - 78px);padding:10px}
+    #panel .cat{gap:6px}
+    #panel .bcard{padding:6px 4px}
+    #panel .bcard .nm{font-size:12px}
+    #panel .bcard .ea{font-size:10px}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <div id="hud">
+      <div class="hg" title="Coins"><span class="hic" data-art="ui/coin"><svg viewBox="0 0 48 48" width="36" height="36"><circle cx="24" cy="24" r="19" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5"/><circle cx="24" cy="24" r="12" fill="none" stroke="#e8a400" stroke-width="3"/><path d="M19 17h8a4 4 0 0 1 0 8h-7m0 0h8a4 4 0 0 1 0 8h-9" fill="none" stroke="#2b2340" stroke-width="0"/></svg></span><span class="hnum" id="coins">0</span></div>
+      <div class="hg" title="Level"><span class="hbadge"><span class="hic" data-art="ui/level"><svg viewBox="0 0 48 48" width="46" height="46"><path d="M6 24 24 7l18 17v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5" stroke-linejoin="round"/><path d="M2 26 24 5l22 21" fill="none" stroke="#2b2340" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span id="lvl">1</span></span><span id="xpWrap"><span id="xpBar"></span></span></div>
+      <div class="hg" title="Blocks used / available"><span class="hic" data-art="ui/blocks"><svg viewBox="0 0 48 48" width="30" height="30"><rect x="6" y="10" width="36" height="28" rx="3" fill="#ff9f68" stroke="#2b2340" stroke-width="3.5"/><path d="M6 24h36M18 10v14M30 24v14" stroke="#2b2340" stroke-width="3"/></svg></span><span class="hnum small" id="blocks">0/12</span></div>
+    </div>
+    <div id="hudStars" title="Star rating (up to 7)"><span id="starIcons"></span><span class="hnum small" id="starNum">1</span></div>
+    <button id="speedBtn" title="Game speed"><span class="hic" data-art="ui/speed">⏩</span><span class="hnum small" id="speedTxt">2×</span></button>
+    <div id="hint"><span id="hintText"></span><button id="hintCancel">Done</button></div>
+    <div id="goalsBox"></div>
+    <div id="marks"></div>
+    <div id="panel"></div>
+    <div id="toasts"></div>
+    <div id="blockCount"></div>
+    <div id="dock">
+      <button class="dbtn small" id="btnGoals" title="Goals"><span class="ic" data-art="ui/goals"><svg viewBox="0 0 48 48" width="30" height="30"><circle cx="24" cy="24" r="19" fill="#fff" stroke="#2b2340" stroke-width="3"/><circle cx="24" cy="24" r="12" fill="#ff7a90" stroke="#2b2340" stroke-width="3"/><circle cx="24" cy="24" r="5" fill="#fff" stroke="#2b2340" stroke-width="3"/></svg></span><span class="dlab">Goals</span></button>
+      <button class="dbtn small" id="btnMenu" title="Settings"><span class="ic" data-art="ui/settings"><svg viewBox="0 0 48 48" width="30" height="30"><circle cx="24" cy="24" r="15" fill="#b8bec8" stroke="#2b2340" stroke-width="10" stroke-dasharray="6 5.8"/><circle cx="24" cy="24" r="14" fill="#dfe3ea" stroke="#2b2340" stroke-width="3"/><circle cx="24" cy="24" r="6" fill="#fff" stroke="#2b2340" stroke-width="3"/></svg></span><span class="dlab">Settings</span></button>
+      <button class="dbtn mid" id="shiftBtn" title="Open your hotel"><span class="ic" data-art="ui/open"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M24 8c-8 0-12 6-12 14v8l-4 6h32l-4-6v-8c0-8-4-14-12-14z" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5" stroke-linejoin="round"/><circle cx="24" cy="40" r="4" fill="#2b2340"/><circle cx="24" cy="6" r="3" fill="#2b2340"/></svg></span><span class="dlab" id="shiftLab">Open</span><span class="dtimer" id="shiftTimer"></span></button>
+      <button class="dbtn mid" id="btnExpand" title="Expand"><span class="ic" data-art="ui/expand"><svg viewBox="0 0 48 48" width="32" height="32"><rect x="12" y="12" width="24" height="24" rx="3" fill="#ffb38a" stroke="#2b2340" stroke-width="3"/><path d="M4 12V4h8M44 12V4h-8M4 36v8h8M44 36v8h-8" fill="none" stroke="#2b2340" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dlab">Expand</span></button>
+      <button class="dbtn big" id="btnBuild" title="Build"><span class="ic" data-art="ui/build"><svg viewBox="0 0 48 48" width="40" height="40"><g transform="rotate(-40 24 24)"><rect x="21" y="16" width="7" height="30" rx="3" fill="#c8915f" stroke="#2b2340" stroke-width="3"/><path d="M9 8h26a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4z" fill="#b8bec8" stroke="#2b2340" stroke-width="3"/><rect x="9" y="11" width="8" height="8" rx="2" fill="#dfe3ea"/></g></svg></span><span class="dlab">Build</span></button>
+    </div>
+    <div id="helper"><div id="helperPic"></div><div id="helperBubble"><span id="helperText"></span><button id="helperOk">OK</button></div></div>
+  </div>
+</div>
+<div id="modal"><div class="card" id="modalCard"></div></div>
+<div id="helperArrow">👇</div>
+
+<script src="art/manifest.js"></script>
+<script src="art/items.js"></script>
+<script>
+"use strict";
+/* ============================================================
+   Starlit Stays — browser prototype
+   An original hotel-building game. Art by ChatGPT (art/ folder),
+   game code by Claude. Not affiliated with Electronic Arts or Playfish.
+   ============================================================ */
+
+// Every new build starts a fresh hotel (saves from older builds are ignored).
+const BUILD = '0.28';
+// Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
+const SAVE_VERSION = '0.17';
+const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
+// The player's profile (hotel name, whether they've seen the intro) is kept across builds, so beta testers
+// aren't asked for their hotel name after every update. Only the hotel itself resets.
+const PROFILE_KEY = 'starlit-stays-profile';
+const SPEEDS = [1, 2, 3];
+function gameSpeed(){ const v = loadProfileCached().speed; return SPEEDS.includes(v) ? v : 2; }
+let _profCache = null;
+function loadProfileCached(){ if(!_profCache) _profCache = loadProfile(); return _profCache; }
+function loadProfile(){
+  let p = {};
+  try{ p = JSON.parse(localStorage.getItem(PROFILE_KEY)) || {}; }catch(e){}
+  if(!p.name){
+    // players from builds before the profile existed: borrow the name from their newest old save
+    try{
+      for(const k of Object.keys(localStorage)){
+        if(!k.startsWith('starlit-stays-build-') || k===SAVE_KEY) continue;
+        const old = JSON.parse(localStorage.getItem(k));
+        if(old && old.name){ p.name = old.name; p.seenHelp = true; }
+      }
+    }catch(e){}
+  }
+  return p;
+}
+function saveProfile(p){ _profCache = null; try{ localStorage.setItem(PROFILE_KEY, JSON.stringify(Object.assign(loadProfile(), p))); }catch(e){} }
+const CLOUD_DOC = 'save-build-' + SAVE_VERSION.replace(/\./g,'_');
+const CELL = 80, FLOOR = 84, TOP = 70, SIDEWALK = 46, BX = 30, FLOOR_PAD = 12;
+const MAX_STARS = 7;
+
+/* ---------------- rooms ----------------
+   w = cells wide, h = floors tall ('full' = every floor). Rooms can go anywhere they fit. */
+const ROOMS = {
+  lobby:  {name:'Lobby',       kind:'lobby',   w:3, h:1, cost:0,    lvl:99, color:'#ffe9d6', ground:true},
+  nook:   {name:'Cozy Nook',   kind:'guest',   w:1, h:1, cost:150,  lvl:1,  stay:18, pay:10, xp:2,  color:'#ffd9b8'},
+  comfy:  {name:'Comfy Room',  kind:'guest',   w:2, h:1, cost:600,  lvl:2,  stay:24, pay:24, xp:5,  color:'#ffe7a8'},
+  tall:   {name:'Tall Suite',  kind:'guest',   w:1, h:2, cost:1100, lvl:3,  stay:26, pay:34, xp:7,  color:'#ffd6f0'},
+  grand:  {name:'Grand Room',  kind:'guest',   w:2, h:2, cost:2400, lvl:5,  stay:32, pay:70, xp:12, color:'#d8c8ff'},
+  loft:   {name:'Sky Loft',    kind:'guest',   w:3, h:2, cost:5200, lvl:9,  stay:36, pay:120,xp:18, color:'#bfe6ff', minFloor:2},
+  closet: {name:'Linen Closet',kind:'service', w:1, h:1, cost:250,  lvl:1,  capacity:5, color:'#cfe9de'},
+  fit:    {name:'Fit Corner',  kind:'amenity', w:2, h:1, cost:700,  lvl:1,  slots:2, use:9,  pay:8,  xp:3, color:'#ffd1dc', icon:'🏋️'},
+  noodle: {name:'Noodle Bar',  kind:'amenity', w:2, h:1, cost:1400, lvl:4,  slots:3, use:10, pay:15, xp:4, color:'#ffcf9e', icon:'🍜'},
+  lounge: {name:'Tea Lounge',  kind:'amenity', w:2, h:1, cost:2200, lvl:6,  slots:4, use:11, pay:14, xp:4, color:'#d9f2c4', icon:'🫖'},
+  cinema: {name:'Mini Cinema', kind:'amenity', w:2, h:2, cost:4500, lvl:7,  slots:5, use:14, pay:22, xp:6, color:'#3d3a5c', icon:'🎬'},
+  games:  {name:'Game Nook',   kind:'amenity', w:2, h:1, cost:3000, lvl:8,  slots:3, use:8,  pay:20, xp:5, color:'#c9d4ff', icon:'🕹️'},
+  treehouse_2x2: {name:'Canopy Cabin', kind:'amenity', w:2, h:2, cost:3800, lvl:8,  slots:4, use:14, pay:28, xp:6,  color:'#cfe8b8', icon:'🌳'},
+  treehouse_2x3: {name:'Treetop Retreat', kind:'amenity', w:2, h:3, cost:7800, lvl:11, slots:6, use:16, pay:48, xp:10, color:'#bfe0a6', icon:'📚'},
+  pool:   {name:'Splash Pool', kind:'amenity', w:3, h:1, cost:6000, lvl:10, slots:3, use:12, pay:40, xp:8, color:'#bdefff', icon:'🏊'},
+};
+const AMENITY_TYPES = Object.keys(ROOMS).filter(k => ROOMS[k].kind === 'amenity');
+const hOf = type => ROOMS[type].h;
+const WALL_COLORS = ['#ffd6e0','#d4f0ff','#e2f7d4','#fff1b8','#e6dcff','#ffe1c7','#c9f1ea','#f5d0ff'];
+
+/* ---------------- furniture ----------------
+   Built-in items. ChatGPT can add or change items in art/items.js (see ART_BRIEF.md);
+   each item's picture is art/decor/<id>.svg. Sizes are the art file's pixel size (drawn at half size).
+   zone: floor (stands on the floor), wall (hangs, can move up/down), ceiling (hangs from the top), bed (one per guest room). */
+const ITEM_DEFAULTS = [
+  {id:'bed_basic',  name:'Basic Bed',     zone:'bed',     width:112, height:64,  cost:80,   decor:2,  level:1,  rooms:['guest'], emoji:'🛏️'},
+  {id:'bed_fluffy', name:'Fluffy Bed',    zone:'bed',     width:112, height:64,  cost:320,  decor:6,  level:2,  rooms:['guest'], emoji:'🛏️'},
+  {id:'plant',      name:'Potted Plant',  zone:'floor',   width:48,  height:60,  cost:70,   decor:3,  level:1,  emoji:'🪴'},
+  {id:'lamp',       name:'Floor Lamp',    zone:'floor',   width:44,  height:80,  cost:90,   decor:3,  level:1,  emoji:'💡'},
+  {id:'wallart',    name:'Wall Picture',  zone:'wall',    width:60,  height:44,  cost:120,  decor:4,  level:2,  emoji:'🖼️'},
+  {id:'rug',        name:'Round Rug',     zone:'floor',   width:120, height:14,  cost:150,  decor:4,  level:3,  emoji:'🟣', back:true},
+  {id:'armchair',   name:'Armchair',      zone:'floor',   width:64,  height:60,  cost:200,  decor:5,  level:3,  emoji:'🛋️'},
+  {id:'clock',      name:'Wall Clock',    zone:'wall',    width:40,  height:40,  cost:110,  decor:3,  level:4,  emoji:'🕰️'},
+  {id:'bookshelf',  name:'Bookshelf',     zone:'floor',   width:64,  height:104, cost:280,  decor:6,  level:5,  emoji:'📚'},
+  {id:'tv',         name:'TV Stand',      zone:'floor',   width:76,  height:68,  cost:360,  decor:7,  level:6,  emoji:'📺'},
+  {id:'chandelier', name:'Chandelier',    zone:'ceiling', width:84,  height:60,  cost:650,  decor:10, level:8,  emoji:'✨'},
+  {id:'aquarium',   name:'Aquarium',      zone:'floor',   width:84,  height:68,  cost:850,  decor:12, level:10, emoji:'🐠'},
+  {id:'statue',     name:'Golden Statue', zone:'floor',   width:52,  height:100, cost:1600, decor:18, level:12, emoji:'🗿'},
+];
+const ITEMS = {};
+(function buildItems(){
+  const norm = (d) => {
+    if(!d || typeof d.id !== 'string' || !/^[a-z0-9_]{1,40}$/.test(d.id)) return null;
+    const num = (v, def, lo, hi) => { v = Number(v); return Number.isFinite(v) ? Math.max(lo, Math.min(hi, v)) : def; };
+    const zone = ['floor','wall','ceiling','bed'].includes(d.zone) ? d.zone : 'floor';
+    const rooms = Array.isArray(d.rooms) && d.rooms.length ? d.rooms.filter(k=>['guest','amenity','lobby'].includes(k)) : (zone==='bed' ? ['guest'] : ['guest','amenity','lobby']);
+    return { id:d.id, name:String(d.name||d.id).slice(0,30), zone,
+      w: num(d.width,64,8,320)/2, h: num(d.height,64,8,320)/2,
+      cost: Math.round(num(d.cost,100,0,100000)), decor: Math.round(num(d.decor,3,0,60)), lvl: Math.round(num(d.level,1,1,60)),
+      rooms, emoji: typeof d.emoji==='string' && d.emoji && !d.emoji.includes('?') ? d.emoji.slice(0,4) : '✨', back: !!d.back || d.id.includes('rug') };
+  };
+  for(const d of ITEM_DEFAULTS){ const n = norm(d); if(n) ITEMS[n.id] = n; }
+  const extra = Array.isArray(window.STARLIT_ITEMS) ? window.STARLIT_ITEMS : [];
+  for(const d of extra){ const n = norm(Object.assign({}, ITEMS[d && d.id] ? ITEM_DEFAULTS.find(x=>x.id===d.id) : {}, d)); if(n) ITEMS[n.id] = n; }
+})();
+/* ---------------- themes ----------------
+   ChatGPT adds themes without code changes:
+   - a room style:   art/rooms/<theme>_<roomtype>.svg  (e.g. rooms/love_lounge.svg)  -> a style the player can pick for that room
+   - a collection:   3 or more furniture ids that start with the same "<theme>_"     -> grouped in the shop, with a set bonus */
+const ROOM_STYLES = {};   // roomtype -> [theme, ...]
+const COLLECTIONS = {};   // theme -> [item ids]
+(function findThemes(){
+  const m = window.STARLIT_ART || {};
+  for(const key of Object.keys(m)){
+    const mm = /^rooms\/([a-z0-9]+)_([a-z0-9]+)$/.exec(key);
+    if(mm && ROOMS[mm[2]] && mm[2]!==mm[1]){ (ROOM_STYLES[mm[2]] = ROOM_STYLES[mm[2]] || []).push(mm[1]); }
+  }
+  const byPrefix = {};
+  for(const id of Object.keys(ITEMS)){ const p = id.split('_')[0]; if(id.includes('_')) (byPrefix[p] = byPrefix[p] || []).push(id); }
+  const roomThemes = new Set(Object.values(ROOM_STYLES).flat());
+  for(const [p, ids] of Object.entries(byPrefix)) if(ids.length >= 3 || roomThemes.has(p)) COLLECTIONS[p] = ids;
+})();
+const themeName = t => t.charAt(0).toUpperCase() + t.slice(1);
+const themeIcon = t => ({love:'💕', halloween:'🎃', winter:'❄️', christmas:'🎄', spring:'🌸', summer:'🏖️', beach:'🏖️', space:'🚀', garden:'🌿', retro:'📻'})[t] || '✨';
+const STYLE_COST = 250;
+function collectionBonus(r){
+  const out = [];
+  for(const [t, ids] of Object.entries(COLLECTIONS)){
+    const n = (r.items||[]).filter(it=>ids.includes(it.id)).length;
+    if(n >= 3) out.push({theme:t, n, bonus: 3*n});
+  }
+  return out;
+}
+const itemsFor = r => Object.values(ITEMS).filter(it => it.rooms.includes(ROOMS[r.type].kind)).sort((a,b)=>a.lvl-b.lvl || a.cost-b.cost);
+
+/* ---------------- guests ---------------- */
+const GUEST_TYPES = {
+  regular:  {name:'Travellers',  lvl:1, pay:1.0, patience:40, xp:1.0},
+  business: {name:'Business guests', lvl:4, pay:1.4, patience:30, xp:1.3, alwaysWants:true},
+  vip:      {name:'VIP guests',  lvl:8, pay:2.2, patience:35, xp:2.0, needsDecor:0.7},
+};
+const GUEST_COLORS = ['#ff8fa3','#7cc6fe','#ffd166','#95e06c','#c77dff','#ff9f68','#5ed1c5','#f78fb3'];
+
+/* ---------------- progression ---------------- */
+// The build area is open land; what limits the hotel is how many blocks (cells) it may use.
+const WORLD_C = 14, WORLD_F = 10;
+const BLOCK_TIERS = [
+  {blocks:12,lvl:1,cost:0},{blocks:16,lvl:2,cost:400},{blocks:20,lvl:3,cost:900},{blocks:24,lvl:4,cost:1600},
+  {blocks:28,lvl:5,cost:2500},{blocks:32,lvl:6,cost:3600},{blocks:40,lvl:8,cost:6000},{blocks:50,lvl:10,cost:10000},
+  {blocks:60,lvl:12,cost:16000},{blocks:77,lvl:14,cost:25000},{blocks:96,lvl:17,cost:40000},{blocks:120,lvl:20,cost:60000},
+  {blocks:150,lvl:24,cost:90000},
+];
+const SHIFTS = [{mins:5,cost:30},{mins:15,cost:120},{mins:60,cost:450},{mins:240,cost:1500}];
+const GOALS = [
+  {t:'Build your first guest room', r:100, ok:s=>s.rooms.some(r=>ROOMS[r.type].kind==='guest')},
+  {t:'Build a Linen Closet',       r:100,  ok:s=>count('closet')>=1},
+  {t:'Drag a room to a new spot',  r:100,  ok:s=>!!s.moved},
+  {t:'Buy a piece of furniture',   r:100,  ok:s=>!!s.boughtItem},
+  {t:'Rearrange furniture in a room', r:100, ok:s=>!!s.movedItem},
+  {t:'Reach level 2',              r:150,  ok:s=>level()>=2},
+  {t:'Build a fourth Cozy Nook',   r:150,  ok:s=>count('nook')>=4},
+  {t:'Fully decorate a room',      r:400,  ok:s=>s.rooms.some(r=>ROOMS[r.type].kind==='guest' && decorPct(r)>=1)},
+  {t:'Build a Tall Suite',         r:300,  ok:s=>count('tall')>=1},
+  {t:'Serve 50 guests',            r:400,  ok:s=>s.served>=50},
+  {t:'Expand your hotel',          r:500,  ok:s=>s.plot>=1},
+  {t:'Build a Noodle Bar',         r:700,  ok:s=>count('noodle')>=1},
+  {t:'Reach level 5',              r:800,  ok:s=>level()>=5},
+  {t:'Build a Grand Room',         r:1000, ok:s=>count('grand')>=1},
+  {t:'Reach 4 stars',              r:1200, ok:s=>stars()>=4},
+  {t:'Welcome a VIP guest',        r:1500, ok:s=>!!s.vipServed},
+  {t:'Serve 500 guests',           r:2000, ok:s=>s.served>=500},
+  {t:'Reach 5 stars',              r:2500, ok:s=>stars()>=5},
+  {t:'Build a Splash Pool',        r:3000, ok:s=>count('pool')>=1},
+  {t:'Reach 6 stars',              r:4000, ok:s=>stars()>=6},
+  {t:'Reach 7 stars',              r:8000, ok:s=>stars()>=7},
+];
+
+/* ---------------- art ----------------
+   Art files live in art/ and are listed in art/manifest.js. Anything missing falls back to shapes drawn in code. */
+const ART = {};
+(function loadArt(){
+  const m = window.STARLIT_ART || {};
+  for(const [key, file] of Object.entries(m)){
+    const img = new Image();
+    img.onload = () => { ART[key] = img; };
+    img.src = 'art/' + file;
+  }
+})();
+const art = k => ART[k] || null;
+const GUEST_SKINS = (()=>{ let n=0; while((window.STARLIT_ART||{})['chars/guest_'+(n+1)]) n++; return Math.max(n,6); })();   // grows as ChatGPT adds guest_N art
+function sprite(key, x, y, w, h, flip){
+  const img = art(key); if(!img) return false;
+  if(flip){ ctx.save(); ctx.translate(x+w, y); ctx.scale(-1,1); ctx.drawImage(img, 0, 0, w, h); ctx.restore(); }
+  else ctx.drawImage(img, x, y, w, h);
+  return true;
+}
+/* Animations: extra frames named <base>_<anim>_<n>, e.g. chars/guest_1_walk_1 … _walk_4.
+   animFrame() returns the frame to show now, or the base key when the frames aren't drawn yet. */
+function animFrame(base, anim, count, fps, t){
+  const n = 1 + Math.floor((t===undefined ? time : t) * fps) % count;
+  const k = `${base}_${anim}_${n}`;
+  return art(k) ? k : base;
+}
+
+/* ---------------- state ---------------- */
+let S;              // saved state
+let guests = [];    // runtime only
+let floats = [];    // floating texts
+let confetti = [];
+let doorsOpen = 0, spawnTimer = 2, gid = 1, autosave = 0, time = 0, cloudTick = 0, itemUid = 1;
+const ui = {mode:null, drag:null, itemDrag:null, focus:null};
+const cam = {s:1, ox:0, oy:0, ready:false};
+
+function mkRoom(id, type, f, c, ci){
+  return {id, type, f, c, wall:false, floor:false, wallColor:WALL_COLORS[ci%WALL_COLORS.length], items:[], dirty:false, uses:0};
+}
+const mkItem = (id, x) => ({u: itemUid++, id, x, y:0});
+function freshState(){
+  // like the original, a new hotel is just a plain lobby (reception desk and elevator) on 12 blocks of land
+  const rooms = [ mkRoom(1,'lobby',0,5,0) ];
+  for(const r of rooms) if(ROOMS[r.type].kind==='guest') r.items.push(mkItem('bed_basic', 8));
+  return {v:3, build:SAVE_VERSION, name:'', coins:1500, xp:0, plot:0, nextId:2, served:0, goals:[], storage:[], inv:{},
+    moved:false, movedItem:false, boughtItem:false, vipServed:false, seenLevel:1,
+    rooms, shiftEnd:0, freeShift:true, sat:0.6, rate:0, pokes:20, pokeDay:'', savedAt:Date.now()};
+}
+function migrate(s){
+  if(!s || s.build !== SAVE_VERSION) return null;
+  s.rooms = (s.rooms||[]).filter(r=>ROOMS[r.type]);
+  for(const r of s.rooms){ r.items = (r.items||[]).filter(it=>ITEMS[it.id]); for(const it of r.items) itemUid = Math.max(itemUid, (it.u||0)+1); }
+  s.storage = s.storage || []; s.inv = s.inv || {};
+  return s;
+}
+function load(){
+  let raw=null;
+  try{ raw = localStorage.getItem(SAVE_KEY); }catch(e){}
+  if(raw){ try{ S = migrate(JSON.parse(raw)); }catch(e){ S=null; } }
+  if(!S){ S = freshState(); return false; }
+  const now = Date.now(), openUntil = Math.min(now, S.shiftEnd||0), away = (openUntil - (S.savedAt||now))/1000;
+  if(away > 30 && S.rate > 0){
+    const earned = Math.round(Math.min(away, 4*3600) * S.rate * 0.6);
+    if(earned>0){ S.coins += earned; S.xp += Math.round(earned*0.2); setTimeout(()=>toast(`While you were away your staff earned 🪙${earned}`),600); }
+  }
+  return true;
+}
+const RUNTIME_KEYS = new Set(['guest','reserved','users','cleanT','anim','pulse','carF']);
+function serialize(){ return JSON.stringify(S, (k,v)=> RUNTIME_KEYS.has(k) ? undefined : v); }
+function save(){
+  S.savedAt = Date.now();
+  try{ localStorage.setItem(SAVE_KEY, serialize()); }catch(e){}
+}
+
+/* ---------------- cloud save (per player, private) ---------------- */
+const cloud = {ref:null, busy:false, last:''};
+async function initCloud(){
+  try{
+    if(!window.claude || typeof window.claude.use !== 'function') return;
+    const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+    if(!db || !user) return;
+    const uid = await user.id(); if(!uid) return;
+    const ref = db.doc('data/users/' + uid + '/' + CLOUD_DOC);
+    const snap = await Promise.race([ref.get(), new Promise((_,rej)=>setTimeout(()=>rej({code:'timeout'}), 10000))]);
+    if(snap && snap.exists){
+      const d = snap.data();
+      if(d && typeof d.json === 'string'){
+        const remote = migrate(JSON.parse(d.json));
+        if(remote && (d.savedAt||0) > (S.savedAt||0) + 2000){
+          S = remote; S.savedAt = d.savedAt; guests = []; lastTop=''; checkPokeDay(); renderGoalsBox(); closeModal(); closePanel();
+          try{ localStorage.setItem(SAVE_KEY, serialize()); }catch(e){}
+          toast('☁️ Loaded your cloud save');
+        }
+      }
+    }
+    cloud.ref = ref;
+    try{
+      cloud.profile = db.doc('data/users/' + uid + '/profile');
+      const ps = await cloud.profile.get();
+      const pd = ps && ps.exists ? ps.data() : null;
+      if(pd && pd.name && !loadProfile().name){ saveProfile({name: pd.name, seenHelp: true}); if(S.name !== pd.name){ S.name = pd.name; save(); closeModal(); lastTop=''; } }
+      else if(S.name && (!pd || pd.name !== S.name)) await cloud.profile.set({name: S.name});
+    }catch(e){}
+    cloudSave();
+  }catch(e){ /* cloud save unavailable: browser save still works */ }
+}
+async function cloudSave(){
+  if(!cloud.ref || cloud.busy || !S.name) return;
+  const json = serialize().replace(/"savedAt":\d+,?/,'');
+  if(json === cloud.last) return;
+  cloud.busy = true;
+  try{ await cloud.ref.set({json: serialize(), savedAt: S.savedAt || Date.now()}); cloud.last = json; }
+  catch(e){ if(e && (e.code==='invalid_argument' || e.code==='revoked' || e.code==='not_granted' || e.code==='quota_exceeded')) cloud.ref = null; }
+  cloud.busy = false;
+}
+
+/* ---------------- helpers ---------------- */
+const plot = () => ({w:WORLD_C, h:WORLD_F});
+const blocksMax = () => BLOCK_TIERS[S.plot].blocks;
+const blocksUsed = (ignoreId) => S.rooms.reduce((a,r)=> a + (r.id===ignoreId ? 0 : ROOMS[r.type].w*hOf(r.type)), 0);
+const count = t => S.rooms.filter(r=>r.type===t).length;
+const cellsOf = r => ROOMS[r.type].w * hOf(r.type);
+const decorCapacity = r => 12 * cellsOf(r);
+function decorPoints(r){
+  let p = 0;
+  if(r.wall) p += 2*cellsOf(r);
+  if(r.floor) p += 2*cellsOf(r);
+  for(const it of (r.items||[])) p += ITEMS[it.id] ? ITEMS[it.id].decor : 0;
+  for(const c of collectionBonus(r)) p += c.bonus;   // matching sets are worth more
+  if(r.style) p += 2*cellsOf(r);                      // a themed room style counts as decor too
+  return p;
+}
+function decorPct(r){
+  const k = ROOMS[r.type].kind;
+  if(k==='service') return 0;
+  return Math.min(1, decorPoints(r)/decorCapacity(r));
+}
+const hasBed = r => (r.items||[]).some(it=>ITEMS[it.id] && ITEMS[it.id].zone==='bed');
+const xpFor = n => n<=1 ? 0 : Math.floor(25*Math.pow(n-1,1.6));
+function level(){ let n=1; while(S.xp >= xpFor(n+1)) n++; return n; }
+const isOpen = () => Date.now() < S.shiftEnd;
+function stars(){
+  const g = S.rooms.filter(r=>ROOMS[r.type].kind==='guest');
+  const avgDecor = g.length ? g.reduce((a,r)=>a+decorPct(r),0)/g.length : 0;
+  const types = new Set(S.rooms.filter(r=>ROOMS[r.type].kind==='amenity').map(r=>r.type)).size;
+  const cleanable = S.rooms.filter(r=>ROOMS[r.type].kind==='guest' || ROOMS[r.type].kind==='amenity');
+  const clean = cleanable.length ? cleanable.filter(r=>!r.dirty).length/cleanable.length : 1;
+  const lobby = lobbyRoom(), lobbyDecor = lobby ? decorPct(lobby) : 0;
+  const score = 1 + 2.2*avgDecor + 1.4*Math.min(types,6)/6 + 1.0*S.sat + 0.8*clean + 0.6*lobbyDecor;
+  return Math.max(1, Math.min(MAX_STARS, Math.round(score*2)/2));
+}
+const starMult = () => 0.6 + 0.15*stars();
+function roomRect(r){
+  const def = ROOMS[r.type], h = hOf(r.type);
+  return {x: BX + r.c*CELL, y: TOP + (plot().h - r.f - h)*FLOOR, w: def.w*CELL, h: h*FLOOR};
+}
+const lobbyRoom = () => S.rooms.find(r=>r.type==='lobby');
+const ease = t => 1 - Math.pow(1-t, 3);
+function visRect(r){
+  if(r.ghost) return {x:r.ghost.x, y:r.ghost.y, w:ROOMS[r.type].w*CELL, h:hOf(r.type)*FLOOR};
+  const q = roomRect(r), d = ui.drag;
+  if(d && d.moved && d.room.id===r.id){ q.x += d.px - d.wx0; q.y += d.py - d.wy0; }
+  else if(r.anim){ const k = 1 - ease(Math.min(1, r.anim.t/0.2)); q.x += r.anim.dx*k; q.y += r.anim.dy*k; }
+  return q;
+}
+const groundY = () => TOP + plot().h*FLOOR;
+const worldW = () => BX + plot().w*CELL + 90;
+function buildBounds(pad){
+  pad = pad===undefined ? 1.5 : pad;
+  let c0 = WORLD_C, c1 = 0, f1 = 1;
+  for(const r of S.rooms){ c0 = Math.min(c0, r.c); c1 = Math.max(c1, r.c + ROOMS[r.type].w); f1 = Math.max(f1, r.f + hOf(r.type)); }
+  if(c0 > c1){ c0 = 5; c1 = 8; }
+  const x0 = BX + (c0 - pad)*CELL, x1 = BX + (c1 + pad)*CELL;
+  const y0 = TOP + (WORLD_F - f1 - Math.max(1, pad))*FLOOR - 40, y1 = groundY() + SIDEWALK;
+  return {x0, x1, y0, y1, c0, c1, f1};
+}
+const streetX = () => buildBounds().x1 + 20;
+const lobbyLiftX = () => { const l = lobbyRoom(); return l ? BX + l.c*CELL + ROOMS.lobby.w*CELL - 34 : BX; };
+const worldH = () => groundY() + SIDEWALK;
+function shiftCost(sh){ return Math.round(sh.cost * (1 + 0.1*(level()-1))); }
+function coverage(){
+  const cap = S.rooms.filter(r=>r.type==='closet').length * ROOMS.closet.capacity;
+  const list = S.rooms.filter(r=>ROOMS[r.type].kind==='guest' || ROOMS[r.type].kind==='amenity').sort((a,b)=>a.id-b.id);
+  return {cap, covered:new Set(list.slice(0,cap).map(r=>r.id)), total:list.length};
+}
+// which cells are taken, optionally pretending one room is gone and another is somewhere else
+function occupancy(ignoreId, extra){
+  const occ = new Set();
+  for(const r of S.rooms){ if(r.id===ignoreId) continue; const d = ROOMS[r.type]; for(let i=0;i<d.w;i++) for(let j=0;j<hOf(r.type);j++) occ.add((r.f+j)+','+(r.c+i)); }
+  if(extra){ const d = ROOMS[extra.type]; for(let i=0;i<d.w;i++) for(let j=0;j<hOf(extra.type);j++) occ.add((extra.f+j)+','+(extra.c+i)); }
+  return occ;
+}
+// a room stands on the ground, or every cell under it belongs to another room
+function isSupported(type, f, c, occ){
+  if(f===0) return true;
+  // like the original: one block underneath is enough, the rest of a wide room can hang over the edge
+  for(let i=0;i<ROOMS[type].w;i++) if(occ.has((f-1)+','+(c+i))) return true;
+  return false;
+}
+// would any other room be left floating if room `id` moved to (f,c) or was removed (f = null)?
+function strandsOthers(id, type, f, c){
+  const extra = f===null ? null : {type, f, c};
+  const occ = occupancy(id, extra);
+  for(const r of S.rooms){ if(r.id===id) continue; if(!isSupported(r.type, r.f, r.c, occ)) return r; }
+  return null;
+}
+function placeProblem(type, f, c, ignoreId){
+  const def = ROOMS[type], p = plot(), h = hOf(type);
+  if(f<0 || c<0 || c+def.w>p.w || f+h>p.h) return "That's outside the building area";
+  if(def.ground && f!==0) return `The ${def.name.toLowerCase()} has to be on the ground floor`;
+  if(def.minFloor && f<def.minFloor) return `${def.name} needs to start on floor ${def.minFloor+1} or higher`;
+  for(const r of S.rooms){
+    if(r.id===ignoreId) continue;
+    const o = ROOMS[r.type], oh = hOf(r.type);
+    if(c < r.c+o.w && r.c < c+def.w && f < r.f+oh && r.f < f+h) return `That spot overlaps the ${o.name}`;
+  }
+  if(blocksUsed(ignoreId) + def.w*h > blocksMax()) return `Not enough blocks (${blocksUsed(ignoreId)}/${blocksMax()} used). Expand to get more.`;
+  if(!isSupported(type, f, c, occupancy(ignoreId))) return 'Rooms need at least one block under them: the ground or another room';
+  if(ignoreId!==undefined){ const s2 = strandsOthers(ignoreId, type, f, c); if(s2) return `The ${ROOMS[s2.type].name} above would have nothing to stand on`; }
+  return null;
+}
+const canPlace = (type,f,c,ignoreId) => !placeProblem(type,f,c,ignoreId);
+function addCoins(n, x, y, label){
+  S.coins += n;
+  if(isOpen()) rateLog.push([time, n]);
+  if(x!==undefined) floats.push({x,y,t:0,text:(label||'+🪙')+n});
+}
+function addXP(n){
+  S.xp += n;
+  const lv = level();
+  if(lv > (S.seenLevel||1)){ const from = S.seenLevel||1; S.seenLevel = lv; levelUp(from+1, lv); }
+}
+let rateLog = [];
+function updateRate(){
+  rateLog = rateLog.filter(e=>time-e[0] < 120);
+  const sum = rateLog.reduce((a,e)=>a+e[1],0);
+  S.rate = rateLog.length ? sum/120 : S.rate*0.999;
+}
+function today(){ return new Date().toDateString(); }
+function checkPokeDay(){ if(S.pokeDay!==today()){ S.pokeDay=today(); S.pokes=20; } }
+
+/* ---------------- levelling ---------------- */
+function unlocksAt(lv){
+  const out = [];
+  for(const [k,d] of Object.entries(ROOMS)) if(d.lvl===lv) out.push({ic: d.icon || (d.kind==='guest'?'🛏️':'🧺'), t:`New room: ${d.name}`, art:'rooms/'+k});
+  for(const it of Object.values(ITEMS)) if(it.lvl===lv) out.push({ic: it.emoji, t:`New furniture: ${it.name}`, art:'decor/'+it.id});
+  for(const [k,g] of Object.entries(GUEST_TYPES)) if(g.lvl===lv) out.push({ic: k==='vip'?'👑':'💼', t:`New guests: ${g.name}` + (k==='vip'?' (pay double, want rooms at least 70% decorated)':' (pay more, always want an amenity)')});
+  const p = BLOCK_TIERS.find(p=>p.lvl===lv); if(p) out.push({ic:'🧱', t:`Expansion available: ${p.blocks} blocks`});
+  return out;
+}
+const levelReward = lv => 100*lv;
+function levelUp(fromLv, toLv){
+  let coins = 0, gifts = [], unlocks = [];
+  for(let lv=fromLv; lv<=toLv; lv++){
+    coins += levelReward(lv);
+    unlocks.push(...unlocksAt(lv));
+    if(lv % 5 === 0){
+      const pool = Object.values(ITEMS).filter(it=>it.lvl<=lv && it.zone!=='bed').sort((a,b)=>b.cost-a.cost).slice(0,4);
+      const gift = pool[Math.floor(Math.random()*pool.length)];
+      if(gift){ S.inv[gift.id] = (S.inv[gift.id]||0)+1; gifts.push(gift); }
+    }
+  }
+  S.coins += coins;
+  burstConfetti();
+  const next = nextUnlock();
+  modal(`<div style="font-weight:800;color:#7a6e86">LEVEL UP!</div><div class="lvlBig">Level ${toLv}</div>
+    <div class="unlock"><span class="ic">🪙</span><span>Reward: <b>${coins.toLocaleString()} coins</b></span></div>
+    ${gifts.map(g=>`<div class="unlock"><span class="ic">🎁</span><span>Gift: <b>${g.name}</b> (in your furniture inventory)</span></div>`).join('')}
+    ${unlocks.map(u=>`<div class="unlock"><span class="ic">${u.ic}</span><span>${u.t}</span></div>`).join('')}
+    ${next ? `<div style="color:#7a6e86;font-size:13px;margin-top:10px">Next: ${next.t} at level ${next.lv}</div>` : ''}
+    <button class="btn" style="margin-top:14px" onclick="closeModal()">Awesome!</button>`);
+  save();
+}
+function nextUnlock(){
+  const lv = level();
+  for(let n=lv+1; n<=60; n++){ const u = unlocksAt(n); if(u.length) return {lv:n, t:u[0].t.replace(/^New (room|furniture|guests): /,'')}; }
+  return null;
+}
+function burstConfetti(){
+  const dpr = window.devicePixelRatio||1, W = cv.width/dpr;
+  for(let i=0;i<120;i++) confetti.push({x:W/2 + (Math.random()-0.5)*80, y:120, vx:(Math.random()-0.5)*520, vy:-200-Math.random()*380, r:Math.random()*6.28, vr:(Math.random()-0.5)*10, t:0, c:['#ffc94d','#ff7a90','#6fd3b5','#7ec8ff','#c77dff'][i%5]});
+}
+
+/* ---------------- guests ---------------- */
+function laneY(){ return groundY(); }
+function queue(){ return guests.filter(g=>g.state==='queue' || g.state==='walkIn'); }
+function deskX(){ const l = lobbyRoom(); return BX + (l ? l.c : 1)*CELL + 34; }
+function liftX(){ return lobbyLiftX(); }
+function guestRoomCount(){ return S.rooms.filter(r=>ROOMS[r.type].kind==='guest' && hasBed(r)).length; }
+function spawnInterval(){ return Math.max(1.2, 22/(guestRoomCount()+1)) * (1.15 - stars()*0.07); }
+function pickGuestType(){
+  const lv = level(), roll = Math.random();
+  if(lv >= GUEST_TYPES.vip.lvl && roll < 0.12) return 'vip';
+  if(lv >= GUEST_TYPES.business.lvl && roll < 0.35) return 'business';
+  return 'regular';
+}
+function spawnGuest(){
+  const q = queue();
+  if(q.length >= Math.min(8, guestRoomCount()+1)) return;
+  const type = pickGuestType(), gt = GUEST_TYPES[type];
+  const unlockedAmen = AMENITY_TYPES.filter(t=>ROOMS[t].lvl <= level());
+  const wantsSomething = gt.alwaysWants || Math.random()<0.55;
+  const want = wantsSomething && unlockedAmen.length ? unlockedAmen[Math.floor(Math.random()*unlockedAmen.length)] : null;
+  guests.push({id:gid++, state:'walkIn', x:streetX(), y:laneY(), qi:q.length, skin:1+Math.floor(Math.random()*GUEST_SKINS), dir:-1,
+    type, color:GUEST_COLORS[Math.floor(Math.random()*GUEST_COLORS.length)], hat:Math.random()<0.4,
+    want, wait:0, inspector: type==='regular' && Math.random()<0.04, room:null, timer:0, alpha:1, poked:false});
+}
+function freeGuestRoom(g){
+  const need = GUEST_TYPES[g.type].needsDecor || 0;
+  const opts = S.rooms.filter(r=>ROOMS[r.type].kind==='guest' && !r.guest && !r.reserved && !r.dirty && hasBed(r) && decorPct(r) >= need);
+  if(!opts.length) return null;
+  opts.sort((a,b)=> (ROOMS[b.type].pay*(0.6+0.9*decorPct(b))) - (ROOMS[a.type].pay*(0.6+0.9*decorPct(a))));
+  return opts[0];
+}
+function amenityFor(type){ return S.rooms.find(r=>r.type===type && !r.dirty && (r.users||0) < ROOMS[r.type].slots); }
+function moveTo(g, tx, speed, dt){
+  g.moving = Math.abs(tx - g.x) > 0.5;
+  const d = tx - g.x, step = speed*dt;
+  if(Math.abs(d) <= step){ g.x = tx; return true; }
+  g.dir = Math.sign(d);
+  g.x += Math.sign(d)*step; g.walk = (g.walk||0) + dt; return false;
+}
+function updateGuests(dt){
+  const qList = guests.filter(g=>g.state==='queue'||g.state==='walkIn').sort((a,b)=>a.id-b.id);
+  qList.forEach((g,i)=> g.qi = i);
+  for(const g of guests){
+    switch(g.state){
+      case 'walkIn': { if(moveTo(g, deskX() + 30 + g.qi*17, 70, dt)) g.state='queue'; break; }
+      case 'queue': {
+        moveTo(g, deskX() + 30 + g.qi*17, 60, dt);
+        g.wait += dt;
+        if(g.qi===0){ const r = freeGuestRoom(g); if(r){ r.reserved = g.id; g.room = r.id; g.state='toLift'; } }
+        if(g.state==='queue' && g.wait > GUEST_TYPES[g.type].patience){ g.state='leave'; g.angry=true; S.sat = S.sat*0.95; floats.push({x:g.x,y:g.y-40,t:0,text: g.type==='vip'?'😤 not fancy enough':'😠'}); }
+        break;
+      }
+      case 'toLift': { if(moveTo(g, liftX(), 80, dt)){ const r = S.rooms.find(x=>x.id===g.room); g.state='ride'; g.timer = 0.9; g.rideT = g.timer; doorsOpen = 1.2; } break; }
+      case 'ride': {
+        g.timer -= dt;
+        if(g.timer<=0){
+          const r = S.rooms.find(x=>x.id===g.room);
+          if(!r){ g.state='leaveLift'; g.timer=0.6; break; }
+          r.reserved = null; r.guest = g.id; g.state='inRoom'; g.timer = ROOMS[r.type].stay; g.alpha=1;
+        }
+        break;
+      }
+      case 'inRoom': {
+        g.timer -= dt;
+        const r = S.rooms.find(x=>x.id===g.room);
+        if(!r){ g.state='leaveLift'; g.timer=0.6; break; }
+        if(g.timer<=0){
+          const def = ROOMS[r.type], gt = GUEST_TYPES[g.type];
+          const pay = Math.max(1, Math.round(def.pay * (0.6+0.9*decorPct(r)) * starMult() * gt.pay * (g.inspector?3:1)));
+          const rr2 = roomRect(r);
+          addCoins(pay, rr2.x+rr2.w/2, rr2.y+20);
+          addXP(Math.round(def.xp * gt.xp));
+          S.served++; if(g.type==='vip') S.vipServed = true;
+          r.guest = null; r.dirty = true;
+          let happy = 0.6 + 0.4*decorPct(r);
+          if(g.want){
+            const a = amenityFor(g.want);
+            if(a){ a.users=(a.users||0)+1; g.state='inAmen'; g.amen=a.id; g.timer=ROOMS[a.type].use; g.slot=a.users-1; happy=Math.min(1,happy+0.3); }
+            else happy *= 0.75;
+          }
+          S.sat = S.sat*0.9 + happy*0.1;
+          if(g.inspector) toast(`🎩 A hotel inspector loved their stay! Bonus 🪙${pay}`);
+          if(g.state!=='inAmen'){ g.state='leaveLift'; g.timer=0.6; }
+        }
+        break;
+      }
+      case 'inAmen': {
+        g.timer -= dt;
+        const a = S.rooms.find(x=>x.id===g.amen);
+        if(!a){ g.state='leaveLift'; g.timer=0.6; break; }
+        if(g.timer<=0){
+          const def = ROOMS[a.type], q = roomRect(a);
+          const pay = Math.max(1, Math.round(def.pay * starMult() * (0.8+0.4*decorPct(a)) * GUEST_TYPES[g.type].pay));
+          addCoins(pay, q.x+q.w/2, q.y+20); addXP(def.xp);
+          a.users = Math.max(0,(a.users||1)-1); a.uses = (a.uses||0)+1;
+          if(a.uses % 3 === 0) a.dirty = true;
+          g.state='leaveLift'; g.timer=0.6;
+        }
+        break;
+      }
+      case 'leaveLift': {
+        g.x = liftX(); g.y = laneY(); doorsOpen = Math.max(doorsOpen, 0.4);
+        g.timer -= dt; g.alpha = 1 - Math.max(0,g.timer/0.6);
+        if(g.timer<=0){ g.state='leave'; g.alpha=1; }
+        break;
+      }
+      case 'leave': { if(moveTo(g, streetX()+40, 80, dt)) g.gone = true; break; }
+    }
+  }
+  guests = guests.filter(g=>!g.gone);
+}
+
+/* ---------------- cleaning ---------------- */
+function updateCleaning(dt){
+  const {covered} = coverage();
+  for(const r of S.rooms){
+    if(!r.dirty || r.guest || (r.users||0)>0){ r.cleanT = 0; continue; }
+    if(covered.has(r.id)){ r.cleanT = (r.cleanT||0) + dt; if(r.cleanT >= 2.5){ r.dirty=false; r.cleanT=0; } }
+  }
+}
+
+/* ---------------- main loop ---------------- */
+let last = performance.now();
+function frame(now){
+  const dt = Math.min(0.1, (now-last)/1000); last = now; time += dt;
+  const sdt = dt * gameSpeed();   // hotel time runs at the chosen speed
+  if(isOpen()){
+    spawnTimer -= sdt;
+    if(spawnTimer<=0){ spawnGuest(); spawnTimer = spawnInterval() * (0.7+Math.random()*0.6); }
+  }
+  updateGuests(sdt); updateCleaning(sdt);
+  for(const r of S.rooms){ if(r.anim){ r.anim.t+=dt; if(r.anim.t>0.2) r.anim=null; } if(r.pulse>0) r.pulse-=dt; }
+  doorsOpen = Math.max(0, doorsOpen - sdt);
+  floats.forEach(f=>f.t+=dt); floats = floats.filter(f=>f.t<1.4);
+  for(const p of confetti){ p.t+=dt; p.vy += 700*dt; p.x += p.vx*dt; p.y += p.vy*dt; p.r += p.vr*dt; }
+  confetti = confetti.filter(p=>p.t<3);
+  autosave += dt;
+  if(autosave>5){ autosave=0; updateRate(); checkGoals(); save(); cloudTick=(cloudTick+1)%3; if(cloudTick===0) cloudSave(); }
+  draw(dt); updateTop();
+  requestAnimationFrame(frame);
+}
+
+/* ---------------- camera ---------------- */
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+let view = {s:1, ox:0, oy:0, dpr:1};
+function resize(){
+  const r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio||1;
+  cv.width = Math.round(r.width*dpr); cv.height = Math.round(r.height*dpr);
+}
+function camTarget(){
+  const dpr = window.devicePixelRatio||1, W = cv.width/dpr, H = cv.height/dpr;
+  const fr = ui.focus ? S.rooms.find(r=>r.id===ui.focus) : null;
+  if(fr){
+    // fit the room into the part of the screen the panel doesn't cover
+    let ax=0, ay=0, aw=W, ah=H;
+    const pr = panel.style.display!=='none' ? panel.getBoundingClientRect() : null, cr = cv.getBoundingClientRect();
+    if(pr && pr.width>0){
+      if(pr.width > W*0.8) ah = Math.max(160, pr.top - cr.top);
+      else aw = Math.max(200, pr.left - cr.left);
+    }
+    const q = roomRect(fr);
+    const s = Math.min(aw*0.86/q.w, ah*0.78/q.h, 3.2);
+    return {s, ox: ax + aw/2 - (q.x+q.w/2)*s, oy: ay + ah/2 - (q.y+q.h/2)*s};
+  }
+  const b = (ui.drag && ui.drag.moved && ui.drag.bounds) || (ui.newDrag && ui.newDrag.moved && ui.newDrag.bounds) || buildBounds();
+  const bw = b.x1 - b.x0, bh = b.y1 - b.y0;
+  let aw = W, ah = H;
+  const hidden = document.body.classList.contains('dragOut');   // menu tucked away while dragging: use the whole screen
+  const pr = panel.style.display==='block' && !hidden ? panel.getBoundingClientRect() : null, cr = cv.getBoundingClientRect();
+  if(pr && pr.width>0){ if(pr.width > W*0.8) ah = Math.max(160, pr.top - cr.top); else aw = Math.max(220, pr.left - cr.left); }
+  const reserve = (pr && pr.width>0 && pr.width > W*0.8) ? 0 : 92; // room for the icon buttons
+  const s = Math.min(aw/bw, (ah-reserve)/bh, 1.6);
+  return {s, ox:(aw - bw*s)/2 - b.x0*s, oy:(ah - reserve - b.y1*s)};
+}
+function updateCam(dt){
+  const t = camTarget();
+  if(!cam.ready){ Object.assign(cam, t, {ready:true}); }
+  const k = 1 - Math.exp(-(dt||0.016)*10);
+  cam.s += (t.s-cam.s)*k; cam.ox += (t.ox-cam.ox)*k; cam.oy += (t.oy-cam.oy)*k;
+  view = {s:cam.s, ox:cam.ox, oy:cam.oy, dpr:window.devicePixelRatio||1};
+}
+
+/* ---------------- drawing ---------------- */
+function rr(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+function skyColors(){
+  const h = new Date().getHours() + new Date().getMinutes()/60;
+  if(h>=6.5 && h<17.5) return ['#7ec8ff','#d6f0ff', false];
+  if(h>=17.5 && h<19.5) return ['#ff9a8b','#ffd8a8', false];
+  if(h>=5 && h<6.5) return ['#a7b8ff','#ffd6c4', false];
+  return ['#1b1f4a','#3b3f7a', true];
+}
+function draw(dt){
+  updateCam(dt);
+  const {s,ox,oy,dpr} = view;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const W = cv.width/dpr, H = cv.height/dpr;
+  const [c1,c2,night] = skyColors();
+  const grad = ctx.createLinearGradient(0,0,0,H); grad.addColorStop(0,c1); grad.addColorStop(1,c2);
+  ctx.fillStyle = grad; ctx.fillRect(0,0,W,H);
+  if(night){ ctx.fillStyle='#fff'; for(let i=0;i<60;i++){ const x=(i*137.5)%W, y=(i*71.3)%(H*0.6); ctx.globalAlpha=0.4+0.6*Math.abs(Math.sin(time*0.8+i)); ctx.fillRect(x,y,2,2);} ctx.globalAlpha=1; }
+  ctx.fillStyle = night ? '#2a2d5e' : 'rgba(120,150,200,.35)';
+  for(let i=0;i<14;i++){ const bw=60+((i*37)%50), bh=80+((i*53)%160); ctx.fillRect(i*W/12 - 20, H-bh-SIDEWALK*s, bw, bh); }
+
+  ctx.setTransform(dpr*s,0,0,dpr*s,dpr*ox,dpr*oy);
+  const p = plot(), gy = groundY(), bb = buildBounds(0);
+  // hotel sign above the tallest part of the building
+  const sx = (bb.x0 + bb.x1)/2, sy = TOP + (WORLD_F - bb.f1)*FLOOR - 30;
+  ctx.fillStyle = '#2b2340'; rr(sx - 90, sy - 13, 180, 26, 13); ctx.fill();
+  ctx.fillStyle = '#ffc94d'; ctx.font = 'bold 14px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('★ ' + (S.name||'My Hotel') + ' ★', sx, sy);
+  const cov = coverage();
+  const dragId = ui.drag && ui.drag.moved ? ui.drag.room.id : null;
+  for(const r of S.rooms) if(r.id!==dragId) drawRoom(r, cov.covered.has(r.id));
+  // sidewalk
+  ctx.fillStyle = '#5f6672'; ctx.fillRect(-2000, gy+SIDEWALK, worldW()+4000, 2000);
+  ctx.fillStyle = '#9aa1ad'; ctx.fillRect(-2000, gy, worldW()+4000, SIDEWALK);
+  ctx.fillStyle = '#b8bec8'; ctx.fillRect(-2000, gy, worldW()+4000, 8);
+  ctx.fillStyle = '#7c8390'; for(let x=-2000; x<worldW()+2000; x+=60) ctx.fillRect(x, gy+8, 2, SIDEWALK-8);
+  const open = isOpen(), lob = lobbyRoom();
+  if(lob){ const lq = visRect(lob), sx = lq.x + lq.w - 114;
+    ctx.fillStyle = open ? '#3fae8c' : '#ff7a90'; rr(sx, lq.y+10, 46, 18, 6); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='bold 10px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(open?'OPEN':'CLOSED', sx+23, lq.y+19); ctx.textBaseline='alphabetic'; }
+  for(const g of guests) if(g.state!=='inRoom' && g.state!=='inAmen'){ if(g.state==='ride') g.alpha = Math.max(0, g.timer/g.rideT - 0.2); drawBean(g.x, g.y, g, 1); }
+  for(const g of guests) if(g.state==='inAmen') drawAmenGuest(g);
+  if(ui.newDrag && ui.newDrag.moved && ui.newDrag.over) drawNewRoomDrag(cov);
+  if(ui.newItem && ui.newItem.moved && ui.newItem.over) drawNewItemDrag();
+  if(dragId){
+    drawDropSpot();
+    const r = ui.drag.room;
+    ctx.save(); ctx.shadowColor='rgba(43,35,64,.45)'; ctx.shadowBlur=24; ctx.shadowOffsetY=10;
+    const q = visRect(r); ctx.fillStyle='#fff'; ctx.fillRect(q.x+2,q.y+2,q.w-4,q.h-4); ctx.restore();
+    drawRoom(r, cov.covered.has(r.id));
+    for(const g of guests) if(g.state==='inAmen' && g.amen===r.id) drawAmenGuest(g);
+  }
+  // dim everything except the room being decorated
+  if(ui.focus){
+    const fr = S.rooms.find(r=>r.id===ui.focus);
+    if(fr){ const q = roomRect(fr);
+      ctx.fillStyle='rgba(29,24,48,.45)';
+      ctx.beginPath(); ctx.rect(-2000,-2000,6000,6000); ctx.rect(q.x+q.w, q.y, -q.w, q.h); ctx.fill('evenodd');
+      ctx.strokeStyle='#ffc94d'; ctx.lineWidth=3; ctx.strokeRect(q.x+1,q.y+1,q.w-2,q.h-2); ctx.lineWidth=1;
+      if(ui.itemDrag && ui.itemDrag.moved) drawItemDragHint(fr, q);
+    }
+  }
+  ctx.textAlign='center'; ctx.font='bold 15px system-ui';
+  for(const f of floats){ ctx.globalAlpha = 1 - f.t/1.4; ctx.fillStyle='#2b2340'; ctx.fillText(f.text, f.x+1, f.y - f.t*30+1); ctx.fillStyle='#ffc94d'; ctx.fillText(f.text, f.x, f.y - f.t*30); }
+  ctx.globalAlpha = 1;
+  // confetti in screen space
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  for(const p2 of confetti){ ctx.save(); ctx.translate(p2.x,p2.y); ctx.rotate(p2.r); ctx.globalAlpha=Math.max(0,1-p2.t/3); ctx.fillStyle=p2.c; ctx.fillRect(-4,-2,8,4); ctx.restore(); }
+  ctx.globalAlpha=1;
+}
+function drawLobby(r, x, y, w){
+  ctx.fillStyle = r.wall ? r.wallColor : '#ffe9d6'; ctx.fillRect(x+2,y+2,w-4,FLOOR-4);
+  if(r.wall){ ctx.fillStyle='rgba(255,255,255,.35)'; for(let i=8;i<w-4;i+=14) ctx.fillRect(x+i, y+2, 5, FLOOR-14); }
+  if(art('rooms/lobby')) sprite('rooms/lobby', x, y, w, FLOOR);
+  else { ctx.fillStyle = r.floor ? '#c8915f' : '#f2c9a7'; for(let i=0;i<w;i+=16) ctx.fillRect(x+i, y+FLOOR-12, 8, 10); }
+  drawItems(r, x, y, w, FLOOR, 'back');
+  if(!art('rooms/lobby')){
+    ctx.fillStyle = '#a0522d'; rr(x+8, y+FLOOR-40, 40, 28, 4); ctx.fill();
+    ctx.fillStyle = '#c8743f'; ctx.fillRect(x+6, y+FLOOR-42, 44, 6);
+  }
+  const bt = time % 4, half = art('chars/clerk_blink_1') ? 'chars/clerk_blink_1' : 'chars/clerk_blink', shut = art('chars/clerk_blink_2') ? 'chars/clerk_blink_2' : 'chars/clerk_blink';
+  const clerkKey = !art(shut) ? 'chars/clerk' : bt < 0.08 ? half : bt < 0.24 ? shut : bt < 0.32 ? half : 'chars/clerk';
+  if(art('rooms/lobby')){ ctx.save(); ctx.beginPath(); ctx.rect(x, y, 100, 52); ctx.clip(); sprite(clerkKey, x+16, y+FLOOR-66, 28, 48); ctx.restore(); }
+  else if(!sprite(clerkKey, x+14, y+FLOOR-62, 28, 48)) drawBean(x+28, y+FLOOR-38, {color:'#5e60ce', hat:true, alpha:1}, 0.8, true);
+  if(!art('rooms/lobby')){ ctx.fillStyle='#a0522d'; rr(x+8, y+FLOOR-34, 40, 22, 4); ctx.fill(); ctx.fillStyle='#ffc94d'; ctx.beginPath(); ctx.arc(x+44, y+FLOOR-38, 4, Math.PI, 0); ctx.fill(); }
+  drawElevator(x + w - 34, y + 14);
+  drawItems(r, x, y, w, FLOOR, 'front');
+  ctx.fillStyle='#2b2340'; ctx.font='bold 11px system-ui'; ctx.textAlign='left'; ctx.textBaseline='middle'; ctx.fillText('Lobby', x+60, y+12);
+}
+function drawElevator(x, y){
+  // golden doors at the right end of the lobby; they slide open while guests get in or out
+  const dw = 44, dh = FLOOR - 22, dx = x, dy = y;
+  const doorArt = doorsOpen>0 && art('building/elevator_open') ? 'building/elevator_open' : 'building/elevator';
+  if(art(doorArt)){ sprite(doorArt, dx-dw/2, dy, dw, dh); }
+  else {
+    ctx.fillStyle = '#3d3550'; rr(dx-dw/2-3, dy-3, dw+6, dh+3, 4); ctx.fill();
+    const open = Math.min(1, doorsOpen*3) * (dw/2-4);
+    ctx.fillStyle = '#5a4e72'; ctx.fillRect(dx-dw/2, dy, dw, dh);
+    ctx.fillStyle = '#ffc94d'; ctx.fillRect(dx-dw/2, dy, dw/2-open, dh); ctx.fillRect(dx+open, dy, dw/2-open, dh);
+    ctx.strokeStyle = '#d99a00'; ctx.lineWidth = 2; ctx.strokeRect(dx-dw/2, dy, dw/2-open, dh); ctx.strokeRect(dx+open, dy, dw/2-open, dh); ctx.lineWidth = 1;
+  }
+  ctx.fillStyle = '#ffc94d'; ctx.beginPath(); ctx.arc(dx+dw/2+8, dy+dh/2, 3, 0, Math.PI*2); ctx.fill();
+}
+function drawRoom(r, covered){
+  const def = ROOMS[r.type], q = visRect(r), x=q.x, y=q.y, w=q.w, h=q.h;
+  if(def.kind==='lobby'){ drawLobby(r,x,y,w); edge(x,y,w,h); pulseEdge(r,x,y,w,h); sellEdge(x,y,w,h); return; }
+  ctx.fillStyle = r.wall ? r.wallColor : def.color; ctx.fillRect(x,y,w,h);
+  if(r.wall){ ctx.fillStyle='rgba(255,255,255,.35)'; for(let i=8;i<w-4;i+=14) ctx.fillRect(x+i, y+2, 5, h-14); }
+  if(r.floor){ ctx.fillStyle='#c8915f'; ctx.fillRect(x,y+h-FLOOR_PAD,w,10); ctx.fillStyle='#a8743f'; for(let i=0;i<w;i+=20) ctx.fillRect(x+i+2, y+h-FLOOR_PAD, 2, 10); }
+  else { ctx.fillStyle='#bcaaa4'; ctx.fillRect(x,y+h-FLOOR_PAD,w,10); }
+  // guest rooms are plain: just walls, floor and whatever furniture the player puts in (a new room only has its bed)
+  if(def.kind==='guest'){ drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,h); drawItems(r,x,y,w,h,'front'); }
+  else if(def.kind==='service'){ if(!sprite('rooms/'+r.type, x, y, w, h)) drawCloset(r,x,y,w,h); }
+  else {
+    const styled = r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h);
+    if(styled || sprite('rooms/'+r.type, x, y, w, h)){ const base = styled ? 'rooms/'+r.style+'_'+r.type : 'rooms/'+r.type;   // themed rooms only animate with their own fx frames
+      const fx = animFrame(base, 'fx', 3, 4); if(fx!==base) sprite(fx, x, y, w, h); }
+    else drawAmenity(r,x,y,w,h);
+    drawItems(r,x,y,w,h,'back'); drawItems(r,x,y,w,h,'front');
+    drawAmenityCount(r,x,y,w);
+  }
+  edge(x,y,w,h);   // same frame on every room, drawn over the art so none look borderless
+  ctx.font='bold 10px system-ui'; ctx.textAlign='left'; ctx.textBaseline='middle';
+  const label = roomLabel(r);
+  { const tw = ctx.measureText(label).width; ctx.fillStyle='rgba(255,253,248,.85)'; rr(x+3, y+7, tw+8, 14, 6); ctx.fill(); }
+  ctx.fillStyle = '#2b2340'; ctx.fillText(label, x+7, y+14);
+  if(r.dirty){
+    ctx.fillStyle='rgba(120,90,60,.25)'; ctx.fillRect(x+2,y+2,w-4,h-4);
+    ctx.fillStyle='#8d6e63'; for(let i=0;i<5;i++){ ctx.beginPath(); ctx.arc(x+14+((i*29)%(w-24)), y+h-18-((i*13)%20), 4, 0, Math.PI*2); ctx.fill(); }
+    if(r.cleanT>0){ if(!sprite(animFrame('chars/cleaner','sweep',2,4), x+w/2-14, y+h-60, 28, 48)){ ctx.font='18px system-ui'; ctx.textAlign='center'; ctx.fillText('🧹', x+w/2, y+h/2); } ctx.fillStyle='#3fae8c'; ctx.fillRect(x+10, y+h-6, (w-20)*Math.min(1,r.cleanT/2.5), 3); }
+    else { ctx.font='16px system-ui'; ctx.textAlign='center'; ctx.fillText(covered?'💨':'👆💨', x+w/2, y+h/2); }
+  }
+  if(def.kind==='guest' || def.kind==='amenity'){
+    const pct = decorPct(r);
+    ctx.fillStyle='rgba(0,0,0,.15)'; ctx.fillRect(x+6, y+20, 30, 4);
+    ctx.fillStyle = pct>=1 ? '#3fae8c' : pct>=0.5 ? '#ffc94d' : '#ff7a7a'; ctx.fillRect(x+6, y+20, 30*pct, 4);
+  }
+  if(def.kind==='guest' && !hasBed(r)){ ctx.font='bold 10px system-ui'; ctx.textAlign='center'; ctx.fillStyle='#d6334f'; ctx.fillText('needs a bed', x+w/2, y+h/2); }
+  sellEdge(x,y,w,h); pulseEdge(r,x,y,w,h);
+  ctx.textBaseline='alphabetic'; ctx.globalAlpha = 1;
+}
+// themed versions shown in the Build menu: amenities use a room style, guest rooms come with that theme's bed
+function themeBed(type, t){ return ROOMS[type].kind==='guest' ? (COLLECTIONS[t]||[]).find(id=>ITEMS[id] && ITEMS[id].zone==='bed') : null; }
+function themesFor(type){
+  if(ROOMS[type].kind==='guest') return Object.keys(COLLECTIONS).filter(t=>themeBed(type,t));
+  return ROOM_STYLES[type] || [];
+}
+function roomCost(type, t){ if(!t) return ROOMS[type].cost; const bed = themeBed(type,t); return ROOMS[type].cost + (bed ? ITEMS[bed].cost : STYLE_COST); }
+const roomLabel = r => (r.style ? themeName(r.style)+' ' : '') + ROOMS[r.type].name;
+function edge(x,y,w,h){ ctx.strokeStyle='rgba(43,35,64,.75)'; ctx.lineWidth=1.25; ctx.strokeRect(x+0.6,y+0.6,w-1.2,h-1.2); ctx.lineWidth=1; }
+function sellEdge(x,y,w,h){ if(ui.mode==='sell'){ ctx.strokeStyle = '#ff7a90'; ctx.lineWidth=2; ctx.setLineDash([5,4]); ctx.strokeRect(x+4,y+4,w-8,h-8); ctx.setLineDash([]); ctx.lineWidth=1; } }
+function pulseEdge(r,x,y,w,h){ if(r.pulse>0){ ctx.strokeStyle=`rgba(255,201,77,${Math.min(1,r.pulse)})`; ctx.lineWidth=4; ctx.strokeRect(x+2,y+2,w-4,h-4); ctx.lineWidth=1; } }
+
+/* furniture positions are stored relative to the room's top-left corner */
+function itemY(r, it, def){
+  const h = hOf(r.type)*FLOOR;
+  if(def.zone==='ceiling') return 3;
+  if(def.zone==='wall') return Math.max(22, Math.min(h - FLOOR_PAD - def.h - 8, it.y || 24));
+  return h - FLOOR_PAD - def.h + (def.back ? 4 : 0);
+}
+function clampItemX(r, def, x){ const w = ROOMS[r.type].w*CELL; return Math.max(4, Math.min(w - def.w - 4, x)); }
+function drawItems(r, x, y, w, h, layer){
+  for(const it of (r.items||[])){
+    const def = ITEMS[it.id]; if(!def) continue;
+    const back = def.back || def.zone==='wall' || def.zone==='ceiling';
+    if((layer==='back') !== back) continue;
+    if(def.zone==='bed') continue; // beds are drawn with the sleeping guest
+    const d = ui.itemDrag;
+    let ix, iy;
+    if(d && d.moved && d.item===it){ ix = d.ix; iy = d.iy; } else { ix = it.x; iy = itemY(r, it, def); }
+    if(d && d.moved && d.item===it && d.out) ctx.globalAlpha = 0.45;
+    drawItem(def, x+ix, y+iy);
+    ctx.globalAlpha = 1;
+  }
+}
+function drawItem(def, x, y){
+  if(sprite('decor/'+def.id, x, y, def.w, def.h)) return;
+  const w = def.w, h = def.h;
+  switch(def.id){
+    case 'bed_basic': case 'bed_fluffy': {
+      const fancy = def.id==='bed_fluffy';
+      ctx.fillStyle = fancy ? '#7b2cbf' : '#8d6e63'; rr(x, y+h-22, w, 20, 4); ctx.fill();
+      ctx.fillStyle = fancy ? '#f8f0ff' : '#efe6dc'; rr(x+3, y+h-26, w-6, 12, 4); ctx.fill();
+      ctx.fillStyle = '#ffffff'; rr(x+4, y+h-30, 16, 8, 3); ctx.fill();
+      if(fancy){ ctx.fillStyle='#c77dff'; ctx.fillRect(x+22, y+h-24, w-28, 8); }
+      return; }
+    case 'lamp': { const lx = x+w/2; ctx.fillStyle='#6d4c41'; ctx.fillRect(lx-1, y+12, 3, h-12); ctx.fillStyle='#ffd166'; ctx.beginPath(); ctx.moveTo(lx-9,y+14); ctx.lineTo(lx+10,y+14); ctx.lineTo(lx+5,y+2); ctx.lineTo(lx-4,y+2); ctx.fill(); ctx.fillStyle='rgba(255,209,102,.2)'; ctx.beginPath(); ctx.arc(lx, y+12, 16, 0, Math.PI*2); ctx.fill(); return; }
+    case 'plant': { ctx.fillStyle='#bf7b4f'; ctx.fillRect(x+6, y+h-12, 12, 12); ctx.fillStyle='#43aa8b'; ctx.beginPath(); ctx.arc(x+12, y+h-18, 8, 0, Math.PI*2); ctx.arc(x+7, y+h-22, 5, 0, Math.PI*2); ctx.arc(x+17, y+h-22, 5, 0, Math.PI*2); ctx.fill(); return; }
+    case 'wallart': { ctx.fillStyle='#8d6e63'; ctx.fillRect(x, y, w, h); ctx.fillStyle='#ffadad'; ctx.fillRect(x+3, y+3, w-6, h-6); ctx.fillStyle='#ffd166'; ctx.beginPath(); ctx.arc(x+w*0.65, y+h*0.4, 3, 0, Math.PI*2); ctx.fill(); ctx.fillStyle='#43aa8b'; ctx.beginPath(); ctx.moveTo(x+3,y+h-3); ctx.lineTo(x+w*0.4,y+h*0.45); ctx.lineTo(x+w*0.75,y+h-3); ctx.fill(); return; }
+    case 'rug': { ctx.fillStyle='#c77dff'; ctx.beginPath(); ctx.ellipse(x+w/2, y+h/2, w/2, h/2, 0, 0, Math.PI*2); ctx.fill(); ctx.strokeStyle='#fff'; ctx.setLineDash([3,3]); ctx.beginPath(); ctx.ellipse(x+w/2, y+h/2, w/2-4, h/2-2, 0, 0, Math.PI*2); ctx.stroke(); ctx.setLineDash([]); return; }
+  }
+  ctx.fillStyle='rgba(255,255,255,.55)'; rr(x, y, w, h, 6); ctx.fill();
+  ctx.strokeStyle='rgba(43,35,64,.35)'; ctx.lineWidth=1.5; rr(x, y, w, h, 6); ctx.stroke(); ctx.lineWidth=1;
+  ctx.font = `${Math.max(10, Math.min(w,h)*0.7)}px system-ui`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(def.emoji, x+w/2, y+h/2+1);
+  ctx.textBaseline='alphabetic';
+}
+function drawGuestRoom(r,x,y,w,h){
+  const fy = y+h-FLOOR_PAD;
+  const bed = (r.items||[]).find(it=>ITEMS[it.id] && ITEMS[it.id].zone==='bed');
+  let bx = x+10, bw = 56;
+  if(bed){
+    const def = ITEMS[bed.id], d = ui.itemDrag;
+    let ix = bed.x, iy = itemY(r, bed, def);
+    if(d && d.moved && d.item===bed){ ix = d.ix; iy = d.iy; if(d.out) ctx.globalAlpha = 0.45; }
+    bx = x+ix; bw = def.w;
+    drawItem(def, bx, y+iy);
+    ctx.globalAlpha = 1;
+  }
+  const g = r.guest ? guests.find(z=>z.id===r.guest) : null;
+  if(g){
+    const sleepKey = g.inspector ? 'chars/inspector_sleep' : 'chars/guest_'+g.skin+'_sleep';
+    if(!sprite(sleepKey, bx, fy-32, 56, 32)){
+      ctx.fillStyle = g.color; ctx.beginPath(); ctx.arc(bx+12, fy-32, 7, 0, Math.PI*2); ctx.fill();
+      if(g.inspector){ ctx.fillStyle='#2b2340'; ctx.fillRect(bx+5, fy-44, 14, 5); ctx.fillRect(bx+8, fy-52, 8, 8); }
+      ctx.fillStyle = '#d7ccc8'; ctx.fillRect(bx+18, fy-28, bw-22, 9);
+    }
+    if(g.type==='vip') drawCrown(bx+12, fy-46);
+    ctx.fillStyle = '#2b2340'; ctx.font='bold 11px system-ui'; ctx.textAlign='center';
+    const zz = (time*1.5 + g.id)%2;
+    ctx.globalAlpha = 1 - zz/2; ctx.fillText('z', bx+24 + zz*6, fy-40 - zz*8); ctx.globalAlpha=1;
+    if(g.want && ROOMS[g.want]){
+      ctx.fillStyle='#fff'; rr(x+w-34, y+18, 26, 22, 8); ctx.fill();
+      if(!sprite('icons/'+g.want, x+w-29, y+21, 16, 16)){ ctx.font='13px system-ui'; ctx.fillText(ROOMS[g.want].icon, x+w-21, y+34); }
+    }
+    const t = 1 - g.timer/ROOMS[r.type].stay;
+    ctx.fillStyle='rgba(43,35,64,.25)'; ctx.fillRect(x+8, y+h-5, w-16, 3);
+    ctx.fillStyle='#5e60ce'; ctx.fillRect(x+8, y+h-5, (w-16)*Math.max(0,Math.min(1,t)), 3);
+  }
+}
+function drawCrown(x,y){ ctx.fillStyle='#ffc94d'; ctx.strokeStyle='#2b2340'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(x-7,y+6); ctx.lineTo(x-7,y-1); ctx.lineTo(x-3,y+3); ctx.lineTo(x,y-4); ctx.lineTo(x+3,y+3); ctx.lineTo(x+7,y-1); ctx.lineTo(x+7,y+6); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.lineWidth=1; }
+function drawAmenityCount(r,x,y,w){
+  ctx.fillStyle = r.type==='cinema' && !art('rooms/cinema') ? '#fff' : '#2b2340'; ctx.font='9px system-ui'; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.fillText(`${r.users||0}/${ROOMS[r.type].slots}`, x+w-8, y+12);
+}
+function drawCloset(r,x,y,w,h){
+  ctx.fillStyle='#8d6e63'; for(let i=0;i<3;i++) ctx.fillRect(x+8, y+26+i*16, w-16, 3);
+  const cols=['#ffadad','#a0c4ff','#caffbf','#fdffb6'];
+  for(let i=0;i<3;i++) for(let j=0;j<3;j++){ ctx.fillStyle=cols[(i+j)%4]; rr(x+12+j*18, y+16+i*16, 14, 9, 3); ctx.fill(); }
+  ctx.fillStyle='#2b2340'; ctx.font='9px system-ui'; ctx.textAlign='left'; ctx.fillText('cleans '+ROOMS.closet.capacity, x+6, y+h-18);
+}
+function drawAmenity(r,x,y,w,h){
+  const fy = y+h-FLOOR_PAD;
+  switch(r.type){
+    case 'fit':
+      ctx.fillStyle='#495057'; rr(x+12, fy-14, 44, 12, 3); ctx.fill(); ctx.fillRect(x+50, fy-38, 4, 26); ctx.fillRect(x+44, fy-40, 14, 4);
+      ctx.fillStyle='#2b2340'; ctx.fillRect(x+w-60, fy-8, 26, 4); ctx.fillRect(x+w-64, fy-12, 6, 12); ctx.fillRect(x+w-38, fy-12, 6, 12);
+      ctx.fillStyle='#ff7a90'; ctx.fillRect(x+w-26, y+24, 14, 34); break;
+    case 'noodle':
+      ctx.fillStyle='#a0522d'; rr(x+10, fy-24, w-20, 22, 4); ctx.fill();
+      ctx.fillStyle='#fff'; for(let i=0;i<3;i++){ ctx.beginPath(); ctx.arc(x+30+i*40, fy-26, 7, 0, Math.PI); ctx.fill(); }
+      ctx.fillStyle='#ff7a5a'; ctx.beginPath(); ctx.ellipse(x+w-24, y+30, 8, 11, 0, 0, Math.PI*2); ctx.fill(); ctx.fillStyle='#2b2340'; ctx.fillRect(x+w-25, y+16, 2, 6); break;
+    case 'lounge':
+      ctx.fillStyle='#6a994e'; rr(x+12, fy-22, 60, 20, 6); ctx.fill(); rr(x+12, fy-34, 60, 14, 6); ctx.fill();
+      ctx.fillStyle='#8d6e63'; ctx.fillRect(x+w-56, fy-18, 36, 4); ctx.fillRect(x+w-52, fy-14, 3, 14); ctx.fillRect(x+w-26, fy-14, 3, 14);
+      ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(x+w-38, fy-24, 6, 0, Math.PI*2); ctx.fill(); break;
+    case 'games':
+      for(let i=0;i<3;i++){ const ax = x+12+i*46; ctx.fillStyle=['#5e60ce','#ff7a90','#3fae8c'][i]; rr(ax, fy-50, 30, 50, 4); ctx.fill(); ctx.fillStyle='#1b1f4a'; ctx.fillRect(ax+4, fy-44, 22, 16); ctx.fillStyle=`hsl(${(time*90+i*120)%360},90%,65%)`; ctx.fillRect(ax+7, fy-41, 16, 10); } break;
+    case 'cinema': {
+      const sw = w-30; ctx.fillStyle='#f8f4ff'; rr(x+15, y+26, sw, h*0.38, 4); ctx.fill();
+      ctx.fillStyle=`hsla(${(time*40)%360},70%,70%,.6)`; ctx.fillRect(x+20, y+31, sw-10, h*0.38-10);
+      ctx.fillStyle='#b23a48'; for(let row=0; row<2; row++) for(let i=0;i<5;i++){ rr(x+16+i*((w-32)/5), fy-14-row*22, (w-32)/5-4, 12, 3); ctx.fill(); }
+      break; }
+    case 'pool':
+      ctx.fillStyle='#4cc9f0'; rr(x+10, fy-26, w-20, 24, 6); ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,.8)'; ctx.lineWidth=2; ctx.beginPath();
+      for(let i=0;i<w-30;i+=6){ const yy = fy-18 + Math.sin(time*3 + i*0.2)*2; i===0? ctx.moveTo(x+15+i,yy) : ctx.lineTo(x+15+i,yy); } ctx.stroke(); ctx.lineWidth=1;
+      ctx.fillStyle='#fff'; ctx.fillRect(x+w-30, fy-56, 3, 30); ctx.fillRect(x+w-30, fy-56, 16, 3); break;
+  }
+}
+function drawAmenGuest(g){
+  const a = S.rooms.find(r=>r.id===g.amen); if(!a) return;
+  const q = visRect(a), def = ROOMS[a.type];
+  const sx = q.x + 22 + (g.slot % def.slots) * Math.max(24,(q.w-40)/Math.max(1,def.slots-1));
+  const bob = a.type==='fit' ? Math.abs(Math.sin(time*6+g.id))*3 : a.type==='pool' ? Math.sin(time*2+g.id)*2 : 0;
+  drawBean(sx, q.y+q.h-FLOOR_PAD - (a.type==='pool'?8:0) - bob, g, 0.85);
+}
+function drawBean(x, y, g, sc, noLegs){
+  const base = g.inspector ? 'chars/inspector' : g.skin ? 'chars/guest_'+g.skin : null;
+  const walking = g.moving && (g.state==='walkIn' || g.state==='queue' || g.state==='toLift' || g.state==='leave');
+  const key = base && walking ? animFrame(base, 'walk', 4, 8, (g.walk||0)) : base;
+  if(key && art(key)){
+    const bob = walking && key===base ? Math.abs(Math.sin(g.walk*10))*2 : 0;
+    ctx.save(); ctx.globalAlpha = g.alpha===undefined?1:g.alpha;
+    sprite(key, x-14*sc, y-48*sc-bob, 28*sc, 48*sc, g.dir<0);
+    ctx.restore();
+  } else {
+    ctx.save(); ctx.translate(x,y); ctx.scale(sc,sc); ctx.globalAlpha = g.alpha===undefined?1:g.alpha;
+    const step = g.walk ? Math.sin(g.walk*12)*3 : 0;
+    if(!noLegs){ ctx.fillStyle='#2b2340'; ctx.fillRect(-5, -6, 4, 6+step*0.3); ctx.fillRect(1, -6, 4, 6-step*0.3); }
+    ctx.fillStyle = g.color; rr(-9, -30, 18, 25, 9); ctx.fill();
+    ctx.fillStyle = '#ffe0c2'; ctx.beginPath(); ctx.arc(0, -36, 9, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#2b2340'; ctx.fillRect(-4, -38, 2, 3); ctx.fillRect(2, -38, 2, 3);
+    if(g.angry){ ctx.fillRect(-4,-32,8,1.5); } else { ctx.beginPath(); ctx.arc(0,-33,3,0.1*Math.PI,0.9*Math.PI); ctx.strokeStyle='#2b2340'; ctx.stroke(); }
+    if(g.inspector){ ctx.fillStyle='#2b2340'; ctx.fillRect(-9,-47,18,4); ctx.fillRect(-6,-56,12,10); ctx.strokeStyle='#ffc94d'; ctx.beginPath(); ctx.arc(3,-37,3.5,0,Math.PI*2); ctx.stroke(); }
+    else if(g.hat){ ctx.fillStyle = '#2b2340'; ctx.beginPath(); ctx.arc(0,-43,7,Math.PI,0); ctx.fill(); ctx.fillRect(-10,-44,20,3); }
+    ctx.restore();
+  }
+  if(g.type==='vip') drawCrown(x, y-52*sc);
+  else if(g.type==='business'){ ctx.fillStyle='#6d4c41'; rr(x+6*sc, y-18*sc, 10*sc, 8*sc, 2); ctx.fill(); }
+  if(g.state==='queue' && g.qi<3 && !S.rooms.some(r=>ROOMS[r.type].kind==='guest' && hasBed(r))){
+    ctx.fillStyle='#fff'; rr(x-12, y-76, 24, 22, 7); ctx.fill(); ctx.font='13px system-ui'; ctx.textAlign='center'; ctx.fillText('🛏️', x, y-60);
+  } else if(g.state==='queue' && g.want && ROOMS[g.want] && g.qi<3){
+    ctx.fillStyle='#fff'; rr(x-11, y-74, 22, 20, 7); ctx.fill();
+    if(!sprite('icons/'+g.want, x-8, y-72, 16, 16)){ ctx.font='12px system-ui'; ctx.textAlign='center'; ctx.fillText(ROOMS[g.want].icon, x, y-59); }
+  }
+}
+
+/* ---------------- room drag ---------------- */
+function dropTarget(){
+  const d = ui.drag, r = d.room, def = ROOMS[r.type], q = visRect(r), h = hOf(r.type);
+  const c = Math.round((q.x - BX)/CELL);
+  let f = plot().h - h - Math.round((q.y - TOP)/FLOOR);
+  if(def.ground) f = 0;
+  if(f===r.f && c===r.c) return {f,c,kind:'same'};
+  if(canPlace(r.type, f, c, r.id)) return {f,c,kind:'move'};
+  const hits = S.rooms.filter(o=>{ if(o.id===r.id) return false; const od = ROOMS[o.type], oh = hOf(o.type);
+    return c < o.c+od.w && o.c < c+def.w && f < o.f+oh && o.f < f+h; });
+  if(hits.length===1){
+    const o = hits[0], od = ROOMS[o.type];
+    if(o.f===f && o.c===c && od.w===def.w && hOf(o.type)===h){
+      const okA = !(def.ground && f!==0) && !(def.minFloor && f<def.minFloor);
+      const okB = !(od.ground && r.f!==0) && !(od.minFloor && r.f<od.minFloor);
+      if(okA && okB) return {f,c,kind:'swap',other:o};
+    }
+  }
+  return {f,c,kind:'bad', problem: placeProblem(r.type, f, c, r.id)};
+}
+function drawDropSpot(){
+  const t = dropTarget(); if(t.kind==='bad' || t.kind==='same') return;
+  const r = ui.drag.room, def = ROOMS[r.type], h = hOf(r.type);
+  const x = BX + t.c*CELL, y = TOP + (plot().h - t.f - h)*FLOOR;
+  ctx.fillStyle = 'rgba(43,35,64,.18)'; ctx.fillRect(x, y, def.w*CELL, h*FLOOR);
+}
+function animateFrom(r, fromX, fromY){ const q = roomRect(r); r.anim = {dx: fromX - q.x, dy: fromY - q.y, t:0}; }
+function firstFreeSpot(type){
+  const def = ROOMS[type], p = plot(), h = hOf(type), bb = buildBounds(0);
+  // 1) on top of the building, lowest open floor first, left to right across the hotel
+  for(let f=1; f+h<=p.h; f++) for(let c=bb.c0; c+def.w<=bb.c1; c++) if(canPlace(type,f,c)) return {f,c};
+  // 2) on the ground beside the hotel, to the right first, then to the left
+  for(let d=0; d<p.w; d++){
+    const right = bb.c1 + d, left = bb.c0 - def.w - d;
+    if(right+def.w<=p.w && canPlace(type,0,right)) return {f:0,c:right};
+    if(left>=0 && canPlace(type,0,left)) return {f:0,c:left};
+  }
+  // 3) anywhere it can stand
+  for(let f=0; f+h<=p.h; f++) for(let c=0; c+def.w<=p.w; c++) if(canPlace(type,f,c)) return {f,c};
+  return null;
+}
+function placeNewRoom(type, extra){
+  const spot = firstFreeSpot(type);
+  if(!spot){ const need = ROOMS[type].w*hOf(type); toast(blocksUsed()+need > blocksMax() ? `Not enough blocks: ${blocksUsed()}/${blocksMax()} used. Expand to build more.` : `No spot for a ${ROOMS[type].name} right now. Try moving rooms around.`); return null; }
+  const r = Object.assign(mkRoom(S.nextId++, type, spot.f, spot.c, Math.floor(Math.random()*WALL_COLORS.length)), extra||{});
+  r.pulse = 2.5; S.rooms.push(r); return r;
+}
+
+/* ---------------- furniture drag ---------------- */
+function itemAt(r, p){
+  const q = roomRect(r);
+  const list = (r.items||[]).slice().reverse();
+  // front items first, then back items
+  const order = list.filter(it=>{ const d=ITEMS[it.id]; return d && !(d.back||d.zone==='wall'||d.zone==='ceiling'); }).concat(list.filter(it=>{ const d=ITEMS[it.id]; return d && (d.back||d.zone==='wall'||d.zone==='ceiling'); }));
+  for(const it of order){
+    const def = ITEMS[it.id], ix = q.x + it.x, iy = q.y + itemY(r, it, def);
+    const pad = 4;
+    if(p.x >= ix-pad && p.x <= ix+def.w+pad && p.y >= iy-pad && p.y <= iy+def.h+pad) return it;
+  }
+  return null;
+}
+function drawItemDragHint(r, q){
+  const d = ui.itemDrag;
+  ctx.font='bold 12px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  const msg = d.out ? 'Let go to put it away' : 'Drag out of the room to put it away';
+  const tw = ctx.measureText(msg).width + 20;
+  ctx.fillStyle = d.out ? '#ff7a90' : 'rgba(43,35,64,.85)'; rr(q.x+q.w/2-tw/2, q.y-26, tw, 20, 10); ctx.fill();
+  ctx.fillStyle='#fff'; ctx.fillText(msg, q.x+q.w/2, q.y-16); ctx.textBaseline='alphabetic';
+}
+function canRemoveItem(r, it){
+  const def = ITEMS[it.id];
+  if(def.zone==='bed' && (r.guest || r.reserved)) return 'A guest is using this bed';
+  return null;
+}
+
+/* ---------------- input ---------------- */
+function toWorld(ev){
+  const b = cv.getBoundingClientRect();
+  return {x:(ev.clientX-b.left-view.ox)/view.s, y:(ev.clientY-b.top-view.oy)/view.s};
+}
+function roomAt(p){
+  for(let i=S.rooms.length-1;i>=0;i--){ const r = S.rooms[i], q = roomRect(r); if(p.x>=q.x && p.x<q.x+q.w && p.y>=q.y && p.y<q.y+q.h) return r; }
+  return null;
+}
+cv.addEventListener('pointermove', ev=>{
+  const p = toWorld(ev);
+  const idr = ui.itemDrag;
+  if(idr){
+    if(!idr.moved && Math.hypot(ev.clientX-idr.sx, ev.clientY-idr.sy) > 5) idr.moved = true;
+    if(idr.moved){
+      const r = idr.room, q = roomRect(r), def = ITEMS[idr.item.id];
+      idr.ix = clampItemX(r, def, p.x - q.x - idr.offX);
+      const rawY = p.y - q.y - idr.offY;
+      idr.iy = def.zone==='wall' ? itemY(r, {y:rawY}, def) : itemY(r, idr.item, def);
+      const m = 8;
+      idr.out = p.x < q.x - m || p.x > q.x + q.w + m || p.y < q.y - m || p.y > q.y + q.h + m;
+    }
+    return;
+  }
+  const d = ui.drag; if(!d) return;
+  d.px = p.x; d.py = p.y;
+  if(!d.moved && Math.hypot(ev.clientX-d.sx, ev.clientY-d.sy) > 6){ d.moved = true; d.room.anim = null; if(ui.panelKind!=='build') closePanel(); }
+});
+cv.addEventListener('pointerdown', ev=>{
+  const p = toWorld(ev);
+  try{ cv.setPointerCapture(ev.pointerId); }catch(e){}
+  if(ui.focus){
+    const fr = S.rooms.find(r=>r.id===ui.focus);
+    if(!fr){ unfocus(); return; }
+    const it = itemAt(fr, p);
+    if(it){
+      const q = roomRect(fr), def = ITEMS[it.id];
+      ui.itemDrag = {room:fr, item:it, sx:ev.clientX, sy:ev.clientY, offX: p.x - q.x - it.x, offY: p.y - q.y - itemY(fr,it,def), ix:it.x, iy:itemY(fr,it,def), moved:false, out:false};
+      return;
+    }
+    const r = roomAt(p);
+    if(r && r.id===fr.id){ tapRoom(r, true); return; }
+    unfocus(); return;
+  }
+  const r = roomAt(p);
+  if(ui.mode==='sell'){ if(r) openSell(r); else closePanel(); return; }  // Sell tab open: tap a room to sell it, tap empty space to close
+  if(!r){ closePanel(); return; }   // tap anywhere outside the rooms closes any menu, the Build menu included
+  ui.drag = {room:r, sx:ev.clientX, sy:ev.clientY, wx0:p.x, wy0:p.y, px:p.x, py:p.y, moved:false, bounds: buildBounds(2.5)};
+});
+function endItemDrag(cancelled){
+  const d = ui.itemDrag; ui.itemDrag = null;
+  if(!d || !d.moved || cancelled) return;
+  const r = d.room, it = d.item;
+  if(d.out){
+    const problem = canRemoveItem(r, it);
+    if(problem){ toast(problem); return; }
+    r.items = r.items.filter(x=>x!==it); S.inv[it.id] = (S.inv[it.id]||0)+1;
+    toast(`${ITEMS[it.id].name} put away in your furniture inventory`);
+  } else { it.x = Math.round(d.ix); if(ITEMS[it.id].zone==='wall') it.y = Math.round(d.iy); S.movedItem = true; checkGoals(); }
+  save(); if(ui.focus===r.id) openRoom(r);
+}
+function endDrag(ev, cancelled){
+  if(ui.itemDrag){ endItemDrag(cancelled); return; }
+  const d = ui.drag;
+  if(!d) return;
+  const r = d.room;
+  if(d.moved){
+    const q = visRect(r), t = cancelled ? {kind:'bad'} : dropTarget();
+    ui.drag = null;
+    if(t.kind==='move'){ r.f=t.f; r.c=t.c; }
+    else if(t.kind==='swap'){ const o = t.other, oq = roomRect(o); o.f=r.f; o.c=r.c; r.f=t.f; r.c=t.c; animateFrom(o, oq.x, oq.y); }
+    else if(t.kind==='bad' && t.problem && !cancelled) toast(t.problem);
+    animateFrom(r, q.x, q.y);
+    if(t.kind==='move' || t.kind==='swap'){ if(!S.moved){ S.moved = true; checkGoals(); } save(); }
+    if(ui.panelKind==='build') openBuild();
+    return;
+  }
+  ui.drag = null;
+  if(!cancelled) tapRoom(r, false);
+}
+function tapRoom(r, focused){
+  const def = ROOMS[r.type];
+  if(r.dirty && !r.guest && !(r.users>0)){ r.dirty=false; r.cleanT=0; addXP(1); const q=roomRect(r); floats.push({x:q.x+q.w/2,y:q.y+30,t:0,text:'✨'}); return; }
+  if(def.kind==='guest' && r.guest){ poke(r); return; }
+  if(focused) return;
+  if(def.kind==='guest' || def.kind==='amenity' || def.kind==='lobby') focusRoom(r);
+  else openRoom(r);
+}
+cv.addEventListener('pointerup', ev=>endDrag(ev,false));
+cv.addEventListener('pointercancel', ev=>endDrag(ev,true));
+function poke(r){
+  checkPokeDay();
+  const g = guests.find(z=>z.id===r.guest); const q = roomRect(r);
+  if(!g) return;
+  if(g.poked){ floats.push({x:q.x+q.w/2,y:q.y+30,t:0,text:'💤'}); return; }
+  if(S.pokes<=0){ toast('No more wake-up bonuses today'); return; }
+  g.poked = true; S.pokes--;
+  const bonus = g.inspector ? 40*Math.ceil(stars()) : Math.round((4 + level()*2) * starMult());
+  addCoins(bonus, q.x+q.w/2, q.y+30);
+  if(g.inspector) toast(`🎩 You found the hotel inspector! +🪙${bonus}`);
+}
+function focusRoom(r){ ui.focus = r.id; openRoom(r); }
+function unfocus(){ ui.focus = null; ui.itemDrag = null; closePanel(); }
+
+/* ---------------- UI ---------------- */
+const $ = id => document.getElementById(id);
+const panel = $('panel');
+function toast(msg){ const box = $('toasts'); while(box.children.length >= 3) box.firstChild.remove(); const t = document.createElement('div'); t.className='toast'; t.textContent=msg; box.appendChild(t); setTimeout(()=>t.remove(), 3300); }
+function closePanel(){ $('marks').style.display='none'; panel.style.display='none'; ui.panelKind = null; ui.mode = null; if(ui.focus){ ui.focus = null; } }
+function showPanel(html, kind){ $('marks').style.display='none'; ui.panelKind = kind || 'other'; panel.classList.toggle('wide', ui.panelKind==='build'); document.body.classList.toggle('panelWide', ui.panelKind==='build'); const st = panel.scrollTop; panel.innerHTML = '<button class="x" onclick="unfocus()">×</button>' + html; panel.style.display='block'; panel.scrollTop = st; }
+function setHint(t){ $('hintText').textContent=t; $('hint').style.display = t ? 'flex' : 'none'; }
+function setMode(m){ ui.mode = m; ui.drag = null; setHint(''); }
+$('hintCancel').onclick = ()=> setMode(null);
+function swatch(def, key){
+  const img = key && art(key) ? `<img src="${art(key).src}">` : (def.icon || def.emoji || (def.kind==='guest'?'🛏️':'🧺'));
+  return `<div class="sw" style="background:${def.color||'#f3e4d3'}">${img}</div>`;
+}
+// furniture in the Build menu: drag a piece onto a room to put it right there, or tap to buy it into storage
+function decorShop(lv){
+  const where = it => it.rooms.map(k=>({guest:'guest rooms', amenity:'amenities', lobby:'lobby'})[k]||k).join(', ');
+  const inSet = new Set(Object.values(COLLECTIONS).flat()), all = Object.values(ITEMS).sort((a,b)=>a.lvl-b.lvl || a.cost-b.cost);
+  const groups = [['Furniture', all.filter(it=>!inSet.has(it.id))]].concat(Object.entries(COLLECTIONS).map(([t,ids])=>[`${themeIcon(t)} ${themeName(t)} collection`, all.filter(it=>ids.includes(it.id))]));
+  let h = `<div class="sub">Drag a piece onto a room to put it there, or tap to buy it into storage. 3+ pieces of one collection in a room give bonus decor.</div>`;
+  for(const [title, list] of groups){ if(!list.length) continue;
+    h += `<h3>${title}</h3><div class="cat">`;
+    for(const it of list){
+      const locked = it.lvl > lv, poor = S.coins < it.cost, own = S.inv[it.id]||0;
+      h += `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-item="${it.id}"`} title="${it.name}">${locked?`<span class="lock">🔒 ${it.lvl}</span>`:''}
+        <div class="thumb"><div class="shape" style="width:64px;height:44px;background:#fff8ef">${art('decor/'+it.id)?`<img src="${art('decor/'+it.id).src}" style="object-fit:contain">`:(it.emoji||'🪑')}</div></div>
+        <div class="nm">${it.name}</div><div class="pr">🪙${it.cost.toLocaleString()}</div>
+        <div class="ea">+${it.decor} decor · ${it.zone==='bed'?'bed':it.zone}<br>for ${where(it)}${own?`<br>you own ${own}`:''}</div></div>`;
+    }
+    h += `</div>`;
+  }
+  return h;
+}
+function itemFits(r, id){ const it = ITEMS[id]; return r && it && it.rooms.includes(ROOMS[r.type].kind) && !(it.zone==='bed' && hasBed(r)); }
+function buyItemTo(id, r, wx){
+  const def = ITEMS[id]; if(!def || def.lvl > level()) return;
+  if(S.coins < def.cost){ toast('Not enough coins'); return; }
+  if(r){
+    const before = r.items.length; const keep = ui.panelKind;
+    placeItem(r.id, id, false);
+    if(r.items.length > before){ const it = r.items[r.items.length-1]; it.x = clampItemX(r, def, wx - visRect(r).x - def.w/2); save(); toast(`${def.name} placed in the ${roomLabel(r)}`); }
+    openBuild('rooms'); return;
+  }
+  S.coins -= def.cost; addXP(Math.max(1, Math.round(def.cost/40))); S.boughtItem = true;
+  S.inv[id] = (S.inv[id]||0) + 1; save(); checkGoals();
+  toast(`${def.name} bought. It's in Storage: open a room to place it.`); openBuild('rooms');
+}
+function drawNewItemDrag(){
+  const d = ui.newItem, def = ITEMS[d.id], r = roomAt({x:d.px, y:d.py}), ok = itemFits(r, d.id);
+  if(r){ const q = visRect(r); ctx.strokeStyle = ok ? '#3fae8c' : '#ff7a90'; ctx.lineWidth = 3; ctx.setLineDash([6,4]); ctx.strokeRect(q.x+2, q.y+2, q.w-4, q.h-4); ctx.setLineDash([]); ctx.lineWidth = 1; }
+  ctx.globalAlpha = ok ? 1 : 0.6; drawItem(def, d.px - def.w/2, d.py - def.h/2); ctx.globalAlpha = 1;
+}
+function jumpBuild(id){ const el = document.getElementById('bsec-'+id); if(!el) return; panel.scrollTo({top: el.offsetTop - 8, behavior:'smooth'}); ui.markLock = id; syncMarks(); setTimeout(()=>{ ui.markLock = null; }, 600); }
+// bookmarks hang off the left edge of the Build menu (or off its top edge on phones, where the menu sits at the bottom)
+function placeMarks(){
+  const m = $('marks'), show = panel.style.display==='block' && ui.panelKind==='build' && (ui.buildTab||'rooms')==='rooms' && !!panel.querySelector('.bsec');
+  m.style.display = show ? 'flex' : 'none'; if(!show) return;
+  const st = $('stage').getBoundingClientRect(), pr = panel.getBoundingClientRect(), phone = pr.left - st.left < 60;
+  m.classList.toggle('top', phone);
+  if(phone){ m.style.left = (pr.left - st.left + 14)+'px'; m.style.width = (pr.width - 28)+'px'; m.style.right = ''; m.style.top = (pr.top - st.top - m.offsetHeight + 3)+'px'; }
+  else { const nar = pr.left - st.left < 120; m.classList.toggle('slim', nar); m.style.width = ''; m.style.left = (pr.left - st.left - (nar?58:64) + 3)+'px'; m.style.top = (pr.top - st.top + (nar?40:70))+'px'; }
+}
+window.addEventListener('resize', placeMarks);
+function syncMarks(){
+  const marks = $('marks').querySelectorAll('[data-mark]'); if(!marks.length) return;
+  let cur = ui.markLock;
+  if(!cur){ cur = 'guest'; for(const sec of panel.querySelectorAll('.bsec')) if(sec.offsetTop - 30 <= panel.scrollTop) cur = sec.id.slice(5);
+    if(panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 4) cur = 'limited'; }
+  marks.forEach(b=>b.classList.toggle('on', b.dataset.mark===cur));
+}
+panel.addEventListener('scroll', ()=>{ if(!ui.markLock) syncMarks(); });
+function buildTabs(active){
+  const t = (id, label) => `<button class="${active===id?'on':''}" onclick="openBuild('${id}')">${label}</button>`;
+  return `<div class="tabs">${t('rooms','🏨 Rooms')}${t('storage','📦 Storage')}${t('sell','💱 Sell')}</div>`;
+}
+function openBuild(tab){
+  if(ui.focus) unfocus();
+  tab = tab || ui.buildTab || 'rooms'; ui.buildTab = tab;
+  if(tab==='storage') return openStorage();
+  if(tab==='sell') return openSellTab();
+  ui.mode = null;
+  const lv = level();
+  // every section is in one scrolling list; the side bookmarks jump to a section and light up as you scroll past it
+  const SECTIONS = [['guest','🛏️','Rooms','Guest rooms',[[null,'guest']]], ['amenity','🎡','Amenities','Amenities',[[null,'amenity']]], ['service','🧺','Services','Services',[[null,'service']]],
+    ['decor','🪴','Decor','Decor',[]],
+    ['limited','⏳','Limited','Limited: themed rooms',[['Themed guest rooms','guest'],['Themed amenities','amenity']]]];
+  const mark = ([id, e, label]) => `<button data-mark="${id}" class="${id==='limited'?'ltd':''}" onclick="jumpBuild('${id}')"><span class="e">${e}</span>${label}</button>`;
+  let html = `<h2>🔨 Build</h2>${buildTabs('rooms')}<div class="sub">🧱 <b>${blocksUsed()}/${blocksMax()} blocks used.</b> <b>Drag</b> a room onto your hotel and drop it where you want, or just <b>tap</b> it and it finds a free spot by itself. Rooms stand on the ground or on other rooms.</div>`;
+  $('marks').innerHTML = SECTIONS.map(mark).join('');
+  html += `<div>`;
+  for(const [cat, , , title, groups] of SECTIONS){
+  html += `<div class="bsec" id="bsec-${cat}"><h3 class="big">${title}</h3>`;
+  if(cat==='decor') html += decorShop(lv);
+  if(cat==='limited') html += `<div class="sub">Special themed versions. Guest rooms come with the theme's bed, amenities come fully dressed.</div>`;
+  for(const [label,kind] of groups){
+    html += `${label?`<h3>${label}</h3>`:''}<div class="cat">`;
+    for(const [k,d] of Object.entries(ROOMS)){
+      if(d.kind!==kind) continue;
+      for(const t of (cat==='limited' ? themesFor(k) : [null])){   // plain rooms in their own section, themed ones under Limited
+      const bed = t && themeBed(k,t), cost = roomCost(k,t), need = Math.max(d.lvl, bed ? ITEMS[bed].lvl : 0);
+      const locked = need > lv, poor = S.coins < cost, blocks = d.w*hOf(k);
+      const unit = 22, sw = d.w*unit*1.3, sh = d.h*unit;
+      const key = t && !bed ? 'rooms/'+t+'_'+k : 'rooms/'+k;
+      const inner = bed && art('decor/'+bed) ? `<img src="${art('decor/'+bed).src}" style="width:70%;height:auto;margin-top:auto">` : art(key) ? `<img src="${art(key).src}">` : (d.icon || (d.kind==='guest'?'🛏️':'🧺'));
+      const earn = d.kind==='guest' ? `~🪙${d.pay} per guest · ⭐${d.xp} XP` : d.kind==='amenity' ? `~🪙${d.pay} per visit · ${d.slots} guests` : `Cleans ${d.capacity} rooms`;
+      const nm = t ? `${themeIcon(t)} ${themeName(t)} ${d.name}` : d.name;
+      html += `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-room="${k}"${t?` data-style="${t}"`:''}`} title="${nm}">
+        ${locked?`<span class="lock">🔒 ${need}</span>`:''}
+        <div class="thumb"><div class="shape" style="width:${sw}px;height:${sh}px;background:${d.color}">${inner}</div></div>
+        <div class="nm">${nm}</div><div class="pr">🪙${cost.toLocaleString()}</div>
+        <div class="ea">${bed?`Comes with the ${ITEMS[bed].name}<br>`:''}${earn}<br>${blocks} block${blocks>1?'s':''} · ${d.w}×${d.h}${d.minFloor?` · floor ${d.minFloor+1}+`:''}</div></div>`;
+      }
+    }
+    html += `</div>`;
+  }
+  html += `</div>`;
+  }
+  html += `</div>`;
+  showPanel(html, 'build');
+  placeMarks(); syncMarks();
+}
+/* ---------------- dragging new rooms out of the build menu ----------------
+   Press a room card and drag it onto the hotel to drop it exactly there.
+   A plain tap, or letting go where it can't stand, places it in the first free spot instead. */
+function newDragTarget(nd){
+  const def = ROOMS[nd.type], h = hOf(nd.type);
+  const x = nd.px - def.w*CELL/2, y = nd.py - h*FLOOR/2;
+  const c = Math.round((x - BX)/CELL);
+  const f = def.ground ? 0 : WORLD_F - h - Math.round((y - TOP)/FLOOR);
+  return {x, y, f, c, ok: canPlace(nd.type, f, c)};
+}
+function drawNewRoomDrag(cov){
+  const nd = ui.newDrag, t = newDragTarget(nd), def = ROOMS[nd.type], h = hOf(nd.type);
+  if(t.ok){ ctx.fillStyle = 'rgba(43,35,64,.18)'; ctx.fillRect(BX + t.c*CELL, TOP + (WORLD_F - t.f - h)*FLOOR, def.w*CELL, h*FLOOR); }
+  const temp = {id:-1, type:nd.type, f:t.f, c:t.c, wall:false, floor:false, wallColor:WALL_COLORS[0], items: def.kind==='guest' ? [{u:0,id:(nd.style && themeBed(nd.type,nd.style))||'bed_basic',x:8,y:0}] : [], style: def.kind==='guest' ? null : nd.style||null, ghost:{x:t.x, y:t.y}};
+  ctx.save(); ctx.shadowColor='rgba(43,35,64,.45)'; ctx.shadowBlur=24; ctx.shadowOffsetY=10;
+  ctx.fillStyle='#fff'; ctx.fillRect(t.x+2, t.y+2, def.w*CELL-4, h*FLOOR-4); ctx.restore();
+  if(!t.ok) ctx.globalAlpha = 0.7;
+  drawRoom(temp, false);
+  ctx.globalAlpha = 1;
+}
+panel.addEventListener('pointerdown', ev=>{
+  const ic = ev.target.closest && ev.target.closest('.bcard[data-item]');
+  if(ic && ev.button<=0){ const p = toWorld(ev); ui.newItem = {id: ic.dataset.item, sx: ev.clientX, sy: ev.clientY, px:p.x, py:p.y, moved:false, over:false}; return; }
+  const card = ev.target.closest && ev.target.closest('.bcard[data-room]');
+  if(!card || ev.button>0) return;
+  const p = toWorld(ev);
+  ui.newDrag = {type: card.dataset.room, style: card.dataset.style||null, sx: ev.clientX, sy: ev.clientY, px: p.x, py: p.y, moved:false, over:false, bounds: buildBounds(2.5), card};
+});
+window.addEventListener('pointermove', ev=>{
+  const ni = ui.newItem;
+  if(ni){
+    if(!ni.moved && Math.hypot(ev.clientX-ni.sx, ev.clientY-ni.sy) > 8){ ni.moved = true; document.body.style.cursor = 'grabbing'; document.body.classList.add('dragOut'); }
+    if(ni.moved){ const p = toWorld(ev); ni.px = p.x; ni.py = p.y; const pr = panel.getBoundingClientRect(), cr = cv.getBoundingClientRect();
+      ni.over = ev.clientX>=cr.left && ev.clientX<=cr.right && ev.clientY>=cr.top && ev.clientY<=cr.bottom; }
+    return;
+  }
+  const nd = ui.newDrag; if(!nd) return;
+  if(!nd.moved && Math.hypot(ev.clientX-nd.sx, ev.clientY-nd.sy) > 8){
+    nd.moved = true; document.body.style.cursor = 'grabbing'; document.body.classList.add('dragOut');
+  }
+  if(nd.moved){
+    const p = toWorld(ev); nd.px = p.x; nd.py = p.y;
+    const pr = panel.getBoundingClientRect(), cr = cv.getBoundingClientRect();
+    const inPanel = ev.clientX>=pr.left && ev.clientX<=pr.right && ev.clientY>=pr.top && ev.clientY<=pr.bottom;
+    nd.over = ev.clientX>=cr.left && ev.clientX<=cr.right && ev.clientY>=cr.top && ev.clientY<=cr.bottom;
+  }
+});
+window.addEventListener('pointerup', ev=>{
+  const ni = ui.newItem;
+  if(ni){ ui.newItem = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut');
+    if(!ni.moved){ buyItemTo(ni.id, null); return; }
+    if(!ni.over) return;   // dragged and let go back over the menu: nothing happens
+    const r = roomAt({x:ni.px, y:ni.py});
+    if(!r){ toast('Drop it onto a room'); return; }
+    if(!itemFits(r, ni.id)){ const it = ITEMS[ni.id]; toast(it.zone==='bed' && hasBed(r) ? 'That room already has a bed' : `${it.name} can't go in the ${roomLabel(r)}`); return; }
+    buyItemTo(ni.id, r, ni.px); return; }
+  const nd = ui.newDrag; if(!nd) return;
+  ui.newDrag = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut');
+  const def = ROOMS[nd.type];
+  if(nd.moved && nd.over){
+    const t = newDragTarget(nd);
+    if(t.ok){ buyRoom(nd.type, {f:t.f, c:t.c, x:t.x, y:t.y}, nd.style); return; }
+  }
+  buyRoom(nd.type, null, nd.style);   // a tap, or a drop where it can't stand: find a free spot automatically
+});
+window.addEventListener('pointercancel', ()=>{ ui.newItem = null; document.body.classList.remove('dragOut'); if(ui.newDrag){ ui.newDrag = null; document.body.style.cursor = ''; } });
+function buyRoom(type, at, style){
+  const def = ROOMS[type], cost = roomCost(type, style), bed = style && themeBed(type, style);
+  if(def.lvl > level() || (bed && ITEMS[bed].lvl > level())) return;
+  if(S.coins < cost){ toast('Not enough coins'); return; }
+  let r;
+  if(at && canPlace(type, at.f, at.c)){
+    r = mkRoom(S.nextId++, type, at.f, at.c, Math.floor(Math.random()*WALL_COLORS.length)); S.rooms.push(r);
+    animateFrom(r, at.x, at.y);
+  } else r = placeNewRoom(type);
+  if(!r) return;
+  if(def.kind==='guest') r.items.push(mkItem(bed || 'bed_basic', 8));
+  else if(style){ r.style = style; r.ownedStyles = [style]; }
+  S.coins -= cost; addXP(Math.round(cost/50));
+  toast(at ? `${roomLabel(r)} built.` : `${roomLabel(r)} built in a free spot. Drag it wherever you like.`); save(); checkGoals();
+  if(ui.panelKind==='build') openBuild();
+}
+function openRoom(r){
+  const def = ROOMS[r.type];
+  if(def.kind==='guest' || def.kind==='amenity' || def.kind==='lobby'){
+    const pct = decorPct(r), lv = level();
+    let html = `<h2>${def.icon||''} ${def.name}</h2>`;
+    if(def.kind==='guest') html += `<div class="sub">Decor ${Math.round(pct*100)}% (${decorPoints(r)}/${decorCapacity(r)} points). Guests pay ${Math.round((0.6+0.9*pct)*100)}% of the base price. VIP guests need 70% or more.</div>`;
+    else if(def.kind==='amenity') html += `<div class="sub">Decor ${Math.round(pct*100)}%. Guests who want ${def.name} (${def.icon} bubble) visit after their stay and pay ~🪙${def.pay}, more when it's nicely decorated. Holds ${def.slots} guests.</div>`;
+    else html += `<div class="sub">Decor ${Math.round(pct*100)}%. A beautiful lobby raises your star rating.</div>`;
+    html += `<div class="meter"><i style="width:${pct*100}%"></i></div>`;
+    html += `<div class="sub" style="background:#fff3e6;border-radius:10px;padding:8px">✋ <b>Drag furniture</b> in the room to arrange it. Drag it out of the room to put it away.</div>`;
+    const cells = cellsOf(r);
+    const wallCost = 40*cells, floorCost = 50*cells;
+    html += `<h3>Walls and floor</h3>`;
+    html += `<div class="item"><div class="sw" style="background:${r.wallColor}"></div><div class="info"><b>Wallpaper</b><div class="meta">+${2*cells} decor</div></div>${r.wall?'<span style="font-weight:800;color:#3fae8c">✓</span>':`<button class="btn" ${S.coins<wallCost?'disabled':''} onclick="buyWall(${r.id})">🪙${wallCost}</button>`}</div>`;
+    if(r.wall) html += `<div class="colors">${WALL_COLORS.map(c=>`<span style="background:${c}" class="${c===r.wallColor?'on':''}" onclick="setWall(${r.id},'${c}')"></span>`).join('')}</div>`;
+    html += `<div class="item"><div class="sw" style="background:#c8915f"></div><div class="info"><b>Wooden floor</b><div class="meta">+${2*cells} decor</div></div>${r.floor?'<span style="font-weight:800;color:#3fae8c">✓</span>':`<button class="btn" ${S.coins<floorCost?'disabled':''} onclick="buyFloor(${r.id})">🪙${floorCost}</button>`}</div>`;
+    const styles = ROOM_STYLES[r.type] || [];
+    if(styles.length){
+      html += `<h3>Room style</h3><div class="cat">`;
+      const opt = (t) => { const key = t ? 'rooms/'+t+'_'+r.type : 'rooms/'+r.type, on = (r.style||'')===(t||'');
+        const owned = !t || (r.ownedStyles||[]).includes(t);
+        return `<div class="bcard" style="${on?'border-color:#3fae8c;border-width:3px':''}" onclick="setStyle(${r.id},'${t||''}')"><div class="thumb"><div class="shape" style="width:110px;height:58px">${art(key)?`<img src="${art(key).src}">`:''}</div></div><div class="nm">${t?themeIcon(t)+' '+themeName(t):'Classic'}</div><div class="ea">${on?'✓ In use':owned?'Owned':'🪙'+STYLE_COST}</div></div>`; };
+      html += opt(null) + styles.map(opt).join('') + `</div>`;
+    }
+    const bonuses = collectionBonus(r);
+    if(bonuses.length) html += bonuses.map(b=>`<div class="sub" style="background:#eafaf4;border-radius:10px;padding:8px">${themeIcon(b.theme)} <b>${themeName(b.theme)} set:</b> ${b.n} matching pieces, +${b.bonus} bonus decor</div>`).join('');
+    const all = itemsFor(r), inSet = new Set(Object.values(COLLECTIONS).flat());
+    const groups = [['Furniture', all.filter(it=>!inSet.has(it.id))]].concat(Object.entries(COLLECTIONS).map(([t,ids])=>[`${themeIcon(t)} ${themeName(t)} collection <span style="font-weight:600;color:#7a6e86;font-size:12px">· 3+ pieces in one room = bonus decor</span>`, all.filter(it=>ids.includes(it.id))]));
+    for(const [title, list] of groups){
+    if(!list.length) continue;
+    html += `<h3>${title}</h3>`;
+    for(const it of list){
+      const locked = it.lvl > lv, owned = S.inv[it.id]||0;
+      const isBed = it.zone==='bed', bedTaken = isBed && hasBed(r);
+      const zoneTxt = {floor:'stands on the floor', wall:'hangs on the wall', ceiling:'hangs from the ceiling', bed:'one per room'}[it.zone];
+      html += `<div class="item">${swatch({color:'#fff8ef', emoji:it.emoji}, 'decor/'+it.id)}<div class="info"><b>${it.name}</b><div class="meta">${locked?`🔒 Level ${it.lvl}`:`+${it.decor} decor · ${zoneTxt}`}${owned?` · you own ${owned}`:''}</div></div><div class="btns">`;
+      if(owned) html += `<button class="btn alt" ${bedTaken||locked?'disabled':''} onclick="placeItem(${r.id},'${it.id}',true)">Place</button>`;
+      html += `<button class="btn" ${locked||S.coins<it.cost||bedTaken?'disabled':''} onclick="placeItem(${r.id},'${it.id}',false)">🪙${it.cost}</button>`;
+      html += `</div></div>`;
+      if(bedTaken && !locked) html = html.replace(/one per room(<\/div>)/, 'swap: drag the old bed out first$1');
+    }
+    }
+    if(def.kind!=='lobby') html += `<div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put room in storage</button></div>`;
+    showPanel(html);
+    return;
+  }
+  if(false){ showPanel(`<h2>🛗 Elevator</h2><div class="sub">Guests ride the elevator up to their rooms. It runs the full height of your hotel and grows when you expand. Drag it left or right along the ground floor.</div>`); return; }
+  const cv2 = coverage();
+  showPanel(`<h2>🧺 ${def.name}</h2><div class="sub">Your cleaners look after ${cv2.cap} rooms. You have ${cv2.total} rooms that need cleaning.${cv2.total>cv2.cap?` <b style="color:#d6334f">${cv2.total-cv2.cap} rooms aren't covered. Tap them to clean by hand, or build another closet.</b>`:''}</div>
+    <div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`);
+}
+function buyWall(id){ const r = S.rooms.find(x=>x.id===id), c = 40*cellsOf(r); if(S.coins<c) return; S.coins-=c; r.wall=true; addXP(Math.round(c/40)); save(); checkGoals(); openRoom(r); }
+function buyFloor(id){ const r = S.rooms.find(x=>x.id===id), c = 50*cellsOf(r); if(S.coins<c) return; S.coins-=c; r.floor=true; addXP(Math.round(c/40)); save(); checkGoals(); openRoom(r); }
+function setWall(id,c){ const r = S.rooms.find(x=>x.id===id); r.wallColor=c; save(); openRoom(r); }
+function setStyle(id, t){
+  const r = S.rooms.find(x=>x.id===id); if(!r) return;
+  r.ownedStyles = r.ownedStyles || [];
+  if(t && !r.ownedStyles.includes(t)){
+    if(S.coins < STYLE_COST){ toast('Not enough coins'); return; }
+    S.coins -= STYLE_COST; r.ownedStyles.push(t); addXP(5);
+  }
+  r.style = t || null; save(); openRoom(r);
+  toast(t ? `${themeIcon(t)} ${themeName(t)} style on!` : 'Back to the classic style');
+}
+function placeItem(roomId, itemId, fromInv){
+  const r = S.rooms.find(x=>x.id===roomId), def = ITEMS[itemId]; if(!r || !def) return;
+  if(def.lvl > level()) return;
+  if(def.zone==='bed' && hasBed(r)){ toast('This room already has a bed. Drag the old one out first.'); return; }
+  if(fromInv){ if(!S.inv[itemId]) return; S.inv[itemId]--; if(!S.inv[itemId]) delete S.inv[itemId]; }
+  else { if(S.coins < def.cost) return; S.coins -= def.cost; addXP(Math.max(1, Math.round(def.cost/40))); S.boughtItem = true; }
+  // put it in the middle of the room; the player drags it from there
+  const rw = ROOMS[r.type].w*CELL;
+  const it = mkItem(itemId, clampItemX(r, def, rw/2 - def.w/2 + (Math.random()-0.5)*20));
+  if(def.zone==='wall') it.y = 26;
+  r.items.push(it);
+  save(); checkGoals(); openRoom(r);
+}
+function storeRoom(id){
+  const r = S.rooms.find(x=>x.id===id); if(!r) return;
+  { const st = strandsOthers(r.id, r.type, null); if(st){ toast(`The ${ROOMS[st.type].name} above needs this room to stand on`); return; } }
+  if(r.guest || r.reserved || (r.users||0)>0){ toast('Wait until the room is empty'); return; }
+  if(r.type==='closet' && count('closet')<=1){ toast('Keep at least one Linen Closet'); return; }
+  S.storage.push({type:r.type, wall:r.wall, floor:r.floor, wallColor:r.wallColor, items:r.items, style:r.style||null, ownedStyles:r.ownedStyles||[]});
+  S.rooms = S.rooms.filter(x=>x.id!==id); unfocus(); save(); toast(`${ROOMS[r.type].name} moved to storage`);
+}
+function openStorage(){
+  if(ui.focus) unfocus();
+  ui.buildTab = 'storage'; ui.mode = null;
+  let html = `<h2>🔨 Build</h2>${buildTabs('storage')}<div class="sub">Rooms you've put away keep their decor and furniture. Place them again for free.</div>`;
+  if(!S.storage.length) html += `<div class="item"><div class="info"><b>No rooms in storage</b><div class="meta">Tap a room and choose "Put room in storage".</div></div></div>`;
+  S.storage.forEach((it,i)=>{ const d = ROOMS[it.type];
+    html += `<div class="item">${swatch(d,'rooms/'+it.type)}<div class="info"><b>${d.name}</b><div class="meta">${d.w}×${d.h} · ${(it.items||[]).length} pieces of furniture</div></div><button class="btn" onclick="placeStored(${i})">Place</button></div>`; });
+  const inv = Object.entries(S.inv).filter(([k,n])=>n>0 && ITEMS[k]);
+  html += `<h3>Furniture inventory</h3>`;
+  if(!inv.length) html += `<div class="sub">Furniture you drag out of rooms, and level-up gifts, wait here. Open a room to place them.</div>`;
+  for(const [k,n] of inv) html += `<div class="item">${swatch({color:'#fff8ef', emoji:ITEMS[k].emoji}, 'decor/'+k)}<div class="info"><b>${ITEMS[k].name}</b><div class="meta">× ${n} · +${ITEMS[k].decor} decor</div></div></div>`;
+  showPanel(html, 'build');
+}
+// Sell tab: list of rooms, or tap a room in the hotel (they get a dashed red outline)
+function openSellTab(){
+  if(ui.focus) unfocus();
+  ui.buildTab = 'sell'; ui.mode = 'sell';
+  let html = `<h2>🔨 Build</h2>${buildTabs('sell')}<div class="sub">Sell a room for <b>half its price</b>. Tap a room in your hotel, or pick it below. Its furniture goes to your storage.</div>`;
+  const list = S.rooms.filter(r=>ROOMS[r.type].kind!=='lobby').sort((a,b)=>b.f-a.f || a.c-b.c);
+  if(!list.length) html += `<div class="item"><div class="info"><b>Nothing to sell yet</b><div class="meta">The lobby can't be sold.</div></div></div>`;
+  for(const r of list){ const d = ROOMS[r.type], refund = Math.round(d.cost*0.5);
+    html += `<div class="item">${swatch(d,'rooms/'+r.type)}<div class="info"><b>${d.name}</b><div class="meta">Floor ${r.f+1} · ${(r.items||[]).length} furniture</div></div><button class="btn warn" onclick="openSell(S.rooms.find(x=>x.id===${r.id}))">🪙${refund}</button></div>`; }
+  showPanel(html, 'build');
+}
+function placeStored(i){
+  const it = S.storage[i]; if(!it) return;
+  const r = placeNewRoom(it.type, {wall:!!it.wall, floor:!!it.floor, wallColor: it.wallColor||WALL_COLORS[0], items: it.items||[], style: it.style||null, ownedStyles: it.ownedStyles||[]}); if(!r) return;
+  S.storage.splice(i,1); toast(`${ROOMS[it.type].name} placed. Drag it wherever you like.`); save(); openStorage();
+}
+function openSell(r){
+  const def = ROOMS[r.type];
+  if(def.kind==='lobby'){ toast(`The lobby can't be sold`); return; }
+  { const st = strandsOthers(r.id, r.type, null); if(st){ toast(`The ${ROOMS[st.type].name} above needs this room to stand on`); return; } }
+  if(r.guest || r.reserved || (r.users||0)>0){ toast('Wait until the room is empty'); return; }
+  if(def.kind==='service' && count('closet')<=1){ toast('Keep at least one Linen Closet'); return; }
+  const refund = Math.round(def.cost*0.5);
+  modal(`<h2 style="margin:0 0 6px">Sell ${def.name}?</h2><div style="color:#7a6e86;font-size:14px">You get back 🪙${refund}. Its furniture goes to your storage. Wallpaper and floors are not refunded.</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:14px"><button class="btn alt" onclick="closeModal()">Keep it</button><button class="btn warn" onclick="doSell(${r.id})">Sell for 🪙${refund}</button></div>`);
+}
+function doSell(id){
+  const r = S.rooms.find(x=>x.id===id); if(!r) return;
+  for(const it of (r.items||[])) S.inv[it.id] = (S.inv[it.id]||0)+1;
+  S.coins += Math.round(ROOMS[r.type].cost*0.5); S.rooms = S.rooms.filter(x=>x.id!==id); closeModal(); save(); toast('Sold');
+  if(ui.panelKind==='build') openSellTab();
+}
+function openShift(){
+  unfocus();
+  const left = Math.max(0, S.shiftEnd - Date.now());
+  let html = `<h2>Opening hours</h2><div class="sub">Guests only arrive while the hotel is open. Your staff keep earning (at a slower pace) while you're away, until the shift ends.</div>`;
+  if(left>0) html += `<div class="item"><div class="info"><b>Open for ${fmt(left)}</b><div class="meta">Buying more adds time.</div></div></div>`;
+  if(S.freeShift) html += `<div class="item"><div class="info"><b>Grand opening</b><div class="meta">15 minutes, on the house</div></div><button class="btn" onclick="buyShift(15,0,true)">Free</button></div>`;
+  for(const sh of SHIFTS){ const c = shiftCost(sh); html += `<div class="item"><div class="info"><b>${sh.mins>=60?sh.mins/60+' hour'+(sh.mins>60?'s':''):sh.mins+' minutes'}</b></div><button class="btn" ${S.coins<c?'disabled':''} onclick="buyShift(${sh.mins},${c})">🪙${c}</button></div>`; }
+  showPanel(html);
+}
+function buyShift(mins, cost, free){
+  if(S.coins<cost) return;
+  S.coins -= cost; if(free) S.freeShift=false;
+  S.shiftEnd = Math.max(Date.now(), S.shiftEnd) + mins*60000; save(); closePanel(); toast('🔔 Open for business!'); spawnTimer = 1;
+}
+function openExpand(){
+  unfocus();
+  const next = BLOCK_TIERS[S.plot+1], lv = level();
+  let html = `<h2>🧱 Expand</h2><div class="sub">Your hotel uses <b>${blocksUsed()} of ${blocksMax()} blocks</b>. Each cell a room covers is one block. Expanding lets you build more, anywhere on the land, as long as rooms stand on the ground or on other rooms.</div>`;
+  if(!next) html += `<div class="item"><div class="info"><b>Maximum size reached</b></div></div>`;
+  else html += `<div class="item"><div class="info"><b>${next.blocks} blocks</b><div class="meta">${next.lvl>lv?`🔒 Level ${next.lvl}`:`+${next.blocks-blocksMax()} blocks`}</div></div><button class="btn" ${next.lvl>lv||S.coins<next.cost?'disabled':''} onclick="doExpand()">🪙${next.cost.toLocaleString()}</button></div>`;
+  const later = BLOCK_TIERS.slice(S.plot+2, S.plot+5);
+  for(const t of later) html += `<div class="item" style="opacity:.6"><div class="info"><b>${t.blocks} blocks</b><div class="meta">🔒 Level ${t.lvl} · 🪙${t.cost.toLocaleString()}</div></div></div>`;
+  showPanel(html);
+}
+function doExpand(){
+  const next = BLOCK_TIERS[S.plot+1]; if(!next || S.coins<next.cost || next.lvl>level()) return;
+  S.coins -= next.cost; S.plot++;
+  save(); checkGoals(); closePanel(); toast(`🧱 Expanded to ${next.blocks} blocks!`);
+}
+function openGoals(){
+  unfocus();
+  let html = `<h2>Goals</h2><div class="sub">Finish goals for bonus coins.</div>`;
+  GOALS.forEach((g,i)=>{ const done = S.goals.includes(i); html += `<div class="item"><div class="info"><b style="${done?'text-decoration:line-through;color:#9c917f':''}">${g.t}</b></div><span style="font-weight:800;color:${done?'#3fae8c':'#b07a00'}">${done?'✓':'🪙'+g.r}</span></div>`; });
+  showPanel(html);
+}
+function checkGoals(){
+  GOALS.forEach((g,i)=>{ if(!S.goals.includes(i) && g.ok(S)){ S.goals.push(i); S.coins += g.r; toast(`🎯 Goal done: ${g.t} (+🪙${g.r})`); } });
+  renderGoalsBox();
+}
+function renderGoalsBox(){
+  const open = GOALS.map((g,i)=>({g,i})).filter(o=>!S.goals.includes(o.i)).slice(0,3);
+  const next = nextUnlock();
+  $('goalsBox').innerHTML = (open.length ? `<b>🎯 Goals</b>` + open.map(o=>`<div class="g"><span>${o.g.t}</span><span class="r">🪙${o.g.r}</span></div>`).join('') : '<b>🎉 All goals done!</b>')
+    + (next ? `<div class="next">⭐ Lv ${next.lv}: ${next.t}</div>` : '');
+}
+function openMenu(){
+  unfocus(); checkPokeDay();
+  const cv2 = coverage();
+  showPanel(`<h2>Menu</h2>
+    <div class="item"><div class="info"><b>Guests served</b><div class="meta">${S.served}</div></div></div>
+    <div class="item"><div class="info"><b>Guest happiness</b><div class="meta">${Math.round(S.sat*100)}%</div></div></div>
+    <div class="item"><div class="info"><b>Cleaning coverage</b><div class="meta">${Math.min(cv2.cap,cv2.total)} of ${cv2.total} rooms</div></div></div>
+    <div class="item"><div class="info"><b>Wake-up bonuses left today</b><div class="meta">${S.pokes} (tap a sleeping guest)</div></div></div>
+    <div class="item"><div class="info"><b>How stars work</b><div class="meta">Up to 7 stars, from room decor, amenity variety, guest happiness, cleanliness and a nicely decorated lobby. More stars bring more guests and bigger payments.</div></div></div>
+    <div class="item"><div class="info"><b>Rename hotel</b></div><button class="btn" onclick="askName()">Rename</button></div>
+    <div class="item"><div class="info"><b>How to play</b></div><button class="btn" onclick="showHelp()">Show</button></div>
+    <div class="item"><div class="info"><b>Start over</b><div class="meta">Deletes this save</div></div><button class="btn warn" onclick="resetGame()">Reset</button></div>
+    <div class="sub" style="margin-top:12px">Starlit Stays is an original fan-made game inspired by classic hotel sims. Not affiliated with Electronic Arts or Playfish. Build ${BUILD}.</div>`);
+}
+function resetGame(){ showPanel(`<h2>Start over?</h2><div class="sub">Your hotel and coins will be deleted. This can't be undone.</div><button class="btn warn" onclick="doReset()">Yes, delete my hotel</button>`); }
+function doReset(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} S = freshState(); guests=[]; closePanel(); askName(); renderGoalsBox(); }
+function showHelp(){
+  modal(`<h2 style="margin:0 0 8px">How to play</h2><div style="text-align:left;font-size:14px;line-height:1.5">
+    1. <b>Open the hotel</b> with the button at the top. Guests only come while it's open.<br>
+    2. Guests check in at the lobby, ride the elevator and sleep in a free, clean room with a bed.<br>
+    3. ✋ <b>Drag rooms</b> to rearrange your hotel. Drop a room onto one of the same shape to swap them.<br>
+    4. 🛋️ <b>Tap a room</b> to zoom in and decorate it. Buy furniture, then <b>drag it</b> where you like. Drag it out of the room to put it away.<br>
+    5. Better decor means higher pay and more stars, up to ⭐ 7.<br>
+    6. Bubbles show what guests want after their stay. <b>Build amenities</b> to match.<br>
+    7. <b>Linen Closets</b> clean rooms automatically. Tap messy rooms 💨 to clean by hand.<br>
+    8. Level up for coin rewards, new rooms, furniture and guests. 💼 Business guests pay more, 👑 VIPs pay double but want well-decorated rooms.</div>
+    <button class="btn" style="margin-top:14px" onclick="closeModal()">Let's go</button>`);
+}
+function modal(html){ $('modalCard').innerHTML = html; $('modal').style.display='flex'; }
+function closeModal(){ $('modal').style.display='none'; }
+function askName(){
+  modal(`<h2 style="margin:0">Name your hotel</h2><div style="color:#7a6e86;font-size:14px;margin-top:6px">You can change it later.</div>
+    <input id="nameIn" maxlength="16" placeholder="e.g. The Lantern Inn" value="${(S.name||'').replace(/"/g,'&quot;')}">
+    <button class="btn" onclick="saveName()">Save</button>`);
+  setTimeout(()=>{ const i=$('nameIn'); if(i){ i.focus(); i.onkeydown=e=>{ if(e.key==='Enter') saveName(); }; } },50);
+}
+function saveName(){
+  const v = ($('nameIn').value||'').trim().slice(0,16);
+  const first = !S.name;
+  S.name = v || 'Starlit Inn'; save(); closeModal();
+  saveProfile({name: S.name});
+  if(cloud.profile){ cloud.profile.set({name: S.name}).catch(()=>{}); }
+  if(first && !loadProfile().seenHelp){ saveProfile({seenHelp:true}); showHelp(); }
+}
+function fmt(ms){ const s = Math.ceil(ms/1000), h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=s%60; return h? `${h}h ${m}m` : `${m}:${String(x).padStart(2,'0')}`; }
+let lastTop = '';
+function updateTop(){
+  const lv = level(), st = stars();
+  const full = Math.floor(st), half = st-full>=0.5;
+  const starImg = k => art(k) ? `<img src="${art(k).src}" alt="">` : null;
+  let icons = '';
+  for(let i=0;i<MAX_STARS;i++){
+    const kind = i<full ? 'full' : (i===full && half) ? 'half' : 'empty';
+    icons += starImg('ui/star_'+kind) || (kind==='full' ? '<span>★</span>' : kind==='half' ? '<span>✬</span>' : '<span class="off">★</span>');
+  }
+  const open = isOpen(), left = S.shiftEnd-Date.now();
+  const key = [S.name, st, Math.floor(S.coins), lv, S.xp, open, open?Math.ceil(left/1000):0, blocksUsed(), blocksMax()].join('|');
+  if(key===lastTop) return; lastTop = key;
+  $('starIcons').innerHTML = icons;
+  $('starNum').textContent = (st%1 ? st.toFixed(1) : st);
+  $('coins').textContent = Math.floor(S.coins).toLocaleString();
+  $('blocks').textContent = `${blocksUsed()}/${blocksMax()}`;
+  $('blockCount').textContent = `${blocksUsed()}/${blocksMax()} blocks used`;
+  $('lvl').textContent = lv;
+  const a = xpFor(lv), b = xpFor(lv+1);
+  $('xpBar').style.width = Math.min(100, (S.xp-a)/(b-a)*100) + '%';
+  const btn = $('shiftBtn');
+  btn.classList.toggle('open', open);
+  $('shiftLab').textContent = open ? 'Open' : 'Start';
+  $('shiftTimer').textContent = open ? fmt(left) : '';
+}
+// first-time helper: a bellhop who points at what to do next (like the original's tutorial)
+function helperStep(){
+  if(S.helperDone) return null;
+  const hasRoom = S.rooms.some(r=>ROOMS[r.type].kind==='guest');
+  if(!hasRoom) return ui.panelKind==='build' ? {id:'build2', text:'Drag a Cozy Nook onto your lobby, or just tap it to place it automatically.', target:null} : {id:'build', text:'Welcome to your new hotel! Tap Build to add rooms for your guests.', target:'#btnBuild'};
+  if(S.freeShift) return {id:'open', text:'Nice room! Now open your hotel so guests can check in.', target:'#shiftBtn'};
+  if(count('closet')<1) return {id:'closet', text:'Guests leave rooms messy. Build a Linen Closet and it will clean them for you.', target:'#btnBuild'};
+  if(!S.boughtItem) return {id:'decor', text:'Tap a room to decorate it. Nicer rooms earn more and raise your stars!', target:null};
+  return null;
+}
+let helperShown = '';
+function updateHelper(){
+  document.body.classList.toggle('panelOpen', panel.style.display==='block');
+  const st = helperStep(), h = $('helper'), arrow = $('helperArrow');
+  const modalOpen = $('modal').style.display==='flex';
+  if(!st || modalOpen || (st.id===S.helperSkip)){ h.style.display='none'; arrow.style.display='none'; helperShown=''; if(!st && !S.helperDone && S.rooms.length>1){ S.helperDone = true; save(); } return; }
+  if(helperShown !== st.id){
+    helperShown = st.id; $('helperText').textContent = st.text;
+    $('helperPic').innerHTML = art('chars/helper') ? `<img src="${art('chars/helper').src}">` : (art('chars/clerk') ? `<img src="${art('chars/clerk').src}">` : '🛎️');
+  }
+  h.style.display = panel.style.display==='block' && window.innerWidth<=640 ? 'none' : 'flex';
+  const t = st.target && document.querySelector(st.target);
+  if(t && panel.style.display!=='block'){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
+  else arrow.style.display='none';
+}
+$('helperOk').onclick = ()=>{ const st = helperStep(); if(st) S.helperSkip = st.id; save(); updateHelper(); };
+setInterval(updateHelper, 250);
+$('shiftBtn').onclick = openShift;
+function showSpeed(){ $('speedTxt').textContent = gameSpeed() + '×'; }
+$('speedBtn').onclick = ()=>{ const i = SPEEDS.indexOf(gameSpeed()); const next = SPEEDS[(i+1) % SPEEDS.length]; saveProfile({speed: next}); showSpeed(); toast(next===1 ? '🐢 Relaxed speed' : next===2 ? '⏩ Fast speed' : '⚡ Turbo speed'); };
+showSpeed();
+$('btnBuild').onclick = ()=>{ if(ui.panelKind==='build'){ closePanel(); return; } openBuild(); };
+$('btnExpand').onclick = ()=>{ openExpand(); };
+$('btnGoals').onclick = ()=>{ openGoals(); };
+$('btnMenu').onclick = ()=>{ openMenu(); };
+$('goalsBox').onclick = ()=>{ openGoals(); };
+// ChatGPT can replace these icons: art/ui/build.svg, expand.svg, goals.svg, settings.svg
+setTimeout(()=>{ lastTop=''; document.querySelectorAll('[data-art]').forEach(el=>{ const a = art(el.dataset.art); if(a) el.innerHTML = `<img src="${a.src}" alt="">`; }); }, 1500);
+setInterval(()=>{ $('btnBuild').classList.toggle('on', ui.panelKind==='build'); }, 200);
+window.addEventListener('resize', resize);
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden){ save(); cloudSave(); } });
+window.addEventListener('beforeunload', save);
+
+/* ---------------- start ---------------- */
+const hadSave = load();
+checkPokeDay();
+resize(); renderGoalsBox();
+if(!S.name){
+  // reuse the hotel name from earlier builds; only ask when there isn't one yet
+  const prof = loadProfile();
+  if(prof.name){ S.name = prof.name; save(); if(!hadSave) setTimeout(()=>toast(`🏨 New build ${BUILD}: ${S.name} starts fresh`), 400); }
+  else askName();
+}
+requestAnimationFrame(t=>{ last=t; requestAnimationFrame(frame); });
+initCloud();
+</script>
+</body>
+</html>

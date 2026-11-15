@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="168" viewBox="0 0 160 168">
+<path d="M0 0h160v168H0Z" fill="#f4ebe0"/>
+<path d="M0 137h160v31H0Z" fill="#e0cbb6"/>
+<path d="M0 137h160" fill="none" stroke="#2b2340" stroke-width="2.5"/>
+<g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<!-- Shelving begins below the room-name area. -->
+<rect x="10" y="48" width="88" height="105" rx="4" fill="#c8915f"/>
+<path d="M17 54h74v91H17Z" fill="#ac754b"/>
+<path d="M17 80h74m-74 31h74" fill="none" stroke="#2b2340" stroke-width="6"/>
+<path d="M17 79h74m-74 31h74" fill="none" stroke="#e6b481" stroke-width="3"/>
+<rect x="23" y="66" width="35" height="11" rx="3" fill="#fff8ef"/>
+<rect x="26" y="56" width="30" height="10" rx="3" fill="#b6eedc"/>
+<path d="M28 71h22" fill="none" stroke="#e0d6cc"/>
+<rect x="63" y="59" width="21" height="18" rx="4" fill="#7ec8ff"/>
+<path d="M67 64h12" fill="none" stroke="#bce9ff"/>
+<rect x="23" y="96" width="59" height="11" rx="3" fill="#6fd3b5"/>
+<rect x="26" y="86" width="54" height="10" rx="3" fill="#fff8ef"/>
+<path d="M31 101h40" fill="none" stroke="#43aa8b"/>
+<rect x="23" y="123" width="29" height="18" rx="3" fill="#ffe6a1"/>
+<path d="M29 129h17" fill="none" stroke="#c8915f"/>
+<path d="M112 111V92q0-5 5-5h26" fill="none" stroke="#776783" stroke-width="4"/>
+<path d="M105 114q3-15 14-9 7-13 17-1l5 12" fill="#fff8ef"/>
+<path d="M97 111h51l-5 36h-40Z" fill="#7ec8ff"/>
+<path d="M137 112h10l-5 34h-10Z" fill="#61a9df" stroke="none"/>
+<path d="M107 121v15m10-15v15m10-15v15" fill="none" stroke="#bce9ff"/>
+<path d="M104 148h37" fill="none"/>
+<circle cx="109" cy="153" r="5" fill="#514965"/><circle cx="137" cy="153" r="5" fill="#514965"/>
+</g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="64" viewBox="0 0 96 64">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 50v12.75h8l3-13m49 0 2 13h8V50" fill="#c8915f" vector-effect="non-scaling-stroke" />
+    <rect x="10" y="7" width="76" height="45" rx="14" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+    <path d="M71 9q14 3 14 16v24H72Z" fill="#db647f" stroke="none" vector-effect="non-scaling-stroke" />
+    <rect x="15" y="34" width="66" height="17" rx="6" fill="#ffabb9" vector-effect="non-scaling-stroke" />
+    <rect x="4" y="29" width="13" height="27" rx="5" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+    <rect x="79" y="29" width="13" height="27" rx="5" fill="#db647f" vector-effect="non-scaling-stroke" />
+    <path d="M48 16v31" fill="none" stroke="#db647f" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+    <g transform="translate(30 29) scale(0.63)">
+      <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    </g>
+    <g transform="translate(65 28) scale(0.54)">
+      <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    </g>
+    <path d="M20 14q5-3 11-3" fill="none" stroke="#ffbdc8" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

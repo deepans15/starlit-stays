@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="96" viewBox="0 0 56 96">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <g id="back_hair" transform="translate(0 -2)" />
+    <g id="legs">
+      <path d="M18 71L21.25 82L23 90H33L31.25 82L31 71Z M32 71L29.4 82L25 85H35L39.4 82L40 70Z" fill="#43aa8b" />
+    </g>
+    <g id="rear_shoe" transform="translate(5 0)">
+      <path d="M18 89h10l5 3v2.75H16v-4Z" fill="#654239" />
+    </g>
+    <g id="front_shoe" transform="translate(-8 -5)">
+      <path d="M33 89h9l5 3v2.75H32v-4Z" fill="#654239" />
+    </g>
+    <path d="M19 49q11-7 21 1l3 25H16Z" fill="#ffc94d" />
+    <path d="M35 51l7 23h-9Z" fill="#e5ad37" stroke="none" />
+    <path d="M24 44v7q5 4 10-1v-7" fill="#ffb38a" />
+    <g id="rear_arm" transform="rotate(0 19 51)">
+      <path d="M19 50q-6 6-7 15l6 6 5-5-3-3 6-10Z" fill="#ffc94d" />
+      <path d="m18 65 5 4-3 5q-3 2-5-2l-2-3Z" fill="#ffb38a" />
+    </g>
+    <g id="front_arm" transform="rotate(0 36 51)">
+      <path d="M36 50q7 6 9 15l-6 6-5-5 4-3-7-10Z" fill="#ffc94d" />
+      <path d="m39 66-5 3 2 5q3 2 5-2l2-3Z" fill="#ffb38a" />
+    </g>
+    <path d="M23 49l7 16 7-15" fill="none" stroke="#c8915f" stroke-width="2.5" />
+    <rect x="20" y="63" width="23" height="14" rx="3" fill="#514965" />
+    <rect x="24" y="60" width="8" height="4" rx="1" fill="#514965" />
+    <circle cx="32" cy="70" r="5" fill="#7ec8ff" />
+    <circle cx="32" cy="70" r="2" fill="#dff4ff" stroke="none" />
+    <circle cx="39" cy="66" r="1" fill="#ffc94d" stroke="none" />
+    <g id="head" transform="translate(0 -2)">
+      <path d="M13 23q0-13 16-13 15 0 15 15v7l4 4-5 3q-1 11-15 11-15 0-15-17Z" fill="#ffb38a" />
+      <path d="M13 33q-7-4-7 3 1 6 8 4" fill="#ffb38a" />
+      <path d="M13 32Q5 15 20 10q18-6 24 10-9 5-16-3-3 10-10 12v7Z" fill="#654239" />
+      <path d="M17 18q4-5 12-5" fill="none" stroke="#986c50" stroke-width="2.5" />
+      <circle cx="31" cy="32" r="1.7" fill="#2b2340" stroke="none" />
+      <circle cx="40" cy="32" r="1.7" fill="#2b2340" stroke="none" />
+      <path d="M35 42q3 2 6-1" fill="none" stroke="#2b2340" stroke-width="2" />
+      <ellipse cx="25" cy="39" rx="4" ry="2" fill="#ef8e83" stroke="none" />
+      <g id="hat">
+        <path d="M10 18q-5-10 10-13 20-5 25 10l-9 6-21-1Z" fill="#b5a0d6" />
+        <path d="M14 13q6-5 13-4" fill="none" stroke="#ded4ed" stroke-width="2.5" />
+        <path d="M29 6l2-2" fill="none" stroke="#514965" stroke-width="2.5" />
+      </g>
+    </g>
+  </g>
+</svg>

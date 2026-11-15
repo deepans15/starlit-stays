@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="96" viewBox="0 0 56 96">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <g id="back_hair" />
+    <g id="legs">
+      <path d="M18 71v19h10l3-19m1 0 1 19h10l-3-20" fill="#654239" />
+    </g>
+    <g id="rear_shoe">
+      <path d="M18 89h10l5 3v2.75H16v-4Z" fill="#2b2340" />
+    </g>
+    <g id="front_shoe">
+      <path d="M33 89h9l5 3v2.75H32v-4Z" fill="#2b2340" />
+    </g>
+    <path d="M19 49q11-7 21 1l3 25H16Z" fill="#fff8ef" />
+    <path d="M35 51l7 23h-9Z" fill="#eadfd9" stroke="none" />
+    <path d="M24 44v7q5 4 10-1v-7" fill="#754d3d" />
+    <g id="rear_arm">
+      <path d="M19 50q-6 6-7 15l6 6 5-5-3-3 6-10Z" fill="#fff8ef" />
+      <path d="m18 65 5 4-3 5q-3 2-5-2l-2-3Z" fill="#754d3d" />
+    </g>
+    <g id="front_arm">
+      <path d="M36 50q7 6 9 15l-6 6-5-5 4-3-7-10Z" fill="#fff8ef" />
+      <path d="m39 66-5 3 2 5q3 2 5-2l2-3Z" fill="#754d3d" />
+    </g>
+    <path d="M20 49l7 7 2 19H16Z" fill="#b5a0d6" />
+    <path d="M36 49l-5 7-2 19h14Z" fill="#9580b7" />
+    <circle cx="29" cy="62" r="1.2" fill="#ffc94d" stroke="none" />
+    <circle cx="29" cy="69" r="1.2" fill="#ffc94d" stroke="none" />
+    <path d="M7 76v-6h11v6" fill="none" stroke="#2b2340" stroke-width="2.5" />
+    <rect x="3" y="76" width="22" height="15" rx="3" fill="#c8915f" />
+    <path d="M5 81h18" fill="none" stroke="#e6b481" stroke-width="2.5" />
+    <g id="head">
+      <path d="M13 23q0-13 16-13 15 0 15 15v7l4 4-5 3q-1 11-15 11-15 0-15-17Z" fill="#754d3d" />
+      <path d="M13 33q-7-4-7 3 1 6 8 4" fill="#754d3d" />
+      <path d="M13 32q-7-6-3-17l8-5-1 17 1 9Z" fill="#ded7e5" />
+      <path d="M42 20q-3-8-10-9l4-2q8 3 8 12Z" fill="#ded7e5" />
+      <circle cx="31" cy="32" r="1.7" fill="#2b2340" stroke="none" />
+      <circle cx="40" cy="32" r="1.7" fill="#2b2340" stroke="none" />
+      <path d="M35 42q3 2 6-1" fill="none" stroke="#2b2340" stroke-width="2" />
+      <ellipse cx="25" cy="39" rx="4" ry="2" fill="#a36c5b" stroke="none" />
+      <path d="M23 41q9 8 20 0-2 14-13 12-7-2-7-12Z" fill="#ded7e5" />
+      <path d="M34 46h5" fill="none" stroke="#9684a3" stroke-width="2" />
+      <circle cx="30" cy="32" r="5" fill="none" stroke-width="2" />
+      <circle cx="41" cy="32" r="4.5" fill="none" stroke-width="2" />
+      <path d="M35 32h1m-11-1-9-2" fill="none" stroke="#2b2340" stroke-width="2" />
+    </g>
+  </g>
+</svg>
