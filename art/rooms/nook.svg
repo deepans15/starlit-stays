@@ -1,11 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="160" height="168" viewBox="0 0 160 168">
-<!-- Only a small upper-right window: x<120,y<44 and x<140,y>=78 remain clear. -->
-<g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-<rect x="124" y="12" width="31" height="58" rx="4" fill="#c8915f"/>
-<rect x="128" y="16" width="23" height="49" rx="2" fill="#bce9ff"/>
-<path d="M130 18h19v20q-10-3-19 5Z" fill="#dff4ff" stroke="none"/>
-<path d="M139.5 17v47m-11-24h22" fill="none" stroke="#fff8ef"/>
-<path d="m131 28 4-5m8 34 5-7" fill="none" stroke="#fff8ef"/>
-<rect x="122" y="66" width="35" height="6" rx="2" fill="#e6b481"/>
-</g>
+  <path d="M0 0h160v168H0Z" fill="#cd8b9f" stroke="none" />
+  <g>
+    <path d="M0 0h160v11H0Z" fill="#2b2340" opacity=".22" stroke="none" />
+    <path d="M0 12h160" stroke="#fff8ef" opacity=".08" stroke-width="2" fill="none" />
+    <rect x="12" y="58" width="84" height="24" rx="5" fill="#2b2340" stroke="none" opacity=".15" />
+    <rect x="12" y="55" width="84" height="24" rx="5" fill="#d6e3e4" stroke="#2b2340" stroke-width="2" />
+    <path d="M17 71h74m-74 4h74" stroke="#718b94" fill="none" stroke-width="1.5" />
+    <path d="M18 60h65" stroke="#fff8ef" fill="none" stroke-width="2" />
+    <circle cx="88" cy="61" r="1.5" fill="#43aa8b" stroke="none" />
+    <path d="M107 44v13" fill="none" stroke="#2b2340" stroke-width="2.5" />
+    <ellipse cx="107" cy="67" rx="19" ry="11" fill="#ffc94d" opacity=".10" stroke="none" />
+    <path d="m94 66 4-11h18l4 11Z" fill="#b98351" stroke="#2b2340" stroke-width="2.5" />
+    <path d="M97 67h20" stroke="#ffe6a1" stroke-width="2" fill="none" />
+  </g>
+  <g>
+    <path d="M0 156h160v12H0Z" fill="#62443e" />
+    <path d="M0 156h160" stroke="#2b2340" stroke-width="2.5" />
+  </g>
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="124" y="12" width="31" height="58" rx="4" fill="#fff0df" />
+    <rect x="128" y="16" width="23" height="49" rx="2" fill="#bce9ff" />
+    <path d="M130 18h19v20q-10-3-19 5Z" fill="#dff4ff" stroke="none" />
+    <path d="M139.5 17v47m-11-24h22" fill="none" stroke="#fff8ef" />
+    <path d="m131 28 4-5m8 34 5-7" fill="none" stroke="#fff8ef" />
+    <rect x="122" y="66" width="35" height="6" rx="2" fill="#e6b481" />
+  </g>
 </svg>

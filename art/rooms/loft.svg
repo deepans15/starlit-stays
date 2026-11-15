@@ -1,3 +1,185 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" height="336" viewBox="0 0 480 336">
-<g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M0 0h480v336H0Z" fill="#d4edff" stroke="none"/><rect x="145" y="51" width="318" height="241" rx="5" fill="#bce9ff"/><path d="M304.0 56v234m-156.0 -108.45h312" fill="none" stroke="#fff8ef" stroke-width="3"/><path d="m153 159.45 95.39999999999999 -95.39999999999999m-31.8 108.45 95.39999999999999 -95.39999999999999" fill="none" stroke="#fff8ef" opacity=".7" stroke-width="3"/><path d="M224 53v237m80-237v237m80-237v237" fill="none" stroke="#6ba6c8" stroke-width="4"/><path d="M148 256q62-25 108-14t100-8 103 3v52H148Z" fill="#e6f5ff" stroke="none"/><path d="M327 208h135m-135 25h135m-130-25v25m23-25v25m23-25v25m23-25v25m23-25v25m23-25v25" fill="none" stroke="#6c9dbb" stroke-width="2.5"/><path d="M0 324h480v12H0Z" fill="#d8b38f" stroke="none"/><path d="M0 324h480" stroke="#2b2340" fill="none"/><path d="M0 320h480" stroke="#fff8ef" fill="none" stroke-width="4"/></g>
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 0h480v336H0Z" fill="#647d92" stroke="none" />
+    <g>
+      <path d="M0 0h480v11H0Z" fill="#2b2340" opacity=".22" stroke="none" />
+      <path d="M0 12h480" stroke="#fff8ef" opacity=".08" stroke-width="2" fill="none" />
+      <g stroke="#c2cdd1" stroke-width="1" opacity=".48" fill="none">
+        <path d="M0 0h480" />
+        <path d="M0 0v28" />
+        <path d="M48 0v28" />
+        <path d="M96 0v28" />
+        <path d="M144 0v28" />
+        <path d="M192 0v28" />
+        <path d="M240 0v28" />
+        <path d="M288 0v28" />
+        <path d="M336 0v28" />
+        <path d="M384 0v28" />
+        <path d="M432 0v28" />
+        <path d="M0 28h480" />
+        <path d="M-24 28v28" />
+        <path d="M24 28v28" />
+        <path d="M72 28v28" />
+        <path d="M120 28v28" />
+        <path d="M168 28v28" />
+        <path d="M216 28v28" />
+        <path d="M264 28v28" />
+        <path d="M312 28v28" />
+        <path d="M360 28v28" />
+        <path d="M408 28v28" />
+        <path d="M456 28v28" />
+        <path d="M0 56h480" />
+        <path d="M0 56v28" />
+        <path d="M48 56v28" />
+        <path d="M96 56v28" />
+        <path d="M144 56v28" />
+        <path d="M192 56v28" />
+        <path d="M240 56v28" />
+        <path d="M288 56v28" />
+        <path d="M336 56v28" />
+        <path d="M384 56v28" />
+        <path d="M432 56v28" />
+        <path d="M0 84h480" />
+        <path d="M-24 84v28" />
+        <path d="M24 84v28" />
+        <path d="M72 84v28" />
+        <path d="M120 84v28" />
+        <path d="M168 84v28" />
+        <path d="M216 84v28" />
+        <path d="M264 84v28" />
+        <path d="M312 84v28" />
+        <path d="M360 84v28" />
+        <path d="M408 84v28" />
+        <path d="M456 84v28" />
+        <path d="M0 112h480" />
+        <path d="M0 112v28" />
+        <path d="M48 112v28" />
+        <path d="M96 112v28" />
+        <path d="M144 112v28" />
+        <path d="M192 112v28" />
+        <path d="M240 112v28" />
+        <path d="M288 112v28" />
+        <path d="M336 112v28" />
+        <path d="M384 112v28" />
+        <path d="M432 112v28" />
+        <path d="M0 140h480" />
+        <path d="M-24 140v28" />
+        <path d="M24 140v28" />
+        <path d="M72 140v28" />
+        <path d="M120 140v28" />
+        <path d="M168 140v28" />
+        <path d="M216 140v28" />
+        <path d="M264 140v28" />
+        <path d="M312 140v28" />
+        <path d="M360 140v28" />
+        <path d="M408 140v28" />
+        <path d="M456 140v28" />
+        <path d="M0 168h480" />
+        <path d="M0 168v28" />
+        <path d="M48 168v28" />
+        <path d="M96 168v28" />
+        <path d="M144 168v28" />
+        <path d="M192 168v28" />
+        <path d="M240 168v28" />
+        <path d="M288 168v28" />
+        <path d="M336 168v28" />
+        <path d="M384 168v28" />
+        <path d="M432 168v28" />
+        <path d="M0 196h480" />
+        <path d="M-24 196v28" />
+        <path d="M24 196v28" />
+        <path d="M72 196v28" />
+        <path d="M120 196v28" />
+        <path d="M168 196v28" />
+        <path d="M216 196v28" />
+        <path d="M264 196v28" />
+        <path d="M312 196v28" />
+        <path d="M360 196v28" />
+        <path d="M408 196v28" />
+        <path d="M456 196v28" />
+        <path d="M0 224h480" />
+        <path d="M0 224v28" />
+        <path d="M48 224v28" />
+        <path d="M96 224v28" />
+        <path d="M144 224v28" />
+        <path d="M192 224v28" />
+        <path d="M240 224v28" />
+        <path d="M288 224v28" />
+        <path d="M336 224v28" />
+        <path d="M384 224v28" />
+        <path d="M432 224v28" />
+        <path d="M0 252h480" />
+        <path d="M-24 252v28" />
+        <path d="M24 252v28" />
+        <path d="M72 252v28" />
+        <path d="M120 252v28" />
+        <path d="M168 252v28" />
+        <path d="M216 252v28" />
+        <path d="M264 252v28" />
+        <path d="M312 252v28" />
+        <path d="M360 252v28" />
+        <path d="M408 252v28" />
+        <path d="M456 252v28" />
+        <path d="M0 280h480" />
+        <path d="M0 280v28" />
+        <path d="M48 280v28" />
+        <path d="M96 280v28" />
+        <path d="M144 280v28" />
+        <path d="M192 280v28" />
+        <path d="M240 280v28" />
+        <path d="M288 280v28" />
+        <path d="M336 280v28" />
+        <path d="M384 280v28" />
+        <path d="M432 280v28" />
+        <path d="M0 308h480" />
+        <path d="M-24 308v28" />
+        <path d="M24 308v28" />
+        <path d="M72 308v28" />
+        <path d="M120 308v28" />
+        <path d="M168 308v28" />
+        <path d="M216 308v28" />
+        <path d="M264 308v28" />
+        <path d="M312 308v28" />
+        <path d="M360 308v28" />
+        <path d="M408 308v28" />
+        <path d="M456 308v28" />
+      </g>
+      <rect x="20" y="55" width="90" height="26" rx="5" fill="#2b2340" stroke="none" opacity=".15" />
+      <rect x="20" y="52" width="90" height="26" rx="5" fill="#d6e3e4" stroke="#2b2340" stroke-width="2" />
+      <path d="M25 70h80m-80 4h80" stroke="#718b94" fill="none" stroke-width="1.5" />
+      <path d="M26 57h71" stroke="#fff8ef" fill="none" stroke-width="2" />
+      <circle cx="102" cy="58" r="1.5" fill="#43aa8b" stroke="none" />
+      <path d="M89 0v104" fill="none" stroke="#2b2340" stroke-width="2.5" />
+      <ellipse cx="89" cy="114" rx="19" ry="11" fill="#ffc94d" opacity=".10" stroke="none" />
+      <path d="m76 113 4-11h18l4 11Z" fill="#303c47" stroke="#2b2340" stroke-width="2.5" />
+      <path d="M79 114h20" stroke="#ffe6a1" stroke-width="2" fill="none" />
+    </g>
+    <rect x="145" y="51" width="318" height="241" rx="5" fill="#bce9ff" />
+    <path d="M304.0 56v234m-156.0 -108.45h312" fill="none" stroke="#fff8ef" stroke-width="3" />
+    <path d="m153 159.45 95.39999999999999 -95.39999999999999m-31.8 108.45 95.39999999999999 -95.39999999999999" fill="none" stroke="#fff8ef" opacity=".7" stroke-width="3" />
+    <path d="M224 53v237m80-237v237m80-237v237" fill="none" stroke="#6ba6c8" stroke-width="4" />
+    <path d="M148 256q62-25 108-14t100-8 103 3v52H148Z" fill="#e6f5ff" stroke="none" />
+    <path d="M327 208h135m-135 25h135m-130-25v25m23-25v25m23-25v25m23-25v25m23-25v25m23-25v25" fill="none" stroke="#6c9dbb" stroke-width="2.5" />
+    <path d="M0 324h480v12H0Z" fill="#344553" stroke="none" />
+    <path d="M0 324h480" stroke="#2b2340" fill="none" />
+    <g>
+      <g stroke="#2b2340" stroke-width="1" opacity=".22" fill="none">
+        <path d="M0 331h480" />
+        <path d="M12 324v12" />
+        <path d="M48 324v12" />
+        <path d="M84 324v12" />
+        <path d="M120 324v12" />
+        <path d="M156 324v12" />
+        <path d="M192 324v12" />
+        <path d="M228 324v12" />
+        <path d="M264 324v12" />
+        <path d="M300 324v12" />
+        <path d="M336 324v12" />
+        <path d="M372 324v12" />
+        <path d="M408 324v12" />
+        <path d="M444 324v12" />
+      </g>
+    </g>
+    <path d="M0 320h480" stroke="#fff8ef" fill="none" stroke-width="4" />
+  </g>
 </svg>

@@ -1,38 +1,43 @@
-# Empty guest rooms and distinct beds
+# Richer classic interiors and branch-built treehouses
 
 ## Scope
-Art folder only. No game-code edits. The four new guest-room backgrounds are explicitly requested exceptions to the older no-guest-room-art rule. Existing rooms/nook.svg is preserved. Every existing manifest key and SVG canvas size remains. Five existing theme beds retain 112 x 64, along with their previous prices, unlock levels and decor values.
+User selected all classic interiors. Sixteen classic room SVGs were updated, plus Gold/Pink maintenance and the four treehouse building layers. Existing theme identities and the other theme room files remain intact. Every original filename, canvas size, manifest entry and item value is retained. Six new placeable decor items were added. No game-code files were edited.
 
-## Empty backgrounds
-- rooms/comfy.svg: 320 x 168, warm yellow ribbon stripes and a right-side window. Floor baseline y156; 12 px floor band.
-- rooms/tall.svg: 160 x 336, soft pink pinstripes and a tall arched window. Baseline y324.
-- rooms/grand.svg: 320 x 336, lilac damask and a simple ceiling hook, with a high window. Baseline y324; no chandelier is baked in.
-- rooms/loft.svg: 480 x 336, sky-blue walls, tall glass windows and a short architectural gallery rail. Baseline y324.
-All contain only wallpaper, windows/structural details, skirting and floor. No beds or furniture. Double-height rooms remain open wall/window space above one bottom floor, without an intermediate floor.
+## Treehouses: architecture rather than a leaf frame
+Both canvases stay 320 x 336 and 320 x 504. The cabins now have dark teal timber walls, an irregular layered roof, warm timber posts, window and porthole, built-in bookshelves, clock, framed map, AC, brass pendant, string lights, lantern, cushions, reading furniture and a small display table. A clear band remains for guests' faces and bodies.
+The support tree is leafless: irregular tapered forked branches, bark knots, uneven exposed roots and curved timber access steps. Branches visibly spread beyond the cabin frame into transparent open air. A continuous central trunk carries the cabin. The taller tree adds an open curved lookout deck, hammock and telescope; these are decorative rather than extra gameplay slots.
+The two combined room SVGs match their corresponding branch/cabin layers. Main wallBounds x26,y78,w268,h134; floorBounds x17,y212,w286,h16; frameBounds x17,y76,w286,h152. guestBaseline=212. Reading slots, foreground masks and guide anchors were updated. Capacities remain four/six.
 
-## New bed items (cheapest first)
-| Item | Canvas | Level | Coins | Decor |
-|---|---|---:|---:|---:|
-| log_cabin_bed | 112 x 64 | 1 | 110 | 3 |
-| cloud_bed | 120 x 60 | 2 | 200 | 4 |
-| race_car_bed | 128 x 60 | 3 | 320 | 6 |
-| round_bed | 120 x 56 | 4 | 440 | 7 |
-| boat_bed | 128 x 64 | 5 | 580 | 9 |
-| bunk_bed | 88 x 112 | 6 | 760 | 11 |
-| hammock_bed | 128 x 72 | 7 | 900 | 12 |
-| canopy_bed | 112 x 112 | 9 | 1200 | 16 |
-| rocket_bed | 96 x 100 | 12 | 1800 | 22 |
-| royal_bed | 136 x 96 | 15 | 2400 | 28 |
+## Stronger room palettes
+- Nook/Tall: saturated warm blush with window contrast and dark floor bands.
+- Comfy: golden-ochre stripes, ivory window accents and a walnut floor.
+- Grand: stronger lilac damask, dark floor and a ceiling hook.
+- Loft: slate-blue brickwork, tall glass, black pendant, split AC and a dark floor.
+- Noodle: deep crimson, brass lanterns, warm counter and dark timber floor. Food still appears only for occupied slots.
+- Lounge: deep sage/teal panelling, copper-toned lighting, AC and warm wood under the existing seating.
+- Gym: bright tile with chrome-toned equipment, AC and a charcoal tiled floor. Three stations and guest anchors unchanged.
+- Pool: glazed tiles, more substantial deck colour, AC and a brass light. Pool geometry and swimmers unchanged.
+- Games: deep aubergine, cyan accents, dark floor, black pendant and AC. Cabinet/guest positions unchanged.
+- Cinema: darker plum, charcoal floor and AC. Seats and correctly placed viewers retain their coordinates.
+- Closet: dark chocolate panelling and a dark floor; the shelves and cart remain.
+- Maintenance: full dark timber workshop with overhead task light, wall vent, cabinet, a populated pegboard, workbench, drawers, tool case, oil can, spool, vice, parts boxes and exposed pipe. Gold/Pink versions keep their own hues at the same richer contrast.
+- Lobby: green tree mural/panelling, dark plank floor and a longer brass-trimmed reception desk. The middle remains open and the rightmost 120 px is a plain elevator bay. Gold elevator doors and clerk are separate sprites, demonstrated in the preview composition.
+All boxed rooms fill their scene edge to edge. Trees retain transparent outdoor space. Guest rooms keep their furniture separate; these backgrounds contain architecture/fixtures rather than baked-in beds.
 
-All are zone bed, category beds, rooms [guest], with matching width/height and w/h fields. New entries are in ascending cost/unlock order. Existing catalog fields and values are preserved. New side-view silhouettes feature wheels/spoiler/roundel, two bunks and ladder, four canopy posts with drapes, circular tufted upholstery, rocket cabin/porthole/fins, rowboat and oar, cloud upholstery, a suspended hammock, rustic log construction, and a crowned gilded headboard. All floor contacts reach the bottom of their own canvas. Number-roundel marking is drawn as paths, not text.
+## Six placeable pieces
+| ID | Size | Zone/category | Coins | Level | Decor |
+|---|---|---|---:|---:|---:|
+| split_air_conditioner | 84 x 36 | wall/wall | 260 | 4 | 5 |
+| industrial_pendant | 48 x 60 | ceiling/lighting | 240 | 4 | 5 |
+| brass_cabin_lantern | 40 x 60 | floor/lighting | 180 | 3 | 4 |
+| workshop_tool_cabinet | 72 x 88 | floor/tables | 420 | 6 | 7 |
+| woven_storage_basket | 48 x 40 | floor/tables | 130 | 2 | 3 |
+| branch_display_shelf | 88 x 48 | wall/wall | 300 | 5 | 6 |
+Each is registered in manifest.js and items.js. Existing categories and tabletop placement fields are preserved. AC is currently artwork/decor; no cooling or emergency gameplay was added.
 
-## Theme bed redraws
-Love: heart headboard and heart foot detail. Halloween: octagonal coffin frame and bat-wing ends. Winter: curved sleigh ends and runners. Gold: sculpted rococo shell/scrollwork and curved apron. Pink: scalloped princess headboard, ruffled skirt and bow. All use the existing decor/<theme>_bed keys and 112 x 64 canvases.
+## Preview and sources
+preview.html includes a sixteen-room comparison, a composed lobby with clerk and golden elevator, six decor cards and the existing occupied-room/empty-room studios. All existing controls remain.
+Contemporary real-world material and lighting references were consulted for the design direction, without using their images, geometry or branded objects: Helen & Hard Woodnest II (https://helenhard.no/work/woodnest-2023/) and Snohetta's 7th Room (https://snohetta.prezly.com/the-7th-room). The resulting graphics, branches, furniture and room layouts are original Starlit Stays designs. The supplied game reference informed colour blocking, not copied artwork.
 
-## Placement and sleep metadata
-Each new/redesigned bed has bedLayout metadata in items.js: mode, pillow centre, mattressTop and sleep bounds in file pixels. Bunk specifies the lower mattress for the current one-guest room and records upperMattressTop for possible future use. Rocket mode is upright and hammock mode is curved; these must not stretch a normal full-bed sleeping overlay across the entire tall canvas. See CODE_NOTES.md for integration details.
-
-## Preview / validation
-preview.html has a dedicated fifteen-bed comparison and four-room architecture gallery, plus the normal asset galleries. Global display size controls apply. All 1323 registered SVGs passed XML, exact dimensions/viewBox, self-contained markup, manifest and preview registration checks. Every original catalog value was retained; new entries have valid guest-only bed categories. Browser gameplay was not verified.
-
-Preview script verification: 1323 assets initialized with zero failures; the dedicated gallery contains all 15 bed designs and four room backgrounds, and the existing animation clock still runs. Mattress continuity and each structural silhouette were inspected using local SVG renders.
+## Validation
+All 1329 registered SVGs passed XML, dimensions/viewBox, local-reference-only markup, file-size, manifest-path and preview-registration checks. Every prior key, canvas size and item entry was preserved. The largest SVG is 9727 bytes. Both treehouse component layers match the combined room geometry exactly. Preview initialized 1329 assets with zero failures; all 234 guest/theme/occupancy combinations passed, including empty-room prop suppression and all ten staff placements. Dedicated galleries include sixteen classic rooms, six new decor cards and a composed lobby. Browser gameplay was not verified.

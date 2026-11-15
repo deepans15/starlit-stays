@@ -5,24 +5,24 @@ window.STARLIT_ROOM_LAYOUTS = [
     "height": 336,
     "openAir": true,
     "wallBounds": {
-      "x": 36,
-      "y": 64,
-      "width": 248,
-      "height": 132
+      "x": 26,
+      "y": 78,
+      "width": 268,
+      "height": 134
     },
     "floorBounds": {
-      "x": 32,
-      "y": 196,
-      "width": 256,
-      "height": 12
+      "x": 17,
+      "y": 212,
+      "width": 286,
+      "height": 16
     },
     "frameBounds": {
-      "x": 32,
-      "y": 64,
-      "width": 256,
-      "height": 144
+      "x": 17,
+      "y": 76,
+      "width": 286,
+      "height": 152
     },
-    "guestBaseline": 196,
+    "guestBaseline": 212,
     "branchKey": "building/treehouse_2x2_branch",
     "cabinKey": "building/treehouse_2x2_cabin",
     "combinedKey": "rooms/treehouse_2x2"
@@ -33,24 +33,24 @@ window.STARLIT_ROOM_LAYOUTS = [
     "height": 504,
     "openAir": true,
     "wallBounds": {
-      "x": 36,
-      "y": 64,
-      "width": 248,
-      "height": 132
+      "x": 26,
+      "y": 78,
+      "width": 268,
+      "height": 134
     },
     "floorBounds": {
-      "x": 32,
-      "y": 196,
-      "width": 256,
-      "height": 12
+      "x": 17,
+      "y": 212,
+      "width": 286,
+      "height": 16
     },
     "frameBounds": {
-      "x": 32,
-      "y": 64,
-      "width": 256,
-      "height": 144
+      "x": 17,
+      "y": 76,
+      "width": 286,
+      "height": 152
     },
-    "guestBaseline": 196,
+    "guestBaseline": 212,
     "branchKey": "building/treehouse_2x3_branch",
     "cabinKey": "building/treehouse_2x3_cabin",
     "combinedKey": "rooms/treehouse_2x3"

@@ -3928,7 +3928,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read",
           "x": 66,
-          "y": 178,
+          "y": 191,
           "scale": 0.56,
           "phase": 0.0,
           "z": 5
@@ -3936,7 +3936,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read",
           "x": 108,
-          "y": 178,
+          "y": 191,
           "scale": 0.56,
           "phase": 0.2,
           "z": 5
@@ -3944,7 +3944,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read",
           "x": 205,
-          "y": 180,
+          "y": 196,
           "scale": 0.6,
           "phase": 0.4,
           "z": 5
@@ -3952,7 +3952,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read_stand",
           "x": 238,
-          "y": 196,
+          "y": 212,
           "scale": 0.5,
           "phase": 0.6,
           "z": 5
@@ -3960,24 +3960,24 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       ],
       "foreground": [
         {
-          "x": 44,
-          "y": 177,
-          "width": 94,
+          "x": 39,
+          "y": 190,
+          "width": 102,
           "height": 10,
           "z": 7
         },
         {
-          "x": 183,
-          "y": 179,
-          "width": 45,
-          "height": 9,
+          "x": 190,
+          "y": 194,
+          "width": 42,
+          "height": 10,
           "z": 7
         },
         {
-          "x": 144,
-          "y": 177,
-          "width": 35,
-          "height": 7,
+          "x": 143,
+          "y": 190,
+          "width": 39,
+          "height": 8,
           "z": 7
         }
       ],
@@ -3985,8 +3985,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "key": "chars/staff_treehouse",
         "frames": 4,
         "fps": 4,
-        "x": 266,
-        "y": 196,
+        "x": 270,
+        "y": 212,
         "scale": 0.55,
         "z": 9,
         "anchor": {
@@ -4003,7 +4003,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read",
           "x": 59,
-          "y": 178,
+          "y": 191,
           "scale": 0.49,
           "phase": 0.0,
           "z": 5
@@ -4011,7 +4011,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read",
           "x": 88,
-          "y": 178,
+          "y": 191,
           "scale": 0.49,
           "phase": 0.2,
           "z": 5
@@ -4019,7 +4019,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read",
           "x": 117,
-          "y": 178,
+          "y": 191,
           "scale": 0.49,
           "phase": 0.4,
           "z": 5
@@ -4027,7 +4027,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read",
           "x": 205,
-          "y": 180,
+          "y": 196,
           "scale": 0.55,
           "phase": 0.6,
           "z": 5
@@ -4035,7 +4035,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read_stand",
           "x": 161,
-          "y": 196,
+          "y": 212,
           "scale": 0.48,
           "phase": 0.8,
           "z": 5
@@ -4043,7 +4043,7 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "read_stand",
           "x": 238,
-          "y": 196,
+          "y": 212,
           "scale": 0.48,
           "phase": 1,
           "z": 5
@@ -4051,24 +4051,24 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       ],
       "foreground": [
         {
-          "x": 44,
-          "y": 177,
-          "width": 94,
+          "x": 39,
+          "y": 190,
+          "width": 102,
           "height": 10,
           "z": 7
         },
         {
-          "x": 183,
-          "y": 179,
-          "width": 45,
-          "height": 9,
+          "x": 190,
+          "y": 194,
+          "width": 42,
+          "height": 10,
           "z": 7
         },
         {
-          "x": 144,
-          "y": 177,
-          "width": 35,
-          "height": 7,
+          "x": 143,
+          "y": 190,
+          "width": 39,
+          "height": 8,
           "z": 7
         }
       ],
@@ -4076,8 +4076,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         "key": "chars/staff_treehouse",
         "frames": 4,
         "fps": 4,
-        "x": 266,
-        "y": 196,
+        "x": 270,
+        "y": 212,
         "scale": 0.55,
         "z": 9,
         "anchor": {

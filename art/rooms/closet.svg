@@ -1,5 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="160" height="168" viewBox="0 0 160 168">
-  <path d="M0 0h160v168H0Z" fill="#654337" />
+  <path d="M0 0h160v168H0Z" fill="#52382e" stroke="none" />
+  <g>
+    <path d="M0 0h160v11H0Z" fill="#2b2340" opacity=".22" stroke="none" />
+    <path d="M0 12h160" stroke="#fff8ef" opacity=".08" stroke-width="2" fill="none" />
+    <g stroke="#a77958" stroke-width="1.2" opacity=".27" fill="none">
+      <path d="M7 12v125m3-125v125" />
+      <path d="M32 12v125m3-125v125" />
+      <path d="M57 12v125m3-125v125" />
+      <path d="M82 12v125m3-125v125" />
+      <path d="M107 12v125m3-125v125" />
+      <path d="M132 12v125m3-125v125" />
+      <path d="M157 12v125m3-125v125" />
+    </g>
+  </g>
   <g stroke="#402c2b" stroke-width="2" fill="none">
     <path d="M8 2v132m3-129v127" stroke="#8b6050" opacity=".55" />
     <path d="M44 2v132m3-129v127" stroke="#8b6050" opacity=".55" />
@@ -7,8 +20,20 @@
     <path d="M116 2v132m3-129v127" stroke="#8b6050" opacity=".55" />
     <path d="M152 2v132m3-129v127" stroke="#8b6050" opacity=".55" />
   </g>
-  <path d="M0 137h160v31H0Z" fill="#e0cbb6" />
+  <path d="M0 137h160v31H0Z" fill="#332d30" />
   <path d="M0 137h160" fill="none" stroke="#2b2340" stroke-width="2.5" />
+  <g>
+    <g stroke="#2b2340" stroke-width="1" opacity=".22" fill="none">
+      <path d="M0 144h160" />
+      <path d="M0 152h160" />
+      <path d="M0 160h160" />
+      <path d="M12 137v31" />
+      <path d="M48 137v31" />
+      <path d="M84 137v31" />
+      <path d="M120 137v31" />
+      <path d="M156 137v31" />
+    </g>
+  </g>
   <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <rect x="10" y="48" width="88" height="105" rx="4" fill="#c8915f" />
     <path d="M17 54h74v91H17Z" fill="#ac754b" />

@@ -897,5 +897,83 @@ window.STARLIT_ITEMS = [
         "height": 29
       }
     }
+  },
+  {
+    "id": "split_air_conditioner",
+    "name": "Split Air Conditioner",
+    "width": 84,
+    "height": 36,
+    "w": 84,
+    "h": 36,
+    "zone": "wall",
+    "category": "wall",
+    "cost": 260,
+    "level": 4,
+    "decor": 5
+  },
+  {
+    "id": "industrial_pendant",
+    "name": "Caged Workshop Pendant",
+    "width": 48,
+    "height": 60,
+    "w": 48,
+    "h": 60,
+    "zone": "ceiling",
+    "category": "lighting",
+    "cost": 240,
+    "level": 4,
+    "decor": 5
+  },
+  {
+    "id": "brass_cabin_lantern",
+    "name": "Brass Cabin Lantern",
+    "width": 40,
+    "height": 60,
+    "w": 40,
+    "h": 60,
+    "zone": "floor",
+    "category": "lighting",
+    "cost": 180,
+    "level": 3,
+    "decor": 4
+  },
+  {
+    "id": "workshop_tool_cabinet",
+    "name": "Rolling Tool Cabinet",
+    "width": 72,
+    "height": 88,
+    "w": 72,
+    "h": 88,
+    "zone": "floor",
+    "category": "tables",
+    "cost": 420,
+    "level": 6,
+    "decor": 7
+  },
+  {
+    "id": "woven_storage_basket",
+    "name": "Woven Blanket Basket",
+    "width": 48,
+    "height": 40,
+    "w": 48,
+    "h": 40,
+    "zone": "floor",
+    "category": "tables",
+    "cost": 130,
+    "level": 2,
+    "decor": 3
+  },
+  {
+    "id": "branch_display_shelf",
+    "name": "Branch Display Shelf",
+    "width": 88,
+    "height": 48,
+    "w": 88,
+    "h": 48,
+    "zone": "wall",
+    "category": "wall",
+    "cost": 300,
+    "level": 5,
+    "decor": 6
   }
 ];

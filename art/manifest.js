@@ -1321,5 +1321,11 @@ window.STARLIT_ART = {
   "decor/hammock_bed": "decor/hammock_bed.svg",
   "decor/canopy_bed": "decor/canopy_bed.svg",
   "decor/rocket_bed": "decor/rocket_bed.svg",
-  "decor/royal_bed": "decor/royal_bed.svg"
+  "decor/royal_bed": "decor/royal_bed.svg",
+  "decor/split_air_conditioner": "decor/split_air_conditioner.svg",
+  "decor/industrial_pendant": "decor/industrial_pendant.svg",
+  "decor/brass_cabin_lantern": "decor/brass_cabin_lantern.svg",
+  "decor/workshop_tool_cabinet": "decor/workshop_tool_cabinet.svg",
+  "decor/woven_storage_basket": "decor/woven_storage_basket.svg",
+  "decor/branch_display_shelf": "decor/branch_display_shelf.svg"
 };

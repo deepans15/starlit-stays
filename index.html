@@ -148,6 +148,7 @@
   .thumb img{width:100%;height:100%;object-fit:cover}
   .bcard .nm{font-weight:800;font-size:12px;line-height:1.2;margin-top:auto}
   .bcard .rate{position:absolute;right:6px;top:5px;background:#e8f7f0;border:2px solid #3fae8c;color:#1f6e55;border-radius:9px;font-weight:900;font-size:11px;padding:1px 6px;white-space:nowrap}
+  .roomRate{position:absolute;right:34px;top:0;background:#e8f7f0;border:2px solid #3fae8c;color:#1f6e55;border-radius:10px;font-size:13px;font-weight:900;padding:2px 8px}
   .bcard .pr{font-weight:900;color:#b07a00;font-size:15px;margin-top:4px;background:#fff6d6;border-radius:9px;padding:2px 0}
   .bcard .ea{color:var(--muted);font-size:11px}
   .lock{position:absolute;left:6px;top:5px;z-index:1;background:#ffc94d;border:2px solid var(--ink);border-radius:8px;font-weight:900;font-size:12px;padding:1px 6px}
@@ -250,7 +251,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.53';
+const BUILD = '0.54';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -760,11 +761,11 @@ function maybeIssue(dt){
   if(ui.visit || !isOpen()) return;
   const rooms = S.rooms.filter(r=>ROOMS[r.type].kind==='guest');
   if(rooms.length < 2) return;
-  ui.issueCd = (ui.issueCd===undefined ? 40 : ui.issueCd) - dt;
+  ui.issueCd = (ui.issueCd===undefined ? 150 : ui.issueCd) - dt;
   if(ui.issueCd > 0) return;
-  ui.issueCd = 50 + Math.random()*70;
+  ui.issueCd = 180 + Math.random()*240;   // roughly one every 3-7 minutes
   const open = rooms.filter(r=>r.issue).length;
-  if(open >= 1 + Math.floor(rooms.length/6)) return;
+  if(open >= 1 + Math.floor(rooms.length/12)) return;
   const pool = rooms.filter(r=>!r.issue && !r.fixT && !r.broken), busy = pool.filter(r=>r.guest);
   const r = (busy.length && Math.random()<0.7 ? busy : pool)[Math.floor(Math.random()*(busy.length && Math.random()<0.7 ? busy.length : pool.length))] || pool[0];
   if(!r) return;
@@ -1150,7 +1151,7 @@ function drawRoom(r, covered){
     if(r.cleanT>0){ if(!sprite(animFrame('chars/cleaner','sweep',2,4), x+w/2-14, y+h-60, 28, 48)){ ctx.font='18px system-ui'; ctx.textAlign='center'; ctx.fillText('🧹', x+w/2, y+h/2); } ctx.fillStyle='#3fae8c'; ctx.fillRect(x+10, y+h-6, (w-20)*Math.min(1,r.cleanT/2.5), 3); }
     else { ctx.font='16px system-ui'; ctx.textAlign='center'; ctx.fillText(covered?'💨':'👆💨', x+w/2, y+h/2); }
   }
-  if(def.kind==='guest'){   // slim decor bar along the top, like the original
+  if(def.kind==='guest' && buildMode()){   // slim decor bar along the top, only while building
     const pct = decorPct(r);
     ctx.fillStyle='rgba(0,0,0,.18)'; rr(x+8, y+5, w-16, 5, 3); ctx.fill();
     ctx.fillStyle = pct>=1 ? '#3fae8c' : pct>=0.5 ? '#ffc94d' : '#ff7a7a'; rr(x+8, y+5, Math.max(5,(w-16)*pct), 5, 3); ctx.fill();
@@ -1161,7 +1162,8 @@ function drawRoom(r, covered){
 }
 // themed versions shown in the Build menu: amenities use a room style, guest rooms come with that theme's bed
 // a Limited guest room comes fully furnished with its theme's pieces, laid out to fit the room (15% cheaper than buying them one by one)
-function furnishPlan(type, t){
+function furnishPlan(type, t){ return fillPlan(type, furnishPlanBase(type, t)); }
+function furnishPlanBase(type, t){
   // ChatGPT's hand-arranged layouts (art/furnished_rooms.js) are used for 2-wide rooms; other sizes are laid out automatically
   const cur = ROOMS[type].w===2 && (window.STARLIT_FURNISHED_ROOMS||[]).find(f=>f.theme===t && f.type==='comfy');
   if(cur){ const kind = ROOMS[type].kind, out = [];
@@ -1181,6 +1183,23 @@ function furnishPlan(type, t){
     room.forEach((id,i)=>{ if(tot + 8*room.length > RW && i > 0) return; const g = Math.max(4, (RW - tot) / (room.length + 1)); out.push({id, x:Math.round(g*(i+1) + cur), y}); cur += ITEMS[id].w; }); };
   spread(ids.filter(id=>ITEMS[id].zone==='wall'), 26);
   spread(ids.filter(id=>ITEMS[id].zone==='ceiling'), 0);
+  return out;
+}
+// top up a themed room so it never looks bare: a rug, wall art, a ceiling light and plants if there's room
+function fillPlan(type, out){
+  const kind = ROOMS[type].kind, RW = ROOMS[type].w*CELL, inSet = new Set(Object.values(COLLECTIONS).flat());
+  const pool = Object.values(ITEMS).filter(d=>!inSet.has(d.id) && d.rooms.includes(kind) && d.zone!=='bed' && d.lvl <= 8).sort((a,b)=>a.cost-b.cost);
+  const has = f => out.some(p=>f(ITEMS[p.id]));
+  const floorSpans = () => out.filter(p=>(ITEMS[p.id].zone==='floor' || ITEMS[p.id].zone==='bed') && !ITEMS[p.id].back).map(p=>[p.x, p.x+ITEMS[p.id].w]);
+  const freeAt = (x, w) => x >= 2 && x + w <= RW - 2 && floorSpans().every(([a,b])=>x+w <= a-2 || x >= b+2);
+  const add = (d, x, y) => { if(!d) return; const p = {id:d.id, x:Math.round(x)}; if(y!==undefined) p.y = y; out.push(p); };
+  if(!has(d=>d.back)){ const rug = pool.find(d=>d.back && d.w <= RW - 16); if(rug) add(rug, RW/2 - rug.w/2); }
+  if(!has(d=>d.zone==='ceiling')){ const c = pool.find(d=>d.zone==='ceiling' && d.w <= RW - 10); if(c) add(c, RW/2 - c.w/2, 0); }
+  const walls = out.filter(p=>ITEMS[p.id].zone==='wall').length;
+  for(const w of pool.filter(d=>d.zone==='wall').slice(0, Math.max(0, (RW>=160?2:1) - walls))){
+    const xs = [RW*0.72 - w.w/2, RW*0.28 - w.w/2]; const x = xs.find(x=>!out.some(p=>ITEMS[p.id].zone==='wall' && Math.abs(p.x - x) < w.w)); if(x!==undefined) add(w, x, 26); }
+  for(const d of pool.filter(d=>d.zone==='floor' && !d.back && d.w <= 30)){   // small plants / side pieces in any gap
+    if(out.length >= 8) break; for(const x of [RW - d.w - 4, 4, RW/2 - d.w/2]){ if(freeAt(x, d.w)){ add(d, x); break; } } }
   return out;
 }
 const furnishCost = (type, t) => Math.round(furnishPlan(type, t).reduce((a,p)=>a + ITEMS[p.id].cost, 0) * 0.85);
@@ -1287,6 +1306,7 @@ function drawGuestRoom(r,x,y,w,h,part){
 }
 function drawCrown(x,y){ ctx.fillStyle='#ffc94d'; ctx.strokeStyle='#2b2340'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(x-7,y+6); ctx.lineTo(x-7,y-1); ctx.lineTo(x-3,y+3); ctx.lineTo(x,y-4); ctx.lineTo(x+3,y+3); ctx.lineTo(x+7,y-1); ctx.lineTo(x+7,y+6); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.lineWidth=1; }
 // a row of little people above each amenity: filled = in use, each with its own timer ring
+const buildMode = () => panel.style.display==='block' && (ui.panelKind==='build' || !!ui.focus);
 function drawAmenityCount(r,x,y,w){
   const n = ROOMS[r.type].slots, users = guests.filter(g=>g.state==='inAmen' && g.amen===r.id).sort((a,b)=>(a.slot||0)-(b.slot||0));
   const fw = 9, fh = 12, gap = 4, x0 = x + 8;
@@ -1784,6 +1804,10 @@ function itemCat(it){
   return 'plants';
 }
 // rough best-case earnings, shown on the Build cards like the original's "max earning per hour"
+// what this room earns per hour right now, with its decor and your stars
+function roomRate(r){ const d = ROOMS[r.type];
+  if(d.kind==='guest') return Math.round((d.pay*(0.6+0.9*decorPct(r)) + decorCoins(r)) * (beautiful(r)?1.25:1) * starMult() * 3600 / ((d.stay||20) + 8));
+  if(d.kind==='amenity') return Math.round((d.pay + decorCoins(r)) * d.slots * starMult() * 3600 / ((d.use||10) + 4)); return 0; }
 function perHour(k){ const d = ROOMS[k]; if(d.kind==='guest') return Math.round(d.pay * 3600 / ((d.stay||20) + 8)); if(d.kind==='amenity') return Math.round(d.pay * d.slots * 3600 / ((d.use||10) + 4)); return 0; }
 function decorShop(lv, cat){
   const where = it => it.rooms.map(k=>({guest:'guest rooms', amenity:'amenities', lobby:'lobby'})[k]||k).join(', ');
@@ -1806,9 +1830,9 @@ function decorShop(lv, cat){
 function placeInvTo(id, r, wx){
   if(!S.inv[id]) return;
   if(!itemFits(r, id)){ const it = ITEMS[id]; toast(it.zone==='bed' && hasBed(r) ? 'That room already has a bed' : `${it.name} can't go in the ${roomLabel(r)}`); return false; }
-  const before = r.items.length, keep = ui.panelKind, keepTab = ui.buildTab;
+  const before = r.items.length, lastBefore = r.items[r.items.length-1], keep = ui.panelKind, keepTab = ui.buildTab;
   placeItem(r.id, id, true);
-  if(r.items.length > before){ const it = r.items[r.items.length-1], def = ITEMS[id]; if(wx!==undefined) it.x = clampItemX(r, def, wx - visRect(r).x - def.w/2); r.pulse = 1.2; save(); toast(`${def.name} placed in the ${roomLabel(r)}`); }
+  if(r.items[r.items.length-1] !== lastBefore){ const it = r.items[r.items.length-1], def = ITEMS[id]; if(wx!==undefined) it.x = clampItemX(r, def, wx - visRect(r).x - def.w/2); r.pulse = 1.2; save(); toast(`${def.name} placed in the ${roomLabel(r)}`); }
   if(ui.focus && ui.focus!==r.id) unfocus();
   if(keep==='build' && keepTab==='storage') openStorage(); else if(!ui.placeInv) closePanel();
   return true;
@@ -1872,14 +1896,17 @@ function startPlaceInv(id){
   ui.placeInv = id; closePanel(); setMode('placeInv'); ui.placeInv = id;
   setHint(`Tap a room to put the ${ITEMS[id].name} in`);
 }
-function itemFits(r, id){ const it = ITEMS[id]; return r && it && it.rooms.includes(ROOMS[r.type].kind) && !(it.zone==='bed' && hasBed(r)); }
+function itemFits(r, id){ const it = ITEMS[id]; return r && it && it.rooms.includes(ROOMS[r.type].kind); }   // a new bed swaps out the old one
+// the room's current bed goes back to storage so a new one can take its place
+function swapOutBed(r, newId){ if(ITEMS[newId].zone!=='bed') return null; const old = (r.items||[]).find(i=>ITEMS[i.id] && ITEMS[i.id].zone==='bed'); if(!old) return null;
+  r.items = r.items.filter(i=>i!==old && i.on!==old.uid); S.inv[old.id] = (S.inv[old.id]||0)+1; return old; }
 function buyItemTo(id, r, wx){
   const def = ITEMS[id]; if(!def || def.lvl > level()) return;
   if(S.coins < def.cost){ toast('Not enough coins'); return; }
   if(r){
-    const before = r.items.length; const keep = ui.panelKind;
+    const before = r.items.length, lastBefore = r.items[r.items.length-1]; const keep = ui.panelKind;
     placeItem(r.id, id, false);
-    if(r.items.length > before){ const it = r.items[r.items.length-1]; it.x = clampItemX(r, def, wx - visRect(r).x - def.w/2); save(); toast(`${def.name} placed in the ${roomLabel(r)}`); }
+    if(r.items[r.items.length-1] !== lastBefore){ const it = r.items[r.items.length-1]; it.x = clampItemX(r, def, wx - visRect(r).x - def.w/2); save(); toast(`${def.name} placed in the ${roomLabel(r)}`); }
     openBuild('rooms'); return;
   }
   S.coins -= def.cost; addXP(Math.max(1, Math.round(def.cost/40))); S.boughtItem = true;
@@ -2052,7 +2079,7 @@ function openRoom(r){
   const def = ROOMS[r.type];
   if(def.kind==='guest' || def.kind==='amenity' || def.kind==='lobby'){
     const pct = decorPct(r), lv = level();
-    let html = `<h2>${def.icon||''} ${def.name}</h2>`;
+    let html = `<h2 style="position:relative;padding-right:96px">${def.icon||''} ${def.name}${def.kind!=='lobby' ? `<span class="roomRate">🪙${roomRate(r).toLocaleString()}/h</span>` : ''}</h2>`;
     if(def.kind==='guest') html += `<div class="sub">Decor ${Math.round(pct*100)}% (${decorPoints(r)}/${decorCapacity(r)} points). Guests pay ${Math.round((0.6+0.9*pct)*100)}% of the base price <b>plus 🪙${decorCoins(r)} for the furniture</b>${beautiful(r) ? ' · ✨ <b>Beautiful room: +25% and more tips</b>' : ' · reach 100% decor for ✨ +25% pay'}. VIP guests need 70% or more.</div>`;
     else if(def.kind==='amenity') html += `<div class="sub">Guests who want ${def.name} (${def.icon} bubble) visit after their stay and pay ~🪙${def.pay}. Holds ${def.slots} guests, each on their own timer. Amenities never get dirty and don't need decor, but every piece of furniture you add pays a little extra (now +🪙${decorCoins(r)} per visit).</div>`;
     else html += `<div class="sub">Decor ${Math.round(pct*100)}%. A beautiful lobby raises your star rating.</div>`;
@@ -2075,13 +2102,13 @@ function openRoom(r){
     html += `<h3>${title}</h3>`;
     for(const it of list){
       const locked = it.lvl > lv, owned = S.inv[it.id]||0;
-      const isBed = it.zone==='bed', bedTaken = isBed && hasBed(r);
+      const isBed = it.zone==='bed', bedTaken = false, swapsBed = isBed && hasBed(r);
       const zoneTxt = {floor:'stands on the floor', wall:'hangs on the wall', ceiling:'hangs from the ceiling', bed:'one per room'}[it.zone];
       html += `<div class="item">${swatch({color:'#fff8ef', emoji:it.emoji}, 'decor/'+it.id)}<div class="info"><b>${it.name}</b><div class="meta">${locked?`🔒 Level ${it.lvl}`:`+${it.decor} decor · +🪙${itemCoins(it.id)} per guest · ${zoneTxt}`}${owned?` · you own ${owned}`:''}</div></div><div class="btns">`;
       if(owned) html += `<button class="btn alt" ${bedTaken||locked?'disabled':''} onclick="placeItem(${r.id},'${it.id}',true)">Place</button>`;
       html += `<button class="btn" ${locked||S.coins<it.cost||bedTaken?'disabled':''} onclick="placeItem(${r.id},'${it.id}',false)">🪙${it.cost}</button>`;
       html += `</div></div>`;
-      if(bedTaken && !locked) html = html.replace(/one per room(<\/div>)/, 'swap: drag the old bed out first$1');
+      if(swapsBed && !locked) html = html.replace(/one per room(<\/div>)/, 'replaces your bed (old one goes to storage)$1');
     }
     }
     if(def.kind!=='lobby') html += `<div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put room in storage</button></div>`;
@@ -2149,12 +2176,13 @@ function setStyle(id, t){
 function placeItem(roomId, itemId, fromInv){
   const r = S.rooms.find(x=>x.id===roomId), def = ITEMS[itemId]; if(!r || !def) return;
   if(def.lvl > level()) return;
-  if(def.zone==='bed' && hasBed(r)){ toast('This room already has a bed. Drag the old one out first.'); return; }
+  if(fromInv && !S.inv[itemId]) return; if(!fromInv && S.coins < def.cost) return;
+  const old = swapOutBed(r, itemId), oldX = old ? old.x : null; if(old) toast(`${ITEMS[old.id].name} moved to storage`);
   if(fromInv){ if(!S.inv[itemId]) return; S.inv[itemId]--; if(!S.inv[itemId]) delete S.inv[itemId]; }
   else { if(S.coins < def.cost) return; S.coins -= def.cost; addXP(Math.max(1, Math.round(def.cost/40))); S.boughtItem = true; }
   // put it in the middle of the room; the player drags it from there
   const rw = ROOMS[r.type].w*CELL;
-  const it = mkItem(itemId, clampItemX(r, def, rw/2 - def.w/2 + (Math.random()-0.5)*20));
+  const it = mkItem(itemId, clampItemX(r, def, oldX!==null ? oldX : rw/2 - def.w/2 + (Math.random()-0.5)*20));
   if(def.zone==='wall') it.y = 26;
   r.items.push(it);
   save(); checkGoals(); openRoom(r);
