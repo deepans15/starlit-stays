@@ -82,7 +82,6 @@
     </g>
     <path d="M145 135l-5 21m43-21 5 21" fill="none" stroke="#c8915f" stroke-width="3" vector-effect="non-scaling-stroke" />
     <ellipse cx="164" cy="132" rx="32" ry="7" fill="#e6b481" vector-effect="non-scaling-stroke" />
-    <path d="M183 123h9q0 8-4 8t-5-8Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
     <g transform="translate(152 104) scale(0.4)">
       <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="26" cy="23" r="20" fill="#bce9ff" vector-effect="non-scaling-stroke" />

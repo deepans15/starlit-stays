@@ -1,20 +1,3 @@
-// Furniture catalogue additions for Starlit Stays.
-// ChatGPT adds new furniture here (or changes the built-in pieces by reusing their id).
-// Each item's picture goes in art/decor/<id>.svg and must also be listed in manifest.js as "decor/<id>".
-//
-// Fields:
-//   id      lowercase letters, numbers and _ only (e.g. "beanbag_chair")
-//   name    shown in the shop
-//   zone    "floor" (stands on the floor), "wall" (hangs, player can move it up and down),
-//           "ceiling" (hangs from the top), or "bed" (one per guest room; guests sleep in it)
-//   width, height   the SVG's size in pixels (the game draws it at half size)
-//   cost    price in coins
-//   decor   decor points it adds to a room (bigger and fancier = more)
-//   level   player level that unlocks it
-//   rooms   optional: which rooms can use it, any of "guest", "amenity", "lobby"
-//   back    optional: true for flat things drawn behind other furniture, like rugs
-//
-// Example:
 window.STARLIT_ITEMS = [
   {
     "id": "bedside_table",
@@ -24,7 +7,8 @@ window.STARLIT_ITEMS = [
     "height": 48,
     "cost": 100,
     "decor": 3,
-    "level": 2
+    "level": 2,
+    "category": "tables"
   },
   {
     "id": "flower_vase",
@@ -34,7 +18,8 @@ window.STARLIT_ITEMS = [
     "height": 64,
     "cost": 140,
     "decor": 4,
-    "level": 3
+    "level": 3,
+    "category": "plants"
   },
   {
     "id": "moon_mobile",
@@ -44,7 +29,8 @@ window.STARLIT_ITEMS = [
     "height": 64,
     "cost": 420,
     "decor": 7,
-    "level": 7
+    "level": 7,
+    "category": "lighting"
   },
   {
     "id": "beanbag_chair",
@@ -54,7 +40,8 @@ window.STARLIT_ITEMS = [
     "height": 48,
     "cost": 180,
     "decor": 5,
-    "level": 3
+    "level": 3,
+    "category": "seating"
   },
   {
     "id": "tea_cart",
@@ -64,7 +51,8 @@ window.STARLIT_ITEMS = [
     "height": 72,
     "cost": 420,
     "decor": 7,
-    "level": 6
+    "level": 6,
+    "category": "tables"
   },
   {
     "id": "star_mirror",
@@ -74,7 +62,8 @@ window.STARLIT_ITEMS = [
     "height": 76,
     "cost": 720,
     "decor": 9,
-    "level": 9
+    "level": 9,
+    "category": "wall"
   },
   {
     "id": "love_bed",
@@ -87,7 +76,8 @@ window.STARLIT_ITEMS = [
     "level": 3,
     "rooms": [
       "guest"
-    ]
+    ],
+    "category": "beds"
   },
   {
     "id": "love_loveseat",
@@ -97,7 +87,8 @@ window.STARLIT_ITEMS = [
     "height": 64,
     "cost": 360,
     "decor": 6,
-    "level": 4
+    "level": 4,
+    "category": "seating"
   },
   {
     "id": "love_rug",
@@ -108,7 +99,8 @@ window.STARLIT_ITEMS = [
     "cost": 150,
     "decor": 4,
     "level": 2,
-    "back": true
+    "back": true,
+    "category": "rugs"
   },
   {
     "id": "love_roses",
@@ -118,7 +110,8 @@ window.STARLIT_ITEMS = [
     "height": 60,
     "cost": 140,
     "decor": 4,
-    "level": 2
+    "level": 2,
+    "category": "plants"
   },
   {
     "id": "love_mirror",
@@ -128,7 +121,8 @@ window.STARLIT_ITEMS = [
     "height": 64,
     "cost": 320,
     "decor": 5,
-    "level": 5
+    "level": 5,
+    "category": "wall"
   },
   {
     "id": "love_mobile",
@@ -138,7 +132,8 @@ window.STARLIT_ITEMS = [
     "height": 60,
     "cost": 480,
     "decor": 8,
-    "level": 8
+    "level": 8,
+    "category": "lighting"
   },
   {
     "id": "halloween_bed",
@@ -151,7 +146,8 @@ window.STARLIT_ITEMS = [
     "level": 4,
     "rooms": [
       "guest"
-    ]
+    ],
+    "category": "beds"
   },
   {
     "id": "halloween_pumpkin_lamp",
@@ -161,7 +157,8 @@ window.STARLIT_ITEMS = [
     "height": 80,
     "cost": 180,
     "decor": 5,
-    "level": 3
+    "level": 3,
+    "category": "lighting"
   },
   {
     "id": "halloween_ghost_chair",
@@ -171,7 +168,8 @@ window.STARLIT_ITEMS = [
     "height": 60,
     "cost": 280,
     "decor": 5,
-    "level": 4
+    "level": 4,
+    "category": "seating"
   },
   {
     "id": "halloween_rug",
@@ -182,7 +180,8 @@ window.STARLIT_ITEMS = [
     "cost": 160,
     "decor": 4,
     "level": 2,
-    "back": true
+    "back": true,
+    "category": "rugs"
   },
   {
     "id": "halloween_bat_art",
@@ -192,7 +191,8 @@ window.STARLIT_ITEMS = [
     "height": 44,
     "cost": 150,
     "decor": 4,
-    "level": 3
+    "level": 3,
+    "category": "wall"
   },
   {
     "id": "halloween_cauldron",
@@ -202,7 +202,8 @@ window.STARLIT_ITEMS = [
     "height": 60,
     "cost": 240,
     "decor": 5,
-    "level": 5
+    "level": 5,
+    "category": "tables"
   },
   {
     "id": "winter_bed",
@@ -217,7 +218,8 @@ window.STARLIT_ITEMS = [
     "height": 64,
     "rooms": [
       "guest"
-    ]
+    ],
+    "category": "beds"
   },
   {
     "id": "winter_armchair",
@@ -229,7 +231,8 @@ window.STARLIT_ITEMS = [
     "w": 64,
     "h": 60,
     "width": 64,
-    "height": 60
+    "height": 60,
+    "category": "seating"
   },
   {
     "id": "winter_pine",
@@ -241,7 +244,8 @@ window.STARLIT_ITEMS = [
     "w": 48,
     "h": 60,
     "width": 48,
-    "height": 60
+    "height": 60,
+    "category": "plants"
   },
   {
     "id": "winter_snowglobe",
@@ -253,7 +257,8 @@ window.STARLIT_ITEMS = [
     "w": 52,
     "h": 56,
     "width": 52,
-    "height": 56
+    "height": 56,
+    "category": "tables"
   },
   {
     "id": "winter_rug",
@@ -266,7 +271,8 @@ window.STARLIT_ITEMS = [
     "h": 14,
     "width": 120,
     "height": 14,
-    "back": true
+    "back": true,
+    "category": "rugs"
   },
   {
     "id": "winter_mobile",
@@ -278,7 +284,8 @@ window.STARLIT_ITEMS = [
     "w": 84,
     "h": 60,
     "width": 84,
-    "height": 60
+    "height": 60,
+    "category": "lighting"
   },
   {
     "id": "gold_bed",
@@ -293,7 +300,8 @@ window.STARLIT_ITEMS = [
     "level": 8,
     "rooms": [
       "guest"
-    ]
+    ],
+    "category": "beds"
   },
   {
     "id": "gold_chaise",
@@ -305,7 +313,8 @@ window.STARLIT_ITEMS = [
     "h": 64,
     "cost": 1120,
     "decor": 16,
-    "level": 10
+    "level": 10,
+    "category": "seating"
   },
   {
     "id": "gold_lamp",
@@ -317,7 +326,8 @@ window.STARLIT_ITEMS = [
     "h": 80,
     "cost": 360,
     "decor": 6,
-    "level": 6
+    "level": 6,
+    "category": "lighting"
   },
   {
     "id": "gold_mirror",
@@ -329,7 +339,8 @@ window.STARLIT_ITEMS = [
     "h": 64,
     "cost": 650,
     "decor": 10,
-    "level": 9
+    "level": 9,
+    "category": "wall"
   },
   {
     "id": "gold_rug",
@@ -342,7 +353,8 @@ window.STARLIT_ITEMS = [
     "cost": 280,
     "decor": 5,
     "level": 5,
-    "back": true
+    "back": true,
+    "category": "rugs"
   },
   {
     "id": "gold_chandelier",
@@ -354,7 +366,8 @@ window.STARLIT_ITEMS = [
     "h": 60,
     "cost": 1600,
     "decor": 20,
-    "level": 15
+    "level": 15,
+    "category": "lighting"
   },
   {
     "id": "pink_bed",
@@ -369,7 +382,8 @@ window.STARLIT_ITEMS = [
     "level": 3,
     "rooms": [
       "guest"
-    ]
+    ],
+    "category": "beds"
   },
   {
     "id": "pink_sofa",
@@ -381,7 +395,8 @@ window.STARLIT_ITEMS = [
     "h": 64,
     "cost": 360,
     "decor": 6,
-    "level": 4
+    "level": 4,
+    "category": "seating"
   },
   {
     "id": "pink_lamp",
@@ -393,7 +408,8 @@ window.STARLIT_ITEMS = [
     "h": 80,
     "cost": 180,
     "decor": 5,
-    "level": 3
+    "level": 3,
+    "category": "lighting"
   },
   {
     "id": "pink_vanity",
@@ -405,7 +421,8 @@ window.STARLIT_ITEMS = [
     "h": 68,
     "cost": 560,
     "decor": 8,
-    "level": 6
+    "level": 6,
+    "category": "tables"
   },
   {
     "id": "pink_rug",
@@ -418,7 +435,8 @@ window.STARLIT_ITEMS = [
     "cost": 180,
     "decor": 5,
     "level": 2,
-    "back": true
+    "back": true,
+    "category": "rugs"
   },
   {
     "id": "pink_wallart",
@@ -430,7 +448,8 @@ window.STARLIT_ITEMS = [
     "h": 44,
     "cost": 200,
     "decor": 5,
-    "level": 4
+    "level": 4,
+    "category": "wall"
   },
   {
     "id": "pebble_fountain",
@@ -442,7 +461,8 @@ window.STARLIT_ITEMS = [
     "h": 68,
     "cost": 560,
     "decor": 8,
-    "level": 7
+    "level": 7,
+    "category": "tables"
   },
   {
     "id": "succulent_shelf",
@@ -454,7 +474,8 @@ window.STARLIT_ITEMS = [
     "h": 48,
     "cost": 240,
     "decor": 5,
-    "level": 4
+    "level": 4,
+    "category": "plants"
   },
   {
     "id": "reading_bench",
@@ -466,7 +487,8 @@ window.STARLIT_ITEMS = [
     "h": 56,
     "cost": 300,
     "decor": 6,
-    "level": 5
+    "level": 5,
+    "category": "seating"
   },
   {
     "id": "halloween_bat_mobile",
@@ -476,7 +498,8 @@ window.STARLIT_ITEMS = [
     "height": 60,
     "cost": 320,
     "decor": 6,
-    "level": 5
+    "level": 5,
+    "category": "lighting"
   },
   {
     "id": "winter_wallart",
@@ -486,7 +509,8 @@ window.STARLIT_ITEMS = [
     "height": 44,
     "cost": 200,
     "decor": 5,
-    "level": 4
+    "level": 4,
+    "category": "wall"
   },
   {
     "id": "pink_mobile",
@@ -496,6 +520,7 @@ window.STARLIT_ITEMS = [
     "height": 60,
     "cost": 280,
     "decor": 6,
-    "level": 4
+    "level": 4,
+    "category": "lighting"
   }
 ];

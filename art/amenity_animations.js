@@ -1158,7 +1158,20 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "phase": 0.67,
               "z": 5
             }
-          ]
+          ],
+          "staff": {
+            "key": "chars/staff_pool",
+            "frames": 4,
+            "fps": 4,
+            "x": 378,
+            "y": 157,
+            "scale": 0.6,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
         },
         "halloween": {
           "slots": [
@@ -1186,7 +1199,115 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "phase": 0.67,
               "z": 5
             }
-          ]
+          ],
+          "staff": {
+            "key": "chars/staff_pool",
+            "frames": 4,
+            "fps": 4,
+            "x": 378,
+            "y": 157,
+            "scale": 0.6,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "gold": {
+          "slots": [
+            {
+              "activity": "swim",
+              "x": 74,
+              "y": 132,
+              "scale": 0.8,
+              "phase": 0,
+              "z": 5
+            },
+            {
+              "activity": "swim",
+              "x": 165,
+              "y": 133,
+              "scale": 0.8,
+              "phase": 0.31,
+              "z": 5
+            },
+            {
+              "activity": "swim",
+              "x": 256,
+              "y": 130,
+              "scale": 0.8,
+              "phase": 0.67,
+              "z": 5
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_pool",
+            "frames": 4,
+            "fps": 4,
+            "x": 378,
+            "y": 157,
+            "scale": 0.6,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "pink": {
+          "slots": [
+            {
+              "activity": "swim",
+              "x": 74,
+              "y": 132,
+              "scale": 0.8,
+              "phase": 0,
+              "z": 5
+            },
+            {
+              "activity": "swim",
+              "x": 165,
+              "y": 133,
+              "scale": 0.8,
+              "phase": 0.31,
+              "z": 5
+            },
+            {
+              "activity": "swim",
+              "x": 256,
+              "y": 130,
+              "scale": 0.8,
+              "phase": 0.67,
+              "z": 5
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_pool",
+            "frames": 4,
+            "fps": 4,
+            "x": 378,
+            "y": 157,
+            "scale": 0.6,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        }
+      },
+      "staff": {
+        "key": "chars/staff_pool",
+        "frames": 4,
+        "fps": 4,
+        "x": 378,
+        "y": 157,
+        "scale": 0.6,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
         }
       }
     },
@@ -1212,7 +1333,88 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "z": 5
         }
       ],
-      "foreground": []
+      "foreground": [],
+      "staff": {
+        "key": "chars/staff_fit",
+        "frames": 4,
+        "fps": 4,
+        "x": 174,
+        "y": 155,
+        "scale": 0.63,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "styleOverrides": {
+        "gold": {
+          "slots": [
+            {
+              "activity": "run",
+              "x": 80,
+              "y": 141,
+              "scale": 0.8,
+              "phase": 0,
+              "z": 5
+            },
+            {
+              "activity": "lift",
+              "x": 253,
+              "y": 155,
+              "scale": 0.8,
+              "phase": 0.4,
+              "z": 5
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_fit",
+            "frames": 4,
+            "fps": 4,
+            "x": 174,
+            "y": 155,
+            "scale": 0.63,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "pink": {
+          "slots": [
+            {
+              "activity": "run",
+              "x": 80,
+              "y": 141,
+              "scale": 0.8,
+              "phase": 0,
+              "z": 5
+            },
+            {
+              "activity": "lift",
+              "x": 253,
+              "y": 155,
+              "scale": 0.8,
+              "phase": 0.4,
+              "z": 5
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_fit",
+            "frames": 4,
+            "fps": 4,
+            "x": 174,
+            "y": 155,
+            "scale": 0.63,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        }
+      }
     },
     {
       "id": "noodle",
@@ -1225,7 +1427,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "y": 124,
           "scale": 1,
           "phase": 0,
-          "z": 5
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 65,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
         },
         {
           "activity": "eat",
@@ -1233,7 +1450,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "y": 124,
           "scale": 1,
           "phase": 0.31,
-          "z": 5
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 157,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
         },
         {
           "activity": "eat",
@@ -1241,7 +1473,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "y": 124,
           "scale": 1,
           "phase": 0.67,
-          "z": 5
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 249,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
         }
       ],
       "foreground": [
@@ -1252,7 +1499,366 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "height": 42,
           "z": 7
         }
-      ]
+      ],
+      "staff": {
+        "key": "chars/staff_noodle",
+        "frames": 4,
+        "fps": 4,
+        "x": 295,
+        "y": 156,
+        "scale": 0.58,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "styleOverrides": {
+        "love": {
+          "slots": [
+            {
+              "activity": "eat",
+              "x": 65,
+              "y": 124,
+              "scale": 1,
+              "phase": 0,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 65,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            },
+            {
+              "activity": "eat",
+              "x": 157,
+              "y": 124,
+              "scale": 1,
+              "phase": 0.31,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 157,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            },
+            {
+              "activity": "eat",
+              "x": 249,
+              "y": 124,
+              "scale": 1,
+              "phase": 0.67,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 249,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_noodle",
+            "frames": 4,
+            "fps": 4,
+            "x": 295,
+            "y": 156,
+            "scale": 0.58,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "halloween": {
+          "slots": [
+            {
+              "activity": "eat",
+              "x": 65,
+              "y": 124,
+              "scale": 1,
+              "phase": 0,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 65,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            },
+            {
+              "activity": "eat",
+              "x": 157,
+              "y": 124,
+              "scale": 1,
+              "phase": 0.31,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 157,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            },
+            {
+              "activity": "eat",
+              "x": 249,
+              "y": 124,
+              "scale": 1,
+              "phase": 0.67,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 249,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_noodle",
+            "frames": 4,
+            "fps": 4,
+            "x": 295,
+            "y": 156,
+            "scale": 0.58,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "gold": {
+          "slots": [
+            {
+              "activity": "eat",
+              "x": 65,
+              "y": 124,
+              "scale": 1,
+              "phase": 0,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 65,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            },
+            {
+              "activity": "eat",
+              "x": 157,
+              "y": 124,
+              "scale": 1,
+              "phase": 0.31,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 157,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            },
+            {
+              "activity": "eat",
+              "x": 249,
+              "y": 124,
+              "scale": 1,
+              "phase": 0.67,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 249,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_noodle",
+            "frames": 4,
+            "fps": 4,
+            "x": 295,
+            "y": 156,
+            "scale": 0.58,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "pink": {
+          "slots": [
+            {
+              "activity": "eat",
+              "x": 65,
+              "y": 124,
+              "scale": 1,
+              "phase": 0,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 65,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            },
+            {
+              "activity": "eat",
+              "x": 157,
+              "y": 124,
+              "scale": 1,
+              "phase": 0.31,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 157,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            },
+            {
+              "activity": "eat",
+              "x": 249,
+              "y": 124,
+              "scale": 1,
+              "phase": 0.67,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_noodle_bowl",
+                "frames": 3,
+                "fps": 4,
+                "width": 40,
+                "height": 40,
+                "x": 249,
+                "y": 92,
+                "scale": 0.78,
+                "z": 9,
+                "anchor": {
+                  "x": 20,
+                  "y": 40
+                }
+              }
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_noodle",
+            "frames": 4,
+            "fps": 4,
+            "x": 295,
+            "y": 156,
+            "scale": 0.58,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        }
+      }
     },
     {
       "id": "lounge",
@@ -1265,7 +1871,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "y": 123,
           "scale": 0.6,
           "phase": 0,
-          "z": 5
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 54,
+            "y": 111,
+            "scale": 0.42,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            }
+          }
         },
         {
           "activity": "drink",
@@ -1273,7 +1894,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "y": 123,
           "scale": 0.6,
           "phase": 0.31,
-          "z": 5
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 87,
+            "y": 111,
+            "scale": 0.42,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            }
+          }
         },
         {
           "activity": "drink",
@@ -1281,7 +1917,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "y": 123,
           "scale": 0.6,
           "phase": 0.67,
-          "z": 5
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 120,
+            "y": 111,
+            "scale": 0.42,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            }
+          }
         },
         {
           "activity": "drink",
@@ -1289,7 +1940,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "y": 134,
           "scale": 0.65,
           "phase": 0.9,
-          "z": 5
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 220,
+            "y": 122,
+            "scale": 0.42,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            }
+          }
         }
       ],
       "foreground": [
@@ -1317,7 +1983,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 134,
               "scale": 0.65,
               "phase": 0,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 53,
+                "y": 122,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink",
@@ -1325,7 +2006,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 134,
               "scale": 0.65,
               "phase": 0.3,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 94,
+                "y": 122,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink",
@@ -1333,7 +2029,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 140,
               "scale": 0.65,
               "phase": 0.6,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 229,
+                "y": 128,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink_stand",
@@ -1341,7 +2052,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 156,
               "scale": 0.58,
               "phase": 0.9,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 173,
+                "y": 139,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             }
           ],
           "foreground": [
@@ -1366,7 +2092,20 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "height": 10,
               "z": 8
             }
-          ]
+          ],
+          "staff": {
+            "key": "chars/staff_lounge",
+            "frames": 4,
+            "fps": 4,
+            "x": 292,
+            "y": 158,
+            "scale": 0.5,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
         },
         "winter": {
           "slots": [
@@ -1376,7 +2115,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 134,
               "scale": 0.65,
               "phase": 0,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 53,
+                "y": 122,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink",
@@ -1384,7 +2138,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 134,
               "scale": 0.65,
               "phase": 0.3,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 94,
+                "y": 122,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink",
@@ -1392,7 +2161,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 139,
               "scale": 0.65,
               "phase": 0.6,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 240,
+                "y": 127,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink_stand",
@@ -1400,7 +2184,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 156,
               "scale": 0.58,
               "phase": 0.9,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 173,
+                "y": 139,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             }
           ],
           "foreground": [
@@ -1425,7 +2224,20 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "height": 10,
               "z": 8
             }
-          ]
+          ],
+          "staff": {
+            "key": "chars/staff_lounge",
+            "frames": 4,
+            "fps": 4,
+            "x": 292,
+            "y": 158,
+            "scale": 0.5,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
         },
         "halloween": {
           "slots": [
@@ -1435,7 +2247,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 139,
               "scale": 0.65,
               "phase": 0,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 62,
+                "y": 127,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink",
@@ -1443,7 +2270,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 139,
               "scale": 0.65,
               "phase": 0.3,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 240,
+                "y": 127,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink_stand",
@@ -1451,7 +2293,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 157,
               "scale": 0.58,
               "phase": 0.6,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 161,
+                "y": 140,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink_stand",
@@ -1459,7 +2316,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 157,
               "scale": 0.58,
               "phase": 0.9,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 200,
+                "y": 140,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             }
           ],
           "foreground": [
@@ -1484,7 +2356,20 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "height": 10,
               "z": 8
             }
-          ]
+          ],
+          "staff": {
+            "key": "chars/staff_lounge",
+            "frames": 4,
+            "fps": 4,
+            "x": 292,
+            "y": 158,
+            "scale": 0.5,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
         },
         "gold": {
           "slots": [
@@ -1494,7 +2379,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 134,
               "scale": 0.65,
               "phase": 0,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 56,
+                "y": 122,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink",
@@ -1502,7 +2402,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 134,
               "scale": 0.65,
               "phase": 0.3,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 96,
+                "y": 122,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink_stand",
@@ -1510,7 +2425,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 156,
               "scale": 0.55,
               "phase": 0.6,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 193,
+                "y": 139,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink_stand",
@@ -1518,7 +2448,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 156,
               "scale": 0.55,
               "phase": 0.9,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 261,
+                "y": 139,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             }
           ],
           "foreground": [
@@ -1536,7 +2481,20 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "height": 10,
               "z": 8
             }
-          ]
+          ],
+          "staff": {
+            "key": "chars/staff_lounge",
+            "frames": 4,
+            "fps": 4,
+            "x": 292,
+            "y": 158,
+            "scale": 0.5,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
         },
         "pink": {
           "slots": [
@@ -1546,7 +2504,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 134,
               "scale": 0.65,
               "phase": 0,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 53,
+                "y": 122,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink",
@@ -1554,7 +2527,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 134,
               "scale": 0.65,
               "phase": 0.3,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 94,
+                "y": 122,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink_stand",
@@ -1562,7 +2550,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 156,
               "scale": 0.58,
               "phase": 0.6,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 182,
+                "y": 139,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             },
             {
               "activity": "drink_stand",
@@ -1570,7 +2573,22 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "y": 156,
               "scale": 0.58,
               "phase": 0.9,
-              "z": 5
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_teacup",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 32,
+                "x": 258,
+                "y": 139,
+                "scale": 0.42,
+                "z": 9,
+                "anchor": {
+                  "x": 16,
+                  "y": 32
+                }
+              }
             }
           ],
           "foreground": [
@@ -1588,7 +2606,33 @@ window.STARLIT_AMENITY_ANIMATIONS = {
               "height": 10,
               "z": 8
             }
-          ]
+          ],
+          "staff": {
+            "key": "chars/staff_lounge",
+            "frames": 4,
+            "fps": 4,
+            "x": 292,
+            "y": 158,
+            "scale": 0.5,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        }
+      },
+      "staff": {
+        "key": "chars/staff_lounge",
+        "frames": 4,
+        "fps": 4,
+        "x": 292,
+        "y": 158,
+        "scale": 0.5,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
         }
       }
     },
@@ -1600,42 +2644,117 @@ window.STARLIT_AMENITY_ANIMATIONS = {
         {
           "activity": "watch",
           "x": 46.5,
-          "y": 255,
-          "scale": 0.8,
-          "phase": 0,
-          "z": 5
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 56.5,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            }
+          }
         },
         {
           "activity": "watch",
           "x": 120.5,
-          "y": 255,
-          "scale": 0.8,
+          "y": 239,
+          "scale": 0.72,
           "phase": 0.2,
-          "z": 5
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 130.5,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            }
+          }
         },
         {
           "activity": "watch",
           "x": 194.5,
-          "y": 255,
-          "scale": 0.8,
+          "y": 239,
+          "scale": 0.72,
           "phase": 0.4,
-          "z": 5
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 204.5,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            }
+          }
         },
         {
           "activity": "watch",
           "x": 268.5,
-          "y": 255,
-          "scale": 0.8,
-          "phase": 0.6,
-          "z": 5
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.6000000000000001,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 278.5,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            }
+          }
         },
         {
           "activity": "watch",
-          "x": 157,
-          "y": 315,
-          "scale": 0.8,
+          "x": 120.5,
+          "y": 303,
+          "scale": 0.72,
           "phase": 0.8,
-          "z": 10
+          "z": 10,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 130.5,
+            "y": 299,
+            "scale": 0.57,
+            "z": 11,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            }
+          }
         }
       ],
       "foreground": [
@@ -1723,7 +2842,894 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "height": 19,
           "z": 12
         }
-      ]
+      ],
+      "staff": {
+        "key": "chars/staff_cinema",
+        "frames": 4,
+        "fps": 4,
+        "x": 304,
+        "y": 332,
+        "scale": 0.45,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "styleOverrides": {
+        "love": {
+          "slots": [
+            {
+              "activity": "watch",
+              "x": 46.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.0,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 56.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 120.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.2,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 130.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 194.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.4,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 204.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 268.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.6000000000000001,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 278.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 120.5,
+              "y": 303,
+              "scale": 0.72,
+              "phase": 0.8,
+              "z": 10,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 130.5,
+                "y": 299,
+                "scale": 0.57,
+                "z": 11,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            }
+          ],
+          "foreground": [
+            {
+              "x": 20,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 20,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 20,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 94,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 94,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 94,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 168,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 168,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 168,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 242,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 242,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 242,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_cinema",
+            "frames": 4,
+            "fps": 4,
+            "x": 304,
+            "y": 332,
+            "scale": 0.45,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "halloween": {
+          "slots": [
+            {
+              "activity": "watch",
+              "x": 46.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.0,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 56.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 120.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.2,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 130.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 194.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.4,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 204.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 268.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.6000000000000001,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 278.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 120.5,
+              "y": 303,
+              "scale": 0.72,
+              "phase": 0.8,
+              "z": 10,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 130.5,
+                "y": 299,
+                "scale": 0.57,
+                "z": 11,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            }
+          ],
+          "foreground": [
+            {
+              "x": 20,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 20,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 20,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 94,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 94,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 94,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 168,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 168,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 168,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 242,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 242,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 242,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_cinema",
+            "frames": 4,
+            "fps": 4,
+            "x": 304,
+            "y": 332,
+            "scale": 0.45,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "gold": {
+          "slots": [
+            {
+              "activity": "watch",
+              "x": 46.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.0,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 56.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 120.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.2,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 130.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 194.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.4,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 204.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 268.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.6000000000000001,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 278.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 120.5,
+              "y": 303,
+              "scale": 0.72,
+              "phase": 0.8,
+              "z": 10,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 130.5,
+                "y": 299,
+                "scale": 0.57,
+                "z": 11,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            }
+          ],
+          "foreground": [
+            {
+              "x": 20,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 20,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 20,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 94,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 94,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 94,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 168,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 168,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 168,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 242,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 242,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 242,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_cinema",
+            "frames": 4,
+            "fps": 4,
+            "x": 304,
+            "y": 332,
+            "scale": 0.45,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "pink": {
+          "slots": [
+            {
+              "activity": "watch",
+              "x": 46.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.0,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 56.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 120.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.2,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 130.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 194.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.4,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 204.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 268.5,
+              "y": 239,
+              "scale": 0.72,
+              "phase": 0.6000000000000001,
+              "z": 5,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 278.5,
+                "y": 235,
+                "scale": 0.57,
+                "z": 6,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            },
+            {
+              "activity": "watch",
+              "x": 120.5,
+              "y": 303,
+              "scale": 0.72,
+              "phase": 0.8,
+              "z": 10,
+              "prop": {
+                "key": "chars/prop_popcorn",
+                "frames": 3,
+                "fps": 4,
+                "width": 32,
+                "height": 36,
+                "x": 130.5,
+                "y": 299,
+                "scale": 0.57,
+                "z": 11,
+                "anchor": {
+                  "x": 16,
+                  "y": 36
+                }
+              }
+            }
+          ],
+          "foreground": [
+            {
+              "x": 20,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 20,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 20,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 94,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 94,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 94,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 168,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 168,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 168,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            },
+            {
+              "x": 242,
+              "y": 237,
+              "width": 53,
+              "height": 19,
+              "z": 7
+            },
+            {
+              "x": 242,
+              "y": 275,
+              "width": 53,
+              "height": 45,
+              "z": 8
+            },
+            {
+              "x": 242,
+              "y": 301,
+              "width": 53,
+              "height": 19,
+              "z": 12
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_cinema",
+            "frames": 4,
+            "fps": 4,
+            "x": 304,
+            "y": 332,
+            "scale": 0.45,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        }
+      }
     },
     {
       "id": "games",
@@ -1777,7 +3783,104 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "height": 3,
           "z": 7
         }
-      ]
+      ],
+      "staff": {
+        "key": "chars/staff_games",
+        "frames": 4,
+        "fps": 4,
+        "x": 236,
+        "y": 156,
+        "scale": 0.5,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "styleOverrides": {
+        "gold": {
+          "slots": [
+            {
+              "activity": "play",
+              "x": 30,
+              "y": 147,
+              "scale": 0.8,
+              "phase": 0,
+              "z": 5
+            },
+            {
+              "activity": "play",
+              "x": 110,
+              "y": 147,
+              "scale": 0.8,
+              "phase": 0.31,
+              "z": 5
+            },
+            {
+              "activity": "play",
+              "x": 190,
+              "y": 147,
+              "scale": 0.8,
+              "phase": 0.67,
+              "z": 5
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_games",
+            "frames": 4,
+            "fps": 4,
+            "x": 236,
+            "y": 156,
+            "scale": 0.5,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "pink": {
+          "slots": [
+            {
+              "activity": "play",
+              "x": 30,
+              "y": 147,
+              "scale": 0.8,
+              "phase": 0,
+              "z": 5
+            },
+            {
+              "activity": "play",
+              "x": 110,
+              "y": 147,
+              "scale": 0.8,
+              "phase": 0.31,
+              "z": 5
+            },
+            {
+              "activity": "play",
+              "x": 190,
+              "y": 147,
+              "scale": 0.8,
+              "phase": 0.67,
+              "z": 5
+            }
+          ],
+          "staff": {
+            "key": "chars/staff_games",
+            "frames": 4,
+            "fps": 4,
+            "x": 236,
+            "y": 156,
+            "scale": 0.5,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        }
+      }
     },
     {
       "id": "treehouse_2x2",
@@ -1786,60 +3889,73 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "slots": [
         {
           "activity": "read",
-          "x": 62,
-          "y": 185,
-          "scale": 0.68,
-          "phase": 0,
+          "x": 66,
+          "y": 178,
+          "scale": 0.56,
+          "phase": 0.0,
           "z": 5
         },
         {
           "activity": "read",
-          "x": 101,
-          "y": 185,
-          "scale": 0.68,
-          "phase": 0.31,
+          "x": 108,
+          "y": 178,
+          "scale": 0.56,
+          "phase": 0.2,
           "z": 5
         },
         {
           "activity": "read",
-          "x": 230,
-          "y": 185,
-          "scale": 0.68,
-          "phase": 0.67,
+          "x": 205,
+          "y": 180,
+          "scale": 0.6,
+          "phase": 0.4,
           "z": 5
         },
         {
           "activity": "read_stand",
-          "x": 159,
-          "y": 202,
-          "scale": 0.62,
-          "phase": 0.9,
+          "x": 238,
+          "y": 196,
+          "scale": 0.5,
+          "phase": 0.6,
           "z": 5
         }
       ],
       "foreground": [
         {
-          "x": 42,
-          "y": 180,
-          "width": 76,
+          "x": 44,
+          "y": 177,
+          "width": 94,
           "height": 10,
           "z": 7
         },
         {
-          "x": 208,
-          "y": 186,
-          "width": 32,
-          "height": 10,
+          "x": 183,
+          "y": 179,
+          "width": 45,
+          "height": 9,
           "z": 7
         },
         {
-          "x": 135,
-          "y": 180,
-          "width": 52,
-          "height": 8,
+          "x": 144,
+          "y": 177,
+          "width": 35,
+          "height": 7,
           "z": 7
         }
-      ]
+      ],
+      "staff": {
+        "key": "chars/staff_treehouse",
+        "frames": 4,
+        "fps": 4,
+        "x": 267,
+        "y": 196,
+        "scale": 0.5,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      }
     },
     {
       "id": "treehouse_2x3",
@@ -1848,76 +3964,145 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "slots": [
         {
           "activity": "read",
-          "x": 55,
-          "y": 185,
-          "scale": 0.58,
-          "phase": 0,
+          "x": 59,
+          "y": 178,
+          "scale": 0.49,
+          "phase": 0.0,
           "z": 5
         },
         {
           "activity": "read",
-          "x": 85,
-          "y": 185,
-          "scale": 0.58,
+          "x": 88,
+          "y": 178,
+          "scale": 0.49,
           "phase": 0.2,
           "z": 5
         },
         {
           "activity": "read",
-          "x": 115,
-          "y": 185,
-          "scale": 0.58,
+          "x": 117,
+          "y": 178,
+          "scale": 0.49,
           "phase": 0.4,
           "z": 5
         },
         {
           "activity": "read",
-          "x": 230,
-          "y": 185,
-          "scale": 0.62,
+          "x": 205,
+          "y": 180,
+          "scale": 0.55,
           "phase": 0.6,
           "z": 5
         },
         {
           "activity": "read_stand",
-          "x": 156,
-          "y": 202,
-          "scale": 0.55,
+          "x": 161,
+          "y": 196,
+          "scale": 0.48,
           "phase": 0.8,
           "z": 5
         },
         {
           "activity": "read_stand",
-          "x": 193,
-          "y": 202,
-          "scale": 0.55,
+          "x": 238,
+          "y": 196,
+          "scale": 0.48,
           "phase": 1,
           "z": 5
         }
       ],
       "foreground": [
         {
-          "x": 42,
-          "y": 180,
-          "width": 76,
+          "x": 44,
+          "y": 177,
+          "width": 94,
           "height": 10,
           "z": 7
         },
         {
-          "x": 208,
-          "y": 186,
-          "width": 32,
-          "height": 10,
+          "x": 183,
+          "y": 179,
+          "width": 45,
+          "height": 9,
           "z": 7
         },
         {
-          "x": 135,
-          "y": 180,
-          "width": 52,
-          "height": 8,
+          "x": 144,
+          "y": 177,
+          "width": 35,
+          "height": 7,
           "z": 7
         }
-      ]
+      ],
+      "staff": {
+        "key": "chars/staff_treehouse",
+        "frames": 4,
+        "fps": 4,
+        "x": 267,
+        "y": 196,
+        "scale": 0.5,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      }
+    },
+    {
+      "id": "closet",
+      "width": 160,
+      "height": 168,
+      "slots": [],
+      "foreground": [],
+      "staff": {
+        "key": "chars/staff_closet",
+        "frames": 4,
+        "fps": 4,
+        "x": 79,
+        "y": 158,
+        "scale": 0.55,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "styleOverrides": {
+        "gold": {
+          "slots": [],
+          "foreground": [],
+          "staff": {
+            "key": "chars/staff_closet",
+            "frames": 4,
+            "fps": 4,
+            "x": 79,
+            "y": 158,
+            "scale": 0.55,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        },
+        "pink": {
+          "slots": [],
+          "foreground": [],
+          "staff": {
+            "key": "chars/staff_closet",
+            "frames": 4,
+            "fps": 4,
+            "x": 79,
+            "y": 158,
+            "scale": 0.55,
+            "z": 9,
+            "anchor": {
+              "x": 28,
+              "y": 96
+            }
+          }
+        }
+      }
     }
   ]
 };

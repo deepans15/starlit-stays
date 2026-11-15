@@ -84,6 +84,5 @@
     <path d="M153 111l-11-3 5 9 6 1" fill="#ffc5de" vector-effect="non-scaling-stroke" transform="translate(0 7)" />
     <ellipse cx="161" cy="106" rx="8" ry="3" fill="#fff8ef" vector-effect="non-scaling-stroke" transform="translate(0 7)" />
     <circle cx="161" cy="102" r="2" fill="#ffc94d" vector-effect="non-scaling-stroke" transform="translate(0 7)" />
-    <path d="M183 123h9q0 8-4 8t-5-8Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
   </g>
 </svg>

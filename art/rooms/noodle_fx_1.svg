@@ -1,11 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="320" height="168" viewBox="0 0 320 168">
   <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M61 73q-8 -6 -3 -12t0-12" fill="none" stroke="#fff8ef" stroke-width="2.5" />
-    <path d="M71 69q8 -5 3 -10t0-10" fill="none" stroke="#ffd2b8" stroke-width="2" />
-    <path d="M153 73q-8 -6 -3 -12t0-12" fill="none" stroke="#fff8ef" stroke-width="2.5" />
-    <path d="M163 69q8 -5 3 -10t0-10" fill="none" stroke="#ffd2b8" stroke-width="2" />
-    <path d="M245 73q-8 -6 -3 -12t0-12" fill="none" stroke="#fff8ef" stroke-width="2.5" />
-    <path d="M255 69q8 -5 3 -10t0-10" fill="none" stroke="#ffd2b8" stroke-width="2" />
     <path d="M164 57q-3 4 -3 9" fill="none" stroke="#c8915f" stroke-width="2" />
     <path d="M159 65v3m4-3v3" fill="none" stroke="#ffc94d" stroke-width="2" />
     <path d="M230 57q-3 4 -3 9" fill="none" stroke="#c8915f" stroke-width="2" />

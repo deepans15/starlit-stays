@@ -28,11 +28,5 @@
       <path d="M45 43q4 16-7 17" fill="none" stroke="#ffc94d" stroke-width="1.5" vector-effect="non-scaling-stroke" />
       <path d="m37 35 2-1" fill="none" stroke="#fff8ef" stroke-width="2" vector-effect="non-scaling-stroke" />
     </g>
-    <path d="M35 69h14l-2 14H37Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-    <path d="M40 72v8m5-8v8" fill="none" stroke="#fff8ef" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <circle cx="36" cy="68" r="2.6" fill="#fff0b5" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <circle cx="40" cy="65" r="2.6" fill="#fff0b5" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <circle cx="45" cy="66" r="2.6" fill="#fff0b5" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <circle cx="48" cy="69" r="2.6" fill="#fff0b5" stroke-width="2" vector-effect="non-scaling-stroke" />
   </g>
 </svg>

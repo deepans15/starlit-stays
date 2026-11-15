@@ -21,28 +21,10 @@
     <rect x="15" y="90" width="290" height="38" rx="3" fill="#ffdc85" vector-effect="non-scaling-stroke" />
     <rect x="12" y="86" width="296" height="9" rx="3" fill="#ffedb6" vector-effect="non-scaling-stroke" />
     <path d="M25 99h271v23H25Z" fill="#ffdc85" stroke="none" vector-effect="non-scaling-stroke" />
-    <path d="M51 81h28q-2 14-14 14t-14-14Z" fill="#fff6dd" vector-effect="non-scaling-stroke" />
-    <ellipse cx="65" cy="81" rx="14" ry="4" fill="#ffdc85" vector-effect="non-scaling-stroke" />
-    <path d="M55 81q5-5 10 0t10 0" fill="none" stroke="#ffedb6" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <path d="M66 76l10-13m-6 14 11-12" fill="none" stroke="#ffdc85" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <path d="M59 66q-5-5 0-10t0-10" fill="none" stroke="#ffdc85" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <path d="M71 63q-5-5 0-10t0-10" fill="none" stroke="#ffdc85" stroke-width="2" vector-effect="non-scaling-stroke" transform="translate(0 3)" />
     <path d="M56 124l-5 33m20-33 5 33m-23-10h18" fill="none" stroke="#2b2340" stroke-width="3" vector-effect="non-scaling-stroke" />
     <ellipse cx="65" cy="124" rx="14" ry="5" fill="#ffdc85" vector-effect="non-scaling-stroke" />
-    <path d="M143 81h28q-2 14-14 14t-14-14Z" fill="#fff6dd" vector-effect="non-scaling-stroke" />
-    <ellipse cx="157" cy="81" rx="14" ry="4" fill="#ffdc85" vector-effect="non-scaling-stroke" />
-    <path d="M147 81q5-5 10 0t10 0" fill="none" stroke="#ffedb6" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <path d="M158 76l10-13m-6 14 11-12" fill="none" stroke="#ffdc85" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <path d="M151 66q-5-5 0-10t0-10" fill="none" stroke="#ffdc85" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <path d="M163 63q-5-5 0-10t0-10" fill="none" stroke="#ffdc85" stroke-width="2" vector-effect="non-scaling-stroke" transform="translate(0 3)" />
     <path d="M148 124l-5 33m20-33 5 33m-23-10h18" fill="none" stroke="#2b2340" stroke-width="3" vector-effect="non-scaling-stroke" />
     <ellipse cx="157" cy="124" rx="14" ry="5" fill="#ffdc85" vector-effect="non-scaling-stroke" />
-    <path d="M235 81h28q-2 14-14 14t-14-14Z" fill="#fff6dd" vector-effect="non-scaling-stroke" />
-    <ellipse cx="249" cy="81" rx="14" ry="4" fill="#ffdc85" vector-effect="non-scaling-stroke" />
-    <path d="M239 81q5-5 10 0t10 0" fill="none" stroke="#ffedb6" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <path d="M250 76l10-13m-6 14 11-12" fill="none" stroke="#ffdc85" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <path d="M243 66q-5-5 0-10t0-10" fill="none" stroke="#ffdc85" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <path d="M255 63q-5-5 0-10t0-10" fill="none" stroke="#ffdc85" stroke-width="2" vector-effect="non-scaling-stroke" transform="translate(0 3)" />
     <path d="M240 124l-5 33m20-33 5 33m-23-10h18" fill="none" stroke="#2b2340" stroke-width="3" vector-effect="non-scaling-stroke" />
     <ellipse cx="249" cy="124" rx="14" ry="5" fill="#ffdc85" vector-effect="non-scaling-stroke" />
     <rect x="28" y="71" width="13" height="14" rx="2" fill="#ffedb6" vector-effect="non-scaling-stroke" />
