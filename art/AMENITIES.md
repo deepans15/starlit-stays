@@ -9,8 +9,8 @@ Every guest identity (guest_1 through guest_12 and inspector) has the following 
 | Activity | Canvas | Frames | FPS | Anchor in file pixels |
 |---|---|---:|---:|---|
 | swim | 96 x 56 | 8 | 8 | x48, y44, waterline |
-| run | 56 x 96 | 4 | 8 | x28, y96, belt/floor |
-| lift | 56 x 96 | 4 | 3 | x28, y96, floor |
+| run | 56 x 96 | 8 | 10 | x28, y96, belt/floor |
+| lift | 56 x 96 | 8 | 4 | x28, y96, floor |
 | eat | 56 x 112 | 4 | 3 | x28, y88, seat |
 | drink | 56 x 112 | 4 | 2 | x28, y88, seat |
 | watch | 56 x 112 | 4 | 2 | x28, y88, seat |
@@ -19,7 +19,7 @@ Every guest identity (guest_1 through guest_12 and inspector) has the following 
 | drink_stand | 56 x 96 | 4 | 2 | x28, y96, floor |
 | read_stand | 56 x 96 | 4 | 2 | x28, y96, floor |
 
-There are 572 new frames across thirteen identities. The exact original heads, hairstyles and skin tones are retained. Bags, cameras and other carried travel props are omitted during activities. Top hats, caps and headphones are removed for swimming/exercise. The hooded guest keeps covered swimwear. Swimming uses a horizontal body and alternating crawl strokes, with the lower body clipped below a constant waterline and only small ripple strokes visible. Seated poses have bent legs, not standing legs pushed below a table. Tea cups, spoons, weights, popcorn and books move with their hands.
+There are now 676 activity frames across thirteen identities. The exact original heads, hairstyles and skin tones are retained. Bags, cameras and other carried travel props are omitted during activities. Top hats, caps and headphones are removed for swimming/exercise. The hooded guest keeps covered swimwear. Swimming uses a horizontal body and alternating crawl strokes, with the lower body clipped below a constant waterline and only small ripple strokes visible. Seated poses have bent legs, not standing legs pushed below a table. Tea cups, spoons, weights, popcorn and books move with their hands.
 
 ## Room placements and foreground overlap
 amenity_animations.js defines window.STARLIT_AMENITY_ANIMATIONS. Each activity has an anchor, its size, rate and all character frame keys. Each room has one slot per current room capacity. Coordinates and scales refer to the room SVG's full file size, before the game's normal half-size display. Slot phase offsets prevent synchronized visitors.

@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="56" height="96" viewBox="0 0 56 96">
   <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 71L25.3 82L32 90H42L35.3 82L31 71Z M32 71L24.25 82L18 90H28L34.25 82L40 70Z" fill="#514965" vector-effect="non-scaling-stroke" />
-    <g transform="translate(14 0)">
+    <path d="M18 71L22.80 82L25.00 90.00h10L30.80 82L31 71Z M32 71L31.20 82L27.00 83.00h9L38.20 82L40 70Z" fill="#514965" vector-effect="non-scaling-stroke" />
+    <g transform="translate(7.00 0.00)">
       <path d="M18 89h10l5 3v2.75H16v-4Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
     </g>
-    <g transform="translate(-15 0)">
+    <g transform="translate(-7.00 -7.00)">
       <path d="M33 89h9l5 3v2.75H32v-4Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
     </g>
     <path d="M19 49q11-7 21 1l3 25H16Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
     <path d="M35 51l7 23h-8Z" fill="#514965" stroke="none" opacity="0.18" vector-effect="non-scaling-stroke" />
     <path d="M24 44v7q5 4 10-1v-7" fill="#a96e4b" vector-effect="non-scaling-stroke" />
     <path d="M24 52l5 4 6-5" fill="none" stroke="#fff8ef" stroke-width="2" vector-effect="non-scaling-stroke" />
-    <path d="M19 53Q8.00 63 15.00 63" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
-    <path d="M19 53Q8.00 63 15.00 63" fill="none" stroke="#fff8ef" stroke-width="5" vector-effect="non-scaling-stroke" />
-    <path d="M37 53Q48.00 64 42.00 65" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
-    <path d="M37 53Q48.00 64 42.00 65" fill="none" stroke="#fff8ef" stroke-width="5" vector-effect="non-scaling-stroke" />
+    <path d="M19 53Q10.90 62 25.20 61.20" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
+    <path d="M19 53Q10.90 62 25.20 61.20" fill="none" stroke="#fff8ef" stroke-width="5" vector-effect="non-scaling-stroke" />
+    <path d="M37 53Q45.10 62 32.80 66.80" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
+    <path d="M37 53Q45.10 62 32.80 66.80" fill="none" stroke="#fff8ef" stroke-width="5" vector-effect="non-scaling-stroke" />
     <g transform="translate(0 0) rotate(0 28 35)">
       <g>
         <path d="M13 17q10-16 25-6 11 10 9 32l3 14q-20 11-40-1l4-18Z" fill="#43aa8b" vector-effect="non-scaling-stroke" />

@@ -167,8 +167,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "name": "Treadmill running",
       "width": 56,
       "height": 96,
-      "frames": 4,
-      "fps": 8,
+      "frames": 8,
+      "fps": 10,
       "anchor": {
         "x": 28,
         "y": 96
@@ -178,79 +178,131 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "chars/guest_1_run_1",
           "chars/guest_1_run_2",
           "chars/guest_1_run_3",
-          "chars/guest_1_run_4"
+          "chars/guest_1_run_4",
+          "chars/guest_1_run_5",
+          "chars/guest_1_run_6",
+          "chars/guest_1_run_7",
+          "chars/guest_1_run_8"
         ],
         "guest_2": [
           "chars/guest_2_run_1",
           "chars/guest_2_run_2",
           "chars/guest_2_run_3",
-          "chars/guest_2_run_4"
+          "chars/guest_2_run_4",
+          "chars/guest_2_run_5",
+          "chars/guest_2_run_6",
+          "chars/guest_2_run_7",
+          "chars/guest_2_run_8"
         ],
         "guest_3": [
           "chars/guest_3_run_1",
           "chars/guest_3_run_2",
           "chars/guest_3_run_3",
-          "chars/guest_3_run_4"
+          "chars/guest_3_run_4",
+          "chars/guest_3_run_5",
+          "chars/guest_3_run_6",
+          "chars/guest_3_run_7",
+          "chars/guest_3_run_8"
         ],
         "guest_4": [
           "chars/guest_4_run_1",
           "chars/guest_4_run_2",
           "chars/guest_4_run_3",
-          "chars/guest_4_run_4"
+          "chars/guest_4_run_4",
+          "chars/guest_4_run_5",
+          "chars/guest_4_run_6",
+          "chars/guest_4_run_7",
+          "chars/guest_4_run_8"
         ],
         "guest_5": [
           "chars/guest_5_run_1",
           "chars/guest_5_run_2",
           "chars/guest_5_run_3",
-          "chars/guest_5_run_4"
+          "chars/guest_5_run_4",
+          "chars/guest_5_run_5",
+          "chars/guest_5_run_6",
+          "chars/guest_5_run_7",
+          "chars/guest_5_run_8"
         ],
         "guest_6": [
           "chars/guest_6_run_1",
           "chars/guest_6_run_2",
           "chars/guest_6_run_3",
-          "chars/guest_6_run_4"
+          "chars/guest_6_run_4",
+          "chars/guest_6_run_5",
+          "chars/guest_6_run_6",
+          "chars/guest_6_run_7",
+          "chars/guest_6_run_8"
         ],
         "guest_7": [
           "chars/guest_7_run_1",
           "chars/guest_7_run_2",
           "chars/guest_7_run_3",
-          "chars/guest_7_run_4"
+          "chars/guest_7_run_4",
+          "chars/guest_7_run_5",
+          "chars/guest_7_run_6",
+          "chars/guest_7_run_7",
+          "chars/guest_7_run_8"
         ],
         "guest_8": [
           "chars/guest_8_run_1",
           "chars/guest_8_run_2",
           "chars/guest_8_run_3",
-          "chars/guest_8_run_4"
+          "chars/guest_8_run_4",
+          "chars/guest_8_run_5",
+          "chars/guest_8_run_6",
+          "chars/guest_8_run_7",
+          "chars/guest_8_run_8"
         ],
         "guest_9": [
           "chars/guest_9_run_1",
           "chars/guest_9_run_2",
           "chars/guest_9_run_3",
-          "chars/guest_9_run_4"
+          "chars/guest_9_run_4",
+          "chars/guest_9_run_5",
+          "chars/guest_9_run_6",
+          "chars/guest_9_run_7",
+          "chars/guest_9_run_8"
         ],
         "guest_10": [
           "chars/guest_10_run_1",
           "chars/guest_10_run_2",
           "chars/guest_10_run_3",
-          "chars/guest_10_run_4"
+          "chars/guest_10_run_4",
+          "chars/guest_10_run_5",
+          "chars/guest_10_run_6",
+          "chars/guest_10_run_7",
+          "chars/guest_10_run_8"
         ],
         "guest_11": [
           "chars/guest_11_run_1",
           "chars/guest_11_run_2",
           "chars/guest_11_run_3",
-          "chars/guest_11_run_4"
+          "chars/guest_11_run_4",
+          "chars/guest_11_run_5",
+          "chars/guest_11_run_6",
+          "chars/guest_11_run_7",
+          "chars/guest_11_run_8"
         ],
         "guest_12": [
           "chars/guest_12_run_1",
           "chars/guest_12_run_2",
           "chars/guest_12_run_3",
-          "chars/guest_12_run_4"
+          "chars/guest_12_run_4",
+          "chars/guest_12_run_5",
+          "chars/guest_12_run_6",
+          "chars/guest_12_run_7",
+          "chars/guest_12_run_8"
         ],
         "inspector": [
           "chars/inspector_run_1",
           "chars/inspector_run_2",
           "chars/inspector_run_3",
-          "chars/inspector_run_4"
+          "chars/inspector_run_4",
+          "chars/inspector_run_5",
+          "chars/inspector_run_6",
+          "chars/inspector_run_7",
+          "chars/inspector_run_8"
         ]
       }
     },
@@ -259,8 +311,8 @@ window.STARLIT_AMENITY_ANIMATIONS = {
       "name": "Dumbbell curls",
       "width": 56,
       "height": 96,
-      "frames": 4,
-      "fps": 3,
+      "frames": 8,
+      "fps": 4,
       "anchor": {
         "x": 28,
         "y": 96
@@ -270,79 +322,131 @@ window.STARLIT_AMENITY_ANIMATIONS = {
           "chars/guest_1_lift_1",
           "chars/guest_1_lift_2",
           "chars/guest_1_lift_3",
-          "chars/guest_1_lift_4"
+          "chars/guest_1_lift_4",
+          "chars/guest_1_lift_5",
+          "chars/guest_1_lift_6",
+          "chars/guest_1_lift_7",
+          "chars/guest_1_lift_8"
         ],
         "guest_2": [
           "chars/guest_2_lift_1",
           "chars/guest_2_lift_2",
           "chars/guest_2_lift_3",
-          "chars/guest_2_lift_4"
+          "chars/guest_2_lift_4",
+          "chars/guest_2_lift_5",
+          "chars/guest_2_lift_6",
+          "chars/guest_2_lift_7",
+          "chars/guest_2_lift_8"
         ],
         "guest_3": [
           "chars/guest_3_lift_1",
           "chars/guest_3_lift_2",
           "chars/guest_3_lift_3",
-          "chars/guest_3_lift_4"
+          "chars/guest_3_lift_4",
+          "chars/guest_3_lift_5",
+          "chars/guest_3_lift_6",
+          "chars/guest_3_lift_7",
+          "chars/guest_3_lift_8"
         ],
         "guest_4": [
           "chars/guest_4_lift_1",
           "chars/guest_4_lift_2",
           "chars/guest_4_lift_3",
-          "chars/guest_4_lift_4"
+          "chars/guest_4_lift_4",
+          "chars/guest_4_lift_5",
+          "chars/guest_4_lift_6",
+          "chars/guest_4_lift_7",
+          "chars/guest_4_lift_8"
         ],
         "guest_5": [
           "chars/guest_5_lift_1",
           "chars/guest_5_lift_2",
           "chars/guest_5_lift_3",
-          "chars/guest_5_lift_4"
+          "chars/guest_5_lift_4",
+          "chars/guest_5_lift_5",
+          "chars/guest_5_lift_6",
+          "chars/guest_5_lift_7",
+          "chars/guest_5_lift_8"
         ],
         "guest_6": [
           "chars/guest_6_lift_1",
           "chars/guest_6_lift_2",
           "chars/guest_6_lift_3",
-          "chars/guest_6_lift_4"
+          "chars/guest_6_lift_4",
+          "chars/guest_6_lift_5",
+          "chars/guest_6_lift_6",
+          "chars/guest_6_lift_7",
+          "chars/guest_6_lift_8"
         ],
         "guest_7": [
           "chars/guest_7_lift_1",
           "chars/guest_7_lift_2",
           "chars/guest_7_lift_3",
-          "chars/guest_7_lift_4"
+          "chars/guest_7_lift_4",
+          "chars/guest_7_lift_5",
+          "chars/guest_7_lift_6",
+          "chars/guest_7_lift_7",
+          "chars/guest_7_lift_8"
         ],
         "guest_8": [
           "chars/guest_8_lift_1",
           "chars/guest_8_lift_2",
           "chars/guest_8_lift_3",
-          "chars/guest_8_lift_4"
+          "chars/guest_8_lift_4",
+          "chars/guest_8_lift_5",
+          "chars/guest_8_lift_6",
+          "chars/guest_8_lift_7",
+          "chars/guest_8_lift_8"
         ],
         "guest_9": [
           "chars/guest_9_lift_1",
           "chars/guest_9_lift_2",
           "chars/guest_9_lift_3",
-          "chars/guest_9_lift_4"
+          "chars/guest_9_lift_4",
+          "chars/guest_9_lift_5",
+          "chars/guest_9_lift_6",
+          "chars/guest_9_lift_7",
+          "chars/guest_9_lift_8"
         ],
         "guest_10": [
           "chars/guest_10_lift_1",
           "chars/guest_10_lift_2",
           "chars/guest_10_lift_3",
-          "chars/guest_10_lift_4"
+          "chars/guest_10_lift_4",
+          "chars/guest_10_lift_5",
+          "chars/guest_10_lift_6",
+          "chars/guest_10_lift_7",
+          "chars/guest_10_lift_8"
         ],
         "guest_11": [
           "chars/guest_11_lift_1",
           "chars/guest_11_lift_2",
           "chars/guest_11_lift_3",
-          "chars/guest_11_lift_4"
+          "chars/guest_11_lift_4",
+          "chars/guest_11_lift_5",
+          "chars/guest_11_lift_6",
+          "chars/guest_11_lift_7",
+          "chars/guest_11_lift_8"
         ],
         "guest_12": [
           "chars/guest_12_lift_1",
           "chars/guest_12_lift_2",
           "chars/guest_12_lift_3",
-          "chars/guest_12_lift_4"
+          "chars/guest_12_lift_4",
+          "chars/guest_12_lift_5",
+          "chars/guest_12_lift_6",
+          "chars/guest_12_lift_7",
+          "chars/guest_12_lift_8"
         ],
         "inspector": [
           "chars/inspector_lift_1",
           "chars/inspector_lift_2",
           "chars/inspector_lift_3",
-          "chars/inspector_lift_4"
+          "chars/inspector_lift_4",
+          "chars/inspector_lift_5",
+          "chars/inspector_lift_6",
+          "chars/inspector_lift_7",
+          "chars/inspector_lift_8"
         ]
       }
     },
