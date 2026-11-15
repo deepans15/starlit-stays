@@ -54,6 +54,12 @@
   body.panelOpen.panelWide #dock{right:458px}
   body.dragOut #panel, body.dragOut #marks{opacity:0;pointer-events:none;transform:translateX(40px)}
   #panel, #marks{transition:opacity .15s, transform .15s}
+  #loading{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:linear-gradient(#2b2a5c,#45397a);color:#ffe8a8;font-weight:900;transition:opacity .45s}
+  #loading.done{opacity:0;pointer-events:none}
+  #loading .t{font-size:30px;letter-spacing:.5px;text-shadow:0 3px 0 rgba(0,0,0,.25)}
+  #loading .b{width:min(260px,70vw);height:12px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}
+  #loading .b i{display:block;height:100%;width:0;background:#ffc94d;border-radius:99px;transition:width .2s}
+  #loading .s{font-size:13px;color:#cfc6ef;font-weight:700}
   #marks{position:absolute;display:none;flex-direction:column;gap:6px;z-index:5}
   #marks button{border:3px solid var(--line);border-right:none;background:#f3ece2;border-radius:14px 0 0 14px;width:64px;padding:8px 2px;font-weight:800;font-size:10.5px;cursor:pointer;color:#7a6e86;line-height:1.15;text-align:center;box-shadow:-4px 4px 10px rgba(0,0,0,.18);transition:transform .12s,background .12s,width .12s}
   #marks button .e{display:block;font-size:19px;margin-bottom:2px}
@@ -139,6 +145,7 @@
 </style>
 </head>
 <body>
+<div id="loading"><div class="t">★ Starlit Stays ★</div><div class="b"><i id="loadBar"></i></div><div class="s">Opening the doors…</div></div>
 <div id="app">
   <div id="stage">
     <canvas id="cv"></canvas>
@@ -180,7 +187,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.29';
+const BUILD = '0.30';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -344,14 +351,21 @@ const GOALS = [
 /* ---------------- art ----------------
    Art files live in art/ and are listed in art/manifest.js. Anything missing falls back to shapes drawn in code. */
 const ART = {};
-(function loadArt(){
-  const m = window.STARLIT_ART || {};
-  for(const [key, file] of Object.entries(m)){
+// all art is loaded behind the loading screen, so the game never flashes old or placeholder pictures.
+// ?v=BUILD makes browsers fetch fresh art after each update instead of showing old cached copies.
+const artReady = new Promise(done => {
+  const list = Object.entries(window.STARLIT_ART || {});
+  let left = list.length; const bar = document.getElementById('loadBar');
+  const tick = () => { left--; if(bar) bar.style.width = Math.round(100*(list.length-left)/Math.max(1,list.length))+'%'; if(left<=0) done(); };
+  if(!left) done();
+  for(const [key, file] of list){
     const img = new Image();
-    img.onload = () => { ART[key] = img; };
-    img.src = 'art/' + file;
+    img.onload = () => { ART[key] = img; tick(); };
+    img.onerror = tick;
+    img.src = 'art/' + file + '?v=' + BUILD;
   }
-})();
+  setTimeout(done, 8000);   // slow connection: start anyway, late pictures pop in when they arrive
+});
 const art = k => ART[k] || null;
 const GUEST_SKINS = (()=>{ let n=0; while((window.STARLIT_ART||{})['chars/guest_'+(n+1)]) n++; return Math.max(n,6); })();   // grows as ChatGPT adds guest_N art
 function sprite(key, x, y, w, h, flip){
@@ -1861,7 +1875,9 @@ $('btnMenu').onclick = ()=>{ openMenu(); };
 $('btnRanks').onclick = ()=>{ if(ui.panelKind==='ranks') closePanel(); else openRanks(); };
 $('goalsBox').onclick = ()=>{ openGoals(); };
 // ChatGPT can replace these icons: art/ui/build.svg, expand.svg, goals.svg, settings.svg
-setTimeout(()=>{ lastTop=''; document.querySelectorAll('[data-art]').forEach(el=>{ const a = art(el.dataset.art); if(a) el.innerHTML = `<img src="${a.src}" alt="">`; }); }, 1500);
+function swapIcons(){ lastTop=''; document.querySelectorAll('[data-art]').forEach(el=>{ const a = art(el.dataset.art); if(a) el.innerHTML = `<img src="${a.src}" alt="">`; }); }
+artReady.then(()=>{ swapIcons(); const l = document.getElementById('loading'); if(l){ l.classList.add('done'); setTimeout(()=>l.remove(), 500); } });
+setTimeout(swapIcons, 9000);
 setInterval(()=>{ $('btnBuild').classList.toggle('on', ui.panelKind==='build'); }, 200);
 window.addEventListener('resize', resize);
 document.addEventListener('visibilitychange', ()=>{ if(document.hidden){ save(); cloudSave(); onlineSave(); pushScores(true); } });
