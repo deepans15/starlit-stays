@@ -223,7 +223,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.38';
+const BUILD = '0.39';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -1364,6 +1364,7 @@ cv.addEventListener('pointerdown', ev=>{
     unfocus(); return;
   }
   const r = roomAt(p);
+  if(ui.mode==='placeInv'){ const id = ui.placeInv; if(r && id){ if(placeInvTo(id, r) !== false){ setMode(null); ui.placeInv = null; } } else { setMode(null); ui.placeInv = null; } return; }
   if(ui.mode==='sell'){ if(r) openSell(r); else closePanel(); return; }  // Sell tab open: tap a room to sell it, tap empty space to close
   if(!r){ ui.pan = {sx:ev.clientX, sy:ev.clientY, x0:ui.panX||0, y0:ui.panY||0, moved:false}; return; }   // drag empty space to look around; a plain tap closes any menu
   ui.drag = {room:r, sx:ev.clientX, sy:ev.clientY, wx0:p.x, wy0:p.y, px:p.x, py:p.y, moved:false, bounds: buildBounds(2.5)};
@@ -1493,6 +1494,21 @@ function decorShop(lv){
   }
   return h;
 }
+// furniture from storage: drop or tap onto a room, free
+function placeInvTo(id, r, wx){
+  if(!S.inv[id]) return;
+  if(!itemFits(r, id)){ const it = ITEMS[id]; toast(it.zone==='bed' && hasBed(r) ? 'That room already has a bed' : `${it.name} can't go in the ${roomLabel(r)}`); return false; }
+  const before = r.items.length, keep = ui.panelKind, keepTab = ui.buildTab;
+  placeItem(r.id, id, true);
+  if(r.items.length > before){ const it = r.items[r.items.length-1], def = ITEMS[id]; if(wx!==undefined) it.x = clampItemX(r, def, wx - visRect(r).x - def.w/2); r.pulse = 1.2; save(); toast(`${def.name} placed in the ${roomLabel(r)}`); }
+  if(ui.focus && ui.focus!==r.id) unfocus();
+  if(keep==='build' && keepTab==='storage') openStorage(); else if(!ui.placeInv) closePanel();
+  return true;
+}
+function startPlaceInv(id){
+  ui.placeInv = id; closePanel(); setMode('placeInv'); ui.placeInv = id;
+  setHint(`Tap a room to put the ${ITEMS[id].name} in`);
+}
 function itemFits(r, id){ const it = ITEMS[id]; return r && it && it.rooms.includes(ROOMS[r.type].kind) && !(it.zone==='bed' && hasBed(r)); }
 function buyItemTo(id, r, wx){
   const def = ITEMS[id]; if(!def || def.lvl > level()) return;
@@ -1604,7 +1620,7 @@ function drawNewRoomDrag(cov){
 }
 panel.addEventListener('pointerdown', ev=>{
   const ic = ev.target.closest && ev.target.closest('.bcard[data-item]');
-  if(ic && ev.button<=0){ const p = toWorld(ev); ui.newItem = {id: ic.dataset.item, sx: ev.clientX, sy: ev.clientY, px:p.x, py:p.y, moved:false, over:false}; return; }
+  if(ic && ev.button<=0){ const p = toWorld(ev); ui.newItem = {id: ic.dataset.item, inv: !!ic.dataset.inv, sx: ev.clientX, sy: ev.clientY, px:p.x, py:p.y, moved:false, over:false}; return; }
   const card = ev.target.closest && ev.target.closest('.bcard[data-room]');
   if(!card || ev.button>0) return;
   const p = toWorld(ev);
@@ -1632,12 +1648,12 @@ window.addEventListener('pointermove', ev=>{
 window.addEventListener('pointerup', ev=>{
   const ni = ui.newItem;
   if(ni){ ui.newItem = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut'); setTimeout(placeMarks, 220);
-    if(!ni.moved){ buyItemTo(ni.id, null); return; }
+    if(!ni.moved){ if(ni.inv) startPlaceInv(ni.id); else buyItemTo(ni.id, null); return; }
     if(!ni.over) return;   // dragged and let go back over the menu: nothing happens
     const r = roomAt({x:ni.px, y:ni.py});
     if(!r){ toast('Drop it onto a room'); return; }
     if(!itemFits(r, ni.id)){ const it = ITEMS[ni.id]; toast(it.zone==='bed' && hasBed(r) ? 'That room already has a bed' : `${it.name} can't go in the ${roomLabel(r)}`); return; }
-    buyItemTo(ni.id, r, ni.px); return; }
+    if(ni.inv) placeInvTo(ni.id, r, ni.px); else buyItemTo(ni.id, r, ni.px); return; }
   const nd = ui.newDrag; if(!nd) return;
   ui.newDrag = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut'); setTimeout(placeMarks, 220);
   const def = ROOMS[nd.type];
@@ -1768,8 +1784,10 @@ function openStorage(){
     html += `<div class="item">${swatch(d,'rooms/'+it.type)}<div class="info"><b>${d.name}</b><div class="meta">${d.w}×${d.h} · ${(it.items||[]).length} pieces of furniture</div></div><button class="btn" onclick="placeStored(${i})">Place</button></div>`; });
   const inv = Object.entries(S.inv).filter(([k,n])=>n>0 && ITEMS[k]);
   html += `<h3>Furniture inventory</h3>`;
-  if(!inv.length) html += `<div class="sub">Furniture you drag out of rooms, and level-up gifts, wait here. Open a room to place them.</div>`;
-  for(const [k,n] of inv) html += `<div class="item">${swatch({color:'#fff8ef', emoji:ITEMS[k].emoji}, 'decor/'+k)}<div class="info"><b>${ITEMS[k].name}</b><div class="meta">× ${n} · +${ITEMS[k].decor} decor</div></div></div>`;
+  if(!inv.length) html += `<div class="sub">Furniture you drag out of rooms, and level-up gifts, wait here.</div>`;
+  else html += `<div class="sub"><b>Drag</b> a piece onto a room to put it there, or <b>tap</b> it and then tap a room.</div><div class="cat">`;
+  for(const [k,n] of inv) html += `<div class="bcard" data-item="${k}" data-inv="1" title="${ITEMS[k].name}"><div class="thumb"><div class="shape" style="width:64px;height:44px;background:#fff8ef">${art('decor/'+k)?`<img src="${art('decor/'+k).src}" style="object-fit:contain">`:(ITEMS[k].emoji||'🪑')}</div></div><div class="nm">${ITEMS[k].name}</div><div class="pr">× ${n}</div><div class="ea">+${ITEMS[k].decor} decor · +🪙${itemCoins(k)} per guest</div></div>`;
+  if(inv.length) html += `</div>`;
   showPanel(html, 'build');
 }
 // Sell tab: list of rooms, or tap a room in the hotel (they get a dashed red outline)

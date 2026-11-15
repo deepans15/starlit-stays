@@ -452,5 +452,12 @@ window.STARLIT_ART = {
   "weather/leaves_front_9": "weather/leaves_front_9.svg",
   "weather/leaves_front_10": "weather/leaves_front_10.svg",
   "weather/leaves_front_11": "weather/leaves_front_11.svg",
-  "weather/leaves_front_12": "weather/leaves_front_12.svg"
+  "weather/leaves_front_12": "weather/leaves_front_12.svg",
+  "decor/halloween_bat_mobile": "decor/halloween_bat_mobile.svg",
+  "decor/winter_wallart": "decor/winter_wallart.svg",
+  "decor/pink_mobile": "decor/pink_mobile.svg",
+  "building/treehouse_2x2_branch": "building/treehouse_2x2_branch.svg",
+  "building/treehouse_2x2_cabin": "building/treehouse_2x2_cabin.svg",
+  "building/treehouse_2x3_branch": "building/treehouse_2x3_branch.svg",
+  "building/treehouse_2x3_cabin": "building/treehouse_2x3_cabin.svg"
 };

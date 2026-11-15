@@ -3,85 +3,117 @@
     <path d="M0 0h320v168H0Z" fill="#fff0f3" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 133h320v35H0Z" fill="#ead2ca" stroke="none" vector-effect="non-scaling-stroke" />
     <path d="M0 133h320" fill="none" stroke="#2b2340" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    <rect x="153" y="18" width="94" height="52" rx="5" fill="#c8915f" vector-effect="non-scaling-stroke" />
-    <rect x="159" y="24" width="82" height="40" rx="3" fill="#dff4ff" vector-effect="non-scaling-stroke" />
-    <path d="M200 25v38" fill="none" stroke="#fff8ef" stroke-width="3" vector-effect="non-scaling-stroke" />
-    <path d="M160 51q18-14 39-2t41-4v17h-80Z" fill="#b6eedc" stroke="none" vector-effect="non-scaling-stroke" />
-    <g transform="translate(20 144) scale(1.8)">
-      <ellipse cx="60" cy="7" rx="58.75" ry="5.75" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-      <ellipse cx="60" cy="7" rx="47" ry="3.6" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
-      <path d="M60 10q-22-4-13-6 8-1 13 1 5-2 13-1 9 2-13 6Z" fill="#fff8ef" stroke="none" vector-effect="non-scaling-stroke" />
-    </g>
-    <g transform="translate(21 89) scale(1)">
-      <path d="M12 50v12.75h8l3-13m49 0 2 13h8V50" fill="#c8915f" vector-effect="non-scaling-stroke" />
-      <rect x="10" y="7" width="76" height="45" rx="14" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-      <path d="M71 9q14 3 14 16v24H72Z" fill="#db647f" stroke="none" vector-effect="non-scaling-stroke" />
-      <rect x="15" y="34" width="66" height="17" rx="6" fill="#ffabb9" vector-effect="non-scaling-stroke" />
-      <rect x="4" y="29" width="13" height="27" rx="5" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-      <rect x="79" y="29" width="13" height="27" rx="5" fill="#db647f" vector-effect="non-scaling-stroke" />
-      <path d="M48 16v31" fill="none" stroke="#db647f" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-      <g transform="translate(30 29) scale(0.63)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-      </g>
-      <g transform="translate(65 28) scale(0.54)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
-      </g>
-      <path d="M20 14q5-3 11-3" fill="none" stroke="#ffbdc8" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-    </g>
-    <g transform="translate(266 96) scale(1)">
-      <path d="M24 43V14m0 17-13-8m13 0 11-10" fill="none" stroke="#43aa8b" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-      <path d="M23 34Q6 33 5 23q15-4 18 11Zm2-5q2-15 17-13 0 13-17 13Z" fill="#6fd3b5" vector-effect="non-scaling-stroke" />
-      <g transform="translate(12 17) scale(0.8)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-      </g>
-      <path d="M9 11q3-4 6 0" fill="none" stroke="#ffbdc8" stroke-width="2" vector-effect="non-scaling-stroke" />
-      <g transform="translate(34 14) scale(0.72)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-      </g>
-      <path d="M31 5q3-4 6 0" fill="none" stroke="#ffbdc8" stroke-width="2" vector-effect="non-scaling-stroke" transform="translate(0 3)" />
-      <g transform="translate(23 14) scale(0.8)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-      </g>
-      <path d="M20 3q3-4 6 0" fill="none" stroke="#ffbdc8" stroke-width="2" vector-effect="non-scaling-stroke" transform="translate(0 5)" />
-      <path d="M10 40h28l-4 18.75H14Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-      <rect x="8" y="37" width="32" height="7" rx="3" fill="#ffd2dc" vector-effect="non-scaling-stroke" />
-      <g transform="translate(24 53) scale(0.37)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+    <rect x="181" y="19" width="122" height="53" rx="5" fill="#c8915f" vector-effect="non-scaling-stroke" />
+    <rect x="187" y="25" width="110" height="41" rx="2" fill="#dff4ff" vector-effect="non-scaling-stroke" />
+    <path d="M242 26v39" fill="none" stroke="#fff8ef" stroke-width="3" vector-effect="non-scaling-stroke" />
+    <g transform="translate(14 145) scale(2)">
+      <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="60" cy="7" rx="58.75" ry="5.75" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        <ellipse cx="60" cy="7" rx="47" ry="3.6" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+        <path d="M60 10q-22-4-13-6 8-1 13 1 5-2 13-1 9 2-13 6Z" fill="#fff8ef" stroke="none" vector-effect="non-scaling-stroke" />
       </g>
     </g>
-    <g transform="translate(252 12) scale(0.8)">
-      <path d="M30 2 21 11m9-9 9 9" fill="none" stroke="#c8915f" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-      <g transform="translate(30 34) scale(2.15)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ffc94d" vector-effect="non-scaling-stroke" />
-      </g>
-      <g transform="translate(30 33) scale(1.72)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#bce9ff" vector-effect="non-scaling-stroke" />
-      </g>
-      <path d="M18 25 25 18m-9 15 14-13" fill="none" stroke="#fff8ef" stroke-width="3" vector-effect="non-scaling-stroke" />
-      <path d="M30 51q8 6 0 11-8-5 0-11Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-    </g>
-    <g transform="translate(130 0) scale(0.8)">
-      <path d="M42 1.25v12M9 22q33-20 66 0M11 22v17m31-26v16m31-7v17" fill="none" stroke="#c8915f" stroke-width="2.5" vector-effect="non-scaling-stroke" />
-      <circle cx="42" cy="13" r="3" fill="#ffc94d" vector-effect="non-scaling-stroke" />
-      <g transform="translate(11 50) scale(0.78)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-      </g>
-      <g transform="translate(42 40) scale(1)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
-      </g>
-      <g transform="translate(73 50) scale(0.78)">
-        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+    <g transform="translate(16 92) scale(1)">
+      <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 50v12.75h8l3-13m49 0 2 13h8V50" fill="#c8915f" vector-effect="non-scaling-stroke" />
+        <rect x="10" y="7" width="76" height="45" rx="14" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        <path d="M71 9q14 3 14 16v24H72Z" fill="#db647f" stroke="none" vector-effect="non-scaling-stroke" />
+        <rect x="15" y="34" width="66" height="17" rx="6" fill="#ffabb9" vector-effect="non-scaling-stroke" />
+        <rect x="4" y="29" width="13" height="27" rx="5" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        <rect x="79" y="29" width="13" height="27" rx="5" fill="#db647f" vector-effect="non-scaling-stroke" />
+        <path d="M48 16v31" fill="none" stroke="#db647f" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+        <g transform="translate(30 29) scale(0.63)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+        </g>
+        <g transform="translate(65 28) scale(0.54)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+        </g>
+        <path d="M20 14q5-3 11-3" fill="none" stroke="#ffbdc8" stroke-width="2.5" vector-effect="non-scaling-stroke" />
       </g>
     </g>
-    <path d="M161 133l-5 21m40-21 5 21" fill="none" stroke="#c8915f" stroke-width="4" vector-effect="non-scaling-stroke" />
-    <ellipse cx="179" cy="130" rx="30" ry="7" fill="#e6b481" vector-effect="non-scaling-stroke" />
-    <path d="M164 116h13q0 10-6 10t-7-10Zm22 0h13q0 10-6 10t-7-10Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
-    <g transform="translate(181 111) scale(0.55)">
-      <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+    <g transform="translate(126 16) scale(0.7)">
+      <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M30 2 21 11m9-9 9 9" fill="none" stroke="#c8915f" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+        <g transform="translate(30 34) scale(2.15)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ffc94d" vector-effect="non-scaling-stroke" />
+        </g>
+        <g transform="translate(30 33) scale(1.72)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#bce9ff" vector-effect="non-scaling-stroke" />
+        </g>
+        <path d="M18 25 25 18m-9 15 14-13" fill="none" stroke="#fff8ef" stroke-width="3" vector-effect="non-scaling-stroke" />
+        <path d="M30 51q8 6 0 11-8-5 0-11Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+      </g>
     </g>
-    <rect x="220" y="102" width="29" height="38" rx="9" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
-    <rect x="216" y="118" width="10" height="25" rx="4" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-    <rect x="244" y="118" width="10" height="25" rx="4" fill="#ff7a90" vector-effect="non-scaling-stroke" />
-    <path d="M225 144v11m22-11v11" fill="none" stroke="#c8915f" stroke-width="3" vector-effect="non-scaling-stroke" />
+    <g transform="translate(186 0) scale(0.75)">
+      <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M42 1.25v12M9 22q33-20 66 0M11 22v17m31-26v16m31-7v17" fill="none" stroke="#c8915f" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+        <circle cx="42" cy="13" r="3" fill="#ffc94d" vector-effect="non-scaling-stroke" />
+        <g transform="translate(11 50) scale(0.78)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        </g>
+        <g transform="translate(42 40) scale(1)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+        </g>
+        <g transform="translate(73 50) scale(0.78)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        </g>
+      </g>
+    </g>
+    <g transform="translate(265 97) scale(1)">
+      <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M24 43V14m0 17-13-8m13 0 11-10" fill="none" stroke="#43aa8b" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+        <path d="M23 34Q6 33 5 23q15-4 18 11Zm2-5q2-15 17-13 0 13-17 13Z" fill="#6fd3b5" vector-effect="non-scaling-stroke" />
+        <g transform="translate(12 17) scale(0.8)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        </g>
+        <path d="M9 11q3-4 6 0" fill="none" stroke="#ffbdc8" stroke-width="2" vector-effect="non-scaling-stroke" />
+        <g transform="translate(34 14) scale(0.72)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        </g>
+        <path d="M31 5q3-4 6 0" fill="none" stroke="#ffbdc8" stroke-width="2" vector-effect="non-scaling-stroke" transform="translate(0 3)" />
+        <g transform="translate(23 14) scale(0.8)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        </g>
+        <path d="M20 3q3-4 6 0" fill="none" stroke="#ffbdc8" stroke-width="2" vector-effect="non-scaling-stroke" transform="translate(0 5)" />
+        <path d="M10 40h28l-4 18.75H14Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+        <rect x="8" y="37" width="32" height="7" rx="3" fill="#ffd2dc" vector-effect="non-scaling-stroke" />
+        <g transform="translate(24 53) scale(0.37)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        </g>
+      </g>
+    </g>
+    <g transform="translate(231 81) scale(0.6)">
+      <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 92v10.75h8l2-11m30 0 2 11h8V92" fill="#c8915f" vector-effect="non-scaling-stroke" />
+        <rect x="4" y="3" width="56" height="93" rx="4" fill="#c8915f" vector-effect="non-scaling-stroke" />
+        <path d="M11 10h42v77H11Z" fill="#ac754b" vector-effect="non-scaling-stroke" />
+        <path d="M11 36h42m-42 27h42" fill="none" stroke-width="5" vector-effect="non-scaling-stroke" />
+        <path d="M11 35h42m-42 27h42" fill="none" stroke="#e6b481" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+        <rect x="14" y="15" width="8" height="18" rx="1" fill="#7ec8ff" vector-effect="non-scaling-stroke" />
+        <rect x="23" y="12" width="8" height="21" rx="1" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        <path d="m36 15 7-2 5 19-7 2Z" fill="#ffc94d" vector-effect="non-scaling-stroke" />
+        <path d="M17 19v9m9-11v10" fill="none" stroke="#fff8ef" vector-effect="non-scaling-stroke" />
+        <rect x="15" y="50" width="22" height="9" rx="2" fill="#6fd3b5" vector-effect="non-scaling-stroke" />
+        <rect x="17" y="41" width="19" height="9" rx="2" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+        <path d="M42 52q-5-8 3-13 8 5 3 13v7h-6Z" fill="#b5a0d6" vector-effect="non-scaling-stroke" />
+        <rect x="14" y="70" width="8" height="14" rx="1" fill="#ffc94d" vector-effect="non-scaling-stroke" />
+        <rect x="24" y="68" width="8" height="16" rx="1" fill="#7ec8ff" vector-effect="non-scaling-stroke" />
+        <rect x="36" y="70" width="14" height="14" rx="2" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+        <path d="M40 75h6" fill="none" stroke="#c8915f" vector-effect="non-scaling-stroke" />
+        <path d="M10 91h44" fill="none" stroke="#e6b481" vector-effect="non-scaling-stroke" />
+      </g>
+    </g>
+    <path d="M145 135l-5 21m43-21 5 21" fill="none" stroke="#c8915f" stroke-width="3" vector-effect="non-scaling-stroke" />
+    <ellipse cx="164" cy="132" rx="32" ry="7" fill="#e6b481" vector-effect="non-scaling-stroke" />
+    <path d="M151 121q-6-13 4-15h14q8 5 3 15Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <path d="M171 109q12-6 10 3-1 7-9 6" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <path d="M153 111l-11-3 5 9 6 1" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <ellipse cx="161" cy="106" rx="8" ry="3" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <circle cx="161" cy="102" r="2" fill="#ffc94d" vector-effect="non-scaling-stroke" />
+    <path d="M183 123h9q0 8-4 8t-5-8Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <rect x="201" y="104" width="36" height="41" rx="10" fill="#ffbdc8" vector-effect="non-scaling-stroke" />
+    <rect x="197" y="120" width="10" height="26" rx="4" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+    <rect x="232" y="120" width="10" height="26" rx="4" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+    <path d="M206 147v9m29-9v9" fill="none" stroke="#c8915f" stroke-width="3" vector-effect="non-scaling-stroke" />
   </g>
 </svg>

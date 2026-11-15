@@ -467,5 +467,35 @@ window.STARLIT_ITEMS = [
     "cost": 300,
     "decor": 6,
     "level": 5
+  },
+  {
+    "id": "halloween_bat_mobile",
+    "name": "Little Bat Ceiling Mobile",
+    "zone": "ceiling",
+    "width": 84,
+    "height": 60,
+    "cost": 320,
+    "decor": 6,
+    "level": 5
+  },
+  {
+    "id": "winter_wallart",
+    "name": "Snowy Pines Wall Picture",
+    "zone": "wall",
+    "width": 60,
+    "height": 44,
+    "cost": 200,
+    "decor": 5,
+    "level": 4
+  },
+  {
+    "id": "pink_mobile",
+    "name": "Rose Drop Ceiling Mobile",
+    "zone": "ceiling",
+    "width": 84,
+    "height": 60,
+    "cost": 280,
+    "decor": 6,
+    "level": 4
   }
 ];
