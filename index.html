@@ -60,6 +60,10 @@
   #loading .b{width:min(260px,70vw);height:12px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}
   #loading .b i{display:block;height:100%;width:0;background:#ffc94d;border-radius:99px;transition:width .2s}
   #loading .s{font-size:13px;color:#cfc6ef;font-weight:700}
+  #zoomCtl{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:4}
+  #zoomCtl button{width:40px;height:40px;border-radius:12px;border:3px solid #2b2340;background:#fff;color:#2b2340;font-size:22px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 3px 0 #2b2340}
+  #zoomCtl button:active{transform:translateY(2px);box-shadow:0 1px 0 #2b2340}
+  body.panelOpen #zoomCtl{display:none}
   #dropZones{position:absolute;left:50%;top:78px;transform:translateX(-50%);display:none;gap:14px;z-index:40;pointer-events:none}
   body.dragZones #toasts{opacity:0}
   #dropZones.show{display:flex}
@@ -166,6 +170,7 @@
     <button id="speedBtn" title="Game speed"><span class="hic" data-art="ui/speed">⏩</span><span class="hnum small" id="speedTxt">2×</span></button>
     <div id="hint"><span id="hintText"></span><button id="hintCancel">Done</button></div>
     <div id="goalsBox"></div>
+    <div id="zoomCtl"><button onclick="setZoom((ui.zoom||1)*1.25)" title="Zoom in">+</button><button onclick="setZoom((ui.zoom||1)/1.25)" title="Zoom out">−</button><button id="zoomReset" onclick="resetZoom()" title="Fit hotel" style="visibility:hidden">⤢</button></div>
     <div id="marks"></div>
     <div id="dropZones"><div class="zone" id="zoneStore"><span class="e">📦</span>Storage</div><div class="zone sell" id="zoneSell"><span class="e">🪙</span><span id="zoneSellTxt">Sell</span></div></div>
     <div id="panel"></div>
@@ -197,7 +202,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.33';
+const BUILD = '0.34';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -398,7 +403,7 @@ let guests = [];    // runtime only
 let floats = [];    // floating texts
 let confetti = [];
 let doorsOpen = 0, spawnTimer = 2, gid = 1, autosave = 0, time = 0, cloudTick = 0, itemUid = 1;
-const ui = {mode:null, drag:null, itemDrag:null, focus:null};
+const ui = {mode:null, drag:null, itemDrag:null, focus:null, zoom:1, panX:0, panY:0};
 const cam = {s:1, ox:0, oy:0, ready:false};
 
 function mkRoom(id, type, f, c, ci){
@@ -820,8 +825,18 @@ function camTarget(){
   if(pr && pr.width>0){ if(pr.width > W*0.8) ah = Math.max(160, pr.top - cr.top); else aw = Math.max(220, pr.left - cr.left); }
   const reserve = (pr && pr.width>0 && pr.width > W*0.8) ? 0 : 92; // room for the icon buttons
   const s = Math.min(aw/bw, (ah-reserve)/bh, 1.6);
-  return {s, ox:(aw - bw*s)/2 - b.x0*s, oy:(ah - reserve - b.y1*s)};
+  const ox = (aw - bw*s)/2 - b.x0*s, oy = ah - reserve - b.y1*s;
+  const z = (ui.drag && ui.drag.moved) || (ui.newDrag && ui.newDrag.moved) ? 1 : (ui.zoom||1);
+  if(z === 1 && !ui.panX && !ui.panY) return {s, ox, oy};
+  // player zoom: scale around the middle of the building, then apply the player's pan
+  const cx = (b.x0+b.x1)/2, cy = (b.y0+b.y1)/2, sxc = ox + cx*s, syc = oy + cy*s, s2 = s*z;
+  const lim = Math.max(0, (z-1)) * Math.max(bw, bh) * s * 0.6 + 40;
+  ui.panX = Math.max(-lim, Math.min(lim, ui.panX||0)); ui.panY = Math.max(-lim, Math.min(lim, ui.panY||0));
+  return {s:s2, ox: sxc - cx*s2 + ui.panX, oy: syc - cy*s2 + ui.panY};
 }
+const ZMIN = 0.6, ZMAX = 2.5;
+function setZoom(z){ ui.zoom = Math.max(ZMIN, Math.min(ZMAX, z)); if(ui.zoom <= 1.001){ ui.panX *= 0.5; ui.panY *= 0.5; } $('zoomReset').style.visibility = Math.abs(ui.zoom-1)>0.02 || ui.panX || ui.panY ? 'visible' : 'hidden'; }
+function resetZoom(){ ui.zoom = 1; ui.panX = 0; ui.panY = 0; $('zoomReset').style.visibility = 'hidden'; }
 function updateCam(dt){
   const t = camTarget();
   if(!cam.ready){ Object.assign(cam, t, {ready:true}); }
@@ -1224,6 +1239,9 @@ function roomAt(p){
 }
 cv.addEventListener('pointermove', ev=>{
   const p = toWorld(ev);
+  if(pinchMove(ev)) return;
+  if(ui.pan){ const dx = ev.clientX-ui.pan.sx, dy = ev.clientY-ui.pan.sy; if(!ui.pan.moved && Math.hypot(dx,dy) > 6) ui.pan.moved = true;
+    if(ui.pan.moved){ ui.panX = ui.pan.x0 + dx; ui.panY = ui.pan.y0 + dy; setZoom(ui.zoom||1); } return; }
   const idr = ui.itemDrag;
   if(idr || ui.drag) updateZones(ev.clientX, ev.clientY);
   if(idr){
@@ -1242,7 +1260,23 @@ cv.addEventListener('pointermove', ev=>{
   d.px = p.x; d.py = p.y;
   if(!d.moved && Math.hypot(ev.clientX-d.sx, ev.clientY-d.sy) > 6){ d.moved = true; d.room.anim = null; if(ui.panelKind!=='build') closePanel(); }
 });
+const pointers = new Map();
+function pinchStart(){ const [a,b] = [...pointers.values()]; ui.pinch = {d0: Math.hypot(a.x-b.x, a.y-b.y) || 1, z0: ui.zoom||1, mx: (a.x+b.x)/2, my: (a.y+b.y)/2, px: ui.panX||0, py: ui.panY||0};
+  ui.drag = null; ui.itemDrag = null; ui.pan = null; $('dropZones').classList.remove('show'); document.body.classList.remove('dragZones'); }
+function pinchMove(ev){
+  if(!pointers.has(ev.pointerId)) return false;
+  pointers.set(ev.pointerId, {x:ev.clientX, y:ev.clientY});
+  if(!ui.pinch || pointers.size < 2) return false;
+  const [a,b] = [...pointers.values()], d = Math.hypot(a.x-b.x, a.y-b.y);
+  setZoom(ui.pinch.z0 * d / ui.pinch.d0);
+  ui.panX = ui.pinch.px + ((a.x+b.x)/2 - ui.pinch.mx); ui.panY = ui.pinch.py + ((a.y+b.y)/2 - ui.pinch.my);
+  return true;
+}
+cv.addEventListener('wheel', ev=>{ ev.preventDefault(); if(ui.focus) return; setZoom((ui.zoom||1) * Math.exp(-ev.deltaY*0.0015)); }, {passive:false});
 cv.addEventListener('pointerdown', ev=>{
+  pointers.set(ev.pointerId, {x:ev.clientX, y:ev.clientY});
+  if(pointers.size >= 2 && !ui.focus){ pinchStart(); return; }
+  if((ev.button===1 || ev.button===2) && !ui.focus){ try{ cv.setPointerCapture(ev.pointerId); }catch(e){} ui.pan = {sx:ev.clientX, sy:ev.clientY, x0:ui.panX||0, y0:ui.panY||0, moved:true}; return; }   // right or middle mouse button: look around
   const p = toWorld(ev);
   try{ cv.setPointerCapture(ev.pointerId); }catch(e){}
   if(ui.focus){
@@ -1260,7 +1294,7 @@ cv.addEventListener('pointerdown', ev=>{
   }
   const r = roomAt(p);
   if(ui.mode==='sell'){ if(r) openSell(r); else closePanel(); return; }  // Sell tab open: tap a room to sell it, tap empty space to close
-  if(!r){ closePanel(); return; }   // tap anywhere outside the rooms closes any menu, the Build menu included
+  if(!r){ ui.pan = {sx:ev.clientX, sy:ev.clientY, x0:ui.panX||0, y0:ui.panY||0, moved:false}; return; }   // drag empty space to look around; a plain tap closes any menu
   ui.drag = {room:r, sx:ev.clientX, sy:ev.clientY, wx0:p.x, wy0:p.y, px:p.x, py:p.y, moved:false, bounds: buildBounds(2.5)};
 });
 /* ---------------- drop zones: while dragging a room or a piece of furniture, drop it on Sell or Storage ---------------- */
@@ -1302,6 +1336,9 @@ function endItemDrag(cancelled, ev){
   save(); if(ui.focus===r.id) openRoom(r);
 }
 function endDrag(ev, cancelled){
+  if(ev && ev.pointerId!==undefined) pointers.delete(ev.pointerId);
+  if(ui.pinch){ if(pointers.size < 2) ui.pinch = null; return; }
+  if(ui.pan){ const pn = ui.pan; ui.pan = null; if(!pn.moved && !cancelled) closePanel(); return; }
   if(ui.itemDrag){ endItemDrag(cancelled, ev); return; }
   const d = ui.drag;
   if(!d) return;
@@ -1336,6 +1373,8 @@ function tapRoom(r, focused){
 }
 cv.addEventListener('pointerup', ev=>endDrag(ev,false));
 cv.addEventListener('pointercancel', ev=>endDrag(ev,true));
+cv.style.touchAction = 'none';
+cv.addEventListener('contextmenu', ev=>ev.preventDefault());
 function poke(r){
   checkPokeDay();
   const g = guests.find(z=>z.id===r.guest); const q = roomRect(r);
