@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="56" viewBox="0 0 96 56">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <defs>
+      <clipPath id="watercut">
+        <rect x="0" y="0" width="96" height="44" vector-effect="non-scaling-stroke" />
+      </clipPath>
+    </defs>
+    <g clip-path="url(#watercut)">
+      <path d="M12 39q23-10 45-3l8 7H12Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+      <path d="M14 39 4 39.00" fill="none" stroke="#f5d2b6" stroke-width="5" vector-effect="non-scaling-stroke" />
+      <path d="M56 38Q66.00 33.00 81.00 35.00" fill="none" stroke="#2b2340" stroke-width="6.5" vector-effect="non-scaling-stroke" />
+      <path d="M56 38Q66.00 33.00 81.00 35.00" fill="none" stroke="#f5d2b6" stroke-width="4" vector-effect="non-scaling-stroke" />
+      <g transform="translate(38 2) scale(0.75)">
+        <path d="M13 23q0-13 16-13 15 0 15 15v7l4 4-5 3q-1 11-15 11-15 0-15-17Z" fill="#f5d2b6" vector-effect="non-scaling-stroke" />
+        <path d="M13 33q-7-4-7 3 1 6 8 4" fill="#f5d2b6" vector-effect="non-scaling-stroke" />
+        <path d="M12 31q-8-3-6-11-1-7 7-9 2-8 10-5 7-5 12 1 8-1 10 7 7 5 1 12-8 3-13-3-6 6-11 1l-4 12Z" fill="#c8915f" vector-effect="non-scaling-stroke" />
+        <path d="M13 16q3-4 7-3m6-4q5-1 7 3" fill="none" stroke="#e6b481" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+        <circle cx="31" cy="32" r="1.7" fill="#2b2340" stroke="none" vector-effect="non-scaling-stroke" />
+        <circle cx="40" cy="32" r="1.7" fill="#2b2340" stroke="none" vector-effect="non-scaling-stroke" />
+        <path d="M35 42q3 2 6-1" fill="none" stroke="#2b2340" stroke-width="2" vector-effect="non-scaling-stroke" />
+        <ellipse cx="25" cy="39" rx="4" ry="2" fill="#efb0a4" stroke="none" vector-effect="non-scaling-stroke" />
+        <circle cx="24" cy="36" r="0.7" fill="#a96e4b" stroke="none" vector-effect="non-scaling-stroke" />
+        <circle cx="28" cy="38" r="0.7" fill="#a96e4b" stroke="none" vector-effect="non-scaling-stroke" />
+        <circle cx="28" cy="35" r="0.7" fill="#a96e4b" stroke="none" vector-effect="non-scaling-stroke" />
+      </g>
+      <path d="M56 38Q40.00 33.00 41.00 35.00" fill="none" stroke="#2b2340" stroke-width="6.5" vector-effect="non-scaling-stroke" />
+      <path d="M56 38Q40.00 33.00 41.00 35.00" fill="none" stroke="#f5d2b6" stroke-width="4" vector-effect="non-scaling-stroke" />
+      <circle cx="41.0" cy="35.0" r="2" fill="#f5d2b6" vector-effect="non-scaling-stroke" />
+    </g>
+    <path d="M15 44.00q17-3 34 0t27 0" fill="none" stroke="#dff4ff" stroke-width="2" vector-effect="non-scaling-stroke" />
+    <path d="M6 46.70q8-2 16 0m42 0q8-2 16 0" fill="none" stroke="#fff8ef" stroke-width="2" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="112" viewBox="0 0 56 112">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 80h10l6 12-3 12h-8l2-10-7-6Z" fill="#43aa8b" vector-effect="non-scaling-stroke" />
+    <path d="M30 80h10l8 13-4 15h-9l2-12-8-6Z" fill="#43aa8b" vector-effect="non-scaling-stroke" />
+    <path d="M24 103h9l6 4v3.75H23v-5Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <path d="M35 106h10l6 3v1.75H34v-3Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+    <path d="M19 49q11-7 21 1l3 35H16Z" fill="#ffc94d" vector-effect="non-scaling-stroke" />
+    <path d="M35 51l7 32h-8Z" fill="#43aa8b" stroke="none" opacity="0.18" vector-effect="non-scaling-stroke" />
+    <path d="M24 44v7q5 4 10-1v-7" fill="#ffb38a" vector-effect="non-scaling-stroke" />
+    <path d="M24 52l5 4 6-5" fill="none" stroke="#fff8ef" stroke-width="2" vector-effect="non-scaling-stroke" />
+    <path d="M19 54Q13 65 24 68" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
+    <path d="M19 54Q13 65 24 68" fill="none" stroke="#ffc94d" stroke-width="5" vector-effect="non-scaling-stroke" />
+    <path d="M37 54Q45 64 39 49" fill="none" stroke="#2b2340" stroke-width="7.5" vector-effect="non-scaling-stroke" />
+    <path d="M37 54Q45 64 39 49" fill="none" stroke="#ffb38a" stroke-width="5" vector-effect="non-scaling-stroke" />
+    <g transform="translate(0 0) rotate(0 28 35)">
+      <path d="M13 23q0-13 16-13 15 0 15 15v7l4 4-5 3q-1 11-15 11-15 0-15-17Z" fill="#ffb38a" vector-effect="non-scaling-stroke" />
+      <path d="M13 33q-7-4-7 3 1 6 8 4" fill="#ffb38a" vector-effect="non-scaling-stroke" />
+      <path d="M13 32Q5 15 20 10q18-6 24 10-9 5-16-3-3 10-10 12v7Z" fill="#654239" vector-effect="non-scaling-stroke" />
+      <path d="M17 18q4-5 12-5" fill="none" stroke="#986c50" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      <circle cx="31" cy="32" r="1.7" fill="#2b2340" stroke="none" vector-effect="non-scaling-stroke" />
+      <circle cx="40" cy="32" r="1.7" fill="#2b2340" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M35 42q3 2 6-1" fill="none" stroke="#2b2340" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <ellipse cx="25" cy="39" rx="4" ry="2" fill="#ef8e83" stroke="none" vector-effect="non-scaling-stroke" />
+      <g>
+        <path d="M10 18q-5-10 10-13 20-5 25 10l-9 6-21-1Z" fill="#b5a0d6" vector-effect="non-scaling-stroke" />
+        <path d="M14 13q6-5 13-4" fill="none" stroke="#ded4ed" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+        <path d="M29 6l2-2" fill="none" stroke="#514965" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      </g>
+    </g>
+    <path d="M39 49L38 42" fill="none" stroke="#c8915f" stroke-width="2" vector-effect="non-scaling-stroke" />
+    <ellipse cx="38" cy="42" rx="2.8" ry="1.6" fill="#e6b481" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>
