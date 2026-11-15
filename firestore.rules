@@ -34,5 +34,22 @@ service cloud.firestore {
         && request.resource.data.served is int && request.resource.data.served >= 0
         && (resource == null || request.resource.data.served <= resource.data.served + 2000);
     }
+
+    // Shared hotels for visiting: anyone can look, only the owner can update their own copy.
+    match /hotels/{uid} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['json','name','level','updated'])
+        && request.resource.data.json is string && request.resource.data.json.size() < 300000
+        && request.resource.data.name is string && request.resource.data.name.size() <= 30;
+
+      // Likes: one per visitor, can't like your own hotel.
+      match /likes/{visitor} {
+        allow read: if true;
+        allow create: if request.auth != null && request.auth.uid == visitor && visitor != uid
+          && request.resource.data.keys().hasOnly(['at']);
+        allow delete: if request.auth != null && request.auth.uid == visitor;
+      }
+    }
   }
 }

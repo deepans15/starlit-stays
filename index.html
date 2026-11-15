@@ -70,6 +70,12 @@
   #openPrompt .oplink{background:none;border:none;color:#6a5acd;font-weight:800;font-size:12px;margin-top:4px;cursor:pointer;text-decoration:underline}
   @keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
   @keyframes pulseBtn{50%{transform:scale(1.06)}}
+  #visitBar{position:absolute;left:50%;top:10px;transform:translateX(-50%);display:none;align-items:center;gap:12px;z-index:9;background:rgba(255,253,248,.97);border:3px solid var(--ink);border-radius:18px;padding:8px 12px;box-shadow:0 6px 0 rgba(43,35,64,.25);max-width:calc(100% - 20px)}
+  body.visiting #visitBar{display:flex}
+  #visitBar .vb{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+  #visitBar .vb b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #visitBar .vb span{font-size:12px;color:var(--muted);font-weight:700}
+  body.visiting #dock, body.visiting #hud, body.visiting #hudStars, body.visiting #goalsBox, body.visiting #speedBtn, body.visiting #helper, body.visiting #helperArrow, body.visiting #openPrompt, body.visiting #blockCount{display:none!important}
   #zoomCtl{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:4}
   #zoomCtl button{width:40px;height:40px;border-radius:12px;border:3px solid #2b2340;background:#fff;color:#2b2340;font-size:22px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 3px 0 #2b2340}
   #zoomCtl button:active{transform:translateY(2px);box-shadow:0 1px 0 #2b2340}
@@ -184,6 +190,7 @@
     <div id="goalsBox"></div>
     <div id="zoomCtl"><button onclick="setZoom((ui.zoom||1)*1.25)" title="Zoom in">+</button><button onclick="setZoom((ui.zoom||1)/1.25)" title="Zoom out">−</button><button id="zoomReset" onclick="resetZoom()" title="Fit hotel" style="visibility:hidden">⤢</button></div>
     <div id="openPrompt"><div class="op"><div class="opt">🛎️ Your hotel is closed</div><div class="ops" id="opSub">Open the doors and guests will start arriving.</div><button class="btn big" id="opGo">Open</button><label class="opa"><input type="checkbox" id="opAuto"> Reopen automatically</label><button class="oplink" id="opMore">More opening times</button></div></div>
+    <div id="visitBar"><button class="btn alt" onclick="goHome()">← Back home</button><div class="vb"><b id="visitName"></b><span id="visitMeta"></span></div><button class="btn" id="visitLike" onclick="likeHotel()">❤️ Like</button></div>
     <div id="marks"></div>
     <div id="dropZones"><div class="zone" id="zoneStore"><span class="e">📦</span>Storage</div><div class="zone sell" id="zoneSell"><span class="e">🪙</span><span id="zoneSellTxt">Sell</span></div></div>
     <div id="panel"></div>
@@ -216,7 +223,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.37';
+const BUILD = '0.38';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -457,6 +464,7 @@ function load(){
 const RUNTIME_KEYS = new Set(['guest','reserved','users','cleanT','anim','pulse','carF']);
 function serialize(){ return JSON.stringify(S, (k,v)=> RUNTIME_KEYS.has(k) ? undefined : v); }
 function save(){
+  if(ui.visit) return;   // never save someone else's hotel over yours
   S.savedAt = Date.now();
   try{ localStorage.setItem(SAVE_KEY, serialize()); }catch(e){}
 }
@@ -494,6 +502,7 @@ async function initCloud(){
   }catch(e){ /* cloud save unavailable: browser save still works */ }
 }
 async function cloudSave(){
+  if(ui.visit) return;
   if(!cloud.ref || cloud.busy || !S.name) return;
   const json = serialize().replace(/"savedAt":\d+,?/,'');
   if(json === cloud.last) return;
@@ -820,7 +829,7 @@ function frame(now){
   for(const p of confetti){ p.t+=dt; p.vy += 700*dt; p.x += p.vx*dt; p.y += p.vy*dt; p.r += p.vr*dt; }
   confetti = confetti.filter(p=>p.t<3);
   autosave += dt;
-  if(autosave>5){ autosave=0; updateRate(); checkGoals(); save(); cloudTick=(cloudTick+1)%3; if(cloudTick===0){ cloudSave(); onlineSave(); pushScores(); } }
+  if(autosave>5 && !ui.visit){ autosave=0; updateRate(); checkGoals(); save(); cloudTick=(cloudTick+1)%3; if(cloudTick===0){ cloudSave(); onlineSave(); pushScores(); } }
   draw(dt); updateTop();
   requestAnimationFrame(frame);
 }
@@ -1337,6 +1346,7 @@ cv.addEventListener('wheel', ev=>{ ev.preventDefault(); if(ui.focus) return; set
 cv.addEventListener('pointerdown', ev=>{
   pointers.set(ev.pointerId, {x:ev.clientX, y:ev.clientY});
   if(pointers.size >= 2 && !ui.focus){ pinchStart(); return; }
+  if(ui.visit){ try{ cv.setPointerCapture(ev.pointerId); }catch(e){} ui.pan = {sx:ev.clientX, sy:ev.clientY, x0:ui.panX||0, y0:ui.panY||0, moved:false}; return; }
   if((ev.button===1 || ev.button===2) && !ui.focus){ try{ cv.setPointerCapture(ev.pointerId); }catch(e){} ui.pan = {sx:ev.clientX, sy:ev.clientY, x0:ui.panX||0, y0:ui.panY||0, moved:true}; return; }   // right or middle mouse button: look around
   const p = toWorld(ev);
   try{ cv.setPointerCapture(ev.pointerId); }catch(e){}
@@ -1808,7 +1818,7 @@ function promptShift(){ if(S.freeShift) return {mins:15, cost:0, free:true, labe
 let promptKey = '';
 function updateOpenPrompt(){
   const el = $('openPrompt');
-  const show = !isOpen() && S.name && S.rooms.some(r=>ROOMS[r.type].kind==='guest') && panel.style.display!=='block' && $('modal').style.display!=='flex' && !ui.focus && !ui.drag && !ui.newDrag;
+  const show = !ui.visit && !isOpen() && S.name && S.rooms.some(r=>ROOMS[r.type].kind==='guest') && panel.style.display!=='block' && $('modal').style.display!=='flex' && !ui.focus && !ui.drag && !ui.newDrag;
   el.classList.toggle('show', !!show); if(!show) return;
   const p = promptShift(), key = p.label + S.coins + (S.autoOpen?1:0);
   if(key===promptKey) return; promptKey = key;
@@ -1821,7 +1831,7 @@ $('opMore').onclick = ()=>openShift();
 $('opAuto').onchange = e=>{ S.autoOpen = e.target.checked; save(); toast(S.autoOpen ? '🔁 The hotel will reopen by itself when a shift ends' : 'Auto reopen is off'); };
 setInterval(()=>{ updateOpenPrompt();
   // auto reopen: when a shift ends and the player chose it, buy the shortest shift again
-  if(S.autoOpen && !isOpen() && S.rooms.some(r=>ROOMS[r.type].kind==='guest')){ const p = promptShift(); if(S.coins >= p.cost){ buyShift(p.mins, p.cost, p.free); toast('🔁 Reopened automatically'); } }
+  if(!ui.visit && S.autoOpen && !isOpen() && S.rooms.some(r=>ROOMS[r.type].kind==='guest')){ const p = promptShift(); if(S.coins >= p.cost){ buyShift(p.mins, p.cost, p.free); toast('🔁 Reopened automatically'); } }
 }, 400);
 function buyShift(mins, cost, free){
   if(S.coins<cost) return;
@@ -1850,6 +1860,7 @@ function openGoals(){
   showPanel(html);
 }
 function checkGoals(){
+  if(ui.visit) return;
   GOALS.forEach((g,i)=>{ if(!S.goals.includes(i) && g.ok(S)){ S.goals.push(i); S.coins += g.r; toast(`🎯 Goal done: ${g.t} (+🪙${g.r})`); } });
   renderGoalsBox();
 }
@@ -1894,6 +1905,7 @@ function pickHotel(which){
   online.synced = true; onlineSave(true); pushScores(true);
 }
 async function onlineSave(force){
+  if(ui.visit) return;
   if(!onlineAvailable() || !FB.user || !online.synced || online.busy || !S.name) return;
   const json = serialize(); if(!force && json === online.last) return;
   online.busy = true;
@@ -1901,11 +1913,13 @@ async function onlineSave(force){
   online.busy = false;
 }
 async function pushScores(force){
+  if(ui.visit) return;
   if(!onlineAvailable() || !FB.user || !online.synced || !S.name) return;
   if(!force && Date.now() - online.lastScore < 60000) return;
   online.lastScore = Date.now();
   try{
     await FB.putScore(scoreEntry());
+    if(FB.putHotel) await FB.putHotel(hotelSnapshot());
     if(S.wk && S.wk.id === weekId()) await FB.putWeek(S.wk.id, {name: S.name.slice(0,30), served: S.wk.n|0, updated: Date.now()});
   }catch(e){}
 }
@@ -1939,7 +1953,7 @@ const RANK_TABS = [['level','⭐ Level','Level'],['served','🛎️ Guests','Gue
 async function openRanks(tab){
   unfocus(); tab = tab || ui.ranksTab || 'level'; ui.ranksTab = tab;
   const tabs = `<div class="tabs">${RANK_TABS.map(([id,l])=>`<button class="${tab===id?'on':''}" onclick="openRanks('${id}')">${l}</button>`).join('')}</div>`;
-  const head = `<h2>🏆 Leaderboards</h2>${tabs}`;
+  const head = `<h2>🏆 Leaderboards</h2>${tabs}<button class="btn" style="width:100%;margin-bottom:8px" onclick="openVisitList()">🏨 Visit other hotels</button>`;
   if(!onlineAvailable()){ showPanel(head + `<div class="sub">Leaderboards work on the online version of Starlit Stays, where you can sign in with Google.</div>`, 'ranks'); return; }
   showPanel(head + `<div class="sub">Loading…</div>`, 'ranks');
   if(FB.user) await pushScores(true);
@@ -1953,10 +1967,57 @@ async function openRanks(tab){
   if(tab==='week') html += `<div class="sub">Resets every Monday. Serve guests this week to climb.</div>`;
   if(!rows.length) html += `<div class="sub">No hotels yet. Be the first!</div>`;
   rows.forEach((r,i)=>{ const medal = ['🥇','🥈','🥉'][i] || `<span style="display:inline-block;width:22px;text-align:center;font-weight:900;color:#7a6e86">${i+1}</span>`;
-    html += `<div class="item" style="${r.id===me?'border-color:#3fae8c;background:#eafaf4':''}"><div style="font-size:20px;width:28px;text-align:center">${medal}</div><div class="info"><b>${esc(r.name||'Hotel')}${r.id===me?' (you)':''}</b><div class="meta">${val(r)}</div></div></div>`; });
+    html += `<div class="item" style="${r.id===me?'border-color:#3fae8c;background:#eafaf4':''}"><div style="font-size:20px;width:28px;text-align:center">${medal}</div><div class="info"><b>${esc(r.name||'Hotel')}${r.id===me?' (you)':''}</b><div class="meta">${val(r)}</div></div>${r.id!==me?`<button class="btn alt" onclick="visitHotel('${r.id}')">Visit</button>`:''}</div>`; });
   showPanel(html, 'ranks');
 }
 function esc(t){ return String(t).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+/* ---------------- visiting other players' hotels ----------------
+   Each signed-in player shares a read-only copy of their hotel (rooms, furniture, styles, scenery; never coins).
+   Visiting swaps that copy in for viewing; nothing is saved while you look around, and Back home restores your own hotel. */
+function hotelSnapshot(){
+  const rooms = S.rooms.map(r=>({type:r.type, f:r.f, c:r.c, wall:!!r.wall, floor:!!r.floor, wallColor:r.wallColor||null, style:r.style||null, items:(r.items||[]).map(i=>({id:i.id, x:Math.round(i.x), y:Math.round(i.y||0)}))}));
+  return {json: JSON.stringify({v:1, name:(S.name||'Hotel').slice(0,30), xp:Math.floor(S.xp), served:S.served|0, plot:S.plot|0, scene:S.scene||null, rooms}), name:(S.name||'Hotel').slice(0,30), level:level(), updated:Date.now()};
+}
+async function visitHotel(uid){
+  if(!onlineAvailable()){ toast('Visiting works on the online version'); return; }
+  if(FB.user && uid===FB.user.uid){ toast("That's your own hotel!"); return; }
+  let d; try{ d = await FB.getHotel(uid); }catch(e){ toast("Couldn't open that hotel. Try again."); return; }
+  if(!d || !d.json){ toast("That hotel hasn't been shared yet"); return; }
+  let h; try{ h = JSON.parse(d.json); }catch(e){ toast('That hotel could not be loaded'); return; }
+  if(!ui.visit){ save(); ui.home = S; ui.homeGuests = guests; }
+  const st = freshState();
+  Object.assign(st, {name:h.name, xp:h.xp||0, served:h.served||0, plot:Math.min(h.plot||0, BLOCK_TIERS.length-1), scene:h.scene||null, shiftEnd:0, freeShift:false, helperDone:true, seenLevel:999,
+    rooms:(h.rooms||[]).filter(r=>ROOMS[r.type]).map((r,i)=>Object.assign(mkRoom(i+1, r.type, r.f, r.c, 0), {wall:r.wall, floor:r.floor, wallColor:r.wallColor||WALL_COLORS[0], style:r.style||null,
+      items:(r.items||[]).filter(it=>ITEMS[it.id]).map(it=>Object.assign(mkItem(it.id, it.x), {y:it.y||0}))}))});
+  ui.visit = {uid, name:h.name}; S = st; guests = []; closePanel(); closeModal(); resetZoom(); lastTop = '';
+  document.body.classList.add('visiting');
+  $('visitName').textContent = h.name; $('visitMeta').textContent = `Level ${level()} · ${'★'.repeat(Math.floor(stars()))} · ${st.rooms.length} rooms`;
+  $('visitLike').textContent = '❤️ Like'; $('visitLike').disabled = !FB.user;
+  try{ const [n, mine] = await Promise.all([FB.likeCount(uid), FB.user ? FB.hasLiked(uid) : false]); if(ui.visit && ui.visit.uid===uid){ ui.visit.likes = n; ui.visit.liked = mine; showLikes(); } }catch(e){}
+  // small thank-you for visiting: once per hotel per day
+  const home = ui.home, today_ = today(); home.visits = home.visits && home.visits.day===today_ ? home.visits : {day:today_, ids:[]};
+  if(!home.visits.ids.includes(uid) && home.visits.ids.length < 10){ home.visits.ids.push(uid); const gift = Math.min(150, 25 + 5*level()); home.coins += gift; toast(`🎁 Thanks for visiting! +🪙${gift} for your hotel`); }
+}
+function showLikes(){ const v = ui.visit; if(!v) return; $('visitLike').textContent = (v.liked ? '💖 Liked' : '❤️ Like') + (v.likes!==undefined ? ` · ${v.likes}` : ''); $('visitLike').disabled = !FB.user || v.liked; }
+async function likeHotel(){ const v = ui.visit; if(!v || !FB.user || v.liked) return; try{ await FB.like(v.uid); v.liked = true; v.likes = (v.likes||0) + 1; showLikes(); toast(`💖 You liked ${v.name}`); }catch(e){ toast("Couldn't send the like"); } }
+function goHome(){
+  if(!ui.visit) return;
+  S = ui.home; guests = ui.homeGuests || []; ui.visit = null; ui.home = null; document.body.classList.remove('visiting'); resetZoom(); lastTop = ''; closePanel(); save();
+}
+async function openVisitList(){
+  unfocus();
+  const head = `<h2>🏨 Visit hotels</h2><div class="sub">Look around other players' hotels for ideas. You get a small coin gift for each new hotel you visit today (up to 10).</div>`;
+  if(!onlineAvailable()){ showPanel(head + `<div class="sub">Visiting works on the online version of Starlit Stays, where you can sign in with Google.</div>`, 'visit'); return; }
+  showPanel(head + `<div class="sub">Loading…</div>`, 'visit');
+  let rows = []; try{ rows = await FB.recentHotels(40); }catch(e){ showPanel(head + `<div class="sub">Couldn't load hotels. Check your connection.</div>`, 'visit'); return; }
+  if(ui.panelKind!=='visit') return;
+  const me = FB.user && FB.user.uid, done = (S.visits && S.visits.day===today()) ? S.visits.ids : [];
+  let html = head + (FB.user ? '' : `<div class="item" style="background:#fff6e0"><div class="info"><b>Share your hotel too</b><div class="meta">Sign in with Google so others can visit you.</div></div><button class="btn" onclick="signInGoogle()">Sign in</button></div>`);
+  const list = rows.filter(r=>r.id!==me);
+  if(!list.length) html += `<div class="sub">No other hotels to visit yet.</div>`;
+  for(const r of list) html += `<div class="item"><div class="info"><b>${esc(r.name||'Hotel')}</b><div class="meta">Level ${r.level||1}${done.includes(r.id)?' · visited today':' · 🎁 gift'}</div></div><button class="btn" onclick="visitHotel('${r.id}')">Visit</button></div>`;
+  showPanel(html, 'visit');
+}
 function openMenu(){
   unfocus(); checkPokeDay();
   const cv2 = coverage();
@@ -2063,7 +2124,7 @@ function nudgeStep(){
 let helperShown = '';
 function updateHelper(){
   document.body.classList.toggle('panelOpen', panel.style.display==='block');
-  const st = helperStep() || (S.helperDone && !ui.focus && !(ui.drag||ui.newDrag||ui.itemDrag) ? nudgeStep() : null), h = $('helper'), arrow = $('helperArrow');
+  const st = ui.visit ? null : helperStep() || (S.helperDone && !ui.focus && !(ui.drag||ui.newDrag||ui.itemDrag) ? nudgeStep() : null), h = $('helper'), arrow = $('helperArrow');
   ui.helperNow = st;
   const modalOpen = $('modal').style.display==='flex';
   if(!st || modalOpen || $('openPrompt').classList.contains('show') || (st.id===S.helperSkip)){ h.style.display='none'; arrow.style.display='none'; helperShown=''; if(!st && !S.helperDone && S.rooms.length>1){ S.helperDone = true; save(); } return; }
@@ -2221,6 +2282,12 @@ if(!window.claude && /^https?:$/.test(location.protocol)){
       putScore(e){ return setDoc(doc(db,'leaderboard',FB.user.uid), e); },
       putWeek(w, e){ return setDoc(doc(db,'weekly',String(w),'scores',FB.user.uid), e); },
       async top(field, n){ const q = await getDocs(query(collection(db,'leaderboard'), orderBy(field,'desc'), limit(n))); return q.docs.map(d=>({id:d.id, ...d.data()})); },
+      putHotel(d){ return setDoc(doc(db,'hotels',FB.user.uid), d); },
+      async getHotel(uid){ const s = await getDoc(doc(db,'hotels',uid)); return s.exists() ? s.data() : null; },
+      async recentHotels(n){ const q = await getDocs(query(collection(db,'hotels'), orderBy('updated','desc'), limit(n))); return q.docs.map(d=>({id:d.id, name:d.data().name, level:d.data().level})); },
+      like(uid){ return setDoc(doc(db,'hotels',uid,'likes',FB.user.uid), {at: Date.now()}); },
+      async hasLiked(uid){ return (await getDoc(doc(db,'hotels',uid,'likes',FB.user.uid))).exists(); },
+      async likeCount(uid){ const c = await fsM.getCountFromServer(collection(db,'hotels',uid,'likes')); return c.data().count; },
       async topWeek(w, n){ const q = await getDocs(query(collection(db,'weekly',String(w),'scores'), orderBy('served','desc'), limit(n))); return q.docs.map(d=>({id:d.id, ...d.data()})); }
     };
     authM.getRedirectResult(auth).catch(()=>{});
