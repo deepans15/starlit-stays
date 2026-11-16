@@ -119,3 +119,8 @@ Removed the baked hanging lamps (cord, shade, rim highlight and faint glow) from
 
 ## Validation for this personality pack
 All 2551 SVGs passed XML, exact dimensions/viewBox, self-contained markup, manifest-path and file-size checks. All original 2004 keys, source dimensions and catalog values were retained. Largest SVG: 9508 bytes. New content totals 547 SVG keys, 416 reaction frames, 40 furniture-motion frames, 72 halos, 9 off variants, 8 window views and 2 new item base sprites. All 416 reaction sprites were rendered and checked for side clipping, with no clipping found. Preview initialization checked 2551 assets with zero failures; 351 guest/light/time combinations passed, with 4 reaction scenes, 5 motion players and 9 light selections. Existing animation/pause/scale controls remain intact. Browser gameplay was not verified.
+
+
+## 2026-11-17 - Sprite sheet packaging
+
+Packed all 2,287 existing animation frames into 301 lossless transparent PNG sheets (8.913 MiB), with sheets.js supplying exact frame keys, cell sizes, rows/columns and unchanged anchors at 2x game-display resolution. Every packed pixel was verified against its source render; all sheets are under 2048px wide. All original SVGs, manifest keys, artwork, timing/placement metadata and index.html are preserved. CODE_NOTES.md describes loader mapping and scaling; sheets/validation.json records counts and dimensions. Loader integration remains separate; 301 animated sheets plus 264 unchanged statics would be 565 image requests if all are loaded.

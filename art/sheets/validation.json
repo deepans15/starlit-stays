@@ -1,0 +1,2123 @@
+{
+  "sheetCount": 301,
+  "sourceFrameCount": 2287,
+  "verifiedFrames": 2287,
+  "totalPngBytes": 9346405,
+  "totalPngMiB": 8.913,
+  "maximumWidth": 1920,
+  "maximumHeight": 3240,
+  "unchangedManifestEntries": 2551,
+  "remainingStaticEntries": 264,
+  "allAssetsRequestCount": 565,
+  "unchangedSourceFiles": 2563,
+  "durationSeconds": 18.9,
+  "sheets": [
+    {
+      "key": "backgrounds/aurora_fx",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 292730
+    },
+    {
+      "key": "backgrounds/cloud_day_fx",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 92004
+    },
+    {
+      "key": "backgrounds/golden_evening_fx",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 116011
+    },
+    {
+      "key": "backgrounds/moonlit_rooftops_fx",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 51535
+    },
+    {
+      "key": "backgrounds/petal_garden_fx",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 72141
+    },
+    {
+      "key": "backgrounds/starlit_night_fx",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 46623
+    },
+    {
+      "key": "backgrounds/sunny_skyline_fx",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 97576
+    },
+    {
+      "key": "backgrounds/sunrise_meadow_fx",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 57546
+    },
+    {
+      "key": "backgrounds/sunset_lanterns_fx",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 92793
+    },
+    {
+      "key": "chars/cleaner_sweep",
+      "frames": 2,
+      "width": 112,
+      "height": 96,
+      "bytes": 7322
+    },
+    {
+      "key": "chars/clerk_blink",
+      "frames": 2,
+      "width": 112,
+      "height": 96,
+      "bytes": 5200
+    },
+    {
+      "key": "chars/guest_10_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33233
+    },
+    {
+      "key": "chars/guest_10_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31716
+    },
+    {
+      "key": "chars/guest_10_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31524
+    },
+    {
+      "key": "chars/guest_10_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30029
+    },
+    {
+      "key": "chars/guest_10_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30550
+    },
+    {
+      "key": "chars/guest_10_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30785
+    },
+    {
+      "key": "chars/guest_10_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30091
+    },
+    {
+      "key": "chars/guest_10_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31340
+    },
+    {
+      "key": "chars/guest_10_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29481
+    },
+    {
+      "key": "chars/guest_10_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33431
+    },
+    {
+      "key": "chars/guest_10_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 32368
+    },
+    {
+      "key": "chars/guest_10_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 20094
+    },
+    {
+      "key": "chars/guest_10_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28044
+    },
+    {
+      "key": "chars/guest_10_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30325
+    },
+    {
+      "key": "chars/guest_10_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 16384
+    },
+    {
+      "key": "chars/guest_10_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 9698
+    },
+    {
+      "key": "chars/guest_10_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 33085
+    },
+    {
+      "key": "chars/guest_10_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33593
+    },
+    {
+      "key": "chars/guest_11_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31286
+    },
+    {
+      "key": "chars/guest_11_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29637
+    },
+    {
+      "key": "chars/guest_11_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 29623
+    },
+    {
+      "key": "chars/guest_11_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27315
+    },
+    {
+      "key": "chars/guest_11_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28465
+    },
+    {
+      "key": "chars/guest_11_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28159
+    },
+    {
+      "key": "chars/guest_11_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28311
+    },
+    {
+      "key": "chars/guest_11_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29362
+    },
+    {
+      "key": "chars/guest_11_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 26817
+    },
+    {
+      "key": "chars/guest_11_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 30856
+    },
+    {
+      "key": "chars/guest_11_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29791
+    },
+    {
+      "key": "chars/guest_11_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 18410
+    },
+    {
+      "key": "chars/guest_11_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 25653
+    },
+    {
+      "key": "chars/guest_11_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27783
+    },
+    {
+      "key": "chars/guest_11_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 15866
+    },
+    {
+      "key": "chars/guest_11_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 12231
+    },
+    {
+      "key": "chars/guest_11_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31147
+    },
+    {
+      "key": "chars/guest_11_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31295
+    },
+    {
+      "key": "chars/guest_12_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31187
+    },
+    {
+      "key": "chars/guest_12_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29498
+    },
+    {
+      "key": "chars/guest_12_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 29303
+    },
+    {
+      "key": "chars/guest_12_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27463
+    },
+    {
+      "key": "chars/guest_12_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28157
+    },
+    {
+      "key": "chars/guest_12_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27946
+    },
+    {
+      "key": "chars/guest_12_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27356
+    },
+    {
+      "key": "chars/guest_12_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29210
+    },
+    {
+      "key": "chars/guest_12_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 26602
+    },
+    {
+      "key": "chars/guest_12_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 30090
+    },
+    {
+      "key": "chars/guest_12_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29014
+    },
+    {
+      "key": "chars/guest_12_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 18705
+    },
+    {
+      "key": "chars/guest_12_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 24958
+    },
+    {
+      "key": "chars/guest_12_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27313
+    },
+    {
+      "key": "chars/guest_12_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 16339
+    },
+    {
+      "key": "chars/guest_12_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 9677
+    },
+    {
+      "key": "chars/guest_12_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30492
+    },
+    {
+      "key": "chars/guest_12_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 30807
+    },
+    {
+      "key": "chars/guest_1_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31363
+    },
+    {
+      "key": "chars/guest_1_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29740
+    },
+    {
+      "key": "chars/guest_1_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 30712
+    },
+    {
+      "key": "chars/guest_1_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27382
+    },
+    {
+      "key": "chars/guest_1_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28821
+    },
+    {
+      "key": "chars/guest_1_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27768
+    },
+    {
+      "key": "chars/guest_1_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28041
+    },
+    {
+      "key": "chars/guest_1_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28776
+    },
+    {
+      "key": "chars/guest_1_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 26904
+    },
+    {
+      "key": "chars/guest_1_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31913
+    },
+    {
+      "key": "chars/guest_1_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30852
+    },
+    {
+      "key": "chars/guest_1_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 21363
+    },
+    {
+      "key": "chars/guest_1_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28346
+    },
+    {
+      "key": "chars/guest_1_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29469
+    },
+    {
+      "key": "chars/guest_1_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 18386
+    },
+    {
+      "key": "chars/guest_1_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 10349
+    },
+    {
+      "key": "chars/guest_1_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31530
+    },
+    {
+      "key": "chars/guest_1_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31382
+    },
+    {
+      "key": "chars/guest_2_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 30623
+    },
+    {
+      "key": "chars/guest_2_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29050
+    },
+    {
+      "key": "chars/guest_2_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 29244
+    },
+    {
+      "key": "chars/guest_2_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 23528
+    },
+    {
+      "key": "chars/guest_2_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28459
+    },
+    {
+      "key": "chars/guest_2_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 26877
+    },
+    {
+      "key": "chars/guest_2_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27220
+    },
+    {
+      "key": "chars/guest_2_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27849
+    },
+    {
+      "key": "chars/guest_2_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 26505
+    },
+    {
+      "key": "chars/guest_2_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 30300
+    },
+    {
+      "key": "chars/guest_2_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29254
+    },
+    {
+      "key": "chars/guest_2_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 17061
+    },
+    {
+      "key": "chars/guest_2_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 23045
+    },
+    {
+      "key": "chars/guest_2_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 25200
+    },
+    {
+      "key": "chars/guest_2_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 15331
+    },
+    {
+      "key": "chars/guest_2_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 11316
+    },
+    {
+      "key": "chars/guest_2_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27810
+    },
+    {
+      "key": "chars/guest_2_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 30991
+    },
+    {
+      "key": "chars/guest_3_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 26663
+    },
+    {
+      "key": "chars/guest_3_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 25200
+    },
+    {
+      "key": "chars/guest_3_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 26110
+    },
+    {
+      "key": "chars/guest_3_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 22704
+    },
+    {
+      "key": "chars/guest_3_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 24194
+    },
+    {
+      "key": "chars/guest_3_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 23360
+    },
+    {
+      "key": "chars/guest_3_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 23367
+    },
+    {
+      "key": "chars/guest_3_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 24638
+    },
+    {
+      "key": "chars/guest_3_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 22137
+    },
+    {
+      "key": "chars/guest_3_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 27078
+    },
+    {
+      "key": "chars/guest_3_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 26044
+    },
+    {
+      "key": "chars/guest_3_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 17716
+    },
+    {
+      "key": "chars/guest_3_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 23992
+    },
+    {
+      "key": "chars/guest_3_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 24765
+    },
+    {
+      "key": "chars/guest_3_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 15632
+    },
+    {
+      "key": "chars/guest_3_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 9538
+    },
+    {
+      "key": "chars/guest_3_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 26441
+    },
+    {
+      "key": "chars/guest_3_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 26356
+    },
+    {
+      "key": "chars/guest_4_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 39347
+    },
+    {
+      "key": "chars/guest_4_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 37678
+    },
+    {
+      "key": "chars/guest_4_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 38088
+    },
+    {
+      "key": "chars/guest_4_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35614
+    },
+    {
+      "key": "chars/guest_4_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 36672
+    },
+    {
+      "key": "chars/guest_4_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35756
+    },
+    {
+      "key": "chars/guest_4_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35600
+    },
+    {
+      "key": "chars/guest_4_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 37462
+    },
+    {
+      "key": "chars/guest_4_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 34887
+    },
+    {
+      "key": "chars/guest_4_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 39126
+    },
+    {
+      "key": "chars/guest_4_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 38148
+    },
+    {
+      "key": "chars/guest_4_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 25193
+    },
+    {
+      "key": "chars/guest_4_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 34133
+    },
+    {
+      "key": "chars/guest_4_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35995
+    },
+    {
+      "key": "chars/guest_4_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 20154
+    },
+    {
+      "key": "chars/guest_4_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 12599
+    },
+    {
+      "key": "chars/guest_4_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 39383
+    },
+    {
+      "key": "chars/guest_4_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 39219
+    },
+    {
+      "key": "chars/guest_5_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33189
+    },
+    {
+      "key": "chars/guest_5_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31553
+    },
+    {
+      "key": "chars/guest_5_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31130
+    },
+    {
+      "key": "chars/guest_5_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27179
+    },
+    {
+      "key": "chars/guest_5_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29884
+    },
+    {
+      "key": "chars/guest_5_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29063
+    },
+    {
+      "key": "chars/guest_5_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29067
+    },
+    {
+      "key": "chars/guest_5_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29419
+    },
+    {
+      "key": "chars/guest_5_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28504
+    },
+    {
+      "key": "chars/guest_5_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31893
+    },
+    {
+      "key": "chars/guest_5_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30809
+    },
+    {
+      "key": "chars/guest_5_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 22177
+    },
+    {
+      "key": "chars/guest_5_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 26491
+    },
+    {
+      "key": "chars/guest_5_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27507
+    },
+    {
+      "key": "chars/guest_5_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 18479
+    },
+    {
+      "key": "chars/guest_5_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 11063
+    },
+    {
+      "key": "chars/guest_5_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30511
+    },
+    {
+      "key": "chars/guest_5_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33301
+    },
+    {
+      "key": "chars/guest_6_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 36792
+    },
+    {
+      "key": "chars/guest_6_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35315
+    },
+    {
+      "key": "chars/guest_6_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 34859
+    },
+    {
+      "key": "chars/guest_6_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 26729
+    },
+    {
+      "key": "chars/guest_6_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 34547
+    },
+    {
+      "key": "chars/guest_6_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 33732
+    },
+    {
+      "key": "chars/guest_6_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 33792
+    },
+    {
+      "key": "chars/guest_6_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 34918
+    },
+    {
+      "key": "chars/guest_6_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 32602
+    },
+    {
+      "key": "chars/guest_6_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 35683
+    },
+    {
+      "key": "chars/guest_6_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 34716
+    },
+    {
+      "key": "chars/guest_6_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 18467
+    },
+    {
+      "key": "chars/guest_6_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 24961
+    },
+    {
+      "key": "chars/guest_6_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27093
+    },
+    {
+      "key": "chars/guest_6_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 15747
+    },
+    {
+      "key": "chars/guest_6_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 12317
+    },
+    {
+      "key": "chars/guest_6_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30440
+    },
+    {
+      "key": "chars/guest_6_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 37135
+    },
+    {
+      "key": "chars/guest_7_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33698
+    },
+    {
+      "key": "chars/guest_7_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 32156
+    },
+    {
+      "key": "chars/guest_7_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 32460
+    },
+    {
+      "key": "chars/guest_7_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27247
+    },
+    {
+      "key": "chars/guest_7_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31321
+    },
+    {
+      "key": "chars/guest_7_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30242
+    },
+    {
+      "key": "chars/guest_7_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30504
+    },
+    {
+      "key": "chars/guest_7_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31156
+    },
+    {
+      "key": "chars/guest_7_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29436
+    },
+    {
+      "key": "chars/guest_7_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33587
+    },
+    {
+      "key": "chars/guest_7_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 32604
+    },
+    {
+      "key": "chars/guest_7_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 21287
+    },
+    {
+      "key": "chars/guest_7_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28137
+    },
+    {
+      "key": "chars/guest_7_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29143
+    },
+    {
+      "key": "chars/guest_7_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 18370
+    },
+    {
+      "key": "chars/guest_7_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 11238
+    },
+    {
+      "key": "chars/guest_7_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31356
+    },
+    {
+      "key": "chars/guest_7_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33626
+    },
+    {
+      "key": "chars/guest_8_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 38454
+    },
+    {
+      "key": "chars/guest_8_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 36972
+    },
+    {
+      "key": "chars/guest_8_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 35912
+    },
+    {
+      "key": "chars/guest_8_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35060
+    },
+    {
+      "key": "chars/guest_8_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 34368
+    },
+    {
+      "key": "chars/guest_8_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35264
+    },
+    {
+      "key": "chars/guest_8_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35157
+    },
+    {
+      "key": "chars/guest_8_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 34305
+    },
+    {
+      "key": "chars/guest_8_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 34639
+    },
+    {
+      "key": "chars/guest_8_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 36208
+    },
+    {
+      "key": "chars/guest_8_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35213
+    },
+    {
+      "key": "chars/guest_8_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 23255
+    },
+    {
+      "key": "chars/guest_8_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 28186
+    },
+    {
+      "key": "chars/guest_8_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 33232
+    },
+    {
+      "key": "chars/guest_8_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 18048
+    },
+    {
+      "key": "chars/guest_8_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 11112
+    },
+    {
+      "key": "chars/guest_8_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 37794
+    },
+    {
+      "key": "chars/guest_8_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 38857
+    },
+    {
+      "key": "chars/guest_9_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 35407
+    },
+    {
+      "key": "chars/guest_9_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 33902
+    },
+    {
+      "key": "chars/guest_9_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33191
+    },
+    {
+      "key": "chars/guest_9_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31530
+    },
+    {
+      "key": "chars/guest_9_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 32898
+    },
+    {
+      "key": "chars/guest_9_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 32131
+    },
+    {
+      "key": "chars/guest_9_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 32302
+    },
+    {
+      "key": "chars/guest_9_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 33187
+    },
+    {
+      "key": "chars/guest_9_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30783
+    },
+    {
+      "key": "chars/guest_9_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 34525
+    },
+    {
+      "key": "chars/guest_9_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 33490
+    },
+    {
+      "key": "chars/guest_9_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 20243
+    },
+    {
+      "key": "chars/guest_9_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 27926
+    },
+    {
+      "key": "chars/guest_9_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31200
+    },
+    {
+      "key": "chars/guest_9_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 18148
+    },
+    {
+      "key": "chars/guest_9_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 12342
+    },
+    {
+      "key": "chars/guest_9_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 35599
+    },
+    {
+      "key": "chars/guest_9_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 35574
+    },
+    {
+      "key": "chars/handyman_fix",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 7517
+    },
+    {
+      "key": "chars/inspector_drink",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33815
+    },
+    {
+      "key": "chars/inspector_drink_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 32385
+    },
+    {
+      "key": "chars/inspector_eat",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 31271
+    },
+    {
+      "key": "chars/inspector_lift",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 21952
+    },
+    {
+      "key": "chars/inspector_play",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31297
+    },
+    {
+      "key": "chars/inspector_react_admire",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31230
+    },
+    {
+      "key": "chars/inspector_react_photo",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 29597
+    },
+    {
+      "key": "chars/inspector_react_warm_hands",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31305
+    },
+    {
+      "key": "chars/inspector_react_window_peek",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 30128
+    },
+    {
+      "key": "chars/inspector_read",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 32768
+    },
+    {
+      "key": "chars/inspector_read_stand",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 31793
+    },
+    {
+      "key": "chars/inspector_relax",
+      "frames": 8,
+      "width": 896,
+      "height": 80,
+      "bytes": 16562
+    },
+    {
+      "key": "chars/inspector_run",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 20610
+    },
+    {
+      "key": "chars/inspector_stretch",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 22023
+    },
+    {
+      "key": "chars/inspector_swim",
+      "frames": 8,
+      "width": 768,
+      "height": 56,
+      "bytes": 14318
+    },
+    {
+      "key": "chars/inspector_walk",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 11811
+    },
+    {
+      "key": "chars/inspector_wash",
+      "frames": 8,
+      "width": 448,
+      "height": 96,
+      "bytes": 24858
+    },
+    {
+      "key": "chars/inspector_watch",
+      "frames": 8,
+      "width": 448,
+      "height": 112,
+      "bytes": 33948
+    },
+    {
+      "key": "chars/prop_noodle_bowl",
+      "frames": 3,
+      "width": 120,
+      "height": 40,
+      "bytes": 2336
+    },
+    {
+      "key": "chars/prop_popcorn",
+      "frames": 3,
+      "width": 96,
+      "height": 36,
+      "bytes": 1379
+    },
+    {
+      "key": "chars/prop_teacup",
+      "frames": 3,
+      "width": 96,
+      "height": 32,
+      "bytes": 1692
+    },
+    {
+      "key": "chars/staff_chill",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 6003
+    },
+    {
+      "key": "chars/staff_cinema",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 5723
+    },
+    {
+      "key": "chars/staff_closet",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 6376
+    },
+    {
+      "key": "chars/staff_fit",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 5754
+    },
+    {
+      "key": "chars/staff_games",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 5347
+    },
+    {
+      "key": "chars/staff_laundry",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 6722
+    },
+    {
+      "key": "chars/staff_lounge",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 6817
+    },
+    {
+      "key": "chars/staff_maintenance",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 7640
+    },
+    {
+      "key": "chars/staff_noodle",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 5610
+    },
+    {
+      "key": "chars/staff_pool",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 6228
+    },
+    {
+      "key": "chars/staff_treehouse",
+      "frames": 4,
+      "width": 224,
+      "height": 96,
+      "bytes": 5134
+    },
+    {
+      "key": "decor/ceiling_fan_spin",
+      "frames": 8,
+      "width": 576,
+      "height": 32,
+      "bytes": 7182
+    },
+    {
+      "key": "decor/fireplace_burn",
+      "frames": 8,
+      "width": 704,
+      "height": 88,
+      "bytes": 9436
+    },
+    {
+      "key": "decor/hammock_bed_sway",
+      "frames": 8,
+      "width": 1024,
+      "height": 72,
+      "bytes": 20910
+    },
+    {
+      "key": "decor/linen_curtains_flutter",
+      "frames": 8,
+      "width": 768,
+      "height": 104,
+      "bytes": 20602
+    },
+    {
+      "key": "decor/rocking_chair_rock",
+      "frames": 8,
+      "width": 576,
+      "height": 80,
+      "bytes": 23226
+    },
+    {
+      "key": "effects/light_brass_cabin_lantern",
+      "frames": 8,
+      "width": 1024,
+      "height": 128,
+      "bytes": 25863
+    },
+    {
+      "key": "effects/light_chandelier",
+      "frames": 8,
+      "width": 1792,
+      "height": 160,
+      "bytes": 37564
+    },
+    {
+      "key": "effects/light_fireplace",
+      "frames": 8,
+      "width": 1408,
+      "height": 144,
+      "bytes": 28702
+    },
+    {
+      "key": "effects/light_gold_chandelier",
+      "frames": 8,
+      "width": 1792,
+      "height": 160,
+      "bytes": 36192
+    },
+    {
+      "key": "effects/light_gold_lamp",
+      "frames": 8,
+      "width": 1280,
+      "height": 144,
+      "bytes": 29488
+    },
+    {
+      "key": "effects/light_halloween_pumpkin_lamp",
+      "frames": 8,
+      "width": 1152,
+      "height": 128,
+      "bytes": 24954
+    },
+    {
+      "key": "effects/light_industrial_pendant",
+      "frames": 8,
+      "width": 1280,
+      "height": 144,
+      "bytes": 30089
+    },
+    {
+      "key": "effects/light_lamp",
+      "frames": 8,
+      "width": 1280,
+      "height": 144,
+      "bytes": 30175
+    },
+    {
+      "key": "effects/light_pink_lamp",
+      "frames": 8,
+      "width": 1280,
+      "height": 144,
+      "bytes": 30816
+    },
+    {
+      "key": "rooms/chill_fx",
+      "frames": 3,
+      "width": 960,
+      "height": 168,
+      "bytes": 3436
+    },
+    {
+      "key": "rooms/cinema_fx",
+      "frames": 3,
+      "width": 960,
+      "height": 336,
+      "bytes": 12470
+    },
+    {
+      "key": "rooms/fit_fx",
+      "frames": 3,
+      "width": 960,
+      "height": 168,
+      "bytes": 762
+    },
+    {
+      "key": "rooms/gold_chill_fx",
+      "frames": 3,
+      "width": 960,
+      "height": 168,
+      "bytes": 3436
+    },
+    {
+      "key": "rooms/gold_laundry_fx",
+      "frames": 3,
+      "width": 960,
+      "height": 168,
+      "bytes": 1877
+    },
+    {
+      "key": "rooms/laundry_fx",
+      "frames": 3,
+      "width": 960,
+      "height": 168,
+      "bytes": 1877
+    },
+    {
+      "key": "rooms/noodle_fx",
+      "frames": 3,
+      "width": 960,
+      "height": 168,
+      "bytes": 1301
+    },
+    {
+      "key": "rooms/pink_chill_fx",
+      "frames": 3,
+      "width": 960,
+      "height": 168,
+      "bytes": 3436
+    },
+    {
+      "key": "rooms/pink_laundry_fx",
+      "frames": 3,
+      "width": 960,
+      "height": 168,
+      "bytes": 1877
+    },
+    {
+      "key": "rooms/pool_fx",
+      "frames": 3,
+      "width": 1440,
+      "height": 168,
+      "bytes": 6440
+    },
+    {
+      "key": "ui/broken_overlay",
+      "frames": 4,
+      "width": 640,
+      "height": 168,
+      "bytes": 2294
+    },
+    {
+      "key": "ui/crate_open",
+      "frames": 4,
+      "width": 384,
+      "height": 96,
+      "bytes": 13343
+    },
+    {
+      "key": "ui/issue_cold_overlay",
+      "frames": 4,
+      "width": 1280,
+      "height": 168,
+      "bytes": 6267
+    },
+    {
+      "key": "ui/issue_dark_overlay",
+      "frames": 4,
+      "width": 1280,
+      "height": 168,
+      "bytes": 13027
+    },
+    {
+      "key": "ui/issue_hot_overlay",
+      "frames": 4,
+      "width": 1280,
+      "height": 168,
+      "bytes": 11579
+    },
+    {
+      "key": "ui/issue_leak_overlay",
+      "frames": 4,
+      "width": 1280,
+      "height": 168,
+      "bytes": 3935
+    },
+    {
+      "key": "weather/drizzle_back",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 63413
+    },
+    {
+      "key": "weather/drizzle_front",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 44581
+    },
+    {
+      "key": "weather/fireflies_front",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 60619
+    },
+    {
+      "key": "weather/fog_back",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 373491
+    },
+    {
+      "key": "weather/leaves_front",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 61551
+    },
+    {
+      "key": "weather/rain_back",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 108889
+    },
+    {
+      "key": "weather/rain_front",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 95644
+    },
+    {
+      "key": "weather/snow_back",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 35971
+    },
+    {
+      "key": "weather/snow_front",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 49622
+    },
+    {
+      "key": "weather/sun_rays_back",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 344367
+    },
+    {
+      "key": "weather/sun_rays_front",
+      "frames": 12,
+      "width": 1920,
+      "height": 3240,
+      "bytes": 31581
+    }
+  ]
+}

@@ -1,3 +1,93 @@
+# Sprite sheet integration - 2026-11-17
+
+## Delivered and verified
+
+301 lossless RGBA PNG sheets in sheets/, indexed by window.STARLIT_SHEETS in sheets.js. These replace 2,287 numbered animation-frame requests with 301 sheet requests. Total PNG size: 9,346,405 bytes (8.913 MiB). Maximum width: 1,920 pixels, strictly below 2,048. Maximum height: 3,240 pixels; the width limit requires the 960x540 twelve-frame effects to use 2 columns and 6 rows. A renderer with a texture-height limit below 3,240 must handle those sheets separately; do not assume every sheet fits a 2048x2048 texture.
+
+All 2,551 existing manifest entries and SVG files remain unchanged. All existing animation/placement/timing metadata and preview.html remain unchanged. index.html was not edited. This is an asset packaging delivery: the current game continues using SVGs until its loader is wired to sheets.js.
+
+There are also 264 static manifest images. If every asset is loaded, sheets plus statics require 565 image requests, instead of 2,551 (77.9% fewer). The approximately 300 target is met for animation sheets (301), not for all images combined. Preserving the requested separate statics prevents reaching 300 total image requests in this batch. Lazy-loading sheets can reduce initial requests further. Files on disk are intentionally retained for compatibility.
+
+Coverage: all character activity, walk, reaction, working staff, handyman fix, clerk blink, cleaner sweep and animated prop sequences; all five decor motion sequences; light halos; weather layers; animated background/room FX; emergency overlays; broken overlays; crate opening. Numbered guest identities (chars/guest_1..12) and rating faces (ui/face_1..5) are separate static designs, not animations, and remain SVGs.
+
+## Index and coordinate contract
+
+Load art/sheets.js before the new image loader. Paths in `file` are relative to art/. Sheet keys omit the final frame number and extension; original keys are preserved verbatim in `frameKeys`.
+
+Example, with the actual existing source dimensions:
+
+```js
+"chars/guest_1_run": {
+  "file": "sheets/chars/guest_1_run.png",
+  "frames": 8,
+  "cellW": 56,
+  "cellH": 96,
+  "scale": 0.5,
+  "pixelsPerGamePixel": 2,
+  "anchor": [28, 96],
+  "cols": 8,
+  "rows": 1,
+  "frameKeys": ["chars/guest_1_run_1", "chars/guest_1_run_2", "..."]
+}
+```
+
+The shortened frameKeys above is illustrative; sheets.js contains every real key, never an ellipsis. Cell sizes are sheet pixels. The art brief says the game displays SVGs at half their file size: source SVG pixels already provide the requested 2x display resolution. Rasterizing at native SVG dimensions therefore preserves 2x game resolution, rather than doubling already doubled art.
+
+To follow the requested scale:0.5 example, `scale` means GAME PIXELS PER SHEET PIXEL. Its inverse, `pixelsPerGamePixel`, explicitly records SHEET PIXELS PER GAME PIXEL = 2. Do not use these two meanings interchangeably. A 56x96 cell displays at 28x48 game pixels before any existing slot, room, camera or device scaling. Canvas/device pixel ratio remains the renderer's responsibility. If an existing draw call already supplies destination width/height, keep those exact dimensions; do not apply scale again.
+
+`anchor` is in cell-local sheet pixels, copied from existing activity/reaction/decor/light metadata. Standing/walking/staff feet are [28,96]; seated actions [28,88]; swim [48,44]; relax [56,68]. Prop sprites use their bottom-centre anchor. Full-scene and UI overlays use [0,0] because their existing placement is top-left. UI crate opening also uses top-left placement. The anchor is an origin convention, not new artwork or an offset baked into the cell. Do not subtract it twice if existing code already computes a top-left destination.
+
+Every cell has its original complete canvas, including transparent margins. There is no trimming, rotation, resampling, padding, extra glow, recolouring or anchor recentering. Frames run left to right, then top to bottom. `cols` and `rows` are explicit even for one-row sheets. Any unused end cells are fully transparent. Use integer source rectangles and the original destination transform, not the entire image's dimensions or a stretched CSS background. No gutters are inserted; texture/UV code must constrain sampling to the selected cell and avoid mipmaps that blend neighbouring frames.
+
+## Map an old frame key to a sheet
+
+Build/cache this lookup once. It leaves static names such as ui/face_3 alone and uses the final numbered suffix, so character numbers and activity names containing underscores remain intact.
+
+```js
+function resolveSheetFrame(oldKey) {
+  const match = /^(.*)_(\d+)$/.exec(oldKey);
+  if (!match) return null;
+  const sheet = window.STARLIT_SHEETS[match[1]];
+  const frameIndex = Number(match[2]) - 1; // zero-based
+  if (!sheet || frameIndex < 0 || frameIndex >= sheet.frames ||
+      sheet.frameKeys[frameIndex] !== oldKey) return null;
+  return {
+    sheetKey: match[1], sheet, frameIndex,
+    sx: (frameIndex % sheet.cols) * sheet.cellW,
+    sy: Math.floor(frameIndex / sheet.cols) * sheet.cellH,
+    sw: sheet.cellW, sh: sheet.cellH
+  };
+}
+```
+
+`chars/guest_1_run_3` maps to sheets/chars/guest_1_run.png, frameIndex 2, source rectangle [112,0,56,96], anchor [28,96]. A wrapped example: weather/rain_front_3 maps to frameIndex 2, rectangle [0,540,960,540] on a two-column sheet.
+
+```js
+const cell = resolveSheetFrame(oldKey);
+if (cell) {
+  // Cache/decode one Image per cell.sheet.file, not one per old frame key.
+  const image = sheetImageCache.get(cell.sheet.file);
+  // dx/dy/dw/dh are the EXACT destination rectangle of the existing SVG draw.
+  ctx.drawImage(image, cell.sx, cell.sy, cell.sw, cell.sh, dx, dy, dw, dh);
+} else {
+  // Existing manifest SVG fallback, including all static assets.
+}
+```
+
+If drawing from an anchor position instead of a precomputed rectangle, let effectiveScale be the old SVG file-pixel-to-destination-pixel transform (including room/slot/camera scaling), then dx=x-anchor[0]*effectiveScale, dy=y-anchor[1]*effectiveScale, dw=cellW*effectiveScale, dh=cellH*effectiveScale.
+
+Do not eagerly preload all STARLIT_ART entries after adding sheets: that would still fetch the original frames. Resolve animation keys through STARLIT_SHEETS first, retain the old manifest as fallback, and request sheets by the same active identity/activity/scene policy as before. PNG sheets are intentionally not added to the old SVG manifest, so the current loader does not accidentally load both representations.
+
+## Timing, layers and validation
+
+Frame packing does not define or alter playback. Continue selecting old frame keys using amenity_animations.js, reactions.js, decor_animations.js, lighting.js, backgrounds.js, weather.js and existing UI/staff/walk logic. Preserve frame rate, phase, game pause/speed, blink holds, one-shot endings and looping behaviour. Numbered blink frames do not replace the unnumbered open clerk base or its existing hold durations. Preserve existing foreground crops, props, z order, slot scales and light emitters.
+
+Validation: parsed every source SVG as XML; found no unregistered SVGs; checked every sequence is contiguous starting at 1; checked equal frame dimensions and consistent anchors; rendered every SVG at its exact native dimensions; copied raw RGBA cells without blending; decoded every final PNG and verified every pixel, including alpha and unused sheet space, against the packed source renders. All 2,287 frames passed. Hash-checked 2,563 original SVG/JS/HTML files before and after packing; none changed. Evaluated sheets.js as JavaScript and checked its index count. Per-sheet dimensions, frame counts and byte sizes are in sheets/validation.json.
+
+---
+
+# Earlier integration notes (retained)
+
 # Current handoff: personality, lights and furniture motion
 Art-only implementation. index.html was not edited. Load art/reactions.js, art/decor_animations.js and art/lighting.js after manifest/items. These files reference only registered SVG keys. This section adds to earlier amenity/treehouse requirements; it does not replace their layouts or eight-frame actions.
 
