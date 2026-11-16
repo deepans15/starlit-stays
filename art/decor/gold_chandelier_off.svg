@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="84" height="60" viewBox="0 0 84 60">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M42 1.25v15m-26 14q0 16 26 13 26 3 26-13m-39-5q0 12 13 10 13 2 13-10M42 16v30" fill="none" stroke="#d4a744" stroke-width="3" vector-effect="non-scaling-stroke" />
+    <path d="M11 28h10v-11h-10Z" fill="#fff6dd" vector-effect="non-scaling-stroke" />
+    <circle cx="16" cy="14" r="2" fill="#ffc94d" stroke="none" vector-effect="non-scaling-stroke" />
+    <path d="M24 23h10v-11h-10Z" fill="#fff6dd" vector-effect="non-scaling-stroke" />
+    <circle cx="29" cy="9" r="2" fill="#ffc94d" stroke="none" vector-effect="non-scaling-stroke" />
+    <path d="M50 23h10v-11h-10Z" fill="#fff6dd" vector-effect="non-scaling-stroke" />
+    <circle cx="55" cy="9" r="2" fill="#ffc94d" stroke="none" vector-effect="non-scaling-stroke" />
+    <path d="M63 28h10v-11h-10Z" fill="#fff6dd" vector-effect="non-scaling-stroke" />
+    <circle cx="68" cy="14" r="2" fill="#ffc94d" stroke="none" vector-effect="non-scaling-stroke" />
+    <g transform="translate(42 51) scale(1)">
+      <path d="M0-7 5-2 0 7-5-2Z" fill="#ffc94d" vector-effect="non-scaling-stroke" />
+    </g>
+    <g transform="translate(19 49) scale(0.5)">
+      <path d="M0-7 5-2 0 7-5-2Z" fill="#ffdc85" vector-effect="non-scaling-stroke" />
+    </g>
+    <g transform="translate(65 49) scale(0.5)">
+      <path d="M0-7 5-2 0 7-5-2Z" fill="#ffdc85" vector-effect="non-scaling-stroke" />
+    </g>
+  </g>
+</svg>

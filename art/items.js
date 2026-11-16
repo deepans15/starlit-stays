@@ -93,7 +93,10 @@ window.STARLIT_ITEMS = [
         "width": 84,
         "height": 29
       }
-    }
+    },
+    "guestReactions": [
+      "admire"
+    ]
   },
   {
     "id": "love_loveseat",
@@ -179,7 +182,10 @@ window.STARLIT_ITEMS = [
         "width": 84,
         "height": 29
       }
-    }
+    },
+    "guestReactions": [
+      "admire"
+    ]
   },
   {
     "id": "halloween_pumpkin_lamp",
@@ -190,7 +196,14 @@ window.STARLIT_ITEMS = [
     "cost": 180,
     "decor": 5,
     "level": 3,
-    "category": "lighting"
+    "category": "lighting",
+    "light": {
+      "profile": "halloween_pumpkin_lamp",
+      "autoTimes": [
+        "evening",
+        "night"
+      ]
+    }
   },
   {
     "id": "halloween_ghost_chair",
@@ -265,7 +278,10 @@ window.STARLIT_ITEMS = [
         "width": 84,
         "height": 29
       }
-    }
+    },
+    "guestReactions": [
+      "admire"
+    ]
   },
   {
     "id": "winter_armchair",
@@ -361,7 +377,11 @@ window.STARLIT_ITEMS = [
         "width": 84,
         "height": 29
       }
-    }
+    },
+    "guestReactions": [
+      "admire",
+      "photo"
+    ]
   },
   {
     "id": "gold_chaise",
@@ -387,7 +407,14 @@ window.STARLIT_ITEMS = [
     "cost": 360,
     "decor": 6,
     "level": 6,
-    "category": "lighting"
+    "category": "lighting",
+    "light": {
+      "profile": "gold_lamp",
+      "autoTimes": [
+        "evening",
+        "night"
+      ]
+    }
   },
   {
     "id": "gold_mirror",
@@ -427,7 +454,14 @@ window.STARLIT_ITEMS = [
     "cost": 1600,
     "decor": 20,
     "level": 15,
-    "category": "lighting"
+    "category": "lighting",
+    "light": {
+      "profile": "gold_chandelier",
+      "autoTimes": [
+        "evening",
+        "night"
+      ]
+    }
   },
   {
     "id": "pink_bed",
@@ -457,7 +491,10 @@ window.STARLIT_ITEMS = [
         "width": 84,
         "height": 29
       }
-    }
+    },
+    "guestReactions": [
+      "admire"
+    ]
   },
   {
     "id": "pink_sofa",
@@ -483,7 +520,14 @@ window.STARLIT_ITEMS = [
     "cost": 180,
     "decor": 5,
     "level": 3,
-    "category": "lighting"
+    "category": "lighting",
+    "light": {
+      "profile": "pink_lamp",
+      "autoTimes": [
+        "evening",
+        "night"
+      ]
+    }
   },
   {
     "id": "pink_vanity",
@@ -625,7 +669,10 @@ window.STARLIT_ITEMS = [
         "width": 84,
         "height": 27
       }
-    }
+    },
+    "guestReactions": [
+      "admire"
+    ]
   },
   {
     "id": "cloud_bed",
@@ -655,7 +702,10 @@ window.STARLIT_ITEMS = [
         "width": 84,
         "height": 29
       }
-    }
+    },
+    "guestReactions": [
+      "admire"
+    ]
   },
   {
     "id": "race_car_bed",
@@ -685,7 +735,10 @@ window.STARLIT_ITEMS = [
         "width": 73,
         "height": 18
       }
-    }
+    },
+    "guestReactions": [
+      "admire"
+    ]
   },
   {
     "id": "round_bed",
@@ -715,7 +768,10 @@ window.STARLIT_ITEMS = [
         "width": 86,
         "height": 28
       }
-    }
+    },
+    "guestReactions": [
+      "admire"
+    ]
   },
   {
     "id": "boat_bed",
@@ -745,7 +801,11 @@ window.STARLIT_ITEMS = [
         "width": 88,
         "height": 25
       }
-    }
+    },
+    "guestReactions": [
+      "admire",
+      "photo"
+    ]
   },
   {
     "id": "bunk_bed",
@@ -776,7 +836,11 @@ window.STARLIT_ITEMS = [
         "height": 20
       },
       "upperMattressTop": 37
-    }
+    },
+    "guestReactions": [
+      "admire",
+      "photo"
+    ]
   },
   {
     "id": "hammock_bed",
@@ -806,7 +870,25 @@ window.STARLIT_ITEMS = [
         "width": 74,
         "height": 31
       }
-    }
+    },
+    "animation": {
+      "frames": [
+        "decor/hammock_bed_sway_1",
+        "decor/hammock_bed_sway_2",
+        "decor/hammock_bed_sway_3",
+        "decor/hammock_bed_sway_4",
+        "decor/hammock_bed_sway_5",
+        "decor/hammock_bed_sway_6",
+        "decor/hammock_bed_sway_7",
+        "decor/hammock_bed_sway_8"
+      ],
+      "fps": 3,
+      "mode": "replace"
+    },
+    "guestReactions": [
+      "admire",
+      "photo"
+    ]
   },
   {
     "id": "canopy_bed",
@@ -836,7 +918,11 @@ window.STARLIT_ITEMS = [
         "width": 75,
         "height": 33
       }
-    }
+    },
+    "guestReactions": [
+      "admire",
+      "photo"
+    ]
   },
   {
     "id": "rocket_bed",
@@ -866,7 +952,11 @@ window.STARLIT_ITEMS = [
         "width": 30,
         "height": 33
       }
-    }
+    },
+    "guestReactions": [
+      "admire",
+      "photo"
+    ]
   },
   {
     "id": "royal_bed",
@@ -896,7 +986,11 @@ window.STARLIT_ITEMS = [
         "width": 99,
         "height": 29
       }
-    }
+    },
+    "guestReactions": [
+      "admire",
+      "photo"
+    ]
   },
   {
     "id": "split_air_conditioner",
@@ -928,7 +1022,14 @@ window.STARLIT_ITEMS = [
     "category": "lighting",
     "cost": 240,
     "level": 4,
-    "decor": 5
+    "decor": 5,
+    "light": {
+      "profile": "industrial_pendant",
+      "autoTimes": [
+        "evening",
+        "night"
+      ]
+    }
   },
   {
     "id": "brass_cabin_lantern",
@@ -941,7 +1042,14 @@ window.STARLIT_ITEMS = [
     "category": "lighting",
     "cost": 180,
     "level": 3,
-    "decor": 4
+    "decor": 4,
+    "light": {
+      "profile": "brass_cabin_lantern",
+      "autoTimes": [
+        "evening",
+        "night"
+      ]
+    }
   },
   {
     "id": "workshop_tool_cabinet",
@@ -1037,7 +1145,21 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 300,
     "level": 5,
-    "decor": 5
+    "decor": 5,
+    "animation": {
+      "frames": [
+        "decor/ceiling_fan_spin_1",
+        "decor/ceiling_fan_spin_2",
+        "decor/ceiling_fan_spin_3",
+        "decor/ceiling_fan_spin_4",
+        "decor/ceiling_fan_spin_5",
+        "decor/ceiling_fan_spin_6",
+        "decor/ceiling_fan_spin_7",
+        "decor/ceiling_fan_spin_8"
+      ],
+      "fps": 8,
+      "mode": "replace"
+    }
   },
   {
     "id": "radiator",
@@ -1075,7 +1197,31 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 720,
     "level": 9,
-    "decor": 10
+    "decor": 10,
+    "animation": {
+      "frames": [
+        "decor/fireplace_burn_1",
+        "decor/fireplace_burn_2",
+        "decor/fireplace_burn_3",
+        "decor/fireplace_burn_4",
+        "decor/fireplace_burn_5",
+        "decor/fireplace_burn_6",
+        "decor/fireplace_burn_7",
+        "decor/fireplace_burn_8"
+      ],
+      "fps": 4,
+      "mode": "replace"
+    },
+    "guestReactions": [
+      "warm_hands"
+    ],
+    "light": {
+      "profile": "fireplace",
+      "autoTimes": [
+        "evening",
+        "night"
+      ]
+    }
   },
   {
     "id": "smart_thermostat",
@@ -1112,7 +1258,14 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 120,
     "level": 1,
-    "decor": 3
+    "decor": 3,
+    "guestReactions": [
+      "window_peek"
+    ],
+    "dayNight": {
+      "day": "decor/window_square",
+      "night": "decor/window_square_night"
+    }
   },
   {
     "id": "window_tall",
@@ -1130,7 +1283,14 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 260,
     "level": 4,
-    "decor": 4
+    "decor": 4,
+    "guestReactions": [
+      "window_peek"
+    ],
+    "dayNight": {
+      "day": "decor/window_tall",
+      "night": "decor/window_tall_night"
+    }
   },
   {
     "id": "window_wide",
@@ -1148,7 +1308,14 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 280,
     "level": 4,
-    "decor": 5
+    "decor": 5,
+    "guestReactions": [
+      "window_peek"
+    ],
+    "dayNight": {
+      "day": "decor/window_wide",
+      "night": "decor/window_wide_night"
+    }
   },
   {
     "id": "window_arched",
@@ -1166,7 +1333,14 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 340,
     "level": 5,
-    "decor": 5
+    "decor": 5,
+    "guestReactions": [
+      "window_peek"
+    ],
+    "dayNight": {
+      "day": "decor/window_arched",
+      "night": "decor/window_arched_night"
+    }
   },
   {
     "id": "window_round",
@@ -1184,7 +1358,14 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 180,
     "level": 2,
-    "decor": 3
+    "decor": 3,
+    "guestReactions": [
+      "window_peek"
+    ],
+    "dayNight": {
+      "day": "decor/window_round",
+      "night": "decor/window_round_night"
+    }
   },
   {
     "id": "window_bay",
@@ -1202,7 +1383,15 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 520,
     "level": 8,
-    "decor": 7
+    "decor": 7,
+    "guestReactions": [
+      "window_peek",
+      "photo"
+    ],
+    "dayNight": {
+      "day": "decor/window_bay",
+      "night": "decor/window_bay_night"
+    }
   },
   {
     "id": "window_city_view",
@@ -1220,7 +1409,15 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 600,
     "level": 10,
-    "decor": 7
+    "decor": 7,
+    "guestReactions": [
+      "window_peek",
+      "photo"
+    ],
+    "dayNight": {
+      "day": "decor/window_city_view_day",
+      "night": "decor/window_city_view"
+    }
   },
   {
     "id": "window_shuttered",
@@ -1238,6 +1435,67 @@ window.STARLIT_ITEMS = [
     ],
     "cost": 220,
     "level": 3,
-    "decor": 4
+    "decor": 4,
+    "guestReactions": [
+      "window_peek"
+    ],
+    "dayNight": {
+      "day": "decor/window_shuttered",
+      "night": "decor/window_shuttered_night"
+    }
+  },
+  {
+    "id": "rocking_chair",
+    "name": "Willow Rocking Chair",
+    "zone": "floor",
+    "category": "seating",
+    "width": 72,
+    "height": 80,
+    "w": 72,
+    "h": 80,
+    "cost": 360,
+    "level": 4,
+    "decor": 6,
+    "animation": {
+      "frames": [
+        "decor/rocking_chair_rock_1",
+        "decor/rocking_chair_rock_2",
+        "decor/rocking_chair_rock_3",
+        "decor/rocking_chair_rock_4",
+        "decor/rocking_chair_rock_5",
+        "decor/rocking_chair_rock_6",
+        "decor/rocking_chair_rock_7",
+        "decor/rocking_chair_rock_8"
+      ],
+      "fps": 3,
+      "mode": "replace"
+    }
+  },
+  {
+    "id": "linen_curtains",
+    "name": "Soft Linen Curtains",
+    "zone": "wall",
+    "category": "wall",
+    "width": 96,
+    "height": 104,
+    "w": 96,
+    "h": 104,
+    "cost": 180,
+    "level": 2,
+    "decor": 4,
+    "animation": {
+      "frames": [
+        "decor/linen_curtains_flutter_1",
+        "decor/linen_curtains_flutter_2",
+        "decor/linen_curtains_flutter_3",
+        "decor/linen_curtains_flutter_4",
+        "decor/linen_curtains_flutter_5",
+        "decor/linen_curtains_flutter_6",
+        "decor/linen_curtains_flutter_7",
+        "decor/linen_curtains_flutter_8"
+      ],
+      "fps": 3,
+      "mode": "replace"
+    }
   }
 ];

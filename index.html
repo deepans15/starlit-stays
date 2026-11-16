@@ -141,6 +141,11 @@
   .cat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .bcard{position:relative;touch-action:pan-y;background:#fff;border:2px solid var(--line);border-radius:14px;padding:26px 6px 6px;cursor:pointer;text-align:center;display:flex;flex-direction:column}
   .bcard:hover{border-color:#f19a6c}
+  .cat.mini{grid-template-columns:repeat(3,1fr);gap:6px}
+  .cat.mini .bcard{padding:20px 3px 4px;border-radius:12px}
+  .cat.mini .thumb{height:58px;margin-bottom:2px}
+  .cat.mini .rate{font-size:10px;padding:0 4px;right:3px;top:3px}
+  .cat.mini .pr{font-size:12px;margin-top:2px;padding:1px 0}
   .bcard.locked{cursor:not-allowed;opacity:.75}
   .bcard.poor{opacity:.6}
   .thumb{touch-action:none;cursor:grab;height:104px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
@@ -234,14 +239,16 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.62"></script>
-<script src="art/items.js?v=0.62"></script>
-<script src="art/furnished_rooms.js?v=0.62" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.62" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.62" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.62" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.62"></script>
-<script src="art/weather.js?v=0.62" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.66"></script>
+<script src="art/items.js?v=0.66"></script>
+<script src="art/lighting.js?v=0.66" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/decor_animations.js?v=0.66" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.66" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.66" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.66" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.66" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.66"></script>
+<script src="art/weather.js?v=0.66" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -251,7 +258,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.62';
+const BUILD = '0.66';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -429,7 +436,7 @@ const ART = {};
 // ?v=BUILD makes browsers fetch fresh art after each update instead of showing old cached copies.
 const artReady = new Promise(done => {
   const all = Object.entries(window.STARLIT_ART || {});
-  const lazy = ([k]) => k.startsWith('weather/') || (k.startsWith('backgrounds/') && k.includes('_fx_')) || /^chars\/.+_(swim|eat|drink|drink_stand|watch|play|read|read_stand)_\d+$/.test(k);
+  const lazy = ([k]) => k.startsWith('weather/') || (k.startsWith('backgrounds/') && k.includes('_fx_')) || /^chars\/.+_(swim|eat|drink|drink_stand|watch|play|read|read_stand)_\d+$/.test(k) || k.startsWith('effects/') || /^chars\/.+_react_.+_\d+$/.test(k) || /^decor\/.+_(sway|spin|burn|rock|flutter)_\d+$/.test(k);
   const list = all.filter(e=>!lazy(e));
   setTimeout(()=>{ for(const [key, file] of all.filter(lazy)){ const img = new Image(); img.onload = () => { ART[key] = img; }; img.src = 'art/' + file + '?v=' + BUILD + (/^chars\/.+_(run|lift)_\d+$/.test(key) ? '&rev=gym8' : ''); } }, 300);
   let left = list.length; const bar = document.getElementById('loadBar');
@@ -485,6 +492,7 @@ function migrate(s){
   s.rooms = (s.rooms||[]).filter(r=>ROOMS[r.type]);
   for(const r of s.rooms){ r.items = (r.items||[]).filter(it=>ITEMS[it.id]); for(const it of r.items) itemUid = Math.max(itemUid, (it.u||0)+1); }
   s.storage = s.storage || []; s.inv = s.inv || {};
+  for(const r of s.rooms) if(ROOMS[r.type].kind==='service' || ROOMS[r.type].kind==='amenity'){ r.dirty = false; r.cleanT = 0; }   // only guest rooms get messy
   for(const r of s.rooms) if(r.type.startsWith('treehouse') && !(r.items||[]).some(it=>ITEMS[it.id] && ITEMS[it.id].zone==='bed')){ r.items = r.items || []; r.items.unshift(mkItem('bed_basic', 8)); }
   // a room whose size changed (Laundry Room 1x1 -> 2x1) and now overlaps another room goes to storage instead
   const taken = new Map();
@@ -1140,7 +1148,7 @@ function drawRoom(r, covered){
   if(def.kind==='guest' || !bgArt) drawFloorBand(r, x, y+h-FLOOR_PAD, w);
   // guest rooms are plain: just walls, floor and whatever furniture the player puts in (a new room only has its bed)
   if(def.kind==='guest'){ drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,h,'bed'); drawItems(r,x,y,w,h,'front'); drawGuestRoom(r,x,y,w,h,'guest'); }   // the sleeping guest stays in front of the furniture
-  else if(def.kind==='service'){ if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawCloset(r,x,y,w,h); if(!r.dirty) drawStaff(r,x,y,w,h); }
+  else if(def.kind==='service'){ if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawCloset(r,x,y,w,h); drawStaff(r,x,y,w,h); }
   else {
     const styled = r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h);
     if(styled || sprite('rooms/'+r.type, x, y, w, h)){ const base = styled ? 'rooms/'+r.style+'_'+r.type : 'rooms/'+r.type;   // themed rooms only animate with their own fx frames
@@ -1269,6 +1277,7 @@ function itemY(r, it, def){
 function clampItemX(r, def, x){ const w = ROOMS[r.type].w*CELL; return Math.max(4, Math.min(w - def.w - 4, x)); }
 function drawItems(r, x, y, w, h, layer){
   const list = (r.items||[]).slice().sort((a,b)=>(a.on?1:0)-(b.on?1:0));   // things standing on furniture are drawn last
+  if(layer==='back') drawRoomLight(r, list, x, y, w, h);
   for(const it of list){
     const def = ITEMS[it.id]; if(!def) continue;
     const back = def.back || def.zone==='wall' || def.zone==='ceiling';
@@ -1281,12 +1290,65 @@ function drawItems(r, x, y, w, h, layer){
     else if(d && d.moved && sup && d.item===sup){ ix = d.ix + (it.x - sup.x); iy = d.iy + surfaceTop(ITEMS[sup.id]) - def.h; }
     else { ix = it.x; iy = itemY(r, it, def); }
     if(d && d.moved && d.item===it && d.out) ctx.globalAlpha = 0.45;
-    drawItem(def, x+ix, y+iy);
+    const wp = WINDOW_BY_ID[it.id];
+    if(wp){ const ga = ctx.globalAlpha; drawItem(def, x+ix, y+iy, wp.day); const f = fadeOf(it, 'win', isDusk() ? 1 : 0); if(f > 0 && art(wp.night)){ ctx.globalAlpha = ga*f; drawItem(def, x+ix, y+iy, wp.night); } ctx.globalAlpha = ga; }   // the view outside follows the time of day
+    else drawItem(def, x+ix, y+iy, itemArtKey(r, it));
     ctx.globalAlpha = 1;
   }
 }
-function drawItem(def, x, y){
-  if(sprite('decor/'+def.id, x, y, def.w, def.h)) return;
+/* ---------------- lights, windows and furniture that moves (art/lighting.js, art/decor_animations.js) ----------------
+   Lamps switch on by themselves in the evening and at night; tap one while decorating to flip it (it.sw: 1 on, 0 off). */
+const LIGHTING = window.STARLIT_LIGHTING || {profiles:[], windows:[], fadeMs:1200}, LIGHT_BY_ID = {}, WINDOW_BY_ID = {}, DECOR_ANIM = {};
+for(const p of LIGHTING.profiles||[]) LIGHT_BY_ID[p.id] = p;
+for(const w of LIGHTING.windows||[]) WINDOW_BY_ID[w.id] = w;
+for(const a of (window.STARLIT_DECOR_ANIMATIONS||{}).items||[]) DECOR_ANIM[a.id] = a;
+const fxState = new WeakMap();   // fade progress per placed item, never saved
+function dayPhase(){ const sc = typeof currentScene==='function' ? currentScene() : null; return (sc && sc.time) || timeOfDay(); }
+const isDusk = () => (LIGHTING.autoTimes || ['evening','night']).includes(dayPhase());
+const switchedOn = it => it.sw===undefined ? isDusk() : !!it.sw;
+function fadeOf(it, ch, target){
+  let st = fxState.get(it); if(!st){ st = {}; fxState.set(it, st); }
+  const now = performance.now(), c = st[ch] || (st[ch] = {v:target, t:now});
+  const step = (now - c.t) / (LIGHTING.fadeMs || 1200); c.t = now;
+  c.v = target > c.v ? Math.min(target, c.v + step) : Math.max(target, c.v - step);
+  return c.v;
+}
+function animActive(r, it, a){
+  if(a.activation==='occupied_or_settling') return !!r.guest || (r.users||0) > 0;
+  if(a.activation==='enabled') return it.sw!==0;
+  if(a.activation==='lit') return switchedOn(it);
+  return true;   // breeze: curtains always stir a little
+}
+function frameKey(it, a){ const n = a.frames.length; return a.frames[Math.floor((time + (it.u||0)*0.37) * (a.fps||4)) % n]; }
+function itemArtKey(r, it){
+  const lp = LIGHT_BY_ID[it.id], a = DECOR_ANIM[it.id], on = lp ? switchedOn(it) : true;
+  if(a && !reduceMotion && a.frames && animActive(r, it, a)){ const k = frameKey(it, a); if(art(k)) return k; }
+  return lp ? (on ? lp.on : lp.off) : null;
+}
+// a soft glow around every lit lamp, and a faint night tint on the room's own art
+function drawRoomLight(r, list, x, y, w, h){
+  const L = ROOM_LAYOUT[r.type], kind = ROOMS[r.type].kind; if(kind==='lobby' && !isDusk()) return;
+  let cx = x, cy = y, cw = w, ch = h;
+  if(L && L.openAir){ const k = w / L.width; ch = (L.guestBaseline||156)*k + FLOOR_PAD; }
+  if(isDusk() && !(L && L.openAir) && LIGHTING.ambientTint){ const t = LIGHTING.ambientTint; ctx.save(); ctx.globalAlpha = t.opacity; ctx.fillStyle = t.color; ctx.fillRect(cx, cy, cw, ch - FLOOR_PAD); ctx.restore(); }
+  for(const it of list){
+    const lp = LIGHT_BY_ID[it.id], def = ITEMS[it.id]; if(!lp || !def) continue;
+    const f = fadeOf(it, 'light', switchedOn(it) ? 1 : 0); if(f <= 0 || !lp.frames || !lp.frames.length) continue;
+    const img = art(lp.frames[Math.floor(time*(lp.fps||4)) % lp.frames.length]) || lp.frames.map(art).find(Boolean); if(!img) continue;
+    const s = def.w / lp.itemWidth, ix = (ui.itemDrag && ui.itemDrag.moved && ui.itemDrag.item===it) ? ui.itemDrag.ix : it.x, iy = (ui.itemDrag && ui.itemDrag.moved && ui.itemDrag.item===it) ? ui.itemDrag.iy : itemY(r, it, def);
+    const hx = x + ix + (lp.emitter.x - lp.haloAnchor.x)*s, hy = y + iy + (lp.emitter.y - lp.haloAnchor.y)*s;
+    ctx.save(); ctx.beginPath(); ctx.rect(cx, cy, cw, ch); ctx.clip(); ctx.globalAlpha = f; ctx.drawImage(img, hx, hy, lp.haloWidth*s, lp.haloHeight*s); ctx.restore();
+  }
+}
+// tap a lamp, fan or fireplace while decorating to switch it
+function toggleItem(it){
+  const lp = LIGHT_BY_ID[it.id], a = DECOR_ANIM[it.id];
+  if(!lp && !(a && a.activation==='enabled')) return false;
+  const on = lp ? switchedOn(it) : it.sw!==0; it.sw = on ? 0 : 1;
+  toast(`${ITEMS[it.id].name} ${it.sw ? 'on' : 'off'}`); return true;
+}
+function drawItem(def, x, y, key){
+  if((key && sprite(key, x, y, def.w, def.h)) || sprite('decor/'+def.id, x, y, def.w, def.h)) return;
   const w = def.w, h = def.h;
   switch(def.id){
     case 'bed_basic': case 'bed_fluffy': {
@@ -1449,7 +1511,7 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
     groups.get(g.amen).push(g);
   }
   // every amenity / closet with layout data is drawn here (even empty) so its staff sorts with guests, props and seat backs
-  for(const r of S.rooms){ if(groups.has(r.id) || !AMENITY_ACTIVITY_ROOMS.has(r.type) || ROOMS[r.type].kind==='guest' || r.dirty || (onlyRoomId!==undefined && r.id!==onlyRoomId) || (excludedRoomId!==undefined && r.id===excludedRoomId)) continue;
+  for(const r of S.rooms){ if(groups.has(r.id) || !AMENITY_ACTIVITY_ROOMS.has(r.type) || ROOMS[r.type].kind==='guest' || (onlyRoomId!==undefined && r.id!==onlyRoomId) || (excludedRoomId!==undefined && r.id===excludedRoomId)) continue;
     const L = AMENITY_ACTIVITY_ROOMS.get(r.type); if(L.staff) groups.set(r.id, []); }
   for(const [roomId, visitors] of groups){
     const room = S.rooms.find(r=>r.id===roomId); if(!room) continue;
@@ -1762,7 +1824,7 @@ function endItemDrag(cancelled, ev){
     else { const problem = canRemoveItem(r, d.item); if(problem) toast(problem); else { r.items = r.items.filter(x=>x!==d.item); S.inv[d.item.id] = (S.inv[d.item.id]||0)+1; toast(`${ITEMS[d.item.id].name} put away in storage`); } }
     save(); if(ui.focus===r.id) openRoom(r); else if(ui.panelKind==='build') openBuild(ui.buildTab); return; }
   const d = ui.itemDrag; ui.itemDrag = null;
-  if(!d || !d.moved || cancelled){ if(d && !d.moved && d.build && !cancelled) tapRoom(d.room, false); return; }
+  if(!d || !d.moved || cancelled){ if(d && !d.moved && !cancelled){ if(!d.build && toggleItem(d.item)){ save(); return; } if(d.build) tapRoom(d.room, false); } return; }
   const r = d.room, it = d.item;
   if(d.out){
     const problem = canRemoveItem(r, it);
@@ -1982,6 +2044,7 @@ function buyItemTo(id, r, wx){
     const before = r.items.length, lastBefore = r.items[r.items.length-1]; const keep = ui.panelKind;
     placeItem(r.id, id, false);
     if(r.items[r.items.length-1] !== lastBefore){ const it = r.items[r.items.length-1]; it.x = clampItemX(r, def, wx - visRect(r).x - def.w/2); save(); toast(`${def.name} placed in the ${roomLabel(r)}`); }
+    if(ui.focus){ const fr = S.rooms.find(x=>x.id===ui.focus); if(fr){ openRoom(fr); return; } }
     openBuild('rooms'); return;
   }
   S.coins -= def.cost; addXP(Math.max(1, Math.round(def.cost/40))); S.boughtItem = true;
@@ -2027,9 +2090,31 @@ function openBuild(tab){
   ui.mode = null;
   const lv = level();
   // every section is in one scrolling list; the side bookmarks jump to a section and light up as you scroll past it
-  const SECTIONS = [['guest','🛏️','Rooms','Guest rooms',[[null,'guest']]], ['amenity','🎡','Amenities','Amenities',[[null,'amenity']]], ['service','🧺','Services','Services',[[null,'service']]]]
+  const SECTIONS = [['guest','🛏️','Empty','Empty rooms',[[null,'guest']]], ['special','⭐','Special','Special rooms',[]], ['amenity','🎡','Amenities','Amenities',[[null,'amenity']]], ['service','🧺','Services','Services',[[null,'service']]]]
     .concat([['walls','🎨','Walls','Walls & floors',[]]]).concat(DECOR_CATS.map(([id,e,label])=>['d_'+id, e, label, label, [], id]));
   const mark = ([id, e, label, , , dc]) => `<button data-mark="${id}" onclick="jumpBuild('${id}')"><span class="e">${dc && art('ui/cat_'+dc) ? `<img src="${art('ui/cat_'+dc).src}" style="width:20px;height:20px">` : e}</span>${label}</button>`;
+  // a room card: drawn at the room's true proportions so the art is never squashed or cropped
+  const roomCard = (k, d, t) => {
+    const bed = t && themeBed(k,t), cost = roomCost(k,t), need = Math.max(d.lvl, bed ? furnishLvl(k,t) : 0);
+    const locked = need > lv, poor = S.coins < cost, RWp = d.w*CELL, RHp = hOf(k)*FLOOR, fit = Math.min(124/RWp, 96/RHp), sw = Math.round(RWp*fit), sh = Math.round(RHp*fit);
+    const key = t && !bed ? 'rooms/'+t+'_'+k : 'rooms/'+k;
+    let inner;
+    if(bed){   // a furnished special room: show its pieces laid out like the real thing
+      const k2 = sw/RWp, base = hOf(k)*FLOOR;
+      inner = `<div style="position:absolute;inset:0;background:${d.color}"></div>` + furnishPlan(k,t).map(p=>{ const it = ITEMS[p.id], a = art('decor/'+p.id); if(!a) return '';
+        const top = (it.zone==='wall' || it.zone==='ceiling') ? (p.y||0) : base - FLOOR_PAD - it.h + (it.back ? it.h-6 : 0);
+        return `<img src="${a.src}" style="position:absolute;left:${p.x*k2}px;top:${top*k2}px;width:${it.w*k2}px;height:${it.h*k2}px;object-fit:fill">`; }).join('');
+    } else if(d.kind==='guest' && art(key)){   // a new empty room comes with a bed and a window: show them so the card isn't a blank box
+      const k2 = sw/RWp, base = hOf(k)*FLOOR, put = (id, x, y) => { const it = ITEMS[id], im = it && art('decor/'+id); return im ? `<img src="${im.src}" style="position:absolute;left:${x*k2}px;top:${y*k2}px;width:${it.w*k2}px;height:${it.h*k2}px;object-fit:fill">` : ''; };
+      inner = `<img src="${art(key).src}" style="object-fit:fill">` + put('window_square', Math.round(RWp*0.62), 22) + (ITEMS.bed_basic ? put('bed_basic', 8, base - FLOOR_PAD - ITEMS.bed_basic.h) : '');
+    } else inner = art(key) ? `<img src="${art(key).src}" style="object-fit:fill">` : (d.icon || (d.kind==='guest'?'🛏️':'🧺'));
+    const rate = d.kind==='guest' || d.kind==='amenity' ? `🪙${perHour(k).toLocaleString()}/h` : d.repairs ? `🔧 ${d.capacity}` : `🧹 ${d.capacity}`;
+    const nm = t ? `${themeIcon(t)} ${themeName(t)} ${d.name}` : d.name;
+    return `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-room="${k}"${t?` data-style="${t}"`:''}`} title="${nm}">
+        ${locked?`<span class="lock">🔒 ${need}</span>`:''}
+        <div class="thumb"><div class="shape" style="position:relative;box-sizing:content-box;width:${sw}px;height:${sh}px;background:${d.color}">${inner}</div></div>
+        <span class="rate">${rate}</span><div class="nm">${nm}</div><div class="pr">🪙${cost.toLocaleString()}</div></div>`;
+  };
   let html = `<h2>🔨 Build</h2>${buildTabs('rooms')}<div class="sub">🧱 <b>${blocksUsed()}/${blocksMax()} blocks</b> · drag onto your hotel or tap to place</div>`;
   $('marks').innerHTML = SECTIONS.map(mark).join('');
   html += `<div>`;
@@ -2037,24 +2122,13 @@ function openBuild(tab){
   html += `<div class="bsec${(SECTIONS.some(x=>x[0]===ui.buildSec) ? ui.buildSec : 'guest')===cat ? ' show' : ''}" id="bsec-${cat}"><h3 class="big">${title}</h3>`;
   if(dc) html += decorShop(lv, dc);
   if(cat==='walls') html += skinShop();
+  if(cat==='special'){   // limited, fully furnished themed rooms: only the 2x1 Comfy Room has them
+    const sp = Object.entries(ROOMS).filter(([k,d])=>d.kind==='guest' && d.w===2 && d.h===1).flatMap(([k,d])=>themesFor(k).map(t=>[k,d,t]));
+    html += `<div class="sub">Furnished and themed, ready for guests. Limited pieces, 15% cheaper than buying them one by one.</div><div class="cat">${sp.map(([k,d,t])=>roomCard(k,d,t)).join('') || '<div class="sub">No special rooms yet.</div>'}</div>`;
+  }
   for(const [label,kind] of groups){
     html += `${label?`<h3>${label}</h3>`:''}<div class="cat">`;
-    for(const [k,d] of Object.entries(ROOMS)){
-      if(d.kind!==kind) continue;
-      for(const t of [null, ...(d.kind==='guest' ? themesFor(k) : [])]){   // guest rooms list their furnished theme versions; amenity/service styles are picked in the room's own panel
-      const bed = t && themeBed(k,t), cost = roomCost(k,t), need = Math.max(d.lvl, bed ? furnishLvl(k,t) : 0), pieces = bed ? furnishPlan(k,t).length : 0;
-      const locked = need > lv, poor = S.coins < cost, blocks = d.w*hOf(k);
-      const fit = Math.min(130/(d.w*1.3), 96/d.h), sw = d.w*fit*1.3, sh = d.h*fit;   // as big as the card allows
-      const key = t && !bed ? 'rooms/'+t+'_'+k : 'rooms/'+k;
-      const inner = bed && art('decor/'+bed) ? `<img src="${art('decor/'+bed).src}" style="width:70%;height:auto;margin-top:auto">` : art(key) ? `<img src="${art(key).src}">` : (d.icon || (d.kind==='guest'?'🛏️':'🧺'));
-      const rate = d.kind==='guest' || d.kind==='amenity' ? `🪙${perHour(k).toLocaleString()}/h` : d.repairs ? `🔧 ${d.capacity}` : `🧹 ${d.capacity}`;
-      const nm = t ? `${themeIcon(t)} ${themeName(t)} ${d.name}` : d.name;
-      html += `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-room="${k}"${t?` data-style="${t}"`:''}`} title="${nm}">
-        ${locked?`<span class="lock">🔒 ${need}</span>`:''}
-        <div class="thumb"><div class="shape" style="width:${sw}px;height:${sh}px;background:${d.color}">${inner}</div></div>
-        <span class="rate">${rate}</span><div class="nm">${nm}</div><div class="pr">🪙${cost.toLocaleString()}</div></div>`;
-      }
-    }
+    for(const [k,d] of Object.entries(ROOMS)) if(d.kind===kind) html += roomCard(k, d, null);
     html += `</div>`;
   }
   html += `</div>`;
@@ -2087,7 +2161,7 @@ panel.addEventListener('pointerdown', ev=>{
   const ic = ev.target.closest && ev.target.closest('.bcard[data-item]');
   const sk = ev.target.closest && ev.target.closest('.bcard[data-skin]');
   if(sk && ev.button<=0){ const p = toWorld(ev); ui.newItem = {skin: sk.dataset.skin, sx: ev.clientX, sy: ev.clientY, px:p.x, py:p.y, moved:false, over:false}; return; }
-  if(ic && ev.button<=0){ const p = toWorld(ev); ui.newItem = {id: ic.dataset.item, inv: !!ic.dataset.inv, sx: ev.clientX, sy: ev.clientY, px:p.x, py:p.y, moved:false, over:false}; return; }
+  if(ic && ev.button<=0){ const p = toWorld(ev); ui.newItem = {id: ic.dataset.item, inv: !!ic.dataset.inv, rid: ic.dataset.rid ? +ic.dataset.rid : null, sx: ev.clientX, sy: ev.clientY, px:p.x, py:p.y, moved:false, over:false}; return; }
   const card = ev.target.closest && ev.target.closest('.bcard[data-room]');
   if(!card || ev.button>0) return;
   const p = toWorld(ev);
@@ -2121,12 +2195,14 @@ window.addEventListener('pointerup', ev=>{
   if(ni){ ui.newItem = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut'); setTimeout(placeMarks, 220);
     if(endBuyZone(ev)){ toast('Cancelled'); return; }
     if(ni.skin){ if(!ni.moved){ toast('Drag it onto a guest room'); return; } if(ni.over) applySkin(ni.skin, roomAt({x:ni.px, y:ni.py})); return; }
-    if(!ni.moved){ if(ni.inv) startPlaceInv(ni.id); else buyItemTo(ni.id, null); return; }
+    if(!ni.moved){ if(ni.rid!==null && ni.rid!==undefined){ if(S.rooms.some(r=>r.id===ni.rid)){ const rr0 = S.rooms.find(r=>r.id===ni.rid); if(!itemFits(rr0, ni.id)){ toast(`${ITEMS[ni.id].name} can't go in the ${roomLabel(rr0)}`); return; } placeItem(ni.rid, ni.id, !!S.inv[ni.id]); } return; }
+      if(ni.inv) startPlaceInv(ni.id); else buyItemTo(ni.id, null); return; }
     if(!ni.over) return;   // dragged and let go back over the menu: nothing happens
     const r = roomAt({x:ni.px, y:ni.py});
     if(!r){ toast('Drop it onto a room'); return; }
     if(!itemFits(r, ni.id)){ const it = ITEMS[ni.id]; toast(it.zone==='bed' && hasBed(r) ? 'That room already has a bed' : `${it.name} can't go in the ${roomLabel(r)}`); return; }
-    if(ni.inv) placeInvTo(ni.id, r, ni.px); else buyItemTo(ni.id, r, ni.px); return; }
+    if(ni.inv){ if(ni.rid!==null && ni.rid!==undefined){ const n0 = r.items.length; placeItem(r.id, ni.id, true); if(r.items.length>n0){ const it = r.items[r.items.length-1], def = ITEMS[ni.id]; it.x = clampItemX(r, def, ni.px - visRect(r).x - def.w/2); save(); toast(`${def.name} placed in the ${roomLabel(r)}`); } if(ui.focus) openRoom(ui.focus===r.id ? r : S.rooms.find(x=>x.id===ui.focus)||r); } else placeInvTo(ni.id, r, ni.px); }
+    else buyItemTo(ni.id, r, ni.px); return; }
   const nd = ui.newDrag; if(!nd) return;
   ui.newDrag = null; document.body.style.cursor = ''; document.body.classList.remove('dragOut'); setTimeout(placeMarks, 220);
   if(endBuyZone(ev) && nd.moved){ toast('Cancelled'); return; }
@@ -2179,7 +2255,7 @@ function openRoom(r){
     else if(def.kind==='amenity') html += `<div class="sub">Guests who want ${def.name} (${def.icon} bubble) visit after their stay and pay ~🪙${def.pay}. Holds ${def.slots} guests, each on their own timer. Amenities never get dirty and don't need decor, but every piece of furniture you add pays a little extra (now +🪙${decorCoins(r)} per visit).</div>`;
     else html += `<div class="sub">Decor ${Math.round(pct*100)}%. A beautiful lobby raises your star rating.</div>`;
     html += `<div class="meter"><i style="width:${pct*100}%"></i></div>`;
-    html += `<div class="sub" style="background:#fff3e6;border-radius:10px;padding:8px">✋ <b>Drag furniture</b> in the room to arrange it. Drag it out of the room to put it away. Lift small pieces onto tables and shelves.</div>`;
+    html += `<div class="sub" style="background:#fff3e6;border-radius:10px;padding:8px">✋ <b>Drag furniture</b> in the room to arrange it. Drag it out of the room to put it away. Lift small pieces onto tables and shelves. 💡 Tap a lamp, fan or fireplace to switch it.</div>`;
     const cells = cellsOf(r);
     const wallCost = 40*cells, floorCost = 50*cells;
     html += `<h3>Walls and floor</h3>`;
@@ -2192,19 +2268,17 @@ function openRoom(r){
     if(bonuses.length) html += bonuses.map(b=>`<div class="sub" style="background:#eafaf4;border-radius:10px;padding:8px">${themeIcon(b.theme)} <b>${themeName(b.theme)} set:</b> ${b.n} matching pieces, +${b.bonus} bonus decor</div>`).join('');
     const all = itemsFor(r), inSet = new Set(Object.values(COLLECTIONS).flat());
     const groups = [['Furniture', all.filter(it=>!inSet.has(it.id))]].concat(Object.entries(COLLECTIONS).map(([t,ids])=>[`${themeIcon(t)} ${themeName(t)} collection <span style="font-weight:600;color:#7a6e86;font-size:12px">· 3+ pieces in one room = bonus decor</span>`, all.filter(it=>ids.includes(it.id))]));
+    html += `<div class="sub">✋ Drag a piece onto the room, or tap it to place it in the middle.</div>`;
     for(const [title, list] of groups){
     if(!list.length) continue;
-    html += `<h3>${title}</h3>`;
+    html += `<h3>${title}</h3><div class="cat mini">`;
     for(const it of list){
-      const locked = it.lvl > lv, owned = S.inv[it.id]||0;
-      const isBed = it.zone==='bed', bedTaken = false, swapsBed = isBed && hasBed(r);
-      const zoneTxt = {floor:'stands on the floor', wall:'hangs on the wall', ceiling:'hangs from the ceiling', bed:'one per room'}[it.zone];
-      html += `<div class="item">${swatch({color:'#fff8ef', emoji:it.emoji}, 'decor/'+it.id)}<div class="info"><b>${it.name}</b><div class="meta">${locked?`🔒 Level ${it.lvl}`:`+${it.decor} decor · +🪙${itemCoins(it.id)} per guest · ${zoneTxt}`}${owned?` · you own ${owned}`:''}</div></div><div class="btns">`;
-      if(owned) html += `<button class="btn alt" ${bedTaken||locked?'disabled':''} onclick="placeItem(${r.id},'${it.id}',true)">Place</button>`;
-      html += `<button class="btn" ${locked||S.coins<it.cost||bedTaken?'disabled':''} onclick="placeItem(${r.id},'${it.id}',false)">🪙${it.cost}</button>`;
-      html += `</div></div>`;
-      if(swapsBed && !locked) html = html.replace(/one per room(<\/div>)/, 'replaces your bed (old one goes to storage)$1');
+      const locked = it.lvl > lv, owned = S.inv[it.id]||0, poor = !owned && S.coins < it.cost;
+      html += `<div class="bcard ${locked?'locked':poor?'poor':''}" ${locked?'':`data-item="${it.id}" data-rid="${r.id}"${owned?' data-inv="1"':''}`} title="${it.name}${locked?'':` · +${it.decor} decor · +🪙${itemCoins(it.id)} per guest`}">${locked?`<span class="lock">🔒 ${it.lvl}</span>`:''}
+        <div class="thumb"><div class="shape" style="width:100%;height:100%;background:none;border:none">${art('decor/'+it.id)?`<img src="${art('decor/'+it.id).src}" style="object-fit:contain">`:(it.emoji||'🪑')}</div></div>
+        <span class="rate">${it.climate ? ({cool:"❄️",warm:"🔥",both:"🌡️"})[it.climate]+" " : ""}✨+${it.decor}</span><div class="pr">${owned?`Free ×${owned}`:'🪙'+it.cost.toLocaleString()}</div></div>`;
     }
+    html += `</div>`;
     }
     if(def.kind!=='lobby') html += `<div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put room in storage</button></div>`;
     showPanel(html);
@@ -2677,8 +2751,9 @@ function helperStep(){
   return null;
 }
 /* bellhop tips after the tutorial: point out what the hotel is missing. "Later" hides a tip for a few minutes. */
-const nudgeMute = {};
+const nudgeMute = {}; let nudgeAllUntil = 0;   // "Later" quiets every tip for a while, not just the one shown
 function nudgeStep(){
+  if(Date.now() < nudgeAllUntil) return null;
   const muted = id => (nudgeMute[id]||0) > Date.now();
   const gr = guestRoomCount(), dirty = S.rooms.filter(r=>r.dirty).length, cov = coverage();
   const bad = S.rooms.find(r=>r.issue && !r.fixT && r.issue.t > 12);
@@ -2715,8 +2790,8 @@ function updateHelper(){
   if(false && t){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
   else arrow.style.display='none';
 }
-$('helperOk').onclick = ()=>{ const st = ui.helperNow; if(st && st.go){ nudgeMute[st.id] = Date.now() + 4*60000; } else { const t = helperStep(); if(t) S.helperSkip = t.id; save(); } helperShown=''; updateHelper(); };
-$('helperGo').onclick = ()=>{ const st = ui.helperNow; if(st && st.act){ nudgeMute[st.id] = Date.now() + 90000; st.act(); } helperShown=''; updateHelper(); };
+$('helperOk').onclick = ()=>{ const st = ui.helperNow; if(st && st.go){ nudgeMute[st.id] = Date.now() + 15*60000; nudgeAllUntil = Date.now() + 10*60000; } else { const t = helperStep(); if(t) S.helperSkip = t.id; save(); } helperShown=''; updateHelper(); };
+$('helperGo').onclick = ()=>{ const st = ui.helperNow; if(st && st.act){ nudgeMute[st.id] = Date.now() + 90000; nudgeAllUntil = Date.now() + 2*60000; st.act(); } helperShown=''; updateHelper(); };
 setInterval(updateHelper, 250);
 $('shiftBtn').onclick = openShift;
 function showSpeed(){ $('speedTxt').textContent = gameSpeed() + '×'; }

@@ -144,10 +144,6 @@
         <path d="M408 308v28" />
         <path d="M456 308v28" />
       </g>
-      <path d="M89 0v104" fill="none" stroke="#2b2340" stroke-width="2.5" />
-      <ellipse cx="89" cy="114" rx="19" ry="11" fill="#ffc94d" opacity=".10" stroke="none" />
-      <path d="m76 113 4-11h18l4 11Z" fill="#303c47" stroke="#2b2340" stroke-width="2.5" />
-      <path d="M79 114h20" stroke="#ffe6a1" stroke-width="2" fill="none" />
     </g>
     <path d="M327 208h135m-135 25h135m-130-25v25m23-25v25m23-25v25m23-25v25m23-25v25m23-25v25" fill="none" stroke="#6c9dbb" stroke-width="2.5" />
     <path d="M0 324h480v12H0Z" fill="#344553" stroke="none" />

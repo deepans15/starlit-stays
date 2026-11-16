@@ -3,10 +3,6 @@
   <g>
     <path d="M0 0h160v11H0Z" fill="#2b2340" opacity=".22" stroke="none" />
     <path d="M0 12h160" stroke="#fff8ef" opacity=".08" stroke-width="2" fill="none" />
-    <path d="M107 44v13" fill="none" stroke="#2b2340" stroke-width="2.5" />
-    <ellipse cx="107" cy="67" rx="19" ry="11" fill="#ffc94d" opacity=".10" stroke="none" />
-    <path d="m94 66 4-11h18l4 11Z" fill="#b98351" stroke="#2b2340" stroke-width="2.5" />
-    <path d="M97 67h20" stroke="#ffe6a1" stroke-width="2" fill="none" />
   </g>
   <g>
     <path d="M0 156h160v12H0Z" fill="#62443e" />
