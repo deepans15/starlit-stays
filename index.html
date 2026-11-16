@@ -248,18 +248,18 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.75"></script>
-<script src="art/items.js?v=0.75"></script>
-<script src="art/reactions.js?v=0.75" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.75" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.75" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.75" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.75" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.75" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.75" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.75" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.75"></script>
-<script src="art/weather.js?v=0.75" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.76"></script>
+<script src="art/items.js?v=0.76"></script>
+<script src="art/reactions.js?v=0.76" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.76" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.76" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.76" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.76" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.76" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.76" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.76" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.76"></script>
+<script src="art/weather.js?v=0.76" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -269,7 +269,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.75';
+const BUILD = '0.76';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -936,7 +936,7 @@ function updateGuests(dt){
             const a = amenityFor(g.want);
             if(a){ a.users=(a.users||0)+1; const taken = new Set(guests.filter(o=>o.state==='inAmen' && o.amen===a.id).map(o=>o.slot)); let sl = 0; while(taken.has(sl)) sl++;
               g.state='inAmen'; g.amen=a.id; g.timer=ROOMS[a.type].use; g.slot=sl; happy=Math.min(1,happy+0.3); }
-            else { happy *= 0.75; if(count(g.want)===0){ S.missed = S.missed||{}; S.missed[g.want] = (S.missed[g.want]||0)+1; } }
+            else { happy *= 0.76; if(count(g.want)===0){ S.missed = S.missed||{}; S.missed[g.want] = (S.missed[g.want]||0)+1; } }
           }
           S.sat = S.sat*0.9 + happy*0.1;
           if(g.inspector) toast(`🎩 A hotel inspector loved their stay! Bonus 🪙${pay}`);
@@ -1232,7 +1232,7 @@ function drawRoom(r, covered){
   if(r.tip){ const by = y + 22 + Math.sin(time*4 + r.id)*3, bx = x + w - 18;   // tip coin waiting to be tapped
     if(!sprite('ui/coin', bx-10, by-10, 20, 20)){ ctx.fillStyle='#ffc94d'; ctx.strokeStyle='#2b2340'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(bx, by, 9, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.lineWidth=1; ctx.fillStyle='#2b2340'; ctx.font='bold 10px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('$', bx, by+1); } }
   if(beautiful(r)){ ctx.font='12px system-ui'; ctx.textAlign='left'; ctx.fillText('✨', x+6, y+20); }
-  if(r.issue){ const I = ISSUES[r.issue.type], pulse = 0.75 + 0.25*Math.sin(time*5);
+  if(r.issue){ const I = ISSUES[r.issue.type], pulse = 0.76 + 0.25*Math.sin(time*5);
     const ov = art('ui/issue_'+r.issue.type+'_overlay_'+(1+Math.floor(time*6)%4)) || art('ui/issue_'+r.issue.type+'_overlay');
     if(ov) ctx.drawImage(ov, x, y, w, h); else { ctx.fillStyle = I.tint; ctx.fillRect(x, y, w, h);
       if(r.issue.type==='leak'){ ctx.fillStyle='rgba(80,150,255,.8)'; for(let i=0;i<3;i++){ const dy = ((time*40 + i*23) % (h-30)); ctx.beginPath(); ctx.arc(x+w*0.3+i*w*0.2, y+18+dy, 2.5, 0, Math.PI*2); ctx.fill(); } }
@@ -1309,7 +1309,7 @@ function fillPlan(type, out){
   if(!has(d=>d.zone==='ceiling')){ const c = pool.find(d=>d.zone==='ceiling' && d.w <= RW - 10); if(c) add(c, RW/2 - c.w/2, 0); }
   const walls = out.filter(p=>ITEMS[p.id].zone==='wall').length;
   for(const w of pool.filter(d=>d.zone==='wall').slice(0, Math.max(0, (RW>=160?2:1) - walls))){
-    const xs = [RW*0.75 - w.w/2, RW*0.28 - w.w/2]; const x = xs.find(x=>!out.some(p=>ITEMS[p.id].zone==='wall' && Math.abs(p.x - x) < w.w)); if(x!==undefined) add(w, x, 26); }
+    const xs = [RW*0.76 - w.w/2, RW*0.28 - w.w/2]; const x = xs.find(x=>!out.some(p=>ITEMS[p.id].zone==='wall' && Math.abs(p.x - x) < w.w)); if(x!==undefined) add(w, x, 26); }
   for(const d of pool.filter(d=>d.zone==='floor' && !d.back && d.w <= 30)){   // small plants / side pieces in any gap
     if(out.length >= 8) break; for(const x of [RW - d.w - 4, 4, RW/2 - d.w/2]){ if(freeAt(x, d.w)){ add(d, x); break; } } }
   return out;
@@ -1429,7 +1429,7 @@ function drawItem(def, x, y, key){
       return; }
     case 'lamp': { const lx = x+w/2; ctx.fillStyle='#6d4c41'; ctx.fillRect(lx-1, y+12, 3, h-12); ctx.fillStyle='#ffd166'; ctx.beginPath(); ctx.moveTo(lx-9,y+14); ctx.lineTo(lx+10,y+14); ctx.lineTo(lx+5,y+2); ctx.lineTo(lx-4,y+2); ctx.fill(); ctx.fillStyle='rgba(255,209,102,.2)'; ctx.beginPath(); ctx.arc(lx, y+12, 16, 0, Math.PI*2); ctx.fill(); return; }
     case 'plant': { ctx.fillStyle='#bf7b4f'; ctx.fillRect(x+6, y+h-12, 12, 12); ctx.fillStyle='#43aa8b'; ctx.beginPath(); ctx.arc(x+12, y+h-18, 8, 0, Math.PI*2); ctx.arc(x+7, y+h-22, 5, 0, Math.PI*2); ctx.arc(x+17, y+h-22, 5, 0, Math.PI*2); ctx.fill(); return; }
-    case 'wallart': { ctx.fillStyle='#8d6e63'; ctx.fillRect(x, y, w, h); ctx.fillStyle='#ffadad'; ctx.fillRect(x+3, y+3, w-6, h-6); ctx.fillStyle='#ffd166'; ctx.beginPath(); ctx.arc(x+w*0.65, y+h*0.4, 3, 0, Math.PI*2); ctx.fill(); ctx.fillStyle='#43aa8b'; ctx.beginPath(); ctx.moveTo(x+3,y+h-3); ctx.lineTo(x+w*0.4,y+h*0.45); ctx.lineTo(x+w*0.75,y+h-3); ctx.fill(); return; }
+    case 'wallart': { ctx.fillStyle='#8d6e63'; ctx.fillRect(x, y, w, h); ctx.fillStyle='#ffadad'; ctx.fillRect(x+3, y+3, w-6, h-6); ctx.fillStyle='#ffd166'; ctx.beginPath(); ctx.arc(x+w*0.65, y+h*0.4, 3, 0, Math.PI*2); ctx.fill(); ctx.fillStyle='#43aa8b'; ctx.beginPath(); ctx.moveTo(x+3,y+h-3); ctx.lineTo(x+w*0.4,y+h*0.45); ctx.lineTo(x+w*0.76,y+h-3); ctx.fill(); return; }
     case 'rug': { ctx.fillStyle='#c77dff'; ctx.beginPath(); ctx.ellipse(x+w/2, y+h/2, w/2, h/2, 0, 0, Math.PI*2); ctx.fill(); ctx.strokeStyle='#fff'; ctx.setLineDash([3,3]); ctx.beginPath(); ctx.ellipse(x+w/2, y+h/2, w/2-4, h/2-2, 0, 0, Math.PI*2); ctx.stroke(); ctx.setLineDash([]); return; }
   }
   ctx.fillStyle='rgba(255,255,255,.55)'; rr(x, y, w, h, 6); ctx.fill();
@@ -1941,6 +1941,7 @@ function endItemDrag(cancelled, ev){
     const dx = Math.round(d.ix) - it.x;
     it.x = Math.round(d.ix); if(ITEMS[it.id].zone==='wall') it.y = Math.round(d.iy);
     it.on = d.on || null;
+    r.items.splice(r.items.indexOf(it), 1); r.items.push(it);   // the piece you just moved is drawn in front of the other decor
     for(const c of r.items) if(c.on === it.u && c !== it) c.x = clampItemX(r, ITEMS[c.id], c.x + dx);   // things on top come along
     if(it.on) toast(`${ITEMS[it.id].name} placed on the ${ITEMS[supportOf(r,it).id].name}`);
     S.movedItem = true; checkGoals(); }
@@ -2603,7 +2604,7 @@ function renderGoalsBox(){
    simply plays offline as before. */
 const weekId = () => Math.floor((Date.now()/86400000 + 3) / 7);   // weeks start on Monday (UTC)
 function bumpWeek(){ const w = weekId(); if(!S.wk || S.wk.id !== w) S.wk = {id:w, n:0}; S.wk.n++; }
-const online = {synced:false, busy:false, last:'', lastScore:0, lastWeek:'', asking:false};
+const online = {synced:false, busy:false, last:'', lastScore:0, lastWeek:'', asking:false, known:0};   // known = timestamp of the online copy this device last loaded or saved
 function onlineAvailable(){ return !!(window.FB && window.FB.ok); }
 function scoreEntry(){ return {name: (S.name||'Hotel').slice(0,30), level: level(), xp: Math.floor(S.xp), stars: Math.round(stars()*2)/2, served: S.served|0, rooms: S.rooms.length, updated: Date.now()}; }
 function hotelSummary(st){ const keep = S; S = st; const t = `<b>${st.name||'Unnamed hotel'}</b><br>Level ${level()} · ${st.rooms.length} rooms · ${st.served|0} guests served`; S = keep; return t; }
@@ -2615,21 +2616,39 @@ async function onlineSignedIn(){
     const localFresh = S.xp < 30 && S.rooms.length <= 1;
     // keep whichever hotel was saved most recently (a brand-new local hotel always gives way to the online one)
     if(remote && (localFresh || (d.savedAt||0) > (S.savedAt||0) + 2000)) useHotel(remote, d.savedAt);
+    else if(d) online.known = d.savedAt || 0;
   }catch(e){ toast('Could not reach your online save. Playing on this device for now.'); }
   online.synced = true; onlineSave(true); pushScores(true);
 }
-function useHotel(remote, savedAt){ S = remote; S.savedAt = savedAt || Date.now(); guests = []; lastTop = ''; checkPokeDay(); renderGoalsBox(); closePanel(); save(); toast('☁️ Loaded your online hotel'); }
+function useHotel(remote, savedAt){ online.known = savedAt || 0; S = remote; S.savedAt = savedAt || Date.now(); guests = []; lastTop = ''; checkPokeDay(); renderGoalsBox(); closePanel(); save(); toast('☁️ Loaded your online hotel'); }
+function offerNewerHotel(d){
+  if(online.asking) return; let remote = null;
+  try{ remote = migrate(JSON.parse(d.json)); }catch(e){}
+  if(!remote){ online.known = d.savedAt || 0; return; }
+  online.asking = true; online.pending = {remote, savedAt:d.savedAt};
+  const info = hotelSummary(remote), mine = hotelSummary(S);
+  modal(`<h2>☁️ A newer hotel was saved</h2><div class="sub">Your online hotel was changed on another device. Pick which one to keep. Nothing is overwritten until you choose.</div>
+    <div class="sub"><b>Online:</b><br>${info}</div><div class="sub"><b>This device:</b><br>${mine}</div>
+    <button class="btn big" onclick="pickHotel('cloud')">Load the online hotel</button>
+    <button class="btn alt" onclick="pickHotel('mine')">Keep this device's hotel</button>`);
+}
 function pickHotel(which){
   const p = online.pending; online.pending = null; online.asking = false; closeModal();
-  if(which==='cloud' && p) useHotel(p.remote, p.savedAt);
+  if(which==='cloud' && p) useHotel(p.remote, p.savedAt); else if(p) online.known = p.savedAt || 0;
   online.synced = true; onlineSave(true); pushScores(true);
 }
 async function onlineSave(force){
   if(ui.visit || ui.loadingCode) return;
   if(!onlineAvailable() || !FB.user || !online.synced || online.busy || !S.name) return;
+  if(online.asking) return;
   const json = serialize(); if(!force && json === online.last) return;
   online.busy = true;
-  try{ await FB.putSave({json, savedAt: S.savedAt || Date.now(), name: S.name.slice(0,30), level: level()}); online.last = json; }catch(e){}
+  try{
+    // never overwrite a newer hotel saved from another device: ask first
+    if(!force){ const d = await FB.getSave(); if(d && (d.savedAt||0) > online.known + 2000){ online.busy = false; return offerNewerHotel(d); } }
+    const at = S.savedAt || Date.now();
+    await FB.putSave({json, savedAt: at, name: S.name.slice(0,30), level: level()}); online.last = json; online.known = at;
+  }catch(e){}
   online.busy = false;
 }
 async function pushScores(force){
@@ -2996,7 +3015,8 @@ artReady.then(()=>{ swapIcons(); setTimeout(()=>{ if($('modal').style.display!==
 setTimeout(swapIcons, 9000);
 setInterval(()=>{ $('btnBuild').classList.toggle('on', ui.panelKind==='build'); }, 200);
 window.addEventListener('resize', resize);
-document.addEventListener('visibilitychange', ()=>{ if(document.hidden){ save(); cloudSave(); onlineSave(); pushScores(true); } });
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden){ save(); cloudSave(); onlineSave(); pushScores(true); }
+  else if(onlineAvailable() && FB.user && online.synced && !online.asking && !ui.visit){ FB.getSave().then(d=>{ if(d && (d.savedAt||0) > online.known + 2000) offerNewerHotel(d); }).catch(()=>{}); } });
 window.addEventListener('beforeunload', save);
 
 /* ---------------- start ---------------- */
