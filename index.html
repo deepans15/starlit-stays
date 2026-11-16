@@ -83,6 +83,8 @@
   body.visiting #tipsBtn{display:none!important}
   body.panelOpen #tipsBtn{display:none!important}
   @media (max-width:640px){ #tipsBtn{right:10px;top:74px;font-size:12px} }
+  @media (min-width:1000px) and (max-width:1300px){ #hudStars{left:548px;transform:none} }
+  @media (min-width:641px) and (max-width:999px){ #hudStars{left:14px;top:52px;transform:none} #goalsBox{top:92px} }
   #crateBtn{position:absolute;left:14px;top:50%;transform:translateY(-50%);z-index:4;width:62px;min-height:70px;border:3px solid var(--ink);border-radius:14px;background:#ffe9a8;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 3px 0 var(--ink);padding:2px}
   #crateBtn .ic{font-size:26px;line-height:1} #crateBtn .ic img{width:38px;height:38px}
   body.visiting #crateBtn, body.panelOpen #crateBtn{display:none}
@@ -246,17 +248,17 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.71"></script>
-<script src="art/items.js?v=0.71"></script>
-<script src="art/reactions.js?v=0.71" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.71" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/decor_animations.js?v=0.71" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.71" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.71" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.71" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.71" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.71"></script>
-<script src="art/weather.js?v=0.71" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.74"></script>
+<script src="art/items.js?v=0.74"></script>
+<script src="art/reactions.js?v=0.74" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.74" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/decor_animations.js?v=0.74" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.74" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.74" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.74" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.74" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.74"></script>
+<script src="art/weather.js?v=0.74" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -266,7 +268,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.71';
+const BUILD = '0.74';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -444,19 +446,22 @@ const ART = {};
 // ?v=BUILD makes browsers fetch fresh art after each update instead of showing old cached copies.
 const artReady = new Promise(done => {
   const all = Object.entries(window.STARLIT_ART || {});
-  const lazy = ([k]) => k.startsWith('weather/') || (k.startsWith('backgrounds/') && k.includes('_fx_')) || /^chars\/.+_(swim|eat|drink|drink_stand|watch|play|read|read_stand)_\d+$/.test(k) || k.startsWith('effects/') || /^chars\/.+_react_.+_\d+$/.test(k) || /^decor\/.+_(sway|spin|burn|rock|flutter)_\d+$/.test(k);
-  const list = all.filter(e=>!lazy(e));
-  setTimeout(()=>{ for(const [key, file] of all.filter(lazy)){ const img = new Image(); img.onload = () => { ART[key] = img; }; img.src = 'art/' + file + '?v=' + BUILD + (/^chars\/.+_(run|lift)_\d+$/.test(key) ? '&rev=gym8' : ''); } }, 300);
+  const lazy = ([k]) => k.startsWith('weather/') || (k.startsWith('backgrounds/') && k.includes('_fx_')) || /^chars\/.+_(swim|eat|drink|drink_stand|watch|play|read|read_stand)_\d+$/.test(k) || k.startsWith('effects/') || /^chars\/.+_(run|lift|stretch|wash|relax)_\d+$/.test(k) || /^chars\/.+_react_.+_\d+$/.test(k) || /^decor\/.+_(sway|spin|burn|rock|flutter)_\d+$/.test(k);
+  // only the pictures needed to draw the first screen are waited for; room-activity frames and furniture load right after, in the background
+  const later = ([k]) => lazy([k]) || k.startsWith('decor/') || (k.startsWith('chars/') && /_[a-z_]+_\d+$/.test(k) && !/_walk_\d+$/.test(k));
+  const list = all.filter(e=>!later(e));
+  const loadLater = () => { for(const [key, file] of all.filter(later)){ const img = new Image(); img.onload = () => { ART[key] = img; }; img.src = 'art/' + file + '?v=' + BUILD + (/^chars\/.+_(run|lift)_\d+$/.test(key) ? '&rev=gym8' : ''); } };
   let left = list.length; const bar = document.getElementById('loadBar');
-  const tick = () => { left--; if(bar) bar.style.width = Math.round(100*(list.length-left)/Math.max(1,list.length))+'%'; if(left<=0) done(); };
-  if(!left) done();
+  let started = false; const startLater = () => { if(!started){ started = true; loadLater(); } };
+  const tick = () => { left--; if(bar) bar.style.width = Math.round(100*(list.length-left)/Math.max(1,list.length))+'%'; if(left<=0){ done(); startLater(); } };
+  if(!left){ done(); startLater(); }
   for(const [key, file] of list){
     const img = new Image();
     img.onload = () => { ART[key] = img; tick(); };
     img.onerror = tick;
     img.src = 'art/' + file + '?v=' + BUILD + (/^chars\/.+_(run|lift)_\d+$/.test(key) ? '&rev=gym8' : '');
   }
-  setTimeout(done, 8000);   // slow connection: start anyway, late pictures pop in when they arrive
+  setTimeout(()=>{ done(); startLater(); }, 6000);   // slow connection: start anyway, late pictures pop in when they arrive
 });
 const art = k => ART[k] || null;
 const GUEST_SKINS = (()=>{ let n=0; while((window.STARLIT_ART||{})['chars/guest_'+(n+1)]) n++; return Math.max(n,6); })();   // grows as ChatGPT adds guest_N art
@@ -1273,7 +1278,7 @@ function fillPlan(type, out){
   if(!has(d=>d.zone==='ceiling')){ const c = pool.find(d=>d.zone==='ceiling' && d.w <= RW - 10); if(c) add(c, RW/2 - c.w/2, 0); }
   const walls = out.filter(p=>ITEMS[p.id].zone==='wall').length;
   for(const w of pool.filter(d=>d.zone==='wall').slice(0, Math.max(0, (RW>=160?2:1) - walls))){
-    const xs = [RW*0.72 - w.w/2, RW*0.28 - w.w/2]; const x = xs.find(x=>!out.some(p=>ITEMS[p.id].zone==='wall' && Math.abs(p.x - x) < w.w)); if(x!==undefined) add(w, x, 26); }
+    const xs = [RW*0.74 - w.w/2, RW*0.28 - w.w/2]; const x = xs.find(x=>!out.some(p=>ITEMS[p.id].zone==='wall' && Math.abs(p.x - x) < w.w)); if(x!==undefined) add(w, x, 26); }
   for(const d of pool.filter(d=>d.zone==='floor' && !d.back && d.w <= 30)){   // small plants / side pieces in any gap
     if(out.length >= 8) break; for(const x of [RW - d.w - 4, 4, RW/2 - d.w/2]){ if(freeAt(x, d.w)){ add(d, x); break; } } }
   return out;
