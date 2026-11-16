@@ -90,6 +90,12 @@
   #zoomCtl button{width:40px;height:40px;border-radius:12px;border:3px solid #2b2340;background:#fff;color:#2b2340;font-size:22px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 3px 0 #2b2340}
   #zoomCtl button:active{transform:translateY(2px);box-shadow:0 1px 0 #2b2340}
   body.panelOpen #zoomCtl{display:none}
+  #floorNav{position:absolute;left:14px;top:calc(50% + 54px);display:none;flex-direction:column;align-items:center;gap:6px;z-index:4}
+  #floorNav button{width:44px;height:40px;border-radius:12px;border:3px solid #2b2340;background:#fff;color:#2b2340;font-size:18px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 3px 0 #2b2340}
+  #floorNav button:active{transform:translateY(2px);box-shadow:0 1px 0 #2b2340}
+  #floorNav .fl{min-width:44px;text-align:center;background:#2b2340;color:#fff;border-radius:10px;padding:3px 4px;font-weight:900;font-size:12px;line-height:1.1}
+  #floorNav .fl small{display:block;font-size:9px;font-weight:700;opacity:.8}
+  body.visiting #floorNav{display:none!important}
   #dropZones{position:absolute;left:50%;top:78px;transform:translateX(-50%);display:none;gap:14px;z-index:40;pointer-events:none}
   body.dragZones #toasts{opacity:0}
   #dropZones.show{display:flex}
@@ -216,6 +222,7 @@
     <div id="hint"><span id="hintText"></span><button id="hintCancel">Done</button></div>
     <div id="goalsBox"></div>
     <div id="zoomCtl"><button onclick="setZoom((ui.zoom||1)*1.25)" title="Zoom in">+</button><button onclick="setZoom((ui.zoom||1)/1.25)" title="Zoom out">−</button><button id="zoomReset" onclick="resetZoom()" title="Fit hotel" style="visibility:hidden">⤢</button></div>
+    <div id="floorNav"><button onclick="navFloor(1)" title="Floor up">▲</button><div class="fl" id="floorLab">G<small>floor</small></div><button onclick="navFloor(-1)" title="Floor down">▼</button></div>
     <div id="openPrompt"><div class="op"><div class="opt">🛎️ Your hotel is closed</div><div class="ops" id="opSub">Open the doors and guests will start arriving.</div><button class="btn big" id="opGo">Open</button><label class="opa"><input type="checkbox" id="opAuto"> Reopen automatically</label><button class="oplink" id="opMore">More opening times</button></div></div>
     <div id="visitBar"><button class="btn alt" onclick="goHome()">← Back home</button><div class="vb"><b id="visitName"></b><span id="visitMeta"></span></div><button class="btn" id="visitLike" onclick="likeHotel()">❤️ Like</button></div>
     <button id="tipsBtn" onclick="collectAllTips()" title="Collect all tips"><span class="hic" data-art="ui/tips" style="display:inline-flex;vertical-align:middle;width:18px;height:18px">💰</span> <b id="tipsN">0</b></button>
@@ -239,17 +246,17 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.69"></script>
-<script src="art/items.js?v=0.69"></script>
-<script src="art/reactions.js?v=0.69" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.69" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/decor_animations.js?v=0.69" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.69" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.69" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.69" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.69" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.69"></script>
-<script src="art/weather.js?v=0.69" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.71"></script>
+<script src="art/items.js?v=0.71"></script>
+<script src="art/reactions.js?v=0.71" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.71" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/decor_animations.js?v=0.71" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.71" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.71" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.71" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.71" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.71"></script>
+<script src="art/weather.js?v=0.71" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -259,7 +266,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.69';
+const BUILD = '0.71';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -992,19 +999,39 @@ function camTarget(){
   // fit the whole hotel, but never smaller than a readable size: a big hotel starts at the ground floor and you drag to look up
   const s0 = Math.min(aw/bw, (ah-reserve)/bh, 1.6), s = Math.min(Math.max(s0, W < 600 ? 0.6 : 0.8), 1.6);
   const ox = (aw - bw*s)/2 - b.x0*s, oy = ah - reserve - b.y1*s;
-  ui.zmin = Math.min(ZMIN, s0/s);
-  ui.tall = s > s0 + 1e-6;   // zooming out can still reach the whole-hotel view
+  ui.tall = s > s0 + 1e-6;
+  ui.zmin = Math.min(ZMIN, s0/s);   // zooming out can still reach the whole-hotel view
   const z = ui.zoom||1;
-  if(z === 1 && !ui.panX && !ui.panY) return {s, ox, oy};
+  if(z === 1 && !ui.panX && !ui.panY){ ui.atBottom = ui.tall; ui.atTop = false; return {s, ox, oy}; }
   // player zoom: scale around the middle of the building, then apply the player's pan
   const cx = (b.x0+b.x1)/2, cy = (b.y0+b.y1)/2, sxc = ox + cx*s, syc = oy + cy*s, s2 = s*z;
   const lim = Math.max(0, (z-1)) * Math.max(bw, bh) * s * 0.6 + 40;
-  const limX = Math.max(lim, Math.max(0, bw*s2 - aw)/2 + 40), limY = Math.max(lim, Math.max(0, bh*s2 - (ah-reserve)) + 40);   // enough pan to reach the top of a tall hotel
-  ui.panX = Math.max(-limX, Math.min(limX, ui.panX||0)); ui.panY = Math.max(-limY, Math.min(limY, ui.panY||0));
+  const limX = Math.max(lim, Math.max(0, bw*s2 - aw)/2 + 40);
+  ui.panX = Math.max(-limX, Math.min(limX, ui.panX||0));
+  if(ui.tall){   // big hotel: the ground floor is always the bottom stop (no bedrock or void) and the top floor the top stop, at every zoom level
+    const base = ah - reserve - b.y1*s2, range = Math.max(0, bh*s2 - (ah-reserve) + 40);
+    ui.panY = Math.max(0, Math.min(range, ui.panY||0)); ui.atBottom = ui.panY <= 1; ui.atTop = range > 0 && ui.panY >= range - 1;
+    return {s:s2, ox: sxc - cx*s2 + ui.panX, oy: base + ui.panY};
+  }
+  const limY = lim; ui.panY = Math.max(-limY, Math.min(limY, ui.panY||0)); ui.atTop = ui.atBottom = false;
   return {s:s2, ox: sxc - cx*s2 + ui.panX, oy: syc - cy*s2 + ui.panY};
 }
 const ZMIN = 0.6, ZMAX = 2.5;
 function setZoom(z){ ui.zoom = Math.max(ui.zmin || ZMIN, Math.min(ZMAX, z)); if(ui.zoom <= 1.001 && !ui.tall){ ui.panX *= 0.5; ui.panY *= 0.5; } $('zoomReset').style.visibility = Math.abs(ui.zoom-1)>0.02 || ui.panX || ui.panY ? 'visible' : 'hidden'; }
+/* big hotels: ▲ ▼ step the camera one floor at a time, so every floor can be reached even when the tower fills the screen */
+const topFloor = () => S.rooms.reduce((m, r) => Math.max(m, r.f + hOf(r.type) - 1), 0);
+const floorMidY = f => TOP + (plot().h - f - 0.5)*FLOOR;
+function viewFloor(){
+  if(ui.atBottom) return 0; if(ui.atTop) return topFloor();
+  const H = cv.height/(window.devicePixelRatio||1), wy = (H*0.45 - view.oy)/view.s;
+  return Math.max(0, Math.min(topFloor(), Math.round(plot().h - 0.5 - (wy - TOP)/FLOOR)));
+}
+function navFloor(dir){
+  const f = Math.max(0, Math.min(topFloor(), viewFloor() + dir)), H = cv.height/(window.devicePixelRatio||1);
+  ui.zoom = 1; ui.panX = 0; ui.panY = 0; const b = camTarget();   // the normal readable view, then slide it so floor f sits in the middle
+  ui.panY = H*0.45 - (b.oy + floorMidY(f)*b.s); setZoom(1);
+}
+setInterval(()=>{ const nav = $('floorNav'); if(!nav) return; const show = !!ui.tall && !ui.focus; nav.style.display = show ? 'flex' : 'none'; if(show){ const f = viewFloor(); $('floorLab').innerHTML = (f===0 ? 'G' : f) + '<small>of ' + topFloor() + '</small>'; } }, 250);
 function resetZoom(){ ui.zoom = 1; ui.panX = 0; ui.panY = 0; $('zoomReset').style.visibility = 'hidden'; }
 function updateCam(dt){
   // hold the camera still while anything is being dragged, so the hotel doesn't move under your finger
