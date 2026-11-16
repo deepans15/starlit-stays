@@ -239,17 +239,17 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.67"></script>
-<script src="art/items.js?v=0.67"></script>
-<script src="art/reactions.js?v=0.67" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.67" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/decor_animations.js?v=0.67" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.67" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.67" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.67" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.67" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.67"></script>
-<script src="art/weather.js?v=0.67" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.68"></script>
+<script src="art/items.js?v=0.68"></script>
+<script src="art/reactions.js?v=0.68" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.68" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/decor_animations.js?v=0.68" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.68" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.68" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.68" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.68" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.68"></script>
+<script src="art/weather.js?v=0.68" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -259,7 +259,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.67';
+const BUILD = '0.68';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -2784,7 +2784,7 @@ function helperStep(){
   if(S.helperDone) return null;
   const hasRoom = S.rooms.some(r=>ROOMS[r.type].kind==='guest');
   if(!hasRoom) return ui.panelKind==='build' ? {id:'build2', text:'Drag a Cozy Nook onto your lobby, or just tap it to place it automatically.', target:null} : {id:'build', text:'Welcome to your new hotel! Tap Build to add rooms for your guests.', target:'#btnBuild'};
-  if(S.freeShift) return {id:'open', text:'Nice room! Now open your hotel so guests can check in.', target:'#shiftBtn'};
+  if(S.freeShift && !isOpen()) return {id:'open', text:'Nice room! Now open your hotel so guests can check in.', target:'#shiftBtn'};
   if(count('closet')<1) return {id:'closet', text:'Guests leave rooms messy. Build a Linen Closet and it will clean them for you.', target:'#btnBuild'};
   if(!S.boughtItem) return {id:'decor', text:'Tap a room to decorate it. Nicer rooms earn more and raise your stars!', target:null};
   return null;
