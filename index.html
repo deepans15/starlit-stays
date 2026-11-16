@@ -239,16 +239,17 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.66"></script>
-<script src="art/items.js?v=0.66"></script>
-<script src="art/lighting.js?v=0.66" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/decor_animations.js?v=0.66" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.66" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.66" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.66" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.66" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.66"></script>
-<script src="art/weather.js?v=0.66" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.67"></script>
+<script src="art/items.js?v=0.67"></script>
+<script src="art/reactions.js?v=0.67" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.67" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/decor_animations.js?v=0.67" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.67" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.67" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.67" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.67" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.67"></script>
+<script src="art/weather.js?v=0.67" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -258,7 +259,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.66';
+const BUILD = '0.67';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -873,6 +874,7 @@ function updateGuests(dt){
         g.timer -= dt;
         const r = S.rooms.find(x=>x.id===g.room);
         if(!r){ g.state='leaveLift'; g.timer=0.6; break; }
+        if(g.rx===undefined) planReaction(g, r);
         if(g.timer<=0){
           const def = ROOMS[r.type], gt = GUEST_TYPES[g.type];
           const pay = Math.max(1, Math.round((def.pay * (0.6+0.9*decorPct(r)) + decorCoins(r)) * (beautiful(r) ? 1.25 : 1) * (r.issue ? 0.6 : 1) * starMult() * gt.pay * (g.inspector?3:1)));
@@ -1148,7 +1150,7 @@ function drawRoom(r, covered){
   if(def.kind==='guest' || !bgArt) drawFloorBand(r, x, y+h-FLOOR_PAD, w);
   // guest rooms are plain: just walls, floor and whatever furniture the player puts in (a new room only has its bed)
   if(def.kind==='guest'){ drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,h,'bed'); drawItems(r,x,y,w,h,'front'); drawGuestRoom(r,x,y,w,h,'guest'); }   // the sleeping guest stays in front of the furniture
-  else if(def.kind==='service'){ if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawCloset(r,x,y,w,h); drawStaff(r,x,y,w,h); }
+  else if(def.kind==='service'){ if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawCloset(r,x,y,w,h); drawStaff(r,x,y,w,h); if(r.type==='closet') drawCoverTag(x,y,w); }
   else {
     const styled = r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h);
     if(styled || sprite('rooms/'+r.type, x, y, w, h)){ const base = styled ? 'rooms/'+r.style+'_'+r.type : 'rooms/'+r.type;   // themed rooms only animate with their own fx frames
@@ -1368,6 +1370,34 @@ function drawItem(def, x, y, key){
   ctx.font = `${Math.max(10, Math.min(w,h)*0.7)}px system-ui`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(def.emoji, x+w/2, y+h/2+1);
   ctx.textBaseline='alphabetic';
 }
+/* ---------------- guest reactions (art/reactions.js) ----------------
+   A new guest sometimes gets up for a moment: admires a special bed, peeks out a window, warms their hands at a lit fireplace
+   or snaps a photo, then goes back to sleep. Purely for show: no coins, XP or ratings change. */
+const REACTIONS = window.STARLIT_REACTIONS || null, REACT_BY_ID = {}, REACT_TAGS = {};
+for(const r of (REACTIONS && REACTIONS.reactions) || []) REACT_BY_ID[r.id] = r;
+for(const d of window.STARLIT_ITEMS || []) if(Array.isArray(d.guestReactions)) REACT_TAGS[d.id] = d.guestReactions;
+function reactionFrames(g, rid){ const rd = REACT_BY_ID[rid], keys = rd && rd.characters && rd.characters[g.inspector ? 'inspector' : 'guest_'+g.skin]; return keys && keys.length && keys.every(k=>art(k)) ? keys : null; }
+function planReaction(g, r){
+  g.rx = null; if(!REACTIONS || Math.random() > 0.7 || reduceMotion) return;
+  const opts = [];
+  for(const it of r.items||[]){ const def = ITEMS[it.id]; if(!def) continue;
+    for(const tag of REACT_TAGS[it.id] || []){ if(tag==='warm_hands' && !switchedOn(it)) continue; if(REACT_BY_ID[tag] && reactionFrames(g, tag)) opts.push({id:tag, it, def}); } }
+  if(!opts.length) return;
+  const o = opts[Math.floor(Math.random()*opts.length)], rd = REACT_BY_ID[o.id], once = rd.playMode==='once';
+  const dur = once ? rd.frames / rd.fps + 0.4 : 4 + Math.random()*3, stay = ROOMS[r.type].stay || 20;
+  if(g.timer < dur + 6) return;
+  g.rx = {id:o.id, it:o.it, def:o.def, t0: time + 1.5 + Math.random()*Math.min(5, stay*0.2), dur};
+}
+function drawReaction(g, r, x, w, fy, bx, bw){
+  const rx = g.rx; if(!rx || time < rx.t0 || time > rx.t0 + rx.dur || !r.items.includes(rx.it)) return false;
+  const rd = REACT_BY_ID[rx.id], keys = reactionFrames(g, rx.id); if(!rd || !keys) return false;
+  if(rx.id==='warm_hands' && !switchedOn(rx.it)) return false;
+  const e = time - rx.t0, fi = rd.playMode==='once' ? Math.min(keys.length-1, Math.floor(e*rd.fps)) : Math.floor(e*rd.fps) % keys.length;
+  const sc = 0.4, cx = rx.def.zone==='bed' ? (rx.it.x >= 28 ? x + rx.it.x - 14 : x + rx.it.x + rx.def.w + 14) : x + rx.it.x + rx.def.w/2;
+  const px = Math.max(x + 14, Math.min(x + w - 14, cx));
+  ctx.drawImage(art(keys[fi]), px - rd.anchor.x*sc, fy - rd.anchor.y*sc, rd.width*sc, rd.height*sc);
+  return true;
+}
 function drawGuestRoom(r,x,y,w,h,part){
   const fy = y+h-FLOOR_PAD;
   const bed = (r.items||[]).find(it=>ITEMS[it.id] && ITEMS[it.id].zone==='bed');
@@ -1384,7 +1414,9 @@ function drawGuestRoom(r,x,y,w,h,part){
   const g = r.guest ? guests.find(z=>z.id===r.guest) : null;
   if(g){
     const sleepKey = g.inspector ? 'chars/inspector_sleep' : 'chars/guest_'+g.skin+'_sleep';
-    if(!sprite(sleepKey, bx, fy-32, 56, 32)){
+    const rxDrawn = drawReaction(g, r, x, w, fy, bx, bw);
+    if(rxDrawn){}
+    else if(!sprite(sleepKey, bx, fy-32, 56, 32)){
       ctx.fillStyle = g.color; ctx.beginPath(); ctx.arc(bx+12, fy-32, 7, 0, Math.PI*2); ctx.fill();
       if(g.inspector){ ctx.fillStyle='#2b2340'; ctx.fillRect(bx+5, fy-44, 14, 5); ctx.fillRect(bx+8, fy-52, 8, 8); }
       ctx.fillStyle = '#d7ccc8'; ctx.fillRect(bx+18, fy-28, bw-22, 9);
@@ -1392,7 +1424,7 @@ function drawGuestRoom(r,x,y,w,h,part){
     if(g.type==='vip') drawCrown(bx+12, fy-46);
     ctx.fillStyle = '#2b2340'; ctx.font='bold 11px system-ui'; ctx.textAlign='center';
     const zz = (time*1.5 + g.id)%2;
-    ctx.globalAlpha = 1 - zz/2; ctx.fillText('z', bx+24 + zz*6, fy-40 - zz*8); ctx.globalAlpha=1;
+    if(!rxDrawn){ ctx.globalAlpha = 1 - zz/2; ctx.fillText('z', bx+24 + zz*6, fy-40 - zz*8); ctx.globalAlpha=1; }
     if(g.want && ROOMS[g.want]){
       ctx.fillStyle='#fff'; rr(x+w-34, y+18, 26, 22, 8); ctx.fill();
       if(!sprite('icons/'+g.want, x+w-29, y+21, 16, 16)){ ctx.font='13px system-ui'; ctx.fillText(ROOMS[g.want].icon, x+w-21, y+34); }
@@ -1458,6 +1490,13 @@ function drawStaff(r,x,y,w,h){
   else { const cl = art('chars/clerk'); if(cl) ctx.drawImage(cl, sx, sy, sw, sh); else { ctx.font='18px system-ui'; ctx.textAlign='center'; ctx.fillText('🧑‍🍳', sx+sw/2, sy+sh/2); } }
   // little STAFF tag over their head, like the original
   staffTag(sx+sw/2, sy);
+}
+let coverCache = {t:-1, v:null};
+function drawCoverTag(x, y, w){   // how many rooms the cleaners can look after, red when some are left out
+  if(coverCache.t !== Math.floor(time*4)){ coverCache = {t:Math.floor(time*4), v:coverage()}; }
+  const c = coverCache.v, short = c.total - c.cap, txt = short > 0 ? `🧹 ${c.cap}/${c.total} · +${short}` : `🧹 ${c.total}/${c.cap}`;
+  ctx.save(); ctx.font='bold 9px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; const tw = ctx.measureText(txt).width + 10;
+  ctx.fillStyle = short > 0 ? '#d6334f' : '#3fae8c'; rr(x + w/2 - tw/2, y + 4, tw, 14, 7); ctx.fill(); ctx.fillStyle = '#fff'; ctx.fillText(txt, x + w/2, y + 11.5); ctx.restore();
 }
 function drawCloset(r,x,y,w,h){
   if(r.type==='laundry'){   // fallback until the art arrives
