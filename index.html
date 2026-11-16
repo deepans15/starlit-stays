@@ -239,17 +239,17 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.68"></script>
-<script src="art/items.js?v=0.68"></script>
-<script src="art/reactions.js?v=0.68" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.68" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/decor_animations.js?v=0.68" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.68" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.68" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.68" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.68" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.68"></script>
-<script src="art/weather.js?v=0.68" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.69"></script>
+<script src="art/items.js?v=0.69"></script>
+<script src="art/reactions.js?v=0.69" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.69" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/decor_animations.js?v=0.69" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.69" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.69" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.69" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.69" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.69"></script>
+<script src="art/weather.js?v=0.69" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -259,7 +259,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.68';
+const BUILD = '0.69';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -989,18 +989,22 @@ function camTarget(){
   const pr = panel.style.display==='block' && !hidden ? panel.getBoundingClientRect() : null, cr = cv.getBoundingClientRect();
   if(pr && pr.width>0){ if(pr.width > W*0.8) ah = Math.max(160, pr.top - cr.top); else aw = Math.max(220, pr.left - cr.left); }
   const reserve = (pr && pr.width>0 && pr.width > W*0.8) ? 0 : 92; // room for the icon buttons
-  const s = Math.min(aw/bw, (ah-reserve)/bh, 1.6);
+  // fit the whole hotel, but never smaller than a readable size: a big hotel starts at the ground floor and you drag to look up
+  const s0 = Math.min(aw/bw, (ah-reserve)/bh, 1.6), s = Math.min(Math.max(s0, W < 600 ? 0.6 : 0.8), 1.6);
   const ox = (aw - bw*s)/2 - b.x0*s, oy = ah - reserve - b.y1*s;
+  ui.zmin = Math.min(ZMIN, s0/s);
+  ui.tall = s > s0 + 1e-6;   // zooming out can still reach the whole-hotel view
   const z = ui.zoom||1;
   if(z === 1 && !ui.panX && !ui.panY) return {s, ox, oy};
   // player zoom: scale around the middle of the building, then apply the player's pan
   const cx = (b.x0+b.x1)/2, cy = (b.y0+b.y1)/2, sxc = ox + cx*s, syc = oy + cy*s, s2 = s*z;
   const lim = Math.max(0, (z-1)) * Math.max(bw, bh) * s * 0.6 + 40;
-  ui.panX = Math.max(-lim, Math.min(lim, ui.panX||0)); ui.panY = Math.max(-lim, Math.min(lim, ui.panY||0));
+  const limX = Math.max(lim, Math.max(0, bw*s2 - aw)/2 + 40), limY = Math.max(lim, Math.max(0, bh*s2 - (ah-reserve)) + 40);   // enough pan to reach the top of a tall hotel
+  ui.panX = Math.max(-limX, Math.min(limX, ui.panX||0)); ui.panY = Math.max(-limY, Math.min(limY, ui.panY||0));
   return {s:s2, ox: sxc - cx*s2 + ui.panX, oy: syc - cy*s2 + ui.panY};
 }
 const ZMIN = 0.6, ZMAX = 2.5;
-function setZoom(z){ ui.zoom = Math.max(ZMIN, Math.min(ZMAX, z)); if(ui.zoom <= 1.001){ ui.panX *= 0.5; ui.panY *= 0.5; } $('zoomReset').style.visibility = Math.abs(ui.zoom-1)>0.02 || ui.panX || ui.panY ? 'visible' : 'hidden'; }
+function setZoom(z){ ui.zoom = Math.max(ui.zmin || ZMIN, Math.min(ZMAX, z)); if(ui.zoom <= 1.001 && !ui.tall){ ui.panX *= 0.5; ui.panY *= 0.5; } $('zoomReset').style.visibility = Math.abs(ui.zoom-1)>0.02 || ui.panX || ui.panY ? 'visible' : 'hidden'; }
 function resetZoom(){ ui.zoom = 1; ui.panX = 0; ui.panY = 0; $('zoomReset').style.visibility = 'hidden'; }
 function updateCam(dt){
   // hold the camera still while anything is being dragged, so the hotel doesn't move under your finger
