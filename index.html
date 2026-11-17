@@ -269,18 +269,18 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.94"></script>
-<script src="art/items.js?v=0.94"></script>
-<script src="art/reactions.js?v=0.94" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.94" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.94" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.94" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.94" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.94" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.94" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.94" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.94"></script>
-<script src="art/weather.js?v=0.94" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.97"></script>
+<script src="art/items.js?v=0.97"></script>
+<script src="art/reactions.js?v=0.97" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.97" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.97" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.97" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.97" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.97" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.97" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.97" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.97"></script>
+<script src="art/weather.js?v=0.97" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -290,7 +290,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.94';
+const BUILD = '0.97';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -2829,29 +2829,44 @@ async function openVisitList(){
   for(const r of list) html += `<div class="item"><div class="info"><b>${esc(r.name||'Hotel')}</b><div class="meta">${(r.openUntil||0) > Date.now() ? '🟢 Open' : '⚪ Closed'} · Level ${r.level||1}${done.includes(r.id)?' · visited today':' · 🎁 gift'}</div></div><button class="btn" onclick="visitHotel('${r.id}')">Visit</button></div>`;
   showPanel(html, 'visit');
 }
-/* ---- support the game (website only; the Android app must use Google Play Billing instead) ----
-   Paste your Stripe Payment Link addresses below (Stripe dashboard -> Payment Links). Empty = the button says "Coming soon". */
-const PAY = { supporter:'https://buy.stripe.com/3cIeVe8RvcNdaFge1we3e00', tip:'https://buy.stripe.com/bJe00kebP28zfZA1eKe3e01', email:'' };
+/* ---- support the game ----
+   Website only: Stripe Payment Links. The Android app has no purchases at all (so the Play listing needs no payments profile);
+   it shows an About & privacy page on the website instead. */
+const PAY = { supporter:'https://buy.stripe.com/3cIeVe8RvcNdaFge1we3e00', coffee:'https://buy.stripe.com/bJe00kebP28zfZA1eKe3e01', email:'deepantech97@gmail.com' };
 const inApp = () => !!(window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform());
 function supportRows(){
-  if(inApp() || ui.visit) return '';
+  if(ui.visit || inApp()) return '';
+  const cups = S.coffees||0;
   return `<h3>💛 Support Starlit Stays</h3><div class="sub">No forced ads, ever. If the game made you smile, you can help keep it going.</div>
     <div class="item"><div class="info"><b>⭐ Supporter Pack</b><div class="meta">${S.supporter ? 'You are a Supporter. Thank you!' : 'One-time thank-you: a Supporter badge next to your hotel name.'}</div></div>${S.supporter ? '<span style="font-weight:800;color:#3fae8c">✓</span>' : '<button class="btn" onclick="openPay(\'supporter\')">Get</button>'}</div>
-    <div class="item"><div class="info"><b>☕ Tip jar</b><div class="meta">A voluntary tip, any amount. Nothing is unlocked; it just helps.</div></div><button class="btn alt" onclick="openPay(\'tip\')">Tip</button></div>
+    <div class="item"><div class="info"><b>☕ Buy us a coffee</b><div class="meta">A little thank-you, as often as you like. A ☕ shows next to your name.${cups ? ' You have bought ' + cups + '. Thank you!' : ''}</div></div><button class="btn alt" onclick="openPay('coffee')">☕ Coffee</button></div>
     <div class="sub" style="margin-top:6px">Payments are handled securely by Stripe. Digital purchases are final${PAY.email ? '. Problem? Email ' + esc(PAY.email) + ' within 14 days and it will be made right' : ''}.</div>`;
+}
+function aboutRow(){
+  return `<div class="item"><div class="info"><b>ℹ️ About &amp; privacy policy</b><div class="meta">Who makes the game, how to contact us and how your data is used.</div></div><button class="btn alt" onclick="openAbout()">Open</button></div>`;
+}
+function openUrl(url){
+  if(inApp()){ try{ const c = window.Capacitor, B = c.registerPlugin ? c.registerPlugin('Browser') : (c.Plugins||{}).Browser; B.open({ url }); return; }catch(e){} }   // the app opens it in the phone's browser tab, so the game is not left
+  try{ window.open(url, '_blank', 'noopener'); }catch(e){ location.href = url; }
+}
+function openAbout(){ openUrl(new URL('about.html', location.href).href); }
+function grantSupport(kind){
+  if(kind==='supporter') S.supporter = true; else S.coffees = (S.coffees||0) + 1;
+  save(); lastTop='';
+  modal(`<h2 style="margin:0 0 8px">💛 Thank you!</h2><div style="font-size:14px;line-height:1.5">${kind==='supporter' ? 'You are now a Starlit Stays Supporter. Your badge shows next to your hotel name.' : 'Your coffee helps keep the game free of forced ads.'} It means a lot.</div><button class="btn" style="margin-top:14px" onclick="closeModal()">Back to my hotel</button>`);
+  if(ui.panelKind==='menu') openMenu();
 }
 function openPay(kind){
   const url = PAY[kind];
   if(!url){ toast('Coming soon'); return; }
-  try{ window.open(url, '_blank', 'noopener'); }catch(e){ location.href = url; }
+  openUrl(url);
 }
 /* back from Stripe: the success page of each Payment Link is this game with ?thanks=supporter or ?thanks=tip */
 setTimeout(()=>{
   try{
     const t = new URLSearchParams(location.search).get('thanks'); if(!t || typeof S==='undefined') return;
     history.replaceState(null, '', location.pathname);
-    if(t==='supporter'){ S.supporter = true; save(); lastTop=''; }
-    if(t==='supporter' || t==='tip') modal(`<h2 style="margin:0 0 8px">💛 Thank you!</h2><div style="font-size:14px;line-height:1.5">${t==='supporter' ? 'You are now a Starlit Stays Supporter. Your badge shows next to your hotel name.' : 'Your tip helps keep the game free of forced ads.'} It means a lot.</div><button class="btn" style="margin-top:14px" onclick="closeModal()">Back to my hotel</button>`);
+    if(t==='supporter') grantSupport('supporter'); else if(t==='tip' || t==='coffee') grantSupport('coffee');
   }catch(e){}
 }, 3500);
 function openMenu(){
@@ -2863,6 +2878,7 @@ function openMenu(){
     ${accountRow()}
     ${supportRows()}
     <h3>Settings</h3>
+    ${aboutRow()}
     <div class="item"><div class="info"><b>📋 Move your hotel</b><div class="meta">Copy a save code here and paste it into the game on another website or browser.</div></div><button class="btn alt" onclick="copySaveCode()">Copy</button><button class="btn alt" onclick="pasteSaveCode()">Paste</button></div>
     <div class="item"><div class="info"><b>🌄 Scenery</b><div class="meta">${S.scene==='auto' ? 'Auto (follows the clock)' : S.scene ? (SCENES.find(b=>b.id===S.scene)||{}).name||'Custom' : 'Classic city'}</div></div><button class="btn" onclick="openScenery()">Change</button></div>
     <div class="item"><div class="info"><b>Guests served</b><div class="meta">${S.served}</div></div></div>
@@ -2934,7 +2950,7 @@ function updateTop(){
   $('coins').textContent = Math.floor(S.coins).toLocaleString();
   $('blocks').textContent = `${blocksUsed()}/${blocksMax()}`;
   $('blockCount').textContent = `${blocksUsed()}/${blocksMax()} blocks used`;
-  $('lvl').textContent = lv; $('profName').textContent = (S.supporter ? '⭐ ' : '') + (S.name || 'My hotel');
+  $('lvl').textContent = lv; $('profName').textContent = (S.supporter ? '⭐ ' : '') + (S.name || 'My hotel') + (S.coffees > 0 ? ' ☕' : '');
   const a = xpFor(lv), b = xpFor(lv+1);
   $('xpBar').style.width = Math.min(100, (S.xp-a)/(b-a)*100) + '%';
   const btn = $('shiftBtn');

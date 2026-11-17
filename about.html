@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About Starlit Stays</title>
+<style>
+  :root{--ink:#2b2340;--gold:#ffc94d;--bg:#0b1020;--card:#fffdf8}
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(#1b1f4a,#0b1020);color:#f4efe6;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.55}
+  main{max-width:720px;margin:0 auto;padding:28px 18px 60px}
+  h1{color:var(--gold);margin:0 0 4px;font-size:28px}
+  h2{color:var(--gold);margin:28px 0 6px;font-size:20px}
+  p,li{font-size:16px}
+  a{color:#ffd98a}
+  .card{background:rgba(255,253,248,.08);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:14px 16px;margin:12px 0}
+  .btn{display:inline-block;background:var(--gold);color:var(--ink);font-weight:800;border-radius:12px;padding:10px 18px;text-decoration:none}
+  small{color:#bdb4d4}
+</style>
+</head>
+<body>
+<main>
+  <h1>★ Starlit Stays ★</h1>
+  <small>A cozy hotel-building game. No forced ads.</small>
+
+  <h2>About us</h2>
+  <p>Starlit Stays is a hobby game made by an independent developer who likes small, friendly games. You build a hotel, decorate rooms, keep guests happy and grow your hotel floor by floor. The game is free to play and never forces ads on you.</p>
+  <p>It is an original game inspired by classic hotel-building sims. It is not affiliated with Electronic Arts, Playfish or any other company.</p>
+  <p><a class="btn" href="./">Play in your browser</a></p>
+
+  <h2>Contact</h2>
+  <p>Questions, bugs or ideas: <strong id="contact">(contact email to be added)</strong></p>
+
+  <h2>Supporting the game</h2>
+  <p>If the game made you smile, you can support its development from the website version of the game (Profile menu). Supporting is always optional and never needed to play or progress.</p>
+
+  <h2 id="privacy">Privacy policy</h2>
+  <p><small>Last updated: November 2026</small></p>
+  <div class="card">
+    <p><strong>Your hotel is saved on your device.</strong> The game stores your progress in your browser or app (local storage). If you never sign in, nothing is sent to us.</p>
+  </div>
+  <p><strong>If you sign in with Google</strong> (optional), we use Firebase Authentication. We receive your Google account's unique ID and, from Google, the name and email address on that account. We use this only to identify your saved hotel.</p>
+  <p><strong>Online save and leaderboards.</strong> Signed-in players' saved hotels are stored in Google Firebase (Cloud Firestore) so they follow you between devices. Your hotel name, level, guest counts and hotel layout can be shown to other players on the leaderboards and in the "visit other hotels" feature. Choose a hotel name you are happy to share.</p>
+  <p><strong>Usage statistics.</strong> The online version of the game uses Firebase Analytics to count visits and general usage. It does not show ads and we do not sell your data.</p>
+  <p><strong>Purchases on the website.</strong> Optional support purchases on the website are handled by Stripe. We never see or store your card details. Stripe shares your email address and the payment amount with us so we can thank you.</p>
+  <p><strong>Children.</strong> The game is not directed at children under 13 and we do not knowingly collect their personal information.</p>
+  <p><strong>Your choices.</strong> You can sign out at any time, and you can ask us to delete your online save by contacting us at the address above. Clearing the app or browser data removes the local copy of your hotel.</p>
+  <p><strong>Changes.</strong> If this policy changes, the new version will appear on this page with a new date.</p>
+</main>
+<script>
+  // contact address: set it here (one place) once you have a public support email
+  var CONTACT = 'deepantech97@gmail.com';
+  if (CONTACT) document.getElementById('contact').innerHTML = '<a href="mailto:' + CONTACT + '">' + CONTACT + '</a>';
+</script>
+</body>
+</html>
