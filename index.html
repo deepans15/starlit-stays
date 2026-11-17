@@ -207,10 +207,15 @@
   @keyframes tutPulse{from{transform:scale(1)}to{transform:scale(1.045)}}
   body.tutLock #crateBtn, body.tutLock #zoomCtl, body.tutLock #floorNav, body.tutLock #goalsBox{pointer-events:none}
   body.tutLock #helper{z-index:11} body.tutLock #helperArrow{z-index:12} body.tutLock #toasts{z-index:12}
+  body.tutCards #marks{display:none!important}   /* the bookmark row is not part of the tutorial steps */
+  @media (max-width:640px){
+    body.tutLock #helper{top:100px} body.tutLock #helperPic{display:none} body.tutLock #helperBubble{font-size:13px;padding:8px 10px}
+    body.tutCards #panel, body.tutCards #panel.wide{height:42%}   /* smaller sheet during the tutorial so the hotel stays in view */
+  }
   body.tutCards #panel .bcard:not(.tutTarget){pointer-events:none;opacity:.28}
   body.tutCards #panel .x, body.tutCards #panel .tabs{pointer-events:none;opacity:.25}
   #panel .bcard.tutTarget{box-shadow:0 0 0 4px #ffc94d,0 0 18px rgba(255,201,77,.9)}
-  #helperBubble #tutSkip{display:none;background:none;border:none;color:#9b90a8;font-size:11px;text-decoration:underline;padding:6px 0 0;cursor:pointer;font-weight:700;border-radius:0}
+  #helperBubble #tutSkip{display:none;background:none;border:none;color:#7a6e86;font-size:13px;text-decoration:underline;padding:8px 0 0;cursor:pointer;font-weight:800;border-radius:0}
   body.tutLock #helperBubble #tutSkip{display:block}
   @media (max-width:640px){
     #blockCount{display:none} body.panelOpen #dock{display:none}
@@ -244,7 +249,6 @@
     <div id="hint"><span id="hintText"></span><button id="hintCancel">Done</button></div>
     <div id="goalsBox"></div>
     <div id="zoomCtl"><button onclick="setZoom((ui.zoom||1)*1.25)" title="Zoom in">+</button><button onclick="setZoom((ui.zoom||1)/1.25)" title="Zoom out">−</button><button id="zoomReset" onclick="resetZoom()" title="Fit hotel" style="visibility:hidden">⤢</button></div>
-    <div id="floorNav"><button onclick="navFloor(1)" title="Floor up">▲</button><div class="fl" id="floorLab">G<small>floor</small></div><button onclick="navFloor(-1)" title="Floor down">▼</button></div>
     <div id="openPrompt"><div class="op"><div class="opt">🛎️ Your hotel is closed</div><div class="ops" id="opSub">Open the doors and guests will start arriving.</div><button class="btn big" id="opGo">Open</button><label class="opa"><input type="checkbox" id="opAuto"> Reopen automatically</label><button class="oplink" id="opMore">More opening times</button></div></div>
     <div id="visitBar"><button class="btn alt" onclick="goHome()">← Back home</button><div class="vb"><b id="visitName"></b><span id="visitMeta"></span></div><button class="btn" id="visitLike" onclick="likeHotel()">❤️ Like</button></div>
     <button id="tipsBtn" onclick="collectAllTips()" title="Collect all tips"><span class="hic" data-art="ui/tips" style="display:inline-flex;vertical-align:middle;width:18px;height:18px">💰</span> <b id="tipsN">0</b></button>
@@ -269,18 +273,18 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.97"></script>
-<script src="art/items.js?v=0.97"></script>
-<script src="art/reactions.js?v=0.97" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.97" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.97" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.97" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.97" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.97" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.97" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.97" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.97"></script>
-<script src="art/weather.js?v=0.97" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.101"></script>
+<script src="art/items.js?v=0.101"></script>
+<script src="art/reactions.js?v=0.101" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.101" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.101" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.101" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.101" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.101" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.101" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.101" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.101"></script>
+<script src="art/weather.js?v=0.101" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -290,7 +294,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.97';
+const BUILD = '0.101';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -781,6 +785,7 @@ function unlocksAt(lv){
   for(const it of Object.values(ITEMS)) if(it.lvl===lv) out.push({ic: it.emoji, t:`New furniture: ${it.name}`, art:'decor/'+it.id});
   for(const [k,g] of Object.entries(GUEST_TYPES)) if(g.lvl===lv) out.push({ic: k==='vip'?'👑':'💼', t:`New guests: ${g.name}` + (k==='vip'?' (pay double, want rooms at least 70% decorated)':' (pay more, always want an amenity)')});
   const p = BLOCK_TIERS.find(p=>p.lvl===lv); if(p) out.push({ic:'🧱', t:`Expansion available: ${p.blocks} blocks`});
+  if(lv===CRATE_LVL) out.push({ic:'🎁', t:'Golden Mystery Crate: spend coins for a surprise'});
   return out;
 }
 const levelReward = lv => 100*lv;
@@ -1057,7 +1062,12 @@ function camTarget(){
   let aw = W, ah = H;
   const hidden = document.body.classList.contains('dragOut');   // menu tucked away while dragging: use the whole screen
   const pr = panel.style.display==='block' && !hidden ? panel.getBoundingClientRect() : null, cr = cv.getBoundingClientRect();
-  if(pr && pr.width>0){ if(pr.width > W*0.8) ah = Math.max(160, pr.top - cr.top); else aw = Math.max(220, pr.left - cr.left); }
+  if(pr && pr.width>0){
+    if(pr.width > W*0.8){   // bottom sheet: the hotel sits above it, and above the bookmark row that rides on the sheet's top edge
+      const mk = $('marks'), mh = mk && getComputedStyle(mk).display!=='none' ? mk.offsetHeight : 0;
+      ah = Math.max(140, pr.top - cr.top - (mh ? mh + 8 : 0));
+    } else aw = Math.max(220, pr.left - cr.left);
+  }
   const reserve = (pr && pr.width>0 && pr.width > W*0.8) ? 0 : 92; // room for the icon buttons
   // fit the whole hotel, but never smaller than a readable size: a big hotel starts at the ground floor and you drag to look up
   const s0 = Math.min(aw/bw, (ah-reserve)/bh, 1.6), s = Math.min(Math.max(s0, W < 600 ? 0.6 : 0.8), 1.6);
@@ -2139,8 +2149,9 @@ function drawBag(){ const b = bagRect(); if(!b) return;
 function collectBag(){ const b = bagRect(); if(!b) return; const n = S.bag; S.bag = 0; S.coins += n; addXP(S.bagXp||0); S.bagXp = 0; floats.push({x:b.x+b.w/2, y:b.y, t:0, text:'+🪙'+n}); burstConfetti(); toast(`💰 Collected 🪙${n.toLocaleString()}!`); save(); lastTop=''; }
 /* ---------------- 🎁 Mystery Crate: spend coins for a surprise, sometimes a JACKPOT ---------------- */
 const cratePrice = () => 300 + 60*level();
+const CRATE_LVL = 10;   // the crate button appears from this level
 function openCrate(){
-  if(ui.visit) return; const p = cratePrice();
+  if(ui.visit || level() < CRATE_LVL) return; const p = cratePrice();
   modal(`<div style="text-align:center">${art('ui/crate')?`<img src="${art('ui/crate').src}" style="width:110px;height:110px">`:'<div style="font-size:70px">🎁</div>'}
     <h2 style="margin:4px 0">Golden Mystery Crate</h2><div class="sub">Every crate is a winner: furniture, a pile of coins, a rare themed piece, or the <b>JACKPOT</b> (5× your coins back)!</div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:10px"><button class="btn alt" onclick="closeModal()">Not now</button><button class="btn" ${S.coins<p?'disabled':''} onclick="rollCrate()">Open for 🪙${p.toLocaleString()}</button></div></div>`);
@@ -2950,7 +2961,7 @@ function updateTop(){
   $('coins').textContent = Math.floor(S.coins).toLocaleString();
   $('blocks').textContent = `${blocksUsed()}/${blocksMax()}`;
   $('blockCount').textContent = `${blocksUsed()}/${blocksMax()} blocks used`;
-  $('lvl').textContent = lv; $('profName').textContent = (S.supporter ? '⭐ ' : '') + (S.name || 'My hotel') + (S.coffees > 0 ? ' ☕' : '');
+  $('lvl').textContent = lv; { const cb = $('crateBtn'); if(cb) cb.style.display = lv >= CRATE_LVL ? '' : 'none'; } $('profName').textContent = (S.supporter ? '⭐ ' : '') + (S.name || 'My hotel') + (S.coffees > 0 ? ' ☕' : '');
   const a = xpFor(lv), b = xpFor(lv+1);
   $('xpBar').style.width = Math.min(100, (S.xp-a)/(b-a)*100) + '%';
   const btn = $('shiftBtn');
@@ -2973,8 +2984,12 @@ function helperStep(){
       : {id:'gym', force:true, text:'Guests want more than a bed! Build a Fit Corner (gym) so they can work out and pay you extra.', go:'Show me', act:goto('amenity'), target:'#btnBuild'};
   }
   if(count('closet')<1){
-    const messy = S.rooms.some(r=>r.dirty), enough = S.coins >= ROOMS.closet.cost;
-    if(isOpen() && !(messy && enough)) return {id:'earn', force:true, text: messy ? 'A guest left a mess! Keep the hotel running a moment to earn enough coins for a cleaner...' : 'Let the hotel run: guests pay for rooms and workouts, and your coins grow. Soon a guest will leave a room messy...', target:null};
+    const messy = S.rooms.some(r=>r.dirty);
+    if(isOpen() && !messy){   // never wait long: if no guest has left a mess after about 20 seconds, the tutorial shows one
+      if(!ui.tutEarnT0) ui.tutEarnT0 = Date.now();
+      if(Date.now() - ui.tutEarnT0 > 20000){ const r = S.rooms.find(x=>ROOMS[x.type].kind==='guest' && !x.guest && !x.reserved) || S.rooms.find(x=>ROOMS[x.type].kind==='guest'); if(r){ r.dirty = true; r.cleanT = 0; toast('🧹 A guest left a mess!'); } }
+      return {id:'earn', force:true, text:'Your gym is built! Guests are checking in. Watch for a room that gets messy...', target:null};
+    }
     topUp('tutClean', ROOMS.closet.cost + 50, 'for a cleaning service');
     return build ? {id:'closet3', force:true, text:'Find the Linen Closet under Services and drag it onto your hotel.', target:null}
       : {id:'closet', force:true, text:'🧺 Messy rooms stay empty until they are cleaned. Build a Linen Closet and it cleans them for you.', go:'Show me', act:goto('service'), target:'#btnBuild'};
@@ -3018,6 +3033,7 @@ function nudgeStep(){
 /* forced tutorial: what may be pressed on each step (selectors), and which Build card to light up */
 const TUT_ALLOW = { build:['#btnBuild'], build2:['#panel'], open:['#shiftBtn','#opGo'], gym:['#btnBuild'], gym2:['#panel'], earn:['#speedBtn'], closet:['#btnBuild'], closet3:['#panel'], limit:[], maint:['#btnBuild'], maint2:['#panel'], decor:['#panel','@canvas'] };
 const TUT_CARD = { build2:'nook', gym2:'fit', closet3:'closet', maint2:'maintenance' };
+const TUT_SEC = { build2:'guest', gym2:'amenity', closet3:'service', maint2:'service' };   // which Build page holds that card
 const TUT_PANEL = new Set(['build2','gym2','closet3','maint2','decor']);
 let tutScrolled = '', tutClip = '';
 function tutLockTick(st){
@@ -3028,7 +3044,11 @@ function tutLockTick(st){
   // light up the card to drag (and dim the rest) while the Build menu is the thing to use
   const want = TUT_CARD[st.id]; let card = null;
   document.body.classList.toggle('tutCards', !!want);
-  if(want && panel.style.display==='block') panel.querySelectorAll('.bcard[data-room]').forEach(c=>{ const on = c.dataset.room===want && !c.dataset.style; c.classList.toggle('tutTarget', on); if(on) card = c; });
+  if(want && panel.style.display==='block'){
+    panel.querySelectorAll('.bcard[data-room]').forEach(c=>{ const on = c.dataset.room===want && !c.dataset.style; c.classList.toggle('tutTarget', on); if(on) card = c; });
+    // the menu may still be on another page (e.g. Amenities right after the gym): flip to the page that has the card, so the player is never stuck
+    if(card && card.offsetParent===null && ui.panelKind==='build' && !ui.newDrag){ card = null; if(TUT_SEC[st.id]) jumpBuild(TUT_SEC[st.id]); tutScrolled = ''; }
+  }
   else panel.querySelectorAll('.bcard.tutTarget').forEach(c=>c.classList.remove('tutTarget'));
   if(card && tutScrolled!==st.id){ const pb = panel.getBoundingClientRect(), cb = card.getBoundingClientRect(); if(cb.top < pb.top || cb.bottom > pb.bottom) card.scrollIntoView({block:'center'}); tutScrolled = st.id; }
   const W = innerWidth, H = innerHeight, rects = [];
@@ -3043,14 +3063,14 @@ function tutLockTick(st){
   const rb = card ? (()=>{ const b = card.getBoundingClientRect(); return {x:b.left-4, y:b.top-4, w:b.width+8, h:b.height+8}; })() : rects.find(r=>r.ring);
   if(rb && rb.w>0){ ring.style.display='block'; ring.style.left=rb.x+'px'; ring.style.top=rb.y+'px'; ring.style.width=rb.w+'px'; ring.style.height=rb.h+'px'; } else ring.style.display='none';
 }
-$('tutSkip').onclick = ()=>{ if(confirm('Skip the tutorial? It shows how to build, clean and repair your hotel.')){ S.helperDone = true; save(); updateHelper(); } };
+$('tutSkip').onclick = ()=>{ if(confirm('Skip the tutorial? It shows how to build, clean and repair your hotel.')){ S.helperDone = true; save(); updateHelper(); afterTutorial(); } };
 let helperShown = '';
 function updateHelper(){
   document.body.classList.toggle('panelOpen', panel.style.display==='block');
   const st = ui.visit ? null : helperStep() || (S.helperDone && !ui.focus && !(ui.drag||ui.newDrag||ui.itemDrag) ? nudgeStep() : null), h = $('helper'), arrow = $('helperArrow');
   ui.helperNow = st; tutLockTick(st);
   const modalOpen = $('modal').style.display==='flex';
-  if(!st || modalOpen || $('openPrompt').classList.contains('show') || (st.id===S.helperSkip)){ h.style.display='none'; arrow.style.display='none'; helperShown=''; if(!st && !S.helperDone && S.rooms.length>1){ S.helperDone = true; save(); } return; }
+  if(!st || modalOpen || $('openPrompt').classList.contains('show') || (st.id===S.helperSkip)){ h.style.display='none'; arrow.style.display='none'; helperShown=''; if(!st && !S.helperDone && S.rooms.length>1){ S.helperDone = true; save(); afterTutorial(); } return; }
   if(helperShown !== st.id){
     helperShown = st.id; $('helperText').textContent = st.text;
     $('helperGo').style.display = st.go ? 'block' : 'none'; $('helperGo').textContent = st.go || ''; $('helperOk').textContent = st.go ? 'Later' : 'OK'; $('helperOk').style.display = st.force ? 'none' : 'block';
@@ -3141,8 +3161,9 @@ function setScene(id){ S.scene = id; save(); openScenery(); }
 
 /* ---------------- daily bonus: come back each day, the reward grows for 7 days ---------------- */
 const DAILY_REWARDS = [150, 250, 400, 600, 800, 1200, 2000];
+function afterTutorial(){ setTimeout(()=>{ if($('modal').style.display!=='flex' && !ui.visit) checkDaily(); }, 1800); }
 function checkDaily(){
-  if(!S.name) return;
+  if(!S.name || !S.helperDone) return;   // the daily bonus starts once the tutorial is finished
   const d = new Date(), key = d.toDateString(), yest = new Date(d - 86400000).toDateString();
   S.daily = S.daily || {last:'', streak:0};
   if(S.daily.last === key) return;
