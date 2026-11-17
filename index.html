@@ -108,7 +108,7 @@
   body.dragZones #toasts{opacity:0}
   #dropZones.show{display:flex}
   body.panelOpen #dropZones{left:calc(50% - 220px)}
-  @media (max-width:640px){ body.panelOpen #dropZones{left:50%} }
+  @media (max-width:640px){ body.panelOpen #dropZones{left:50%} #dropZones.buying{top:auto;bottom:16px} }
   #dropZones .zone{min-width:118px;padding:12px 16px;border-radius:18px;border:3px dashed #fff;background:rgba(43,35,64,.82);color:#fff;font-weight:900;font-size:14px;text-align:center;line-height:1.2;transition:transform .12s, background .12s}
   #dropZones .zone .e{display:block;font-size:24px}
   #dropZones .zone.sell{background:rgba(214,51,79,.82)}
@@ -118,15 +118,23 @@
   #dropZones .zone.sell.hot{background:#ff5d78}
   #marks{position:absolute;display:none;flex-direction:column;gap:3px;z-index:8}
   #marks button{border:3px solid var(--line);border-right:none;background:#f3ece2;border-radius:14px 0 0 14px;width:64px;padding:4px 2px;font-weight:800;font-size:10.5px;cursor:pointer;color:#7a6e86;line-height:1.15;text-align:center;box-shadow:-4px 4px 10px rgba(0,0,0,.18);transition:transform .12s,background .12s,width .12s}
+  #marks:not(.top){overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding:0 0 0 10px}   /* short screens: the bookmarks scroll instead of running off the bottom */
+  #marks:not(.top)::-webkit-scrollbar{display:none}
   #marks button .e{display:block;font-size:16px;line-height:1.1}
   #marks button.on{background:var(--panel);color:var(--ink);width:72px;transform:translateX(-8px);border-color:var(--line)}
   #marks button.ltd:not(.on){background:#ffe6b8;color:#b5651d}
   #marks.slim button{width:58px;font-size:9.5px;padding:7px 1px}
   #marks.slim button.on{width:62px;transform:translateX(-4px)}
-  #marks.top{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;padding-top:8px;margin-top:-8px}   /* many bookmarks: swipe sideways */
+  #marks.top{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;padding:8px 0 0 14px;margin-top:-8px;box-sizing:border-box;scroll-padding-left:14px}
+  #marks.top::after{content:'';flex:0 0 14px}   /* breathing room after the last tab */   /* many bookmarks: swipe sideways */
   #marks.top::-webkit-scrollbar{display:none}
+  #marks.inpanel{position:sticky;top:0;z-index:5;left:auto;width:auto;display:flex;flex-direction:row;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;background:var(--panel);margin:2px -10px 8px;padding:6px 10px;box-sizing:border-box;border-bottom:2px solid var(--line)}
+  #marks.inpanel::-webkit-scrollbar{display:none}
+  #marks.inpanel button{flex:0 0 auto;width:auto;border:3px solid var(--line);border-radius:12px;background:#f3ece2;color:#7a6e86;padding:5px 10px;box-shadow:none;transform:none;font-size:11px;line-height:1.15}
+  #marks.inpanel button.on{width:auto;transform:none;background:var(--ink);color:#fff;border-color:var(--ink)}
+  #marks.inpanel button.ltd:not(.on){background:#ffe6b8;color:#b5651d}
   #marks.top button{border:3px solid var(--line);border-bottom:none;border-radius:14px 14px 0 0;width:auto;flex:0 0 auto;padding:6px 11px;box-shadow:0 -3px 8px rgba(0,0,0,.15)}
-  #marks.top button.on{width:auto;transform:translateY(-6px)}
+  #marks.top button.on{width:auto;transform:none;background:var(--panel);color:var(--ink);box-shadow:none;position:relative;z-index:2;padding-bottom:9px;margin-bottom:-3px}
   .bsec{scroll-margin-top:6px;display:none} .bsec.show{display:block}
   .bsec h3.big{margin:6px 0 8px;font-size:15px;border-bottom:2px dashed var(--line);padding-bottom:4px}
   .tabs button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:7px 4px;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink)}
@@ -273,18 +281,18 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.101"></script>
-<script src="art/items.js?v=0.101"></script>
-<script src="art/reactions.js?v=0.101" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.101" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.101" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.101" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.101" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.101" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.101" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.101" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.101"></script>
-<script src="art/weather.js?v=0.101" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.106"></script>
+<script src="art/items.js?v=0.106"></script>
+<script src="art/reactions.js?v=0.106" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.106" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.106" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.106" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.106" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.106" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.106" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.106" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.106"></script>
+<script src="art/weather.js?v=0.106" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -294,7 +302,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.101';
+const BUILD = '0.106';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -878,7 +886,7 @@ function maybeIssue(dt){
 function updateIssues(dt){
   for(const r of S.rooms){
     if(r.issue) r.issue.t += dt;
-    if(r.fixT){ r.fixT -= dt; if(r.fixT <= 0){ const it = r.issue; r.fixT = 0; r.issue = null; if(it){ const q = roomRect(r), gift = 10 + 3*level(); addCoins(gift, q.x+q.w/2, q.y+28, ISSUES[it.type].icon+' +🪙'); addXP(3); toast(`${ISSUES[it.type].fix} +🪙${gift}`); S.fixed = (S.fixed||0)+1; save(); } } }
+    if(r.fixT){ r.fixT -= dt; if(r.fixT <= 0){ const it = r.issue; r.fixT = 0; r.fixAuto = false; r.issue = null; if(it){ const q = roomRect(r), gift = 10 + 3*level(); addCoins(gift, q.x+q.w/2, q.y+28, ISSUES[it.type].icon+' +🪙'); addXP(3); toast(`${ISSUES[it.type].fix} +🪙${gift}`); S.fixed = (S.fixed||0)+1; save(); } } }
   }
 }
 function fixIssue(r){ if(!r.issue || r.fixT) return; r.fixT = 1.6; }
@@ -889,10 +897,13 @@ function repairRoom(r, free){
   if(!free){ const c = repairCost(); if(S.coins < c){ toast(`A repair costs 🪙${c}`); return; } S.coins -= c; lastTop=''; }
   r.repT = free ? 6 : 2;
 }
+const crewBusy = () => S.rooms.filter(r=>(r.repT && r.repFree) || (r.fixT && r.fixAuto)).length;   // jobs the Maintenance Room crew is on right now
 function updateRepairs(dt){
-  const crews = count('maintenance') * ROOMS.maintenance.capacity; let busy = S.rooms.filter(r=>r.repT && r.repFree).length;
+  const crews = count('maintenance') * ROOMS.maintenance.capacity; let busy = crewBusy();
   for(const r of S.rooms){
     if(r.broken && !r.repT && busy < crews){ r.repT = 6; r.repFree = true; busy++; }
+    // small problems the player has not tapped for a while: the crew takes them too (tapping sooner still earns the bonus)
+    if(crews && r.issue && !r.fixT && r.issue.t > 10 && busy < crews){ r.fixT = 1.6; r.fixAuto = true; busy++; }
     if(r.repT){ r.repT -= dt; if(r.repT <= 0){ r.repT = 0; r.repFree = false; r.broken = false; const q = roomRect(r); floats.push({x:q.x+q.w/2, y:q.y+30, t:0, text:'🔧 Fixed!'}); addXP(2); save(); } }
   }
 }
@@ -1064,7 +1075,7 @@ function camTarget(){
   const pr = panel.style.display==='block' && !hidden ? panel.getBoundingClientRect() : null, cr = cv.getBoundingClientRect();
   if(pr && pr.width>0){
     if(pr.width > W*0.8){   // bottom sheet: the hotel sits above it, and above the bookmark row that rides on the sheet's top edge
-      const mk = $('marks'), mh = mk && getComputedStyle(mk).display!=='none' ? mk.offsetHeight : 0;
+      const mk = MARKS, mh = mk && !mk.classList.contains('inpanel') && getComputedStyle(mk).display!=='none' ? mk.offsetHeight : 0;
       ah = Math.max(140, pr.top - cr.top - (mh ? mh + 8 : 0));
     } else aw = Math.max(220, pr.left - cr.left);
   }
@@ -1109,12 +1120,23 @@ function resetZoom(){ ui.zoom = 1; ui.panX = 0; ui.panY = 0; $('zoomReset').styl
 function updateCam(dt){
   // hold the camera still while anything is being dragged, so the hotel doesn't move under your finger
   const dragging = (ui.drag && ui.drag.moved) || (ui.newDrag && ui.newDrag.moved) || (ui.newItem && ui.newItem.moved) || (ui.itemDrag && ui.itemDrag.moved);
-  if(dragging && cam.ready){ view = {s:cam.s, ox:cam.ox, oy:cam.oy, dpr:window.devicePixelRatio||1}; return; }
+  if(dragging){ ui.dragCamT = ui.dragWas ? Math.max(0, (ui.dragCamT||0) - (dt||0.016)) : 0.45; ui.dragWas = true; } else { ui.dragWas = false; ui.dragCamT = 0; }
+  const fromMenu = (ui.newDrag && ui.newDrag.moved) || (ui.newItem && ui.newItem.moved);
+  const syncPtr = ()=>{ if(!ui.ptr) return; const p = toWorld({clientX:ui.ptr.x, clientY:ui.ptr.y}), d = ui.newDrag && ui.newDrag.moved ? ui.newDrag : ui.newItem; if(d){ d.px = p.x; d.py = p.y; } };
+  if(dragging && cam.ready && !(ui.dragCamT > 0)){
+    if(fromMenu && ui.tall && ui.ptr){   // edge scrolling: hold the finger near the top or bottom to look at the other floors
+      const Hh = cv.height/(window.devicePixelRatio||1), d2 = dt||0.016;
+      if(ui.ptr.y < 90) ui.panY = (ui.panY||0) + 420*d2; else if(ui.ptr.y > Hh - 90) ui.panY = (ui.panY||0) - 420*d2;
+      const t2 = camTarget(); cam.s = t2.s; cam.ox = t2.ox; cam.oy = t2.oy; view = {s:cam.s, ox:cam.ox, oy:cam.oy, dpr:window.devicePixelRatio||1}; syncPtr(); return;
+    }
+    view = {s:cam.s, ox:cam.ox, oy:cam.oy, dpr:window.devicePixelRatio||1}; return;
+  }
   const t = camTarget();
   if(!cam.ready){ Object.assign(cam, t, {ready:true}); }
   const k = 1 - Math.exp(-(dt||0.016)*10);
   cam.s += (t.s-cam.s)*k; cam.ox += (t.ox-cam.ox)*k; cam.oy += (t.oy-cam.oy)*k;
   view = {s:cam.s, ox:cam.ox, oy:cam.oy, dpr:window.devicePixelRatio||1};
+  if(fromMenu) syncPtr();
 }
 
 /* ---------------- drawing ---------------- */
@@ -1709,7 +1731,7 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
         w:activity.width*slot.scale*sx, h:activity.height*slot.scale*sy});
     }
     const st = (styledImage && variant.staff) || layout.staff;
-    if(st){ const fr = st.frames||1, k = fr>1 ? st.key+'_'+(1+Math.floor(time*(st.fps||4))%fr) : st.key, img = art(k) || art(st.key);
+    if(st && !(room.type==='maintenance' && crewBusy() > 0)){ const fr = st.frames||1, k = fr>1 ? st.key+'_'+(1+Math.floor(time*(st.fps||4))%fr) : st.key, img = art(k) || art(st.key);
       const guestSc = Math.max(0.5, ...slots.map(o=>o.scale||0.8));   // staff should be as tall as the guests in the room
       if(img){ const sc = Math.max(st.scale||1, guestSc*0.95), an = st.anchor||{x:28,y:96};
         draws.push({z:st.z||9, staff:true, image:img, x:q.x+(st.x-an.x*sc)*sx, y:q.y+(st.y-an.y*sc)*sy, w:56*sc*sx, h:96*sc*sy}); } }
@@ -2046,10 +2068,11 @@ function unfocus(){ ui.focus = null; ui.itemDrag = null; closePanel(); }
 
 /* ---------------- UI ---------------- */
 const $ = id => document.getElementById(id);
+const MARKS = document.getElementById('marks');   // the Build menu's bookmark row (moved into the menu on phones)
 const panel = $('panel');
 function toast(msg){ const box = $('toasts'); while(box.children.length >= 3) box.firstChild.remove(); const t = document.createElement('div'); t.className='toast'; t.textContent=msg; box.appendChild(t); setTimeout(()=>t.remove(), 3300); }
-function closePanel(){ $('marks').style.display='none'; panel.style.display='none'; ui.panelKind = null; ui.mode = null; if(ui.focus){ ui.focus = null; } }
-function showPanel(html, kind){ $('marks').style.display='none'; ui.panelKind = kind || 'other'; panel.classList.toggle('sheet', !!ui.focus); panel.classList.toggle('wide', ui.panelKind==='build'); document.body.classList.toggle('panelWide', ui.panelKind==='build'); const st = panel.scrollTop; panel.innerHTML = '<button class="x" onclick="unfocus()">×</button>' + html; panel.style.display='block'; panel.scrollTop = st; }
+function closePanel(){ MARKS.style.display='none'; panel.style.display='none'; ui.panelKind = null; ui.mode = null; if(ui.focus){ ui.focus = null; } }
+function showPanel(html, kind){ MARKS.style.display='none'; ui.panelKind = kind || 'other'; panel.classList.toggle('sheet', !!ui.focus); panel.classList.toggle('wide', ui.panelKind==='build'); document.body.classList.toggle('panelWide', ui.panelKind==='build'); const st = panel.scrollTop; panel.innerHTML = '<button class="x" onclick="unfocus()">×</button>' + html; panel.style.display='block'; panel.scrollTop = st; }
 function setHint(t){ $('hintText').textContent=t; $('hint').style.display = t ? 'flex' : 'none'; }
 function setMode(m){ ui.mode = m; ui.drag = null; setHint(''); }
 $('hintCancel').onclick = ()=> setMode(null);
@@ -2211,19 +2234,23 @@ function drawNewItemDrag(){
 function jumpBuild(id){ const el = document.getElementById('bsec-'+id); if(!el) return; ui.buildSec = id; panel.querySelectorAll('.bsec').forEach(s=>s.classList.toggle('show', s===el)); panel.scrollTop = 0; syncMarks(); }
 // bookmarks hang off the left edge of the Build menu (or off its top edge on phones, where the menu sits at the bottom)
 function placeMarks(){
-  const m = $('marks'), show = panel.style.display==='block' && ui.panelKind==='build' && (ui.buildTab||'rooms')==='rooms' && !!panel.querySelector('.bsec');
+  const m = MARKS, show = panel.style.display==='block' && ui.panelKind==='build' && (ui.buildTab||'rooms')==='rooms' && !!panel.querySelector('.bsec');
   m.style.display = show ? 'flex' : 'none'; if(!show) return;
   if(document.body.classList.contains('dragOut')) return;   // menu is tucked away; placed again when it comes back
   const st = $('stage').getBoundingClientRect(), pr = panel.getBoundingClientRect(), phone = pr.left - st.left < 60;
-  m.classList.toggle('top', phone);
-  if(phone){ m.style.left = (pr.left - st.left + 14)+'px'; m.style.width = (pr.width - 28)+'px'; m.style.right = ''; m.style.top = (pr.top - st.top - m.offsetHeight + 3)+'px'; }
-  else { const nar = pr.left - st.left < 120; m.classList.toggle('slim', nar); m.style.width = ''; m.style.left = (pr.left - st.left - (nar?58:64) + 3)+'px'; m.style.top = (pr.top - st.top + (nar?40:70))+'px'; }
+  m.classList.remove('top');
+  m.classList.toggle('inpanel', phone);
+  if(phone){   // inside the menu, right under the Rooms / Storage / Sell buttons, and it stays there while the menu scrolls
+    const tabs = panel.querySelector('.tabs'); if(tabs && m.previousElementSibling !== tabs) tabs.after(m);
+    m.style.left = m.style.top = m.style.width = m.style.right = m.style.maxHeight = ''; m.style.display = 'flex';
+  }   // the row runs edge to edge of the screen; its padding lines the first tab up with the menu
+  else { if(m.parentNode !== $('stage')) $('stage').appendChild(m); const nar = pr.left - st.left < 120; m.classList.toggle('slim', nar); m.style.width = ''; m.style.left = (pr.left - st.left - (nar?58:64) + 3 - 10)+'px'; m.style.top = (pr.top - st.top + (nar?40:70))+'px'; m.style.maxHeight = Math.max(120, pr.height - (nar?40:70) - 12)+'px'; }
 }
 window.addEventListener('resize', placeMarks);
 function syncMarks(){
-  const marks = $('marks').querySelectorAll('[data-mark]'); if(!marks.length) return;
+  const marks = MARKS.querySelectorAll('[data-mark]'); if(!marks.length) return;
   const cur = (panel.querySelector('.bsec.show')||{id:'bsec-guest'}).id.slice(5);
-  marks.forEach(b=>{ const on = b.dataset.mark===cur; b.classList.toggle('on', on); if(on && $('marks').classList.contains('top')){ const m = $('marks'), l = b.offsetLeft - (m.clientWidth - b.offsetWidth)/2; m.scrollTo({left:l, behavior:'smooth'}); } });
+  marks.forEach(b=>{ const on = b.dataset.mark===cur; b.classList.toggle('on', on); if(on){ const m = MARKS; if(m.classList.contains('top') || m.classList.contains('inpanel')) m.scrollTo({left: b.offsetLeft - (m.clientWidth - b.offsetWidth)/2, behavior:'smooth'}); else m.scrollTo({top: b.offsetTop - (m.clientHeight - b.offsetHeight)/2, behavior:'smooth'}); } });
 }
 function buildTabs(active){
   const t = (id, label) => `<button class="${active===id?'on':''}" onclick="openBuild('${id}')">${label}</button>`;
@@ -2263,7 +2290,7 @@ function openBuild(tab){
         <span class="rate">${rate}</span><div class="nm">${nm}</div><div class="pr">🪙${cost.toLocaleString()}</div></div>`;
   };
   let html = `<h2>🔨 Build</h2>${buildTabs('rooms')}<div class="sub">🧱 <b>${blocksUsed()}/${blocksMax()} blocks</b> · drag onto your hotel or tap to place</div>`;
-  $('marks').innerHTML = SECTIONS.map(mark).join('');
+  MARKS.innerHTML = SECTIONS.map(mark).join('');
   html += `<div>`;
   for(const [cat, , , title, groups, dc] of SECTIONS){
   html += `<div class="bsec${(SECTIONS.some(x=>x[0]===ui.buildSec) ? ui.buildSec : 'guest')===cat ? ' show' : ''}" id="bsec-${cat}"><h3 class="big">${title}</h3>`;
@@ -2310,6 +2337,10 @@ function newDragTarget(nd){
 function drawNewRoomDrag(cov){
   const nd = ui.newDrag, t = newDragTarget(nd), def = ROOMS[nd.type], h = hOf(nd.type);
   if(t.ok){ ctx.fillStyle = 'rgba(43,35,64,.18)'; ctx.fillRect(BX + t.c*CELL, TOP + (WORLD_F - t.f - h)*FLOOR, def.w*CELL, h*FLOOR); }
+  else {   // nowhere valid under the finger: letting go puts it in the first free spot, so show that spot now (checked a few times a second)
+    if(!nd.autoAt || time - nd.autoAt > 0.3){ nd.autoAt = time; nd.autoSpot = firstFreeSpot(nd.type); }
+    const a = nd.autoSpot; if(a){ const ax = BX + a.c*CELL, ay = TOP + (WORLD_F - a.f - h)*FLOOR; ctx.save(); ctx.fillStyle = 'rgba(255,201,77,.28)'; ctx.fillRect(ax, ay, def.w*CELL, h*FLOOR); ctx.strokeStyle = '#ffc94d'; ctx.lineWidth = 3; ctx.setLineDash([8,6]); ctx.strokeRect(ax+1.5, ay+1.5, def.w*CELL-3, h*FLOOR-3); ctx.restore(); }
+  }
   const temp = {id:-1, type:nd.type, f:t.f, c:t.c, wall:false, floor:false, wallColor:WALL_COLORS[0], items: def.kind==='guest' ? (nd.style && themeBed(nd.type,nd.style) ? furnishPlan(nd.type, nd.style).map((p,i)=>({u:-i-1, id:p.id, x:p.x, y:p.y||0})) : [{u:0,id:'bed_basic',x:8,y:0}]) : [], style: def.kind==='guest' ? null : nd.style||null, ghost:{x:t.x, y:t.y}};
   ctx.save(); ctx.shadowColor='rgba(43,35,64,.45)'; ctx.shadowBlur=24; ctx.shadowOffsetY=10;
   ctx.fillStyle='#fff'; ctx.fillRect(t.x+2, t.y+2, def.w*CELL-4, h*FLOOR-4); ctx.restore();
@@ -2330,6 +2361,7 @@ panel.addEventListener('pointerdown', ev=>{
   ui.newDrag = {type: card.dataset.room, style: card.dataset.style||null, sx: ev.clientX, sy: ev.clientY, px: p.x, py: p.y, moved:false, over:false, bounds: buildBounds(2.5), card};
 });
 window.addEventListener('pointermove', ev=>{
+  ui.ptr = {x:ev.clientX, y:ev.clientY};
   const ni = ui.newItem;
   if(ni){
     if(!ni.moved && Math.hypot(ev.clientX-ni.sx, ev.clientY-ni.sy) > 8){ ni.moved = true; document.body.style.cursor = 'grabbing'; document.body.classList.add('dragOut'); }
@@ -2450,7 +2482,7 @@ function openRoom(r){
   const cv2 = coverage();
   if(def.laundry){ showPanel(`<h2>🫧 ${def.name}</h2><div class="sub">Fresh linen for your Linen Closets: each Laundry Room lets them look after ${def.capacity} more rooms, and rooms get cleaned twice as fast.${count('closet') ? '' : ' <b style="color:#d6334f">Build a Linen Closet first.</b>'}</div>${stylePicker(r)}<div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`); return; }
   if(def.repairs){ const crews = count('maintenance')*def.capacity, broken = S.rooms.filter(o=>o.broken).length;
-    showPanel(`<h2>🔧 ${def.name}</h2><div class="sub">Your handymen fix up to ${crews} broken rooms at once. Broken right now: ${broken}.</div>${stylePicker(r)}<div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`); return; }
+    showPanel(`<h2>🔧 ${def.name}</h2><div class="sub">Your handymen repair up to ${crews} rooms at once: broken rooms, and small problems like lights out or leaks that nobody has tapped. Broken right now: ${broken}.</div>${stylePicker(r)}<div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`); return; }
   showPanel(`<h2>🧺 ${def.name}</h2><div class="sub">Your cleaners look after ${cv2.cap} rooms. You have ${cv2.total} rooms that need cleaning.${cv2.total>cv2.cap?` <b style="color:#d6334f">${cv2.total-cv2.cap} rooms aren't covered. Tap them to clean by hand, or build another closet.</b>`:''}</div>
     ${stylePicker(r)}
     <div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`);
