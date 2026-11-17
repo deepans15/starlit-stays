@@ -194,13 +194,24 @@
   .lvlBig{font-size:46px;font-weight:900;color:#e8a400;margin:4px 0;text-shadow:0 3px 0 #2b2340}
   .unlock{display:flex;gap:10px;align-items:center;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px;margin:6px 0;font-size:14px}
   .unlock .ic{font-size:22px;width:30px;text-align:center}
+  /* forced tutorial: a dark shield blocks everything except the one thing to press (a hole is cut in it by script) */
+  #tutShield{position:fixed;inset:0;z-index:9;background:rgba(15,12,30,.58);display:none;touch-action:none}
+  #tutRing{position:fixed;z-index:9;pointer-events:none;display:none;border:4px solid #ffc94d;border-radius:16px;box-shadow:0 0 0 5px rgba(255,201,77,.35),0 0 24px rgba(255,201,77,.8);animation:tutPulse .9s ease-in-out infinite alternate}
+  @keyframes tutPulse{from{transform:scale(1)}to{transform:scale(1.045)}}
+  body.tutLock #crateBtn, body.tutLock #zoomCtl, body.tutLock #floorNav, body.tutLock #goalsBox{pointer-events:none}
+  body.tutLock #helper{z-index:11} body.tutLock #helperArrow{z-index:12} body.tutLock #toasts{z-index:12}
+  body.tutCards #panel .bcard:not(.tutTarget){pointer-events:none;opacity:.28}
+  body.tutCards #panel .x, body.tutCards #panel .tabs{pointer-events:none;opacity:.25}
+  #panel .bcard.tutTarget{box-shadow:0 0 0 4px #ffc94d,0 0 18px rgba(255,201,77,.9)}
+  #helperBubble #tutSkip{display:none;background:none;border:none;color:#9b90a8;font-size:11px;text-decoration:underline;padding:6px 0 0;cursor:pointer;font-weight:700;border-radius:0}
+  body.tutLock #helperBubble #tutSkip{display:block}
   @media (max-width:640px){
     #blockCount{display:none} body.panelOpen #dock{display:none}
     #helper{top:84px;bottom:auto} #toasts{top:auto;bottom:112px} .toast{font-size:12px;padding:6px 12px} #helperPic{width:48px;height:70px} #helperPic img{width:48px;height:70px} #helper{max-width:calc(100% - 16px)}
     #dock{gap:8px;right:8px} .dbtn.big{width:64px;height:64px} .dbtn.mid{width:52px;height:52px} .dbtn.small{width:42px;height:42px} 
     #goalsBox{display:none} #hud{gap:10px;left:8px} .hnum{font-size:19px;-webkit-text-stroke:4px #2b2340} .hnum.small{font-size:16px} .hic svg{width:28px;height:28px} #xpWrap{width:60px} #lvl{top:13px;font-size:12px} #hudStars{top:46px} #starIcons{font-size:20px} #speedBtn{top:4px}
     /* phones: the menu slides in from the right side, leaving room on the left for the bookmarks and a strip of the hotel */
-    #panel, #panel.wide{left:auto;right:4px;top:70px;bottom:4px;height:auto;width:calc(100% - 78px);padding:10px}
+    #panel, #panel.wide{left:4px;right:4px;top:auto;bottom:4px;height:54%;width:auto;padding:10px}   /* bottom sheet: the hotel stays visible above it, tap it to close */
     /* decorating a room on a phone: the room sits on top, the menu is a sheet at the bottom so furniture can be dragged */
     #panel.sheet, #panel.wide.sheet{left:4px;right:4px;width:auto;top:auto;bottom:4px;height:46%}
     #panel .cat{gap:6px}
@@ -243,24 +254,25 @@
       <button class="dbtn mid" id="btnExpand" title="Expand"><span class="ic" data-art="ui/expand"><svg viewBox="0 0 48 48" width="32" height="32"><rect x="12" y="12" width="24" height="24" rx="3" fill="#ffb38a" stroke="#2b2340" stroke-width="3"/><path d="M4 12V4h8M44 12V4h-8M4 36v8h8M44 36v8h-8" fill="none" stroke="#2b2340" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dlab">Expand</span></button>
       <button class="dbtn big" id="btnBuild" title="Build"><span class="ic" data-art="ui/build"><svg viewBox="0 0 48 48" width="40" height="40"><g transform="rotate(-40 24 24)"><rect x="21" y="16" width="7" height="30" rx="3" fill="#c8915f" stroke="#2b2340" stroke-width="3"/><path d="M9 8h26a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4z" fill="#b8bec8" stroke="#2b2340" stroke-width="3"/><rect x="9" y="11" width="8" height="8" rx="2" fill="#dfe3ea"/></g></svg></span><span class="dlab">Build</span></button>
     </div>
-    <div id="helper"><div id="helperPic"></div><div id="helperBubble"><span id="helperText"></span><div class="hb"><button id="helperGo" style="display:none"></button><button id="helperOk">OK</button></div></div></div>
+    <div id="helper"><div id="helperPic"></div><div id="helperBubble"><span id="helperText"></span><div class="hb"><button id="helperGo" style="display:none"></button><button id="helperOk">OK</button></div><button id="tutSkip">Skip tutorial</button></div></div>
   </div>
 </div>
 <div id="modal"><div class="card" id="modalCard"></div></div>
+<div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.89"></script>
-<script src="art/items.js?v=0.89"></script>
-<script src="art/reactions.js?v=0.89" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.89" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.89" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.89" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.89" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.89" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.89" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.89" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.89"></script>
-<script src="art/weather.js?v=0.89" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.90"></script>
+<script src="art/items.js?v=0.90"></script>
+<script src="art/reactions.js?v=0.90" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.90" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.90" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.90" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.90" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.90" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.90" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.90" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.90"></script>
+<script src="art/weather.js?v=0.90" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -270,7 +282,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.89';
+const BUILD = '0.90';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -2951,11 +2963,40 @@ function nudgeStep(){
     return {id:'n_decor', text:`🛋️ The ${roomLabel(plain)} looks a bit bare. Add furniture: decorated rooms pay more and bring VIP guests.`, go:'Decorate', act:()=>focusRoom(plain)};
   return null;
 }
+/* forced tutorial: what may be pressed on each step (selectors), and which Build card to light up */
+const TUT_ALLOW = { build:['#btnBuild'], build2:['#panel'], open:['#shiftBtn','#opGo'], gym:['#btnBuild'], gym2:['#panel'], earn:['#speedBtn'], closet:['#btnBuild'], closet3:['#panel'], limit:[], maint:['#btnBuild'], maint2:['#panel'], decor:['#panel','@canvas'] };
+const TUT_CARD = { build2:'nook', gym2:'fit', closet3:'closet', maint2:'maintenance' };
+const TUT_PANEL = new Set(['build2','gym2','closet3','maint2','decor']);
+let tutScrolled = '', tutClip = '';
+function tutLockTick(st){
+  const sh = $('tutShield'), ring = $('tutRing'), allow = st && !S.helperDone && !ui.visit && TUT_ALLOW[st.id];
+  if(!allow){ sh.style.display='none'; ring.style.display='none'; document.body.classList.remove('tutLock','tutCards'); tutClip=''; return; }
+  document.body.classList.add('tutLock');
+  if((!TUT_PANEL.has(st.id) || (st.id==='decor' && ui.panelKind==='build')) && panel.style.display==='block' && !ui.drag && !ui.newDrag) closePanel();   // steps that point at a dock button start with the menu closed
+  // light up the card to drag (and dim the rest) while the Build menu is the thing to use
+  const want = TUT_CARD[st.id]; let card = null;
+  document.body.classList.toggle('tutCards', !!want);
+  if(want && panel.style.display==='block') panel.querySelectorAll('.bcard[data-room]').forEach(c=>{ const on = c.dataset.room===want && !c.dataset.style; c.classList.toggle('tutTarget', on); if(on) card = c; });
+  else panel.querySelectorAll('.bcard.tutTarget').forEach(c=>c.classList.remove('tutTarget'));
+  if(card && tutScrolled!==st.id){ const pb = panel.getBoundingClientRect(), cb = card.getBoundingClientRect(); if(cb.top < pb.top || cb.bottom > pb.bottom) card.scrollIntoView({block:'center'}); tutScrolled = st.id; }
+  const W = innerWidth, H = innerHeight, rects = [];
+  for(const sel of allow){
+    if(sel==='@canvas'){ const pr = panel.style.display==='block' ? panel.getBoundingClientRect() : null, top = 100, bot = pr && pr.width>0 ? pr.top - 8 : $('dock').getBoundingClientRect().top - 6; if(bot-top > 40) rects.push({x:0, y:top, w:W, h:bot-top, ring:false}); continue; }
+    const el = document.querySelector(sel); if(!el) continue; const b = el.getBoundingClientRect(); if(b.width<2 || b.height<2) continue;
+    const pad = sel==='#panel' ? 0 : 6; rects.push({x:b.left-pad, y:b.top-pad, w:b.width+2*pad, h:b.height+2*pad, ring: sel!=='#panel'});
+  }
+  const clip = 'path(evenodd,"M0 0H'+W+'V'+H+'H0Z' + rects.map(r=>`M${r.x} ${r.y}H${r.x+r.w}V${r.y+r.h}H${r.x}Z`).join('') + '")';
+  if(clip !== tutClip){ tutClip = clip; sh.style.clipPath = clip; sh.style.webkitClipPath = clip; }
+  sh.style.display = 'block';
+  const rb = card ? (()=>{ const b = card.getBoundingClientRect(); return {x:b.left-4, y:b.top-4, w:b.width+8, h:b.height+8}; })() : rects.find(r=>r.ring);
+  if(rb && rb.w>0){ ring.style.display='block'; ring.style.left=rb.x+'px'; ring.style.top=rb.y+'px'; ring.style.width=rb.w+'px'; ring.style.height=rb.h+'px'; } else ring.style.display='none';
+}
+$('tutSkip').onclick = ()=>{ if(confirm('Skip the tutorial? It shows how to build, clean and repair your hotel.')){ S.helperDone = true; save(); updateHelper(); } };
 let helperShown = '';
 function updateHelper(){
   document.body.classList.toggle('panelOpen', panel.style.display==='block');
   const st = ui.visit ? null : helperStep() || (S.helperDone && !ui.focus && !(ui.drag||ui.newDrag||ui.itemDrag) ? nudgeStep() : null), h = $('helper'), arrow = $('helperArrow');
-  ui.helperNow = st;
+  ui.helperNow = st; tutLockTick(st);
   const modalOpen = $('modal').style.display==='flex';
   if(!st || modalOpen || $('openPrompt').classList.contains('show') || (st.id===S.helperSkip)){ h.style.display='none'; arrow.style.display='none'; helperShown=''; if(!st && !S.helperDone && S.rooms.length>1){ S.helperDone = true; save(); } return; }
   if(helperShown !== st.id){
@@ -2963,9 +3004,9 @@ function updateHelper(){
     $('helperGo').style.display = st.go ? 'block' : 'none'; $('helperGo').textContent = st.go || ''; $('helperOk').textContent = st.go ? 'Later' : 'OK'; $('helperOk').style.display = st.force ? 'none' : 'block';
     $('helperPic').innerHTML = art('chars/helper') ? `<img src="${art('chars/helper').src}">` : (art('chars/clerk') ? `<img src="${art('chars/clerk').src}">` : '🛎️');
   }
-  h.style.display = panel.style.display==='block' && window.innerWidth<=640 ? 'none' : 'flex';
+  h.style.display = panel.style.display==='block' && window.innerWidth<=640 && !TUT_ALLOW[st.id] ? 'none' : 'flex';
   const t = st.target && document.querySelector(st.target);
-  if(st.force && t && !(panel.style.display==='block' && window.innerWidth<=640)){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
+  if(st.force && t && !(panel.style.display==='block')){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
   else arrow.style.display='none';
 }
 $('helperOk').onclick = ()=>{ const st = ui.helperNow; if(st && st.go){ nudgeMute[st.id] = Date.now() + 15*60000; nudgeAllUntil = Date.now() + 10*60000; } else { const t = helperStep(); if(t){ if(t.flag) S[t.flag] = true; else S.helperSkip = t.id; } save(); } helperShown=''; updateHelper(); };
@@ -3084,6 +3125,13 @@ if(!S.name){
 }
 requestAnimationFrame(t=>{ last=t; requestAnimationFrame(frame); });
 initCloud();
+/* Android app: the back button closes menus first, and only then minimises the app */
+try{ const cap = window.Capacitor; if(cap && cap.isNativePlatform && cap.isNativePlatform()){
+  const App = cap.registerPlugin ? cap.registerPlugin('App') : (cap.Plugins||{}).App;
+  App.addListener('backButton', ()=>{ if($('modal').style.display==='flex') closeModal(); else if(panel.style.display==='block') (ui.focus ? unfocus() : closePanel()); else App.minimizeApp(); });
+} }catch(e){}
+/* the Android app loads the live website, so updates need no rebuild; this keeps it playable offline after the first launch */
+if('serviceWorker' in navigator && window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform()) navigator.serviceWorker.register('sw.js?v='+BUILD).catch(()=>{});   // app only: the public website is unaffected
 </script>
 <script type="module">
 /* Firebase: only on the public web version (not inside Claude, not from a local file). The game works without it. */
@@ -3121,6 +3169,13 @@ if(!window.claude && /^https?:$/.test(location.protocol)){
       async likeCount(uid){ const c = await fsM.getCountFromServer(collection(db,'hotels',uid,'likes')); return c.data().count; },
       async topWeek(w, n){ const q = await getDocs(query(collection(db,'weekly',String(w),'scores'), orderBy('served','desc'), limit(n))); return q.docs.map(d=>({id:d.id, ...d.data()})); }
     };
+    // inside the Android app Google blocks the web pop-up, so use the native Google account picker (Capacitor plugin) and hand its token to Firebase
+    const cap = window.Capacitor, NATIVE = !!(cap && cap.isNativePlatform && cap.isNativePlatform());
+    if(NATIVE){
+      const plug = name => cap.registerPlugin ? cap.registerPlugin(name) : (cap.Plugins||{})[name];
+      FB.signIn = async ()=>{ const r = await plug('FirebaseAuthentication').signInWithGoogle(); const tok = r && r.credential && r.credential.idToken; if(!tok) throw new Error('No Google token'); await authM.signInWithCredential(auth, authM.GoogleAuthProvider.credential(tok)); };
+      FB.signOut = async ()=>{ try{ await plug('FirebaseAuthentication').signOut(); }catch(e){} return authM.signOut(auth); };
+    }
     authM.getRedirectResult(auth).catch(()=>{});
     authM.onAuthStateChanged(auth, u => { FB.user = u; if(window.onFBUser) window.onFBUser(u); });
     if(!/^(localhost|127\.|192\.168\.|10\.)/.test(location.hostname)){
