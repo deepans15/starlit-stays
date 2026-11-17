@@ -15,7 +15,15 @@
   .chip{display:flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--line);border-radius:999px;padding:3px 10px;font-weight:700;font-size:14px;white-space:nowrap}
 
   /* floating HUD: no boxes, outlined game text over the sky (icons can be replaced by ChatGPT's art/ui files) */
-  #hud{position:absolute;left:12px;top:10px;display:flex;gap:22px;align-items:center;z-index:4;pointer-events:none}
+  #hud{position:absolute;left:10px;right:10px;top:8px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;z-index:4;pointer-events:none}
+  #hud .hbreak{display:none}
+  #profileBtn{order:1;pointer-events:auto;display:flex;align-items:center;gap:8px;background:rgba(43,35,64,.62);border:3px solid #2b2340;border-radius:16px;padding:3px 12px 3px 4px;cursor:pointer;min-width:170px;max-width:240px;box-shadow:0 3px 0 rgba(43,35,64,.35)}
+  #profileBtn:active{transform:translateY(2px)}
+  #profileBtn .hic svg{width:40px;height:40px}
+  #profileBtn #lvl{top:16px;font-size:14px}
+  .pinfo{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;text-align:left}
+  #profName{font-size:14px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1}
+  .hg.coins{order:2} .hg.blocks{order:3}
   .hg{display:flex;align-items:center;gap:6px}
   .hic{display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 3px 0 rgba(43,35,64,.35))}
   .hic img{width:40px;height:40px;object-fit:contain}
@@ -23,14 +31,14 @@
   .hnum.small{font-size:20px;-webkit-text-stroke:4px #2b2340}
   .hbadge{position:relative;display:flex;align-items:center;justify-content:center}
   #lvl{position:absolute;top:19px;font-size:16px;font-weight:900;color:#2b2340}
-  #xpWrap{width:110px;height:14px;background:#5a4e72;border:3px solid #2b2340;border-radius:8px;overflow:hidden;margin-left:-4px}
+  #xpWrap{display:block;width:100%;height:12px;background:#5a4e72;border:3px solid #2b2340;border-radius:8px;overflow:hidden;box-sizing:border-box}
   #xpBar{display:block;height:100%;width:0;background:linear-gradient(180deg,#ffe08a,#ffc94d)}
-  #hudStars{position:absolute;left:50%;top:10px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;z-index:4;pointer-events:none}
+  #hudStars{order:4;margin-left:auto;display:flex;align-items:center;gap:8px;pointer-events:none}
   #faceIcon{display:inline-flex;width:30px;height:30px;margin-left:4px} #faceIcon img,#faceIcon svg{width:30px;height:30px}
   #starIcons{display:flex;gap:1px;font-size:28px;color:#ffc94d;-webkit-text-stroke:2.5px #2b2340;paint-order:stroke fill;line-height:1}
   #starIcons .off{color:#fff8ef;opacity:.85}
   #starIcons img{width:28px;height:28px}
-  #speedBtn{position:absolute;right:12px;top:8px;z-index:4;display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-size:24px;padding:4px}
+  #speedBtn{order:5;pointer-events:auto;display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-size:24px;padding:4px}
   #speedBtn .hic img{width:30px;height:30px}
   #shiftBtn{background:#ff7a90}
   #shiftBtn.open{background:#6fd3b5}
@@ -77,14 +85,12 @@
   #visitBar .vb b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #visitBar .vb span{font-size:12px;color:var(--muted);font-weight:700}
   body.visiting #dock, body.visiting #hud, body.visiting #hudStars, body.visiting #goalsBox, body.visiting #speedBtn, body.visiting #helper, body.visiting #helperArrow, body.visiting #openPrompt, body.visiting #blockCount{display:none!important}
-  #tipsBtn{position:absolute;right:78px;top:12px;display:none;z-index:6;border:2px solid var(--ink);background:#fff6d6;color:var(--ink);font-weight:900;font-size:13px;border-radius:999px;padding:4px 10px;cursor:pointer;box-shadow:0 2px 0 var(--ink)}
+  #tipsBtn{position:absolute;right:12px;top:78px;display:none;z-index:6;border:2px solid var(--ink);background:#fff6d6;color:var(--ink);font-weight:900;font-size:13px;border-radius:999px;padding:4px 10px;cursor:pointer;box-shadow:0 2px 0 var(--ink)}
   #tipsBtn .hic img{width:18px;height:18px}
   #tipsBtn:active{transform:translateY(2px);box-shadow:none}
   body.visiting #tipsBtn{display:none!important}
   body.panelOpen #tipsBtn{display:none!important}
-  @media (max-width:640px){ #tipsBtn{right:10px;top:74px;font-size:12px;padding:9px 12px} #helperBubble button{padding:10px 16px;font-size:14px} #helperBubble .hb{gap:10px} }
-  @media (min-width:1000px) and (max-width:1300px){ #hudStars{left:548px;transform:none} }
-  @media (min-width:641px) and (max-width:999px){ #hudStars{left:14px;top:52px;transform:none} #goalsBox{top:92px} }
+  @media (max-width:640px){ #tipsBtn{right:10px;top:108px;font-size:12px;padding:9px 12px} #helperBubble button{padding:10px 16px;font-size:14px} #helperBubble .hb{gap:10px} }
   #crateBtn{position:absolute;left:14px;top:50%;transform:translateY(-50%);z-index:4;width:62px;min-height:70px;border:3px solid var(--ink);border-radius:14px;background:#ffe9a8;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 3px 0 var(--ink);padding:2px}
   #crateBtn .ic{font-size:26px;line-height:1} #crateBtn .ic img{width:38px;height:38px}
   body.visiting #crateBtn, body.panelOpen #crateBtn{display:none}
@@ -117,15 +123,16 @@
   #marks button.ltd:not(.on){background:#ffe6b8;color:#b5651d}
   #marks.slim button{width:58px;font-size:9.5px;padding:7px 1px}
   #marks.slim button.on{width:62px;transform:translateX(-4px)}
-  #marks.top{flex-direction:row}
-  #marks.top button{border:3px solid var(--line);border-bottom:none;border-radius:14px 14px 0 0;width:auto;flex:1;box-shadow:0 -3px 8px rgba(0,0,0,.15)}
+  #marks.top{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;padding-top:8px;margin-top:-8px}   /* many bookmarks: swipe sideways */
+  #marks.top::-webkit-scrollbar{display:none}
+  #marks.top button{border:3px solid var(--line);border-bottom:none;border-radius:14px 14px 0 0;width:auto;flex:0 0 auto;padding:6px 11px;box-shadow:0 -3px 8px rgba(0,0,0,.15)}
   #marks.top button.on{width:auto;transform:translateY(-6px)}
   .bsec{scroll-margin-top:6px;display:none} .bsec.show{display:block}
   .bsec h3.big{margin:6px 0 8px;font-size:15px;border-bottom:2px dashed var(--line);padding-bottom:4px}
   .tabs button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:7px 4px;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink)}
   .tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}  #hint{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 14px;border-radius:999px;font-weight:700;font-size:13px;display:none;gap:10px;align-items:center;z-index:5;white-space:nowrap}
   #hint button{border:none;background:var(--rose);color:#fff;border-radius:999px;padding:4px 10px;font-weight:800;cursor:pointer}
-  #goalsBox{cursor:pointer;position:absolute;left:10px;top:64px;background:rgba(255,253,248,.94);border:2px solid var(--line);border-radius:14px;padding:8px 10px;font-size:12px;max-width:240px;z-index:4}
+  #goalsBox{cursor:pointer;position:absolute;left:10px;top:84px;background:rgba(255,253,248,.94);border:2px solid var(--line);border-radius:14px;padding:8px 10px;font-size:12px;max-width:240px;z-index:4}
   #goalsBox b{font-size:12px}
   #goalsBox .g{margin-top:4px;display:flex;justify-content:space-between;gap:8px}
   #goalsBox .r{color:#b07a00;font-weight:800;white-space:nowrap}
@@ -207,9 +214,9 @@
   body.tutLock #helperBubble #tutSkip{display:block}
   @media (max-width:640px){
     #blockCount{display:none} body.panelOpen #dock{display:none}
-    #helper{top:84px;bottom:auto} #toasts{top:auto;bottom:112px} .toast{font-size:12px;padding:6px 12px} #helperPic{width:48px;height:70px} #helperPic img{width:48px;height:70px} #helper{max-width:calc(100% - 16px)}
+    #helper{top:112px;bottom:auto} #toasts{top:auto;bottom:112px} .toast{font-size:12px;padding:6px 12px} #helperPic{width:48px;height:70px} #helperPic img{width:48px;height:70px} #helper{max-width:calc(100% - 16px)}
     #dock{gap:8px;right:8px} .dbtn.big{width:64px;height:64px} .dbtn.mid{width:52px;height:52px} .dbtn.small{width:42px;height:42px} 
-    #goalsBox{display:none} #hud{gap:10px;left:8px} .hnum{font-size:19px;-webkit-text-stroke:4px #2b2340} .hnum.small{font-size:16px} .hic svg{width:28px;height:28px} #xpWrap{width:60px} #lvl{top:13px;font-size:12px} #hudStars{top:46px} #starIcons{font-size:20px} #speedBtn{top:4px}
+    #goalsBox{display:none} #hud{gap:2px 8px;left:6px;right:6px;top:6px} #starIcons img{width:18px;height:18px} #faceIcon,#faceIcon img,#faceIcon svg{width:24px;height:24px;margin-left:0} #starNum{display:none} #hudStars{gap:4px} #hud .hbreak{display:block;flex-basis:100%;height:0;order:3} #profileBtn{order:1;flex:1;max-width:none;min-width:0} #speedBtn{order:2} .hg.coins{order:4} .hg.blocks{order:5} #hudStars{order:6;margin-left:auto} .hnum{font-size:19px;-webkit-text-stroke:4px #2b2340} .hnum.small{font-size:16px} .hic svg{width:28px;height:28px} #profileBtn .hic svg{width:38px;height:38px} #starIcons{font-size:20px}
     /* phones: the menu slides in from the right side, leaving room on the left for the bookmarks and a strip of the hotel */
     #panel, #panel.wide{left:4px;right:4px;top:auto;bottom:4px;height:54%;width:auto;padding:10px}   /* bottom sheet: the hotel stays visible above it, tap it to close */
     /* decorating a room on a phone: the room sits on top, the menu is a sheet at the bottom so furniture can be dragged */
@@ -227,12 +234,13 @@
   <div id="stage">
     <canvas id="cv"></canvas>
     <div id="hud">
-      <div class="hg" title="Coins"><span class="hic" data-art="ui/coin"><svg viewBox="0 0 48 48" width="36" height="36"><circle cx="24" cy="24" r="19" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5"/><circle cx="24" cy="24" r="12" fill="none" stroke="#e8a400" stroke-width="3"/><path d="M19 17h8a4 4 0 0 1 0 8h-7m0 0h8a4 4 0 0 1 0 8h-9" fill="none" stroke="#2b2340" stroke-width="0"/></svg></span><span class="hnum" id="coins">0</span></div>
-      <div class="hg" title="Level"><span class="hbadge"><span class="hic" data-art="ui/level"><svg viewBox="0 0 48 48" width="46" height="46"><path d="M6 24 24 7l18 17v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5" stroke-linejoin="round"/><path d="M2 26 24 5l22 21" fill="none" stroke="#2b2340" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span id="lvl">1</span></span><span id="xpWrap"><span id="xpBar"></span></span></div>
-      <div class="hg" title="Blocks used / available"><span class="hic" data-art="ui/blocks"><svg viewBox="0 0 48 48" width="30" height="30"><rect x="6" y="10" width="36" height="28" rx="3" fill="#ff9f68" stroke="#2b2340" stroke-width="3.5"/><path d="M6 24h36M18 10v14M30 24v14" stroke="#2b2340" stroke-width="3"/></svg></span><span class="hnum small" id="blocks">0/12</span></div>
+      <button id="profileBtn" title="Profile, settings and sign-in"><span class="hbadge"><span class="hic" data-art="ui/level"><svg viewBox="0 0 48 48" width="46" height="46"><path d="M6 24 24 7l18 17v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5" stroke-linejoin="round"/><path d="M2 26 24 5l22 21" fill="none" stroke="#2b2340" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span id="lvl">1</span></span><span class="pinfo"><b id="profName">My hotel</b><span id="xpWrap"><span id="xpBar"></span></span></span></button>
+      <button id="speedBtn" title="Game speed"><span class="hic" data-art="ui/speed">⏩</span><span class="hnum small" id="speedTxt">2×</span></button>
+      <span class="hbreak"></span>
+      <div class="hg coins" title="Coins"><span class="hic" data-art="ui/coin"><svg viewBox="0 0 48 48" width="36" height="36"><circle cx="24" cy="24" r="19" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5"/><circle cx="24" cy="24" r="12" fill="none" stroke="#e8a400" stroke-width="3"/><path d="M19 17h8a4 4 0 0 1 0 8h-7m0 0h8a4 4 0 0 1 0 8h-9" fill="none" stroke="#2b2340" stroke-width="0"/></svg></span><span class="hnum" id="coins">0</span></div>
+      <div class="hg blocks" title="Blocks used / available"><span class="hic" data-art="ui/blocks"><svg viewBox="0 0 48 48" width="30" height="30"><rect x="6" y="10" width="36" height="28" rx="3" fill="#ff9f68" stroke="#2b2340" stroke-width="3.5"/><path d="M6 24h36M18 10v14M30 24v14" stroke="#2b2340" stroke-width="3"/></svg></span><span class="hnum small" id="blocks">0/12</span></div>
+      <div id="hudStars" title="Star rating (up to 5)"><span id="starIcons"></span><span class="hnum small" id="starNum">1</span><span id="faceIcon" title="Guest happiness"></span></div>
     </div>
-    <div id="hudStars" title="Star rating (up to 5)"><span id="starIcons"></span><span class="hnum small" id="starNum">1</span><span id="faceIcon" title="Guest happiness"></span></div>
-    <button id="speedBtn" title="Game speed"><span class="hic" data-art="ui/speed">⏩</span><span class="hnum small" id="speedTxt">2×</span></button>
     <div id="hint"><span id="hintText"></span><button id="hintCancel">Done</button></div>
     <div id="goalsBox"></div>
     <div id="zoomCtl"><button onclick="setZoom((ui.zoom||1)*1.25)" title="Zoom in">+</button><button onclick="setZoom((ui.zoom||1)/1.25)" title="Zoom out">−</button><button id="zoomReset" onclick="resetZoom()" title="Fit hotel" style="visibility:hidden">⤢</button></div>
@@ -249,7 +257,7 @@
     <div id="dock">
       <button class="dbtn small" id="btnGoals" title="Goals"><span class="ic" data-art="ui/goals"><svg viewBox="0 0 48 48" width="30" height="30"><circle cx="24" cy="24" r="19" fill="#fff" stroke="#2b2340" stroke-width="3"/><circle cx="24" cy="24" r="12" fill="#ff7a90" stroke="#2b2340" stroke-width="3"/><circle cx="24" cy="24" r="5" fill="#fff" stroke="#2b2340" stroke-width="3"/></svg></span><span class="dlab">Goals</span></button>
       <button class="dbtn small" id="btnRanks" title="Leaderboard"><span class="ic" data-art="ui/leaderboard"><svg viewBox="0 0 48 48" width="30" height="30"><path d="M14 8h20v8a10 10 0 0 1-20 0z" fill="#ffc94d" stroke="#2b2340" stroke-width="3" stroke-linejoin="round"/><path d="M14 11H7v3a7 7 0 0 0 7 7M34 11h7v3a7 7 0 0 1-7 7" fill="none" stroke="#2b2340" stroke-width="3"/><path d="M24 26v8M16 40h16l-2-6H18z" fill="#c8915f" stroke="#2b2340" stroke-width="3" stroke-linejoin="round"/></svg></span><span class="dlab">Ranks</span></button>
-      <button class="dbtn small" id="btnMenu" title="Settings"><span class="ic" data-art="ui/settings"><svg viewBox="0 0 48 48" width="30" height="30"><circle cx="24" cy="24" r="15" fill="#b8bec8" stroke="#2b2340" stroke-width="10" stroke-dasharray="6 5.8"/><circle cx="24" cy="24" r="14" fill="#dfe3ea" stroke="#2b2340" stroke-width="3"/><circle cx="24" cy="24" r="6" fill="#fff" stroke="#2b2340" stroke-width="3"/></svg></span><span class="dlab">Settings</span></button>
+
       <button class="dbtn mid" id="shiftBtn" title="Open your hotel"><span class="ic" data-art="ui/open"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M24 8c-8 0-12 6-12 14v8l-4 6h32l-4-6v-8c0-8-4-14-12-14z" fill="#ffc94d" stroke="#2b2340" stroke-width="3.5" stroke-linejoin="round"/><circle cx="24" cy="40" r="4" fill="#2b2340"/><circle cx="24" cy="6" r="3" fill="#2b2340"/></svg></span><span class="dlab" id="shiftLab">Open</span><span class="dtimer" id="shiftTimer"></span></button>
       <button class="dbtn mid" id="btnExpand" title="Expand"><span class="ic" data-art="ui/expand"><svg viewBox="0 0 48 48" width="32" height="32"><rect x="12" y="12" width="24" height="24" rx="3" fill="#ffb38a" stroke="#2b2340" stroke-width="3"/><path d="M4 12V4h8M44 12V4h-8M4 36v8h8M44 36v8h-8" fill="none" stroke="#2b2340" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dlab">Expand</span></button>
       <button class="dbtn big" id="btnBuild" title="Build"><span class="ic" data-art="ui/build"><svg viewBox="0 0 48 48" width="40" height="40"><g transform="rotate(-40 24 24)"><rect x="21" y="16" width="7" height="30" rx="3" fill="#c8915f" stroke="#2b2340" stroke-width="3"/><path d="M9 8h26a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4z" fill="#b8bec8" stroke="#2b2340" stroke-width="3"/><rect x="9" y="11" width="8" height="8" rx="2" fill="#dfe3ea"/></g></svg></span><span class="dlab">Build</span></button>
@@ -261,18 +269,18 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.90"></script>
-<script src="art/items.js?v=0.90"></script>
-<script src="art/reactions.js?v=0.90" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.90" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.90" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.90" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.90" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.90" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.90" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.90" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.90"></script>
-<script src="art/weather.js?v=0.90" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.92"></script>
+<script src="art/items.js?v=0.92"></script>
+<script src="art/reactions.js?v=0.92" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.92" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.92" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.92" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.92" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.92" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.92" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.92" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.92"></script>
+<script src="art/weather.js?v=0.92" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -282,7 +290,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.90';
+const BUILD = '0.92';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -2204,7 +2212,7 @@ window.addEventListener('resize', placeMarks);
 function syncMarks(){
   const marks = $('marks').querySelectorAll('[data-mark]'); if(!marks.length) return;
   const cur = (panel.querySelector('.bsec.show')||{id:'bsec-guest'}).id.slice(5);
-  marks.forEach(b=>b.classList.toggle('on', b.dataset.mark===cur));
+  marks.forEach(b=>{ const on = b.dataset.mark===cur; b.classList.toggle('on', on); if(on && $('marks').classList.contains('top')){ const m = $('marks'), l = b.offsetLeft - (m.clientWidth - b.offsetWidth)/2; m.scrollTo({left:l, behavior:'smooth'}); } });
 }
 function buildTabs(active){
   const t = (id, label) => `<button class="${active===id?'on':''}" onclick="openBuild('${id}')">${label}</button>`;
@@ -2824,8 +2832,11 @@ async function openVisitList(){
 function openMenu(){
   unfocus(); checkPokeDay();
   const cv2 = coverage();
-  showPanel(`<h2>Menu</h2>
+  const lv0 = level(), xa = xpFor(lv0), xb = xpFor(lv0+1), pct = Math.min(100, Math.max(0, (S.xp-xa)/(xb-xa)*100));
+  showPanel(`<h2>👤 Profile</h2>
+    <div class="item"><div class="info"><b>${esc(S.name || 'My hotel')}</b><div class="meta">Level ${lv0} · ${Math.floor(S.xp-xa)} / ${xb-xa} XP to level ${lv0+1}</div><div style="margin-top:6px;height:10px;background:#e7dfd3;border-radius:6px;overflow:hidden"><div style="height:100%;width:${pct}%;background:linear-gradient(180deg,#ffe08a,#ffc94d)"></div></div></div><button class="btn" onclick="askName()">Rename</button></div>
     ${accountRow()}
+    <h3>Settings</h3>
     <div class="item"><div class="info"><b>📋 Move your hotel</b><div class="meta">Copy a save code here and paste it into the game on another website or browser.</div></div><button class="btn alt" onclick="copySaveCode()">Copy</button><button class="btn alt" onclick="pasteSaveCode()">Paste</button></div>
     <div class="item"><div class="info"><b>🌄 Scenery</b><div class="meta">${S.scene==='auto' ? 'Auto (follows the clock)' : S.scene ? (SCENES.find(b=>b.id===S.scene)||{}).name||'Custom' : 'Classic city'}</div></div><button class="btn" onclick="openScenery()">Change</button></div>
     <div class="item"><div class="info"><b>Guests served</b><div class="meta">${S.served}</div></div></div>
@@ -2833,7 +2844,6 @@ function openMenu(){
     <div class="item"><div class="info"><b>Cleaning coverage</b><div class="meta">${Math.min(cv2.cap,cv2.total)} of ${cv2.total} rooms</div></div></div>
     <div class="item"><div class="info"><b>Wake-up bonuses left today</b><div class="meta">${S.pokes} (tap a sleeping guest)</div></div></div>
     <div class="item"><div class="info"><b>How stars work</b><div class="meta">Up to 7 stars, from room decor, amenity variety, guest happiness, cleanliness and a nicely decorated lobby. More stars bring more guests and bigger payments.</div></div></div>
-    <div class="item"><div class="info"><b>Rename hotel</b></div><button class="btn" onclick="askName()">Rename</button></div>
     <div class="item"><div class="info"><b>How to play</b></div><button class="btn" onclick="showHelp()">Show</button></div>
     <div class="item"><div class="info"><b>Start over</b><div class="meta">Deletes this save</div></div><button class="btn warn" onclick="resetGame()">Reset</button></div>
     <div class="sub" style="margin-top:12px">Starlit Stays is an original fan-made game inspired by classic hotel sims. Not affiliated with Electronic Arts or Playfish. Build ${BUILD}.</div>`, 'menu');
@@ -2898,7 +2908,7 @@ function updateTop(){
   $('coins').textContent = Math.floor(S.coins).toLocaleString();
   $('blocks').textContent = `${blocksUsed()}/${blocksMax()}`;
   $('blockCount').textContent = `${blocksUsed()}/${blocksMax()} blocks used`;
-  $('lvl').textContent = lv;
+  $('lvl').textContent = lv; $('profName').textContent = S.name || 'My hotel';
   const a = xpFor(lv), b = xpFor(lv+1);
   $('xpBar').style.width = Math.min(100, (S.xp-a)/(b-a)*100) + '%';
   const btn = $('shiftBtn');
@@ -3019,7 +3029,7 @@ showSpeed();
 $('btnBuild').onclick = ()=>{ if(ui.panelKind==='build'){ closePanel(); return; } openBuild(); };
 $('btnExpand').onclick = ()=>{ openExpand(); };
 $('btnGoals').onclick = ()=>{ openGoals(); };
-$('btnMenu').onclick = ()=>{ openMenu(); };
+$('profileBtn').onclick = ()=>{ openMenu(); };
 $('btnRanks').onclick = ()=>{ if(ui.panelKind==='ranks') closePanel(); else openRanks(); };
 $('goalsBox').onclick = ()=>{ openGoals(); };
 // ChatGPT can replace these icons: art/ui/build.svg, expand.svg, goals.svg, settings.svg
