@@ -248,18 +248,18 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.82"></script>
-<script src="art/items.js?v=0.82"></script>
-<script src="art/reactions.js?v=0.82" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.82" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.82" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.82" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.82" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.82" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.82" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.82" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.82"></script>
-<script src="art/weather.js?v=0.82" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.83"></script>
+<script src="art/items.js?v=0.83"></script>
+<script src="art/reactions.js?v=0.83" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.83" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.83" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.83" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.83" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.83" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.83" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.83" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.83"></script>
+<script src="art/weather.js?v=0.83" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -269,7 +269,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.82';
+const BUILD = '0.83';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -2874,8 +2874,14 @@ function updateTop(){
 function helperStep(){
   if(S.helperDone) return null;
   const hasRoom = S.rooms.some(r=>ROOMS[r.type].kind==='guest');
-  if(!hasRoom) return ui.panelKind==='build' ? {id:'build2', text:'Drag a Cozy Nook onto your lobby, or just tap it to place it automatically.', target:null} : {id:'build', text:'Welcome to your new hotel! Tap Build to add rooms for your guests.', target:'#btnBuild'};
-  if(S.freeShift && !isOpen()) return {id:'open', text:'Nice room! Now open your hotel so guests can check in.', target:'#shiftBtn'};
+  // the first three steps are forced (no skip button, arrow points at the control): build + drag a room, start the session, build a gym
+  if(!hasRoom) return ui.panelKind==='build' ? {id:'build2', force:true, text:'Press and hold the Cozy Nook, drag it onto your hotel next to the lobby and let go. (On a phone you can also just tap it.)', target:null} : {id:'build', force:true, text:'Welcome to your new hotel! Tap Build to add your first room for guests.', target:'#btnBuild'};
+  if(S.freeShift && !isOpen()) return {id:'open', force:true, text:'Nice room! Now tap Start to open your hotel so guests can check in.', target:'#shiftBtn'};
+  if(count('fit')<1){
+    if(!S.gymGift){ S.gymGift = true; const need = ROOMS.fit.cost - Math.floor(S.coins); if(need > 0){ S.coins += need; toast(`🎁 Opening gift: 🪙${need.toLocaleString()} for your first gym`); } save(); }
+    return ui.panelKind==='build' ? {id:'gym2', force:true, text:'Find the Fit Corner under Amenities and drag it onto your hotel. Guests pay to work out after their stay!', target:null}
+      : {id:'gym', force:true, text:'Guests want more than a bed! Build a Fit Corner (gym) so they can work out and pay you extra.', go:'Show me', act:()=>{ openBuild('rooms'); jumpBuild('amenity'); }, target:'#btnBuild'};
+  }
   if(count('closet')<1) return {id:'closet', text:'Guests leave rooms messy. Build a Linen Closet and it will clean them for you.', target:'#btnBuild'};
   if(!S.tipTaught && S.rooms.some(r=>r.tip>0)) return {id:'tips', text:'A guest left a tip! Tap the gold coin on the room (or the tips button at the top) to collect it.', target:null};
   if(!S.boughtItem) return {id:'decor', text:'Tap a room to decorate it. Nicer rooms earn more and raise your stars!', target:null};
@@ -2915,12 +2921,12 @@ function updateHelper(){
   if(!st || modalOpen || $('openPrompt').classList.contains('show') || (st.id===S.helperSkip)){ h.style.display='none'; arrow.style.display='none'; helperShown=''; if(!st && !S.helperDone && S.rooms.length>1){ S.helperDone = true; save(); } return; }
   if(helperShown !== st.id){
     helperShown = st.id; $('helperText').textContent = st.text;
-    $('helperGo').style.display = st.go ? 'block' : 'none'; $('helperGo').textContent = st.go || ''; $('helperOk').textContent = st.go ? 'Later' : 'OK';
+    $('helperGo').style.display = st.go ? 'block' : 'none'; $('helperGo').textContent = st.go || ''; $('helperOk').textContent = st.go ? 'Later' : 'OK'; $('helperOk').style.display = st.force ? 'none' : 'block';
     $('helperPic').innerHTML = art('chars/helper') ? `<img src="${art('chars/helper').src}">` : (art('chars/clerk') ? `<img src="${art('chars/clerk').src}">` : '🛎️');
   }
   h.style.display = panel.style.display==='block' && window.innerWidth<=640 ? 'none' : 'flex';
   const t = st.target && document.querySelector(st.target);
-  if(false && t){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
+  if(st.force && t && !(panel.style.display==='block' && window.innerWidth<=640)){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
   else arrow.style.display='none';
 }
 $('helperOk').onclick = ()=>{ const st = ui.helperNow; if(st && st.go){ nudgeMute[st.id] = Date.now() + 15*60000; nudgeAllUntil = Date.now() + 10*60000; } else { const t = helperStep(); if(t) S.helperSkip = t.id; save(); } helperShown=''; updateHelper(); };
