@@ -248,18 +248,18 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.83"></script>
-<script src="art/items.js?v=0.83"></script>
-<script src="art/reactions.js?v=0.83" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.83" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.83" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.83" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.83" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.83" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.83" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.83" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.83"></script>
-<script src="art/weather.js?v=0.83" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.88"></script>
+<script src="art/items.js?v=0.88"></script>
+<script src="art/reactions.js?v=0.88" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.88" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.88" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.88" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.88" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.88" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.88" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.88" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.88"></script>
+<script src="art/weather.js?v=0.88" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -269,7 +269,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.83';
+const BUILD = '0.88';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -311,7 +311,7 @@ const ROOMS = {
   loft:   {name:'Sky Loft',    kind:'guest',   w:3, h:2, cost:5200, lvl:9,  stay:36, pay:120,xp:18, color:'#bfe6ff', minFloor:2},
   closet: {name:'Linen Closet',kind:'service', w:1, h:1, cost:250,  lvl:1,  capacity:5, color:'#5c3a28'},
 
-  maintenance: {name:'Maintenance Room', kind:'service', w:1, h:1, cost:600, lvl:4, capacity:6, color:'#5b6b82', repairs:true},
+  maintenance: {name:'Maintenance Room', kind:'service', w:1, h:1, cost:600, lvl:1, capacity:6, color:'#5b6b82', repairs:true},
   fit:    {name:'Fit Corner',  kind:'amenity', w:2, h:1, cost:1500,  lvl:1,  slots:3, use:9,  pay:8,  xp:3, color:'#ffd1dc', icon:'🏋️'},
   noodle: {name:'Noodle Bar',  kind:'amenity', w:2, h:1, cost:3000, lvl:4,  slots:3, use:10, pay:15, xp:4, color:'#ffcf9e', icon:'🍜'},
   chill:  {name:'Chill Room',  kind:'amenity', w:2, h:1, cost:3600, lvl:5,  slots:3, use:14, pay:11, xp:3, color:'#ffe0c2', icon:'😌'},
@@ -529,7 +529,7 @@ function freshState(){
   const rooms = [ mkRoom(1,'lobby',0,5,0) ];
   for(const r of rooms) if(ROOMS[r.type].kind==='guest') r.items.push(mkItem('bed_basic', 8));
   return {v:3, build:SAVE_VERSION, name:'', coins:1500, xp:0, plot:0, nextId:2, served:0, goals:[], storage:[], inv:{},
-    moved:false, movedItem:false, boughtItem:false, vipServed:false, seenLevel:1,
+    moved:false, movedItem:false, boughtItem:false, xpCurve:2, vipServed:false, seenLevel:1,
     rooms, shiftEnd:0, freeShift:true, sat:0.6, rate:0, pokes:20, pokeDay:'', savedAt:Date.now()};
 }
 function migrate(s){
@@ -537,6 +537,10 @@ function migrate(s){
   s.rooms = (s.rooms||[]).filter(r=>ROOMS[r.type]);
   for(const r of s.rooms){ r.items = (r.items||[]).filter(it=>ITEMS[it.id]); for(const it of r.items) itemUid = Math.max(itemUid, (it.u||0)+1); }
   s.storage = s.storage || []; s.inv = s.inv || {};
+  if(!s.xpCurve){   // levels got slower in 0.88: keep each player at the same level and the same fraction through it
+    const old = k => k<=1 ? 0 : Math.floor(25*Math.pow(k-1,1.6)), xp = s.xp||0; let lv = 1; while(xp >= old(lv+1)) lv++;
+    s.xp = Math.round(xpCurve(lv) + (xp-old(lv))/(old(lv+1)-old(lv))*(xpCurve(lv+1)-xpCurve(lv))); s.xpCurve = 2;
+  }
   for(const r of s.rooms) if(ROOMS[r.type].kind==='service' || ROOMS[r.type].kind==='amenity'){ r.dirty = false; r.cleanT = 0; }   // only guest rooms get messy
   for(const r of s.rooms) if(r.type.startsWith('treehouse') && !(r.items||[]).some(it=>ITEMS[it.id] && ITEMS[it.id].zone==='bed')){ r.items = r.items || []; r.items.unshift(mkItem('bed_basic', 8)); }
   // a room whose size changed (Laundry Room 1x1 -> 2x1) and now overlaps another room goes to storage instead
@@ -644,7 +648,8 @@ function decorPct(r){
   return Math.min(1, decorPoints(r)/decorCapacity(r));
 }
 const hasBed = r => (r.items||[]).some(it=>ITEMS[it.id] && ITEMS[it.id].zone==='bed');
-const xpFor = n => n<=1 ? 0 : Math.floor(25*Math.pow(n-1,1.6));
+function xpCurve(n){ return n<=1 ? 0 : Math.floor(60*Math.pow(n-1,1.75)); }   // 0.88: slower, steadier levels (was 25*(n-1)^1.6, which gave level 3 in a few minutes)
+const xpFor = xpCurve;
 function level(){ let n=1; while(S.xp >= xpFor(n+1)) n++; return n; }
 const isOpen = () => Date.now() < S.shiftEnd;
 function stars(){
@@ -1981,8 +1986,9 @@ function tapRoom(r, focused){
   if(r.broken && !r.repT){ repairRoom(r, false); return; }
   if(r.lost){ returnLost(r); return; }
   if(r.tip){ const q = roomRect(r); addCoins(r.tip, q.x+q.w-18, q.y+24, '💰+🪙'); r.tip = 0; S.tipTaught = true; save(); return; }
-  if(r.dirty && !r.guest && !(r.users>0)){ r.dirty=false; r.cleanT=0; addXP(1); const q=roomRect(r); floats.push({x:q.x+q.w/2,y:q.y+30,t:0,text:'✨'}); return; }
-  if(def.kind==='guest' && r.guest){ poke(r); return; }
+  const decorTut = ui.helperNow && ui.helperNow.id==='decor' && ROOMS[r.type].kind==='guest';   // tutorial: a tap opens decorating even if a guest sleeps inside
+  if(!decorTut && r.dirty && !r.guest && !(r.users>0)){ r.dirty=false; r.cleanT=0; addXP(1); const q=roomRect(r); floats.push({x:q.x+q.w/2,y:q.y+30,t:0,text:'✨'}); return; }
+  if(!decorTut && def.kind==='guest' && r.guest){ poke(r); return; }
   if(focused) return;
   if(def.kind==='guest' || def.kind==='amenity' || def.kind==='lobby') focusRoom(r);
   else openRoom(r);
@@ -2048,9 +2054,9 @@ function applySkin(skin, r){
   if(!r || ROOMS[r.type].kind!=='guest'){ toast('Walls and floors go on guest rooms'); return; }
   const [kind, val] = skin.split(':'), cells = cellsOf(r);
   if(kind==='wall'){ const c = r.wall ? 0 : 40*cells; if(S.coins < c){ toast(`Wallpaper costs 🪙${c}`); return; }
-    S.coins -= c; if(c) addXP(Math.round(c/40)); r.wall = true; r.wallColor = val; toast(c ? `Wallpaper added (-🪙${c})` : 'Wallpaper colour changed'); }
+    S.coins -= c; if(c) addXP(Math.round(c/80)); r.wall = true; r.wallColor = val; toast(c ? `Wallpaper added (-🪙${c})` : 'Wallpaper colour changed'); }
   else { if(r.floor){ toast('This room already has a wooden floor'); return; } const c = 50*cells; if(S.coins < c){ toast(`Wooden floor costs 🪙${c}`); return; }
-    S.coins -= c; addXP(Math.round(c/40)); r.floor = true; toast(`Wooden floor added (-🪙${c})`); }
+    S.coins -= c; addXP(Math.round(c/80)); r.floor = true; toast(`Wooden floor added (-🪙${c})`); }
   r.pulse = 1.2; lastTop=''; save(); checkGoals();
 }
 function decorShop(lv, cat){
@@ -2154,7 +2160,7 @@ function buyItemTo(id, r, wx){
     if(ui.focus){ const fr = S.rooms.find(x=>x.id===ui.focus); if(fr){ openRoom(fr); return; } }
     openBuild('rooms'); return;
   }
-  S.coins -= def.cost; addXP(Math.max(1, Math.round(def.cost/40))); S.boughtItem = true;
+  S.coins -= def.cost; addXP(Math.max(1, Math.round(def.cost/80))); S.boughtItem = true;
   S.inv[id] = (S.inv[id]||0) + 1; save(); checkGoals();
   toast(`${def.name} bought. It's in Storage: open a room to place it.`); openBuild('rooms');
 }
@@ -2348,7 +2354,7 @@ function buyRoom(type, at, style){
     else { r.items.push(mkItem('bed_basic', 8)); if(ITEMS.window_square){ const wi = mkItem('window_square', Math.round(ROOMS[type].w*CELL*0.62)); wi.y = 22; r.items.push(wi); } }
   }
   else if(style){ r.style = style; r.ownedStyles = [style]; }
-  S.coins -= cost; addXP(Math.round(cost/50));
+  S.coins -= cost; addXP(Math.round(cost/100));
   toast(at ? `${roomLabel(r)} built.` : `${roomLabel(r)} built in a free spot. Drag it wherever you like.`); save(); checkGoals();
   if(ui.panelKind==='build') openBuild();
 }
@@ -2400,8 +2406,8 @@ function openRoom(r){
     ${stylePicker(r)}
     <div style="display:flex;gap:8px;margin-top:12px"><button class="btn alt" onclick="storeRoom(${r.id})">📦 Put in storage</button></div>`);
 }
-function buyWall(id){ const r = S.rooms.find(x=>x.id===id), c = 40*cellsOf(r); if(S.coins<c) return; S.coins-=c; r.wall=true; addXP(Math.round(c/40)); save(); checkGoals(); openRoom(r); }
-function buyFloor(id){ const r = S.rooms.find(x=>x.id===id), c = 50*cellsOf(r); if(S.coins<c) return; S.coins-=c; r.floor=true; addXP(Math.round(c/40)); save(); checkGoals(); openRoom(r); }
+function buyWall(id){ const r = S.rooms.find(x=>x.id===id), c = 40*cellsOf(r); if(S.coins<c) return; S.coins-=c; r.wall=true; addXP(Math.round(c/80)); save(); checkGoals(); openRoom(r); }
+function buyFloor(id){ const r = S.rooms.find(x=>x.id===id), c = 50*cellsOf(r); if(S.coins<c) return; S.coins-=c; r.floor=true; addXP(Math.round(c/80)); save(); checkGoals(); openRoom(r); }
 const wallPatternCache = new Map();
 // wooden floor along the bottom of a room: plain planks, or polished parquet once the player buys the wooden floor
 function drawFloorBand(r, x, fy, w){
@@ -2464,7 +2470,7 @@ function placeItem(roomId, itemId, fromInv){
   if(fromInv && !S.inv[itemId]) return; if(!fromInv && S.coins < def.cost) return;
   const old = swapOutBed(r, itemId), oldX = old ? old.x : null; if(old) toast(`${ITEMS[old.id].name} moved to storage`);
   if(fromInv){ if(!S.inv[itemId]) return; S.inv[itemId]--; if(!S.inv[itemId]) delete S.inv[itemId]; }
-  else { if(S.coins < def.cost) return; S.coins -= def.cost; addXP(Math.max(1, Math.round(def.cost/40))); S.boughtItem = true; }
+  else { if(S.coins < def.cost) return; S.coins -= def.cost; addXP(Math.max(1, Math.round(def.cost/80))); S.boughtItem = true; }
   // put it in the middle of the room; the player drags it from there
   const rw = ROOMS[r.type].w*CELL;
   const it = mkItem(itemId, clampItemX(r, def, oldX!==null ? oldX : rw/2 - def.w/2 + (Math.random()-0.5)*20));
@@ -2873,18 +2879,33 @@ function updateTop(){
 // first-time helper: a bellhop who points at what to do next (like the original's tutorial)
 function helperStep(){
   if(S.helperDone) return null;
-  const hasRoom = S.rooms.some(r=>ROOMS[r.type].kind==='guest');
-  // the first three steps are forced (no skip button, arrow points at the control): build + drag a room, start the session, build a gym
-  if(!hasRoom) return ui.panelKind==='build' ? {id:'build2', force:true, text:'Press and hold the Cozy Nook, drag it onto your hotel next to the lobby and let go. (On a phone you can also just tap it.)', target:null} : {id:'build', force:true, text:'Welcome to your new hotel! Tap Build to add your first room for guests.', target:'#btnBuild'};
-  if(S.freeShift && !isOpen()) return {id:'open', force:true, text:'Nice room! Now tap Start to open your hotel so guests can check in.', target:'#shiftBtn'};
+  const gr = guestRoomCount(), build = ui.panelKind==='build';
+  const goto = sec => ()=>{ openBuild('rooms'); jumpBuild(sec); };
+  const topUp = (flag, want, why) => { if(S[flag]) return; S[flag] = true; const need = want - Math.floor(S.coins); if(need > 0){ S.coins += need; toast(`🎁 Gift: 🪙${need.toLocaleString()} ${why}`); } save(); };
+  // forced steps (no skip button, arrow on the control): 3 small rooms -> open -> gym -> earn -> mess -> cleaning (+ limit) -> a room breaks -> maintenance -> decor
+  if(gr < 3) return build ? {id:'build2', force:true, text:`Press and hold a Cozy Nook, drag it next to the lobby and let go (${gr}/3 rooms). On a phone you can also just tap it.`, target:null} : {id:'build', force:true, text:gr ? `Nice! Build ${3-gr} more small room${gr===2?'':'s'}: a hotel needs a few beds before guests arrive.` : 'Welcome to your new hotel! Tap Build and add 3 small rooms for your guests.', target:'#btnBuild'};
+  if(S.freeShift && !isOpen()) return {id:'open', force:true, text:'Three rooms! Now tap Start to open your hotel so guests can check in.', target:'#shiftBtn'};
   if(count('fit')<1){
-    if(!S.gymGift){ S.gymGift = true; const need = ROOMS.fit.cost - Math.floor(S.coins); if(need > 0){ S.coins += need; toast(`🎁 Opening gift: 🪙${need.toLocaleString()} for your first gym`); } save(); }
-    return ui.panelKind==='build' ? {id:'gym2', force:true, text:'Find the Fit Corner under Amenities and drag it onto your hotel. Guests pay to work out after their stay!', target:null}
-      : {id:'gym', force:true, text:'Guests want more than a bed! Build a Fit Corner (gym) so they can work out and pay you extra.', go:'Show me', act:()=>{ openBuild('rooms'); jumpBuild('amenity'); }, target:'#btnBuild'};
+    topUp('tutGym', ROOMS.fit.cost, 'to build your first gym');
+    return build ? {id:'gym2', force:true, text:'Find the Fit Corner under Amenities and drag it onto your hotel. Guests pay to work out after their stay!', target:null}
+      : {id:'gym', force:true, text:'Guests want more than a bed! Build a Fit Corner (gym) so they can work out and pay you extra.', go:'Show me', act:goto('amenity'), target:'#btnBuild'};
   }
-  if(count('closet')<1) return {id:'closet', text:'Guests leave rooms messy. Build a Linen Closet and it will clean them for you.', target:'#btnBuild'};
+  if(count('closet')<1){
+    const messy = S.rooms.some(r=>r.dirty), enough = S.coins >= ROOMS.closet.cost;
+    if(isOpen() && !(messy && enough)) return {id:'earn', force:true, text: messy ? 'A guest left a mess! Keep the hotel running a moment to earn enough coins for a cleaner...' : 'Let the hotel run: guests pay for rooms and workouts, and your coins grow. Soon a guest will leave a room messy...', target:null};
+    topUp('tutClean', ROOMS.closet.cost + 50, 'for a cleaning service');
+    return build ? {id:'closet3', force:true, text:'Find the Linen Closet under Services and drag it onto your hotel.', target:null}
+      : {id:'closet', force:true, text:'🧺 Messy rooms stay empty until they are cleaned. Build a Linen Closet and it cleans them for you.', go:'Show me', act:goto('service'), target:'#btnBuild'};
+  }
+  if(!S.limitTaught){ const cov = coverage(); return {id:'limit', flag:'limitTaught', text:`🧹 Each Linen Closet looks after ${ROOMS.closet.capacity} rooms. You have ${cov.total} room${cov.total===1?'':'s'} to clean so far (${cov.total}/${cov.cap}). Once you pass ${cov.cap}, build another closet, or a Laundry Room to stretch them further.`, target:null}; }
+  if(count('maintenance')<1){
+    if(!S.tutBreak){ const r = S.rooms.find(x=>ROOMS[x.type].kind==='guest' && !x.guest && !x.reserved && !x.broken); if(r){ S.tutBreak = true; r.broken = true; r.dirty = false; toast('❌ A room broke down!'); save(); } }
+    if(S.rooms.some(r=>r.broken) || build) topUp('tutFix', ROOMS.maintenance.cost + 50, 'for repairs');
+    return build ? {id:'maint2', force:true, text:'Find the Maintenance Room under Services and drag it onto your hotel.', target:null}
+      : {id:'maint', force:true, text:'🔧 This room broke and nobody can sleep in it. Tap it to repair for coins, or build a Maintenance Room and a crew fixes broken rooms for you.', go:'Show me', act:goto('service'), target:'#btnBuild'};
+  }
+  if(!S.boughtItem && !S.rooms.some(r=>r.wall||r.floor)){ topUp('tutDecor', 400, 'for decorating'); return {id:'decor', force:true, text:'Now decorate: tap one of your rooms, then buy wallpaper, a floor or a piece of furniture. Nicer rooms earn more and raise your stars!', target:null}; }
   if(!S.tipTaught && S.rooms.some(r=>r.tip>0)) return {id:'tips', text:'A guest left a tip! Tap the gold coin on the room (or the tips button at the top) to collect it.', target:null};
-  if(!S.boughtItem) return {id:'decor', text:'Tap a room to decorate it. Nicer rooms earn more and raise your stars!', target:null};
   return null;
 }
 /* bellhop tips after the tutorial: point out what the hotel is missing. "Later" hides a tip for a few minutes. */
@@ -2929,7 +2950,7 @@ function updateHelper(){
   if(st.force && t && !(panel.style.display==='block' && window.innerWidth<=640)){ const b = t.getBoundingClientRect(); arrow.style.display='block'; arrow.textContent = b.top < 120 ? '👆' : '👇'; arrow.style.left = (b.left + b.width/2)+'px'; arrow.style.top = (b.top < 120 ? b.bottom + 4 : b.top - 44)+'px'; }
   else arrow.style.display='none';
 }
-$('helperOk').onclick = ()=>{ const st = ui.helperNow; if(st && st.go){ nudgeMute[st.id] = Date.now() + 15*60000; nudgeAllUntil = Date.now() + 10*60000; } else { const t = helperStep(); if(t) S.helperSkip = t.id; save(); } helperShown=''; updateHelper(); };
+$('helperOk').onclick = ()=>{ const st = ui.helperNow; if(st && st.go){ nudgeMute[st.id] = Date.now() + 15*60000; nudgeAllUntil = Date.now() + 10*60000; } else { const t = helperStep(); if(t){ if(t.flag) S[t.flag] = true; else S.helperSkip = t.id; } save(); } helperShown=''; updateHelper(); };
 $('helperGo').onclick = ()=>{ const st = ui.helperNow; if(st && st.act){ nudgeMute[st.id] = Date.now() + 90000; nudgeAllUntil = Date.now() + 2*60000; st.act(); } helperShown=''; updateHelper(); };
 setInterval(updateHelper, 250);
 $('shiftBtn').onclick = openShift;
