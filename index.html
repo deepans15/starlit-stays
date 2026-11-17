@@ -281,18 +281,18 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.106"></script>
-<script src="art/items.js?v=0.106"></script>
-<script src="art/reactions.js?v=0.106" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.106" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.106" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.106" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.106" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.106" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.106" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.106" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.106"></script>
-<script src="art/weather.js?v=0.106" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.107"></script>
+<script src="art/items.js?v=0.107"></script>
+<script src="art/reactions.js?v=0.107" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.107" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.107" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.107" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.107" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.107" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.107" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.107" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.107"></script>
+<script src="art/weather.js?v=0.107" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -302,7 +302,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.106';
+const BUILD = '0.107';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -2628,7 +2628,7 @@ function promptShift(){ if(S.freeShift) return {mins:15, cost:0, free:true, labe
 let promptKey = '';
 function updateOpenPrompt(){
   const el = $('openPrompt');
-  const show = !ui.visit && !isOpen() && S.name && S.rooms.some(r=>ROOMS[r.type].kind==='guest') && panel.style.display!=='block' && $('modal').style.display!=='flex' && !ui.focus && !ui.drag && !ui.newDrag;
+  const show = !ui.visit && !isOpen() && (S.helperDone || S.freeShift) && S.name && S.rooms.some(r=>ROOMS[r.type].kind==='guest') && panel.style.display!=='block' && $('modal').style.display!=='flex' && !ui.focus && !ui.drag && !ui.newDrag;
   el.classList.toggle('show', !!show); if(!show) return;
   const p = promptShift(), key = p.label + S.coins + (S.autoOpen?1:0);
   if(key===promptKey) return; promptKey = key;
@@ -2935,6 +2935,13 @@ function openMenu(){
 }
 function resetGame(){ showPanel(`<h2>Start over?</h2><div class="sub">Your hotel and coins will be deleted. This can't be undone.</div><button class="btn warn" onclick="doReset()">Yes, delete my hotel</button>`); }
 function doReset(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} S = freshState(); guests=[]; closePanel(); askName(); renderGoalsBox(); }
+function showTutorialIntro(){
+  modal(`<h2 style="margin:0 0 6px">Welcome to ${esc(S.name)}! 🏨</h2>
+    <div style="font-size:14px;line-height:1.6;text-align:left;margin-top:6px">A quick tutorial (about 3 minutes) shows you how to:<br>🛏️ build rooms and open your hotel<br>🏋️ add a gym<br>🧺 keep rooms clean<br>🔧 repair breakdowns<br>🛋️ decorate your rooms</div>
+    <button class="btn" style="margin-top:14px;width:100%" onclick="closeModal()">Start tutorial</button>
+    <div style="margin-top:8px"><button class="oplink" onclick="skipIntro()">I already know how to play</button></div>`);
+}
+function skipIntro(){ S.helperDone = true; save(); closeModal(); afterTutorial(); }
 function showHelp(){
   modal(`<h2 style="margin:0 0 8px">How to play</h2><div style="text-align:left;font-size:14px;line-height:1.5">
     1. <b>Open the hotel</b> with the button at the top. Guests only come while it's open.<br>
@@ -2963,7 +2970,7 @@ function saveName(){
   S.name = v || 'Starlit Inn'; save(); closeModal();
   saveProfile({name: S.name});
   if(cloud.profile){ cloud.profile.set({name: S.name}).catch(()=>{}); }
-  if(first && !loadProfile().seenHelp){ saveProfile({seenHelp:true}); showHelp(); }
+  if(first && !loadProfile().seenHelp){ saveProfile({seenHelp:true}); if(S.helperDone) showHelp(); else showTutorialIntro(); }
 }
 // guest happiness face: 5 = bright green grin ... 1 = red frown
 const faceLevel = () => { const v = S.sat===undefined ? 0.7 : S.sat; return v>=0.85 ? 5 : v>=0.7 ? 4 : v>=0.55 ? 3 : v>=0.4 ? 2 : 1; };
@@ -3019,8 +3026,8 @@ function helperStep(){
     const messy = S.rooms.some(r=>r.dirty);
     if(isOpen() && !messy){   // never wait long: if no guest has left a mess after about 20 seconds, the tutorial shows one
       if(!ui.tutEarnT0) ui.tutEarnT0 = Date.now();
-      if(Date.now() - ui.tutEarnT0 > 20000){ const r = S.rooms.find(x=>ROOMS[x.type].kind==='guest' && !x.guest && !x.reserved) || S.rooms.find(x=>ROOMS[x.type].kind==='guest'); if(r){ r.dirty = true; r.cleanT = 0; toast('🧹 A guest left a mess!'); } }
-      return {id:'earn', force:true, text:'Your gym is built! Guests are checking in. Watch for a room that gets messy...', target:null};
+      if(Date.now() - ui.tutEarnT0 > 12000){ const r = S.rooms.find(x=>ROOMS[x.type].kind==='guest' && !x.guest && !x.reserved) || S.rooms.find(x=>ROOMS[x.type].kind==='guest'); if(r){ r.dirty = true; r.cleanT = 0; toast('🧹 A guest left a mess!'); } }
+      return {id:'earn', force:true, text:'Your gym is built! 🎉 Guests are checking in. Watch the hotel: a room is about to get messy...', target:null};
     }
     topUp('tutClean', ROOMS.closet.cost + 50, 'for a cleaning service');
     return build ? {id:'closet3', force:true, text:'Find the Linen Closet under Services and drag it onto your hotel.', target:null}
@@ -3091,13 +3098,14 @@ function tutLockTick(st){
   }
   const clip = 'path(evenodd,"M0 0H'+W+'V'+H+'H0Z' + rects.map(r=>`M${r.x} ${r.y}H${r.x+r.w}V${r.y+r.h}H${r.x}Z`).join('') + '")';
   if(clip !== tutClip){ tutClip = clip; sh.style.clipPath = clip; sh.style.webkitClipPath = clip; }
-  sh.style.display = 'block';
+  sh.style.display = 'block'; sh.style.background = st.id==='earn' ? 'rgba(15,12,30,.10)' : '';   // waiting for a guest to make a mess: keep the hotel bright and visible
   const rb = card ? (()=>{ const b = card.getBoundingClientRect(); return {x:b.left-4, y:b.top-4, w:b.width+8, h:b.height+8}; })() : rects.find(r=>r.ring);
   if(rb && rb.w>0){ ring.style.display='block'; ring.style.left=rb.x+'px'; ring.style.top=rb.y+'px'; ring.style.width=rb.w+'px'; ring.style.height=rb.h+'px'; } else ring.style.display='none';
 }
 $('tutSkip').onclick = ()=>{ if(confirm('Skip the tutorial? It shows how to build, clean and repair your hotel.')){ S.helperDone = true; save(); updateHelper(); afterTutorial(); } };
 let helperShown = '';
 function updateHelper(){
+  if(!S.helperDone && !S.freeShift && !ui.visit && S.rooms.some(r=>ROOMS[r.type].kind==='guest') && !isOpen()){ S.shiftEnd = Date.now() + 15*60000; save(); toast('🛎️ Your hotel stays open while you learn'); }
   document.body.classList.toggle('panelOpen', panel.style.display==='block');
   const st = ui.visit ? null : helperStep() || (S.helperDone && !ui.focus && !(ui.drag||ui.newDrag||ui.itemDrag) ? nudgeStep() : null), h = $('helper'), arrow = $('helperArrow');
   ui.helperNow = st; tutLockTick(st);
