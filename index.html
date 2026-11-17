@@ -156,6 +156,7 @@
   .cat.mini .pr{font-size:12px;margin-top:2px;padding:1px 0}
   .bcard.locked{cursor:not-allowed;opacity:.75}
   .bcard.poor{opacity:.6}
+  .bcard,.bcard *{-webkit-user-drag:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
   .thumb{touch-action:none;cursor:grab;height:104px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
   .thumb .shape{border:3px solid var(--ink);border-top-width:6px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden}
   .thumb img{width:100%;height:100%;object-fit:cover}
@@ -248,18 +249,18 @@
 <div id="modal"><div class="card" id="modalCard"></div></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.88"></script>
-<script src="art/items.js?v=0.88"></script>
-<script src="art/reactions.js?v=0.88" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.88" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.88" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.88" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.88" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.88" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.88" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.88" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.88"></script>
-<script src="art/weather.js?v=0.88" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.89"></script>
+<script src="art/items.js?v=0.89"></script>
+<script src="art/reactions.js?v=0.89" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.89" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.89" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.89" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.89" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.89" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.89" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.89" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.89"></script>
+<script src="art/weather.js?v=0.89" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -269,7 +270,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.88';
+const BUILD = '0.89';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -1756,6 +1757,8 @@ function dropTarget(){
       if(okA && okB) return {f,c,kind:'swap',other:o};
     }
   }
+  const nb = nearestPlace(r.type, f, c, r.id, plot().h - h - (q.y - TOP)/FLOOR, (q.x - BX)/CELL);
+  if(nb) return {f:nb.f, c:nb.c, kind:'move'};
   return {f,c,kind:'bad', problem: placeProblem(r.type, f, c, r.id)};
 }
 function drawDropSpot(){
@@ -2253,12 +2256,25 @@ function openBuild(tab){
 /* ---------------- dragging new rooms out of the build menu ----------------
    Press a room card and drag it onto the hotel to drop it exactly there.
    A plain tap, or letting go where it can't stand, places it in the first free spot instead. */
+// a drop that is a little off still lands: look one floor and two columns around the exact cell for the nearest spot that works
+function nearestPlace(type, f, c, ignoreId, fx, cx){
+  const def = ROOMS[type]; let best = null, bd = 1e9;
+  for(let df=-1; df<=1; df++) for(let dc=-2; dc<=2; dc++){
+    if(def.ground && f+df!==0) continue;
+    if(!canPlace(type, f+df, c+dc, ignoreId)) continue;
+    const d = Math.hypot(dc + (c-cx), (df + (f-fx))*0.8);
+    if(d < bd){ bd = d; best = {f:f+df, c:c+dc}; }
+  }
+  return best;
+}
 function newDragTarget(nd){
   const def = ROOMS[nd.type], h = hOf(nd.type);
-  const x = nd.px - def.w*CELL/2, y = nd.py - h*FLOOR/2;
-  const c = Math.round((x - BX)/CELL);
-  const f = def.ground ? 0 : WORLD_F - h - Math.round((y - TOP)/FLOOR);
-  return {x, y, f, c, ok: canPlace(nd.type, f, c)};
+  let x = nd.px - def.w*CELL/2, y = nd.py - h*FLOOR/2;
+  let c = Math.round((x - BX)/CELL);
+  let f = def.ground ? 0 : WORLD_F - h - Math.round((y - TOP)/FLOOR);
+  let ok = canPlace(nd.type, f, c);
+  if(!ok){ const nb = nearestPlace(nd.type, f, c, undefined, (WORLD_F - h) - (y - TOP)/FLOOR, (x - BX)/CELL); if(nb){ f = nb.f; c = nb.c; ok = true; } }
+  return {x, y, f, c, ok};
 }
 function drawNewRoomDrag(cov){
   const nd = ui.newDrag, t = newDragTarget(nd), def = ROOMS[nd.type], h = hOf(nd.type);
@@ -2270,6 +2286,8 @@ function drawNewRoomDrag(cov){
   drawRoom(temp, false);
   ctx.globalAlpha = 1;
 }
+panel.addEventListener('dragstart', ev=>ev.preventDefault());   // no native drag image: the room itself follows the finger
+panel.addEventListener('contextmenu', ev=>{ if(ev.target.closest && ev.target.closest('.bcard')) ev.preventDefault(); });
 panel.addEventListener('pointerdown', ev=>{
   const ic = ev.target.closest && ev.target.closest('.bcard[data-item]');
   const sk = ev.target.closest && ev.target.closest('.bcard[data-skin]');
