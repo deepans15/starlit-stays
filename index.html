@@ -83,7 +83,9 @@
   #openPrompt .opx:active{background:rgba(0,0,0,.08)}
   #openPrompt .opt{font-size:20px;font-weight:900}
   #openPrompt .ops{color:var(--muted);font-size:13px;margin:4px 0 12px}
-  #openPrompt .btn.big{font-size:20px;padding:12px 26px;border-radius:16px;animation:pulseBtn 1.4s ease-in-out infinite}
+  #openPrompt .btn.big{font-size:20px;padding:12px 26px;border-radius:16px;animation:pulseBtn 1.4s ease-in-out infinite;max-width:100%;box-sizing:border-box}
+  #openPrompt .opt{padding:0 28px}
+  @media (max-width:360px){ #openPrompt .op{padding:16px 14px;max-width:calc(100vw - 28px)} #openPrompt .btn.big{font-size:17px;padding:11px 14px;width:100%} #openPrompt .opt{font-size:18px} }
   #openPrompt .opa{display:flex;gap:6px;justify-content:center;align-items:center;font-size:12px;font-weight:700;margin-top:10px;color:var(--muted)}
   #openPrompt .oplink{background:none;border:none;color:#6a5acd;font-weight:800;font-size:12px;margin-top:4px;cursor:pointer;text-decoration:underline}
   @keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
@@ -234,6 +236,7 @@
   #panel .bcard.tutTarget{box-shadow:0 0 0 4px #ffc94d,0 0 18px rgba(255,201,77,.9)}
   #helperBubble #tutSkip{display:none;background:none;border:none;color:#7a6e86;font-size:13px;text-decoration:underline;padding:8px 0 0;cursor:pointer;font-weight:800;border-radius:0}
   body.tutLock #helperBubble #tutSkip{display:block}
+  @media (max-width:360px){ .hnum{font-size:16px!important;-webkit-text-stroke:3px #2b2340!important} .hnum.small{font-size:14px!important} .hg.coins .hic svg,.hg.blocks .hic svg{width:22px!important;height:22px!important} #starIcons img{width:15px!important;height:15px!important} #starIcons{font-size:15px!important} #faceIcon,#faceIcon img,#faceIcon svg{width:20px!important;height:20px!important} #profileBtn .hic svg{width:32px!important;height:32px!important} #profName{font-size:12px} #speedBtn{padding:2px} #tipsBtn{font-size:11px!important;padding:6px 10px!important} }
   @media (max-width:640px){
     #blockCount{display:none} body.panelOpen #dock{display:none}
     #helper{top:112px;bottom:auto} #toasts{top:auto;bottom:112px} .toast{font-size:12px;padding:6px 12px} #helperPic{width:48px;height:70px} #helperPic img{width:48px;height:70px} #helper{max-width:calc(100% - 16px)}
@@ -290,18 +293,18 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.117"></script>
-<script src="art/items.js?v=0.117"></script>
-<script src="art/reactions.js?v=0.117" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.117" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.117" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.117" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.117" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.117" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.117" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.117" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.117"></script>
-<script src="art/weather.js?v=0.117" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.119"></script>
+<script src="art/items.js?v=0.119"></script>
+<script src="art/reactions.js?v=0.119" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.119" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.119" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.119" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.119" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.119" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.119" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.119" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.119"></script>
+<script src="art/weather.js?v=0.119" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -311,7 +314,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.117';
+const BUILD = '0.119';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -3199,7 +3202,9 @@ function tutLockTick(st){
 }
 $('tutSkip').onclick = ()=>{ if(confirm('Skip the tutorial? It shows how to build, clean and repair your hotel.')){ S.helperDone = true; save(); updateHelper(); afterTutorial(); } };
 let helperShown = '';
+function placeTips(){ const h = $('hud'), t = $('tipsBtn'); if(!h || !t) return; const sb = $('stage').getBoundingClientRect(), hb = h.getBoundingClientRect(); t.style.top = Math.round(hb.bottom - sb.top + 6) + 'px'; }
 function updateHelper(){
+  placeTips();
   if(!S.helperDone && !S.freeShift && !ui.visit && S.rooms.some(r=>ROOMS[r.type].kind==='guest') && !isOpen()){ S.shiftEnd = Date.now() + 15*60000; save(); toast('🛎️ Your hotel stays open while you learn'); }
   document.body.classList.toggle('panelOpen', panel.style.display==='block');
   const st = ui.visit ? null : helperStep() || (S.helperDone && !ui.focus && !(ui.drag||ui.newDrag||ui.itemDrag) ? nudgeStep() : null), h = $('helper'), arrow = $('helperArrow');
