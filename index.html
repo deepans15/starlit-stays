@@ -72,6 +72,9 @@
   #openPrompt{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:6;pointer-events:none}
   #openPrompt.show{display:flex}
   #openPrompt .op{pointer-events:auto;background:rgba(255,253,248,.97);border:3px solid var(--ink);border-radius:22px;padding:18px 22px;text-align:center;box-shadow:0 10px 0 rgba(43,35,64,.3);max-width:min(330px,86vw);animation:popIn .35s ease-out}
+  #openPrompt .op{position:relative}
+  #openPrompt .opx{position:absolute;right:10px;top:8px;width:36px;height:36px;border:none;background:none;font-size:20px;font-weight:900;color:#7a6e86;cursor:pointer;border-radius:50%}
+  #openPrompt .opx:active{background:rgba(0,0,0,.08)}
   #openPrompt .opt{font-size:20px;font-weight:900}
   #openPrompt .ops{color:var(--muted);font-size:13px;margin:4px 0 12px}
   #openPrompt .btn.big{font-size:20px;padding:12px 26px;border-radius:16px;animation:pulseBtn 1.4s ease-in-out infinite}
@@ -257,7 +260,7 @@
     <div id="hint"><span id="hintText"></span><button id="hintCancel">Done</button></div>
     <div id="goalsBox"></div>
     <div id="zoomCtl"><button onclick="setZoom((ui.zoom||1)*1.25)" title="Zoom in">+</button><button onclick="setZoom((ui.zoom||1)/1.25)" title="Zoom out">−</button><button id="zoomReset" onclick="resetZoom()" title="Fit hotel" style="visibility:hidden">⤢</button></div>
-    <div id="openPrompt"><div class="op"><div class="opt">🛎️ Your hotel is closed</div><div class="ops" id="opSub">Open the doors and guests will start arriving.</div><button class="btn big" id="opGo">Open</button><label class="opa"><input type="checkbox" id="opAuto"> Reopen automatically</label><button class="oplink" id="opMore">More opening times</button></div></div>
+    <div id="openPrompt"><div class="op"><button class="opx" id="opClose" title="Close">✕</button><div class="opt">🛎️ Your hotel is closed</div><div class="ops" id="opSub">Open the doors and guests will start arriving.</div><button class="btn big" id="opGo">Open</button><label class="opa"><input type="checkbox" id="opAuto"> Reopen automatically</label><button class="oplink" id="opMore">More opening times</button></div></div>
     <div id="visitBar"><button class="btn alt" onclick="goHome()">← Back home</button><div class="vb"><b id="visitName"></b><span id="visitMeta"></span></div><button class="btn" id="visitLike" onclick="likeHotel()">❤️ Like</button></div>
     <button id="tipsBtn" onclick="collectAllTips()" title="Collect all tips"><span class="hic" data-art="ui/tips" style="display:inline-flex;vertical-align:middle;width:18px;height:18px">💰</span> <b id="tipsN">0</b></button>
     <button id="crateBtn" onclick="openCrate()" title="Golden Mystery Crate"><span class="ic" data-art="ui/crate">🎁</span><span class="dlab">Crate</span></button>
@@ -281,18 +284,18 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.115"></script>
-<script src="art/items.js?v=0.115"></script>
-<script src="art/reactions.js?v=0.115" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.115" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.115" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.115" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.115" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.115" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.115" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.115" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.115"></script>
-<script src="art/weather.js?v=0.115" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.116"></script>
+<script src="art/items.js?v=0.116"></script>
+<script src="art/reactions.js?v=0.116" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.116" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.116" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.116" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.116" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.116" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.116" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.116" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.116"></script>
+<script src="art/weather.js?v=0.116" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -302,7 +305,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.115';
+const BUILD = '0.116';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -1198,7 +1201,7 @@ function draw(dt){
   if(lob){ const lq = visRect(lob), sx = lq.x + lq.w - 114;
     ctx.fillStyle = open ? '#3fae8c' : '#ff7a90'; rr(sx, lq.y+10, 46, 18, 6); ctx.fill();
     ctx.fillStyle='#fff'; ctx.font='bold 10px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(open?'OPEN':'CLOSED', sx+23, lq.y+19); ctx.textBaseline='alphabetic'; }
-  for(const g of guests) if(g.state!=='inRoom' && g.state!=='inAmen'){ if(g.state==='ride') g.alpha = Math.max(0, g.timer/g.rideT - 0.2); drawBean(g.x, g.y, g, 1); }
+  if(!hideGuests()) for(const g of guests) if(g.state!=='inRoom' && g.state!=='inAmen'){ if(g.state==='ride') g.alpha = Math.max(0, g.timer/g.rideT - 0.2); drawBean(g.x, g.y, g, 1); }
   drawAmenityGuests(undefined, dragId);
   if(ui.newDrag && ui.newDrag.moved && ui.newDrag.over) drawNewRoomDrag(cov);
   if(ui.newItem && ui.newItem.moved && ui.newItem.over) drawNewItemDrag();
@@ -1540,6 +1543,7 @@ function drawReaction(g, r, x, w, fy, bx, bw){
   return true;
 }
 function drawGuestRoom(r,x,y,w,h,part){
+  if(part==='guest' && hideGuests()) return;   // the sleeping guest is hidden while you build
   const fy = y+h-FLOOR_PAD;
   const bed = (r.items||[]).find(it=>ITEMS[it.id] && ITEMS[it.id].zone==='bed');
   let bx = x+10, bw = 56;
@@ -1574,6 +1578,7 @@ function drawGuestRoom(r,x,y,w,h,part){
 function drawCrown(x,y){ ctx.fillStyle='#ffc94d'; ctx.strokeStyle='#2b2340'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(x-7,y+6); ctx.lineTo(x-7,y-1); ctx.lineTo(x-3,y+3); ctx.lineTo(x,y-4); ctx.lineTo(x+3,y+3); ctx.lineTo(x+7,y-1); ctx.lineTo(x+7,y+6); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.lineWidth=1; }
 // a row of little people above each amenity: filled = in use, each with its own timer ring
 const buildMode = () => panel.style.display==='block' && (ui.panelKind==='build' || !!ui.focus);
+const hideGuests = () => buildMode();   // while building or decorating, guests are only hidden (their state keeps running), so the room is easy to edit
 // a thick roof line wherever a room has open sky above it, like the original's dark building outline
 function drawRoofs(skipId){
   const occ = new Set(); for(const r of S.rooms){ if(r.id===skipId) continue; const d = ROOMS[r.type]; for(let i=0;i<d.w;i++) for(let j=0;j<hOf(r.type);j++) occ.add((r.f+j)+','+(r.c+i)); }
@@ -1682,6 +1687,7 @@ const AMENITY_ACTIVITY_ROOMS = new Map((AMENITY_ACTIVITY_DATA?.rooms || []).map(
 function drawAmenityGuests(onlyRoomId, excludedRoomId){
   const groups = new Map();
   for(const g of guests){
+    if(hideGuests()) break;
     if(g.state!=='inAmen' || (onlyRoomId!==undefined && g.amen!==onlyRoomId) || (excludedRoomId!==undefined && g.amen===excludedRoomId)) continue;
     if(!groups.has(g.amen)) groups.set(g.amen, []);
     groups.get(g.amen).push(g);
@@ -2055,7 +2061,7 @@ function tapRoom(r, focused){
   if(r.tip){ const q = roomRect(r); addCoins(r.tip, q.x+q.w-18, q.y+24, '💰+🪙'); r.tip = 0; S.tipTaught = true; save(); return; }
   const decorTut = ui.helperNow && ui.helperNow.id==='decor' && ROOMS[r.type].kind==='guest';   // tutorial: a tap opens decorating even if a guest sleeps inside
   if(!decorTut && r.dirty && !r.guest && !(r.users>0)){ r.dirty=false; r.cleanT=0; addXP(1); const q=roomRect(r); floats.push({x:q.x+q.w/2,y:q.y+30,t:0,text:'✨'}); return; }
-  if(!decorTut && def.kind==='guest' && r.guest){ poke(r); return; }
+  if(!decorTut && def.kind==='guest' && r.guest && !hideGuests()){ poke(r); return; }
   if(focused) return;
   if(def.kind==='guest' || def.kind==='amenity' || def.kind==='lobby') focusRoom(r);
   else openRoom(r);
@@ -2640,7 +2646,8 @@ function promptShift(){ if(S.freeShift) return {mins:15, cost:0, free:true, labe
 let promptKey = '';
 function updateOpenPrompt(){
   const el = $('openPrompt');
-  const show = !ui.visit && !isOpen() && (S.helperDone || S.freeShift) && S.name && S.rooms.some(r=>ROOMS[r.type].kind==='guest') && panel.style.display!=='block' && $('modal').style.display!=='flex' && !ui.focus && !ui.drag && !ui.newDrag;
+  if(isOpen()) ui.openClosedAt = 0;
+  const show = !ui.visit && !isOpen() && !(ui.openClosedAt && Date.now() - ui.openClosedAt < 10*60000) && (S.helperDone || S.freeShift) && S.name && S.rooms.some(r=>ROOMS[r.type].kind==='guest') && panel.style.display!=='block' && $('modal').style.display!=='flex' && !ui.focus && !ui.drag && !ui.newDrag;
   el.classList.toggle('show', !!show); if(!show) return;
   const p = promptShift(), key = p.label + S.coins + (S.autoOpen?1:0);
   if(key===promptKey) return; promptKey = key;
@@ -2648,6 +2655,7 @@ function updateOpenPrompt(){
   $('opSub').textContent = S.coins < p.cost ? 'Not enough coins for a shift. Sell or decorate less, or wait for your staff earnings.' : S.served ? 'Guests are waiting outside. Open the doors!' : 'Open the doors and guests will start arriving.';
   $('opAuto').checked = !!S.autoOpen;
 }
+$('opClose').onclick = ()=>{ ui.openClosedAt = Date.now(); updateOpenPrompt(); };   // dismissed: it comes back in 10 minutes, and the Start button is always there
 $('opGo').onclick = ()=>{ const p = promptShift(); buyShift(p.mins, p.cost, p.free); promptKey=''; };
 $('opMore').onclick = ()=>openShift();
 $('opAuto').onchange = e=>{ S.autoOpen = e.target.checked; save(); toast(S.autoOpen ? '🔁 The hotel will reopen by itself when a shift ends' : 'Auto reopen is off'); };
