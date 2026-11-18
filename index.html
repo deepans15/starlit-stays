@@ -293,18 +293,18 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.119"></script>
-<script src="art/items.js?v=0.119"></script>
-<script src="art/reactions.js?v=0.119" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.119" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.119" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.119" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.119" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.119" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.119" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.119" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.119"></script>
-<script src="art/weather.js?v=0.119" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.120"></script>
+<script src="art/items.js?v=0.120"></script>
+<script src="art/reactions.js?v=0.120" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.120" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.120" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.120" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.120" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.120" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.120" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.120" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.120"></script>
+<script src="art/weather.js?v=0.120" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -314,7 +314,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.119';
+const BUILD = '0.120';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -2733,7 +2733,7 @@ async function onlineSignedIn(){
     if(remote){
       if(localFresh) useHotel(remote, d.savedAt);                                   // a brand-new local hotel always gives way to the online one
       else if(stored && (d.savedAt||0) <= stored + 2000) setKnown(stored);          // nothing newer was saved elsewhere since this device last synced: keep this one
-      else { offerNewerHotel(d); return; }                                          // first sign-in here, or the online hotel changed on another device: let the player choose
+      else { offerNewerHotel(d); return; }                                          // first sign-in here, or the online hotel changed on another device: the higher level (then the latest save) is kept automatically
     }
   }catch(e){ toast('Could not reach your online save. Playing on this device for now.'); }
   online.synced = true; onlineSave(true); pushScores(true);
@@ -2741,21 +2741,25 @@ async function onlineSignedIn(){
 const KNOWN_KEY = 'starlit-online-known';   // when this device last synced with the online hotel (per account)
 function storedKnown(){ try{ const k = JSON.parse(localStorage.getItem(KNOWN_KEY)||'null'); return k && FB.user && k.u === FB.user.uid ? k.v : 0; }catch(e){ return 0; } }
 function setKnown(v){ online.known = v || 0; try{ if(FB.user) localStorage.setItem(KNOWN_KEY, JSON.stringify({u:FB.user.uid, v:online.known})); }catch(e){} }
-function useHotel(remote, savedAt){ setKnown(savedAt || 0); S = remote; S.savedAt = savedAt || Date.now(); guests = []; lastTop = ''; checkPokeDay(); renderGoalsBox(); closePanel(); save(); toast('☁️ Loaded your online hotel'); }
+function useHotel(remote, savedAt, why){ setKnown(savedAt || 0); S = remote; S.savedAt = savedAt || Date.now(); guests = []; lastTop = ''; checkPokeDay(); renderGoalsBox(); closePanel(); save(); toast('☁️ Loaded your online hotel' + (why ? ` (${why})` : '')); }
+const levelOfState = st => { let n = 1; while((st.xp||0) >= xpFor(n+1)) n++; return n; };
+/* two different hotels (this device and online): no prompt. The higher level wins; at the same level the most recent save wins;
+   a complete tie keeps this device's hotel. The hotel that loses is kept as a backup on this device (starlit-lost-hotel). */
 function offerNewerHotel(d){
-  if(online.asking) return; let remote = null;
+  let remote = null;
   try{ remote = migrate(JSON.parse(d.json)); }catch(e){}
   if(!remote){ setKnown(d.savedAt || 0); return; }
-  online.asking = true; online.pending = {remote, savedAt:d.savedAt};
-  const info = hotelSummary(remote), mine = hotelSummary(S);
-  modal(`<h2>☁️ A newer hotel was saved</h2><div class="sub">Your online hotel and the hotel on this device are different. Pick which one to keep. Nothing is overwritten until you choose.</div>
-    <div class="sub"><b>Online:</b><br>${info}</div><div class="sub"><b>This device:</b><br>${mine}</div>
-    <button class="btn big" onclick="pickHotel('cloud')">Load the online hotel</button>
-    <button class="btn alt" onclick="pickHotel('mine')">Keep this device's hotel</button>`);
+  const lr = levelOfState(remote), ll = levelOfState(S), tr = d.savedAt || 0, tl = S.savedAt || 0;
+  const useRemote = lr > ll || (lr === ll && tr > tl), why = lr !== ll ? 'higher level' : 'most recent';
+  try{ localStorage.setItem('starlit-lost-hotel', JSON.stringify({at:Date.now(), kept: useRemote ? 'online' : 'device', json: useRemote ? serialize() : d.json})); }catch(e){}
+  online.pending = null;
+  if(useRemote) useHotel(remote, d.savedAt, why);
+  else { setKnown(d.savedAt || 0); toast(`📱 Kept this device's hotel (${why})`); }
+  online.synced = true; onlineSave(true); pushScores(true);
 }
 function pickHotel(which){
   const p = online.pending; online.pending = null; online.asking = false; closeModal();
-  if(which==='cloud' && p) useHotel(p.remote, p.savedAt); else if(p) setKnown(p.savedAt || 0);
+  if(which==='cloud' && p) useHotel(p.remote, p.savedAt); else if(p) setKnown(p.savedAt || 0);   // (kept for older prompts; the game no longer asks)
   online.synced = true; onlineSave(true); pushScores(true);
 }
 async function onlineSave(force){
