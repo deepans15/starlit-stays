@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="84" height="60" viewBox="0 0 84 60">
+  <g transform="translate(4.2 0) scale(0.9)">
+    <g stroke="#2b2340" stroke-width="2.777778" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 23q32-20 64 0" fill="none" stroke="#5c4f6c" stroke-width="3" transform="translate(1.4 1.4)" />
+      <path d="M42 1.25v12M10 23q32-20 64 0M12 22v16m30-25v16m30-7v16" fill="none" stroke="#776783" stroke-width="2.777778" />
+      <circle cx="42" cy="13" r="3" fill="#b58f48" transform="translate(1.4 1.4)" />
+      <circle cx="42" cy="13" r="3" fill="#ffc94d" />
+      <path d="M2 43q5 0 7 4l3-3 3 3q2-4 7-4l-4 10-6-2-6 2Z" fill="#443c58" transform="translate(1.4 1.4)" />
+      <path d="M2 43q5 0 7 4l3-3 3 3q2-4 7-4l-4 10-6-2-6 2Z" fill="#514965" />
+      <path d="M32 34q5 0 7 4l3-3 3 3q2-4 7-4l-4 10-6-2-6 2Z" fill="#443c58" transform="translate(1.4 1.4)" />
+      <path d="M32 34q5 0 7 4l3-3 3 3q2-4 7-4l-4 10-6-2-6 2Z" fill="#514965" />
+      <path d="M62 43q5 0 7 4l3-3 3 3q2-4 7-4l-4 10-6-2-6 2Z" fill="#443c58" transform="translate(1.4 1.4)" />
+      <path d="M62 43q5 0 7 4l3-3 3 3q2-4 7-4l-4 10-6-2-6 2Z" fill="#514965" />
+    </g>
+  </g>
+</svg>

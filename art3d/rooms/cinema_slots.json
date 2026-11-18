@@ -1,0 +1,2540 @@
+{
+  "notes": "Apply only in the 3D test copy. All y/scale/phase/anchor/frame/fps/z values stay unchanged. Front furniture faces narrow horizontally to clear the inner wall; character canvases/scales do not change. Use the full per-style slots, prop origins, staff and replacement foreground crops below. Do not apply another shell projection. Original metadata is untouched. Floor starts at y198 beneath the screen; back/front tiers contact at262/326. The unassigned front-right chair is removed in the new picture to open the usher aisle; the five guest chairs/slots remain. Hand-held props retain their original x offset from the guest anchor rather than narrowing with furniture.",
+  "styles": {
+    "classic": {
+      "slotX": [
+        85.06,
+        147.22,
+        209.38,
+        271.54,
+        147.22
+      ],
+      "slots": [
+        {
+          "activity": "watch",
+          "x": 85.06,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 95.06,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.2,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 209.38,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.4,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 219.38,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 271.54,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.6000000000000001,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 281.54,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 303,
+          "scale": 0.72,
+          "phase": 0.8,
+          "z": 20,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 299,
+            "scale": 0.57,
+            "z": 21,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_cinema",
+        "frames": 4,
+        "fps": 4,
+        "x": 294.64,
+        "y": 332,
+        "scale": 0.72,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 63,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 101,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 70,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 125,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 163,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 132,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 187,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 225,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 194,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 249,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 287,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 256,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 125,
+          "y": 296,
+          "width": 7,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 163,
+          "y": 296,
+          "width": 6,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 132,
+          "y": 301,
+          "width": 31,
+          "height": 17,
+          "z": 24,
+          "forSlot": 4
+        }
+      ]
+    },
+    "gold": {
+      "slotX": [
+        85.06,
+        147.22,
+        209.38,
+        271.54,
+        147.22
+      ],
+      "slots": [
+        {
+          "activity": "watch",
+          "x": 85.06,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 95.06,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.2,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 209.38,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.4,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 219.38,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 271.54,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.6000000000000001,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 281.54,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 303,
+          "scale": 0.72,
+          "phase": 0.8,
+          "z": 20,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 299,
+            "scale": 0.57,
+            "z": 21,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_cinema",
+        "frames": 4,
+        "fps": 4,
+        "x": 294.64,
+        "y": 332,
+        "scale": 0.72,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 63,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 101,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 70,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 125,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 163,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 132,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 187,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 225,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 194,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 249,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 287,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 256,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 125,
+          "y": 296,
+          "width": 7,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 163,
+          "y": 296,
+          "width": 6,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 132,
+          "y": 301,
+          "width": 31,
+          "height": 17,
+          "z": 24,
+          "forSlot": 4
+        }
+      ]
+    },
+    "pink": {
+      "slotX": [
+        85.06,
+        147.22,
+        209.38,
+        271.54,
+        147.22
+      ],
+      "slots": [
+        {
+          "activity": "watch",
+          "x": 85.06,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 95.06,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.2,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 209.38,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.4,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 219.38,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 271.54,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.6000000000000001,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 281.54,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 303,
+          "scale": 0.72,
+          "phase": 0.8,
+          "z": 20,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 299,
+            "scale": 0.57,
+            "z": 21,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_cinema",
+        "frames": 4,
+        "fps": 4,
+        "x": 294.64,
+        "y": 332,
+        "scale": 0.72,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 63,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 101,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 70,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 125,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 163,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 132,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 187,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 225,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 194,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 249,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 287,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 256,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 125,
+          "y": 296,
+          "width": 7,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 163,
+          "y": 296,
+          "width": 6,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 132,
+          "y": 301,
+          "width": 31,
+          "height": 17,
+          "z": 24,
+          "forSlot": 4
+        }
+      ]
+    },
+    "halloween": {
+      "slotX": [
+        85.06,
+        147.22,
+        209.38,
+        271.54,
+        147.22
+      ],
+      "slots": [
+        {
+          "activity": "watch",
+          "x": 85.06,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 95.06,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.2,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 209.38,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.4,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 219.38,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 271.54,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.6000000000000001,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 281.54,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 303,
+          "scale": 0.72,
+          "phase": 0.8,
+          "z": 20,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 299,
+            "scale": 0.57,
+            "z": 21,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_cinema",
+        "frames": 4,
+        "fps": 4,
+        "x": 294.64,
+        "y": 332,
+        "scale": 0.72,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 63,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 101,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 70,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 125,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 163,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 132,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 187,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 225,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 194,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 249,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 287,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 256,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 125,
+          "y": 296,
+          "width": 7,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 163,
+          "y": 296,
+          "width": 6,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 132,
+          "y": 301,
+          "width": 31,
+          "height": 17,
+          "z": 24,
+          "forSlot": 4
+        }
+      ]
+    },
+    "love": {
+      "slotX": [
+        85.06,
+        147.22,
+        209.38,
+        271.54,
+        147.22
+      ],
+      "slots": [
+        {
+          "activity": "watch",
+          "x": 85.06,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 95.06,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.2,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 209.38,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.4,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 219.38,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 271.54,
+          "y": 239,
+          "scale": 0.72,
+          "phase": 0.6000000000000001,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 281.54,
+            "y": 235,
+            "scale": 0.57,
+            "z": 6,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "watch",
+          "x": 147.22,
+          "y": 303,
+          "scale": 0.72,
+          "phase": 0.8,
+          "z": 20,
+          "prop": {
+            "key": "chars/prop_popcorn",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 36,
+            "x": 157.22,
+            "y": 299,
+            "scale": 0.57,
+            "z": 21,
+            "anchor": {
+              "x": 16,
+              "y": 36
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.88,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.76,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -7.92,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -1.44,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -5.04,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.16,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_cinema",
+        "frames": 4,
+        "fps": 4,
+        "x": 294.64,
+        "y": 332,
+        "scale": 0.72,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 63,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 101,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 70,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 0
+        },
+        {
+          "x": 125,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 163,
+          "y": 232,
+          "width": 6,
+          "height": 24,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 132,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 1
+        },
+        {
+          "x": 187,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 225,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 194,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 2
+        },
+        {
+          "x": 249,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 287,
+          "y": 232,
+          "width": 7,
+          "height": 24,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 256,
+          "y": 237,
+          "width": 31,
+          "height": 17,
+          "z": 8,
+          "forSlot": 3
+        },
+        {
+          "x": 125,
+          "y": 296,
+          "width": 7,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 163,
+          "y": 296,
+          "width": 6,
+          "height": 24,
+          "z": 24,
+          "forSlot": 4
+        },
+        {
+          "x": 132,
+          "y": 301,
+          "width": 31,
+          "height": 17,
+          "z": 24,
+          "forSlot": 4
+        }
+      ]
+    }
+  },
+  "effectTransform": {
+    "scaleX": 0.84,
+    "translateX": 46,
+    "scaleY": 1,
+    "translateY": 0
+  },
+  "slotX": [
+    85.06,
+    147.22,
+    209.38,
+    271.54,
+    147.22
+  ],
+  "staff": {
+    "key": "chars/staff_cinema",
+    "frames": 4,
+    "fps": 4,
+    "x": 294.64,
+    "y": 332,
+    "scale": 0.72,
+    "z": 9,
+    "anchor": {
+      "x": 28,
+      "y": 96
+    }
+  },
+  "foreground": [
+    {
+      "x": 63,
+      "y": 232,
+      "width": 7,
+      "height": 24,
+      "z": 8,
+      "forSlot": 0
+    },
+    {
+      "x": 101,
+      "y": 232,
+      "width": 6,
+      "height": 24,
+      "z": 8,
+      "forSlot": 0
+    },
+    {
+      "x": 70,
+      "y": 237,
+      "width": 31,
+      "height": 17,
+      "z": 8,
+      "forSlot": 0
+    },
+    {
+      "x": 125,
+      "y": 232,
+      "width": 7,
+      "height": 24,
+      "z": 8,
+      "forSlot": 1
+    },
+    {
+      "x": 163,
+      "y": 232,
+      "width": 6,
+      "height": 24,
+      "z": 8,
+      "forSlot": 1
+    },
+    {
+      "x": 132,
+      "y": 237,
+      "width": 31,
+      "height": 17,
+      "z": 8,
+      "forSlot": 1
+    },
+    {
+      "x": 187,
+      "y": 232,
+      "width": 7,
+      "height": 24,
+      "z": 8,
+      "forSlot": 2
+    },
+    {
+      "x": 225,
+      "y": 232,
+      "width": 7,
+      "height": 24,
+      "z": 8,
+      "forSlot": 2
+    },
+    {
+      "x": 194,
+      "y": 237,
+      "width": 31,
+      "height": 17,
+      "z": 8,
+      "forSlot": 2
+    },
+    {
+      "x": 249,
+      "y": 232,
+      "width": 7,
+      "height": 24,
+      "z": 8,
+      "forSlot": 3
+    },
+    {
+      "x": 287,
+      "y": 232,
+      "width": 7,
+      "height": 24,
+      "z": 8,
+      "forSlot": 3
+    },
+    {
+      "x": 256,
+      "y": 237,
+      "width": 31,
+      "height": 17,
+      "z": 8,
+      "forSlot": 3
+    },
+    {
+      "x": 125,
+      "y": 296,
+      "width": 7,
+      "height": 24,
+      "z": 24,
+      "forSlot": 4
+    },
+    {
+      "x": 163,
+      "y": 296,
+      "width": 6,
+      "height": 24,
+      "z": 24,
+      "forSlot": 4
+    },
+    {
+      "x": 132,
+      "y": 301,
+      "width": 31,
+      "height": 17,
+      "z": 24,
+      "forSlot": 4
+    }
+  ],
+  "watch": [
+    85.06,
+    147.22,
+    209.38,
+    271.54,
+    147.22
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "notes": "Apply only in the 3D test copy. All y/scale/phase/anchor/frame/fps/z values stay unchanged. Front furniture faces narrow horizontally to clear the inner wall; character canvases/scales do not change. Use the full per-style slots, prop origins, staff and replacement foreground crops below. Do not apply another shell projection. Original metadata is untouched.",
+  "styles": {
+    "classic": {
+      "slotX": [
+        83.8,
+        174.52,
+        266.08
+      ],
+      "slots": [
+        {
+          "activity": "run",
+          "x": 83.8,
+          "y": 149,
+          "scale": 0.8,
+          "phase": 0.0,
+          "z": 5
+        },
+        {
+          "activity": "lift",
+          "x": 174.52,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "stretch",
+          "x": 266.08,
+          "y": 155,
+          "scale": 0.8,
+          "phase": 0.62,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_fit",
+        "frames": 4,
+        "fps": 4,
+        "x": 128.32,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 104,
+          "y": 99,
+          "width": 10,
+          "height": 42,
+          "z": 7
+        }
+      ]
+    },
+    "gold": {
+      "slotX": [
+        83.8,
+        174.52,
+        266.08
+      ],
+      "slots": [
+        {
+          "activity": "run",
+          "x": 83.8,
+          "y": 149,
+          "scale": 0.8,
+          "phase": 0.0,
+          "z": 5
+        },
+        {
+          "activity": "lift",
+          "x": 174.52,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "stretch",
+          "x": 266.08,
+          "y": 155,
+          "scale": 0.8,
+          "phase": 0.62,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_fit",
+        "frames": 4,
+        "fps": 4,
+        "x": 128.32,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 104,
+          "y": 99,
+          "width": 10,
+          "height": 42,
+          "z": 7
+        }
+      ]
+    },
+    "pink": {
+      "slotX": [
+        83.8,
+        174.52,
+        266.08
+      ],
+      "slots": [
+        {
+          "activity": "run",
+          "x": 83.8,
+          "y": 149,
+          "scale": 0.8,
+          "phase": 0.0,
+          "z": 5
+        },
+        {
+          "activity": "lift",
+          "x": 174.52,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "stretch",
+          "x": 266.08,
+          "y": 155,
+          "scale": 0.8,
+          "phase": 0.62,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_fit",
+        "frames": 4,
+        "fps": 4,
+        "x": 128.32,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 104,
+          "y": 99,
+          "width": 10,
+          "height": 42,
+          "z": 7
+        }
+      ]
+    }
+  },
+  "effectTransform": {
+    "scaleX": 0.84,
+    "translateX": 46,
+    "scaleY": 1,
+    "translateY": 0
+  },
+  "slotX": [
+    83.8,
+    174.52,
+    266.08
+  ],
+  "staff": {
+    "key": "chars/staff_fit",
+    "frames": 4,
+    "fps": 4,
+    "x": 128.32,
+    "y": 157,
+    "scale": 0.8,
+    "z": 9,
+    "anchor": {
+      "x": 28,
+      "y": 96
+    }
+  },
+  "foreground": [
+    {
+      "x": 104,
+      "y": 99,
+      "width": 10,
+      "height": 42,
+      "z": 7
+    }
+  ],
+  "stretch": [
+    266.08
+  ],
+  "run": [
+    83.8
+  ],
+  "lift": [
+    174.52
+  ]
+}

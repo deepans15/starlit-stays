@@ -1,0 +1,270 @@
+{
+  "notes": "Apply only in the 3D test copy. All y/scale/phase/anchor/frame/fps/z values stay unchanged. Front furniture faces narrow horizontally to clear the inner wall; character canvases/scales do not change. Use the full per-style slots, prop origins, staff and replacement foreground crops below. Do not apply another shell projection. Original metadata is untouched. The ladder is moved +28 source px (+24.64 canvas px) to straddle the right pool rim, clearing the themed swimming slots; no guest or water FX y changes.",
+  "styles": {
+    "classic": {
+      "slotX": [
+        123.12,
+        203.2,
+        283.28
+      ],
+      "slots": [
+        {
+          "activity": "swim",
+          "x": 123.12,
+          "y": 132,
+          "scale": 0.8,
+          "phase": 0,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 203.2,
+          "y": 133,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 283.28,
+          "y": 130,
+          "scale": 0.8,
+          "phase": 0.67,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_pool",
+        "frames": 4,
+        "fps": 4,
+        "x": 390.64,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    },
+    "gold": {
+      "slotX": [
+        123.12,
+        203.2,
+        283.28
+      ],
+      "slots": [
+        {
+          "activity": "swim",
+          "x": 123.12,
+          "y": 132,
+          "scale": 0.8,
+          "phase": 0,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 203.2,
+          "y": 133,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 283.28,
+          "y": 130,
+          "scale": 0.8,
+          "phase": 0.67,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_pool",
+        "frames": 4,
+        "fps": 4,
+        "x": 390.64,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    },
+    "pink": {
+      "slotX": [
+        123.12,
+        203.2,
+        283.28
+      ],
+      "slots": [
+        {
+          "activity": "swim",
+          "x": 123.12,
+          "y": 132,
+          "scale": 0.8,
+          "phase": 0,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 203.2,
+          "y": 133,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 283.28,
+          "y": 130,
+          "scale": 0.8,
+          "phase": 0.67,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_pool",
+        "frames": 4,
+        "fps": 4,
+        "x": 390.64,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    },
+    "halloween": {
+      "slotX": [
+        185.6,
+        255.12,
+        313.2
+      ],
+      "slots": [
+        {
+          "activity": "swim",
+          "x": 185.6,
+          "y": 132,
+          "scale": 0.7,
+          "phase": 0,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 255.12,
+          "y": 133,
+          "scale": 0.7,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 313.2,
+          "y": 131,
+          "scale": 0.7,
+          "phase": 0.67,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_pool",
+        "frames": 4,
+        "fps": 4,
+        "x": 390.64,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    },
+    "love": {
+      "slotX": [
+        185.6,
+        255.12,
+        313.2
+      ],
+      "slots": [
+        {
+          "activity": "swim",
+          "x": 185.6,
+          "y": 132,
+          "scale": 0.7,
+          "phase": 0,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 255.12,
+          "y": 133,
+          "scale": 0.7,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "swim",
+          "x": 313.2,
+          "y": 131,
+          "scale": 0.7,
+          "phase": 0.67,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_pool",
+        "frames": 4,
+        "fps": 4,
+        "x": 390.64,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    }
+  },
+  "effectTransform": {
+    "scaleX": 0.88,
+    "translateX": 58,
+    "scaleY": 1,
+    "translateY": 0
+  },
+  "slotX": [
+    123.12,
+    203.2,
+    283.28
+  ],
+  "staff": {
+    "key": "chars/staff_pool",
+    "frames": 4,
+    "fps": 4,
+    "x": 390.64,
+    "y": 157,
+    "scale": 0.8,
+    "z": 9,
+    "anchor": {
+      "x": 28,
+      "y": 96
+    }
+  },
+  "foreground": [],
+  "swim": [
+    123.12,
+    203.2,
+    283.28
+  ]
+}

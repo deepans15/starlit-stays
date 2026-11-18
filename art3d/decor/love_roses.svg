@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="60" viewBox="0 0 48 60">
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(1.919999999999999 4.6999999999999975) scale(0.92)">
+      <path d="M11 42h26l-3.5 16.75h-19Z" fill="#fff8ef" stroke-width="2.71739130" />
+      <path d="M31 44q6 7 2.5 14.75h-5q4.5-7.75 2.5-14.75Z" fill="#b5adb2" stroke="none" stroke-width="2.71739130" />
+      <ellipse cx="24.5" cy="39" rx="16" ry="4" fill="#ffdde5" stroke-width="2.71739130" />
+      <ellipse cx="24.5" cy="39" rx="12" ry="2.4" fill="#866044" stroke="none" stroke-width="2.71739130" />
+      <path d="M24 43V14m0 17-13-8m13 0 11-10" fill="none" stroke="#43aa8b" stroke-width="2.71739130" />
+      <path d="M23 34Q6 33 5 23q15-4 18 11Zm2-5q2-15 17-13 0 13-17 13Z" fill="#6fd3b5" stroke-width="2.71739130" />
+      <path d="M12 26q7 0 11 8Q12 34 8 28q5 3 4-2Zm13 3q10-4 15-11-1 10-15 11Z" fill="#57958c" stroke="none" stroke-width="2.71739130" />
+      <g transform="translate(12 17) scale(0.8)">
+        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" stroke-width="3.39673913" />
+      </g>
+      <path d="M9 11q3-4 6 0" fill="none" stroke="#ffbdc8" stroke-width="2.17391304" />
+      <g transform="translate(34 14) scale(0.72)">
+        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" stroke-width="3.77415459" />
+      </g>
+      <path d="M31 5q3-4 6 0" fill="none" stroke="#ffbdc8" stroke-width="2.17391304" transform="translate(0 3)" />
+      <g transform="translate(23 14) scale(0.8)">
+        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" stroke-width="3.39673913" />
+      </g>
+      <path d="M20 3q3-4 6 0" fill="none" stroke="#ffbdc8" stroke-width="2.17391304" transform="translate(0 5)" />
+      <path d="M8.5 39q16 6 32 0v3q-16 6-32 0Z" fill="#ffd2dc" stroke-width="2.71739130" />
+      <g transform="translate(24 53) scale(0.37)">
+        <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" stroke-width="7.34430082" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+  <defs>
+    <clipPath id="glass">
+      <path d="M7 7h42v42H7Z" fill="#fff" stroke="none" stroke-width="1.00000000" />
+    </clipPath>
+    <clipPath id="wall-glass">
+      <path d="M7 7h42v42H7Z" fill="#ffffff" stroke="none" stroke-width="1.00000000" />
+    </clipPath>
+  </defs>
+  <g transform="translate(2.240000 2.240000) scale(0.92)" data-role="fixed-wall-anchor">
+    <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-role="original-front">
+      <g transform="translate(2.0543 2.0543)" data-role="frame-thickness">
+        <rect x="2" y="2" width="52" height="52" rx="4" fill="#a5968d" stroke-width="2.71739130" />
+      </g>
+      <rect x="2" y="2" width="52" height="52" rx="4" fill="#e7d4b6" data-role="frame-front" stroke-width="2.71739130" />
+      <path d="M7 7h42v42H7Z" fill="#273d5b" stroke-width="2.71739130" />
+      <g clip-path="url(#wall-glass)" data-role="glass-scenery">
+        <path d="M9 38q14.0-11 25.2-4t22.400000000000002-3v12H9Z" fill="#405b6b" stroke="none" stroke-width="2.71739130" />
+        <path d="M28.0 8v40M8 28.0h40m-33-8 10-10" stroke="#b8d0d9" stroke-width="2.71739130" fill="none" />
+      </g>
+    </g>
+    <g clip-path="url(#glass)">
+      <circle cx="39.199999999999996" cy="13.44" r="3.9200000000000004" fill="#f7e8b9" stroke="none" stroke-width="1.08695652" />
+      <circle cx="14.0" cy="12.88" r=".8" fill="#d9edf2" stroke="none" stroke-width="1.08695652" />
+      <circle cx="34.72" cy="32.48" r=".8" fill="#d9edf2" stroke="none" stroke-width="1.08695652" />
+      <circle cx="19.599999999999998" cy="38.64" r=".8" fill="#d9edf2" stroke="none" stroke-width="1.08695652" />
+    </g>
+  </g>
+</svg>

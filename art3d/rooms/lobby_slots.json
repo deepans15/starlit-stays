@@ -1,0 +1,26 @@
+{
+  "notes": "Apply only in the 3D test copy. All y/scale/phase/anchor/frame/fps/z values stay unchanged. Front furniture faces narrow horizontally to clear the inner wall; character canvases/scales do not change. Use the full per-style slots, prop origins, staff and replacement foreground crops below. Do not apply another shell projection. Original metadata is untouched. Gold/pink desk translates +26px; apply the same +26px to the lobby clerk anchor in the 3D copy; keep elevator at its original position. No source lobby metadata entry exists.",
+  "styles": {
+    "gold": {
+      "slotX": [],
+      "slots": [],
+      "staff": null,
+      "foreground": []
+    },
+    "pink": {
+      "slotX": [],
+      "slots": [],
+      "staff": null,
+      "foreground": []
+    }
+  },
+  "effectTransform": {
+    "scaleX": 1,
+    "translateX": 26,
+    "scaleY": 1,
+    "translateY": 0
+  },
+  "slotX": [],
+  "staff": null,
+  "foreground": []
+}

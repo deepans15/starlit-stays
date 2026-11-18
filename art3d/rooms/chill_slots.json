@@ -1,0 +1,81 @@
+{
+  "relax": [
+    80,
+    149,
+    218
+  ],
+  "notes": "Classic, pink and gold: retain y=142, scale=0.65, phases, z and relax anchor {56,68}. Move staff x296 ->268; keep y157, scale0.8, anchor{28,96}, frames/fps/z. Do not use the old foreground rectangles: use the replacements below. Props/effects are baked art overlays, not guest props. Wall strip x0..42 is furniture-free. Do not apply an additional shell projection.",
+  "staff": {
+    "x": 268,
+    "y": 157,
+    "scale": 0.8,
+    "anchor": {
+      "x": 28,
+      "y": 96
+    }
+  },
+  "foreground": [
+    {
+      "x": 48,
+      "y": 132,
+      "width": 11,
+      "height": 20,
+      "z": 7,
+      "forSlot": 0
+    },
+    {
+      "x": 99,
+      "y": 133,
+      "width": 8,
+      "height": 19,
+      "z": 7,
+      "forSlot": 0
+    },
+    {
+      "x": 117,
+      "y": 132,
+      "width": 11,
+      "height": 20,
+      "z": 7,
+      "forSlot": 1
+    },
+    {
+      "x": 168,
+      "y": 133,
+      "width": 8,
+      "height": 19,
+      "z": 7,
+      "forSlot": 1
+    },
+    {
+      "x": 186,
+      "y": 132,
+      "width": 11,
+      "height": 20,
+      "z": 7,
+      "forSlot": 2
+    },
+    {
+      "x": 237,
+      "y": 133,
+      "width": 8,
+      "height": 19,
+      "z": 7,
+      "forSlot": 2
+    }
+  ],
+  "effects": {
+    "lavaLampOffset": [
+      8,
+      24
+    ],
+    "recordOffset": [
+      9,
+      29
+    ],
+    "plantOffset": [
+      -29,
+      45
+    ]
+  }
+}

@@ -1,0 +1,543 @@
+{
+  "notes": "Apply only in the 3D test copy. All y/scale/phase/anchor/frame/fps/z values stay unchanged. Front furniture faces narrow horizontally to clear the inner wall; character canvases/scales do not change. Use the full per-style slots, prop origins, staff and replacement foreground crops below. Do not apply another shell projection. Original metadata is untouched. Hand-held props retain their original x offset from the guest anchor rather than narrowing with furniture.",
+  "styles": {
+    "classic": {
+      "slotX": [
+        100.6,
+        177.88,
+        255.16
+      ],
+      "slots": [
+        {
+          "activity": "eat",
+          "x": 100.6,
+          "y": 124,
+          "scale": 1,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 100.6,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 177.88,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.31,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 177.88,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 255.16,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.67,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 255.16,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_noodle",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 156,
+        "scale": 1.0,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 56,
+          "y": 86,
+          "width": 249,
+          "height": 42,
+          "z": 7
+        }
+      ]
+    },
+    "gold": {
+      "slotX": [
+        100.6,
+        177.88,
+        255.16
+      ],
+      "slots": [
+        {
+          "activity": "eat",
+          "x": 100.6,
+          "y": 124,
+          "scale": 1,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 100.6,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 177.88,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.31,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 177.88,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 255.16,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.67,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 255.16,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_noodle",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 156,
+        "scale": 1.0,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 56,
+          "y": 86,
+          "width": 249,
+          "height": 42,
+          "z": 7
+        }
+      ]
+    },
+    "pink": {
+      "slotX": [
+        100.6,
+        177.88,
+        255.16
+      ],
+      "slots": [
+        {
+          "activity": "eat",
+          "x": 100.6,
+          "y": 124,
+          "scale": 1,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 100.6,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 177.88,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.31,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 177.88,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 255.16,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.67,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 255.16,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_noodle",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 156,
+        "scale": 1.0,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 56,
+          "y": 86,
+          "width": 249,
+          "height": 42,
+          "z": 7
+        }
+      ]
+    },
+    "halloween": {
+      "slotX": [
+        100.6,
+        177.88,
+        255.16
+      ],
+      "slots": [
+        {
+          "activity": "eat",
+          "x": 100.6,
+          "y": 124,
+          "scale": 1,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 100.6,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 177.88,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.31,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 177.88,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 255.16,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.67,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 255.16,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_noodle",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 156,
+        "scale": 1.0,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 56,
+          "y": 86,
+          "width": 249,
+          "height": 42,
+          "z": 7
+        }
+      ]
+    },
+    "love": {
+      "slotX": [
+        100.6,
+        177.88,
+        255.16
+      ],
+      "slots": [
+        {
+          "activity": "eat",
+          "x": 100.6,
+          "y": 124,
+          "scale": 1,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 100.6,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 177.88,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.31,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 177.88,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        },
+        {
+          "activity": "eat",
+          "x": 255.16,
+          "y": 124,
+          "scale": 1,
+          "phase": 0.67,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_noodle_bowl",
+            "frames": 3,
+            "fps": 4,
+            "width": 40,
+            "height": 40,
+            "x": 255.16,
+            "y": 92,
+            "scale": 0.78,
+            "z": 9,
+            "anchor": {
+              "x": 20,
+              "y": 40
+            }
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_noodle",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 156,
+        "scale": 1.0,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 56,
+          "y": 86,
+          "width": 249,
+          "height": 42,
+          "z": 7
+        }
+      ]
+    }
+  },
+  "effectTransform": {
+    "scaleX": 0.84,
+    "translateX": 46,
+    "scaleY": 1,
+    "translateY": 0
+  },
+  "slotX": [
+    100.6,
+    177.88,
+    255.16
+  ],
+  "staff": {
+    "key": "chars/staff_noodle",
+    "frames": 4,
+    "fps": 4,
+    "x": 291.28,
+    "y": 156,
+    "scale": 1.0,
+    "z": 9,
+    "anchor": {
+      "x": 28,
+      "y": 96
+    }
+  },
+  "foreground": [
+    {
+      "x": 56,
+      "y": 86,
+      "width": 249,
+      "height": 42,
+      "z": 7
+    }
+  ],
+  "eat": [
+    100.6,
+    177.88,
+    255.16
+  ]
+}

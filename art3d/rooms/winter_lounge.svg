@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="168" viewBox="0 0 320 168">
+  <defs>
+    <clipPath id="side-wall">
+      <path d="M0 0H42V133L0 151Z" fill="none" />
+    </clipPath>
+    <clipPath id="canvas">
+      <rect x="0" y="0" width="320" height="168" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#canvas)" stroke="#2b2340" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <g id="room-background">
+      <path d="M0 0h320v168H0Z" fill="#eef7f7" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M0 133h320v35H0Z" fill="#d8e0e5" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M0 133h320" fill="none" stroke="#2b2340" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+    </g>
+    <g id="left-inner-wall" clip-path="url(#side-wall)">
+      <path d="M0 0H42V133L0 151Z" fill="#bec6c6" stroke="none" />
+      <path d="M0 0H42V10L0 11.353383458646617Z" fill="#2b2340" opacity=".22" stroke="none" />
+    </g>
+    <g id="back-corner-shadow" stroke="none">
+      <rect x="42" y="0" width="3" height="133" fill="#2b2340" opacity="0.12" />
+      <rect x="45" y="0" width="3" height="133" fill="#2b2340" opacity="0.07" />
+      <rect x="48" y="0" width="3" height="133" fill="#2b2340" opacity="0.035" />
+      <rect x="51" y="0" width="3" height="133" fill="#2b2340" opacity="0.01" />
+    </g>
+    <path d="M42 0V133L0 151" fill="none" stroke="#2b2340" stroke-width="2.5" stroke-linecap="butt" />
+    <g id="room-furniture" transform="translate(46 0) scale(0.84 1)">
+      <g id="floor-contact-shadows" stroke="none">
+        <ellipse cx="76" cy="154" rx="64" ry="2.4" fill="#2b2340" opacity=".13" />
+        <ellipse cx="159" cy="157" rx="34" ry="2.4" fill="#2b2340" opacity=".13" />
+        <ellipse cx="210" cy="155" rx="26" ry="2.4" fill="#2b2340" opacity=".13" />
+      </g>
+      <g id="additional-depth-and-supports" />
+      <g transform="translate(14 145) scale(2)" data-approved-3d-decor="winter_rug">
+        <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1.25 6q0 4.75 58.75 4.75T118.75 6v2q0 4.75-58.75 4.75T1.25 8Z" fill="#618ebc" stroke-width="2.50000000" />
+          <ellipse cx="60" cy="6" rx="58.75" ry="4.75" fill="#7ec8ff" stroke-width="2.50000000" />
+          <ellipse cx="60" cy="6" rx="47" ry="2.5" fill="#dff4ff" stroke="none" stroke-width="2.50000000" />
+          <g transform="translate(0 0.68) scale(1 0.76)">
+            <path d="m60 4 5 2 12 1-12 1-5 2-5-2-12-1 12-1Z" fill="#7ec8ff" stroke="none" stroke-width="2.50000000" />
+          </g>
+        </g>
+      </g>
+      <g transform="translate(16 92) scale(1)" data-approved-3d-decor="pink_sofa">
+        <g transform="translate(1.25 6.4) scale(0.9)">
+          <g stroke="#2b2340" stroke-width="2.777778" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 50v12.75h8l3-13m49 0 2 13h8V50" fill="#c8915f" />
+            <path d="M86.0 21.0L95.6 15.0V32.0Q95.6 47.0 80.6 47.0L71.0 53.0Q86.0 53.0 86.0 38.0Z" fill="#618ebc" />
+            <path d="M10 21.0Q10 6 25.0 6H71.0Q86.0 6 86.0 21.0L95.6 15.0Q95.6 0 80.6 0H34.6Q19.6 0 19.6 15.0Z" fill="#9ed6ff" />
+            <rect x="10" y="6" width="76" height="47" rx="15" fill="#7ec8ff" />
+            <path d="M71 9q14 5 14 18v22H72Z" fill="#61a9df" stroke="none" />
+            <path d="M81.0 41.0L90.6 35.0V40.0Q90.6 46.0 84.6 46.0L75.0 52.0Q81.0 52.0 81.0 46.0Z" fill="#89a4bc" />
+            <path d="M15 41.0Q15 35 21.0 35H75.0Q81.0 35 81.0 41.0L90.6 35.0Q90.6 29 84.6 29H30.6Q24.6 29 24.6 35.0Z" fill="#cdeeff" />
+            <rect x="15" y="35" width="66" height="17" rx="6" fill="#bce9ff" />
+            <path d="M17.0 36.0L26.6 30.0V44.0Q26.6 50.0 20.6 50.0L11.0 56.0Q17.0 56.0 17.0 50.0Z" fill="#618ebc" />
+            <path d="M4 36.0Q4 30 10.0 30H11.0Q17.0 30 17.0 36.0L26.6 30.0Q26.6 24 20.6 24H19.6Q13.600000000000001 24 13.600000000000001 30.0Z" fill="#9ed6ff" />
+            <rect x="4" y="30" width="13" height="26" rx="6" fill="#7ec8ff" />
+            <path d="M92.0 36.0L101.6 30.0V44.0Q101.6 50.0 95.6 50.0L86.0 56.0Q92.0 56.0 92.0 50.0Z" fill="#4e7aa7" />
+            <path d="M79 36.0Q79 30 85.0 30H86.0Q92.0 30 92.0 36.0L101.6 30.0Q101.6 24 95.6 24H94.6Q88.6 24 88.6 30.0Z" fill="#88bee7" />
+            <rect x="79" y="30" width="13" height="26" rx="6" fill="#61a9df" />
+            <path d="M48 14v33" fill="none" stroke="#61a9df" stroke-width="2.777778" />
+            <rect x="22" y="19" width="19" height="18" rx="5" fill="#fff8ef" />
+            <rect x="56" y="19" width="18" height="18" rx="5" fill="#fff8ef" />
+            <path d="M20 14q5-3 11-3" fill="none" stroke="#bce9ff" stroke-width="2.777778" />
+          </g>
+        </g>
+      </g>
+      <g transform="translate(198 97) scale(1)" data-approved-3d-decor="winter_armchair">
+        <g transform="translate(1.25 6.0) scale(0.9)">
+          <g stroke="#2b2340" stroke-width="2.777778" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 48v10.75h8l3-11m20 0 2 11h7V48" fill="#c8915f" />
+            <path d="M54.0 17.0L60.4 12.0V27.0Q60.4 39.0 48.4 39.0L42.0 44.0Q54.0 44.0 54.0 32.0Z" fill="#618ebc" />
+            <path d="M10 17.0Q10 5 22.0 5H42.0Q54.0 5 54.0 17.0L60.4 12.0Q60.4 0 48.4 0H28.4Q16.4 0 16.4 12.0Z" fill="#9ed6ff" />
+            <rect x="10" y="5" width="44" height="39" rx="12" fill="#7ec8ff" />
+            <path d="M54.0 40.0L60.4 34.0V41.0Q60.4 47.0 54.4 47.0L48.0 53.0Q54.0 53.0 54.0 47.0Z" fill="#4e7aa7" />
+            <path d="M10 40.0Q10 34 16.0 34H48.0Q54.0 34 54.0 40.0L60.4 34.0Q60.4 28 54.4 28H22.4Q16.4 28 16.4 34.0Z" fill="#88bee7" />
+            <rect x="10" y="34" width="44" height="19" rx="6" fill="#61a9df" />
+            <path d="M48.0 36.0L54.4 30.0V32.0Q54.4 37.0 49.4 37.0L43.0 43.0Q48.0 43.0 48.0 38.0Z" fill="#89a4bc" />
+            <path d="M16 36.0Q16 31 21.0 31H43.0Q48.0 31 48.0 36.0L54.4 30.0Q54.4 25 49.4 25H27.4Q22.4 25 22.4 30.0Z" fill="#cdeeff" />
+            <rect x="16" y="31" width="32" height="12" rx="5" fill="#bce9ff" />
+            <path d="M16.0 30.0L22.4 24.0V42.0Q22.4 47.0 17.4 47.0L11.0 53.0Q16.0 53.0 16.0 48.0Z" fill="#618ebc" />
+            <path d="M4 30.0Q4 25 9.0 25H11.0Q16.0 25 16.0 30.0L22.4 24.0Q22.4 19 17.4 19H15.4Q10.4 19 10.4 24.0Z" fill="#9ed6ff" />
+            <rect x="4" y="25" width="12" height="28" rx="5" fill="#7ec8ff" />
+            <path d="M60.0 30.0L66.4 24.0V42.0Q66.4 47.0 61.4 47.0L55.0 53.0Q60.0 53.0 60.0 48.0Z" fill="#4e7aa7" />
+            <path d="M48 30.0Q48 25 53.0 25H55.0Q60.0 25 60.0 30.0L66.4 24.0Q66.4 19 61.4 19H59.4Q54.4 19 54.4 24.0Z" fill="#88bee7" />
+            <rect x="48" y="25" width="12" height="28" rx="5" fill="#61a9df" />
+            <g transform="translate(32 20) scale(0.7)">
+              <path d="M0-10v20M-9-5 9 5M-9 5 9-5M-3-7 0-4 3-7M-3 7 0 4 3 7" fill="none" stroke="#fff8ef" stroke-width="2.777778" />
+            </g>
+            <path d="M18 12h10" fill="none" stroke="#dff4ff" stroke-width="2.777778" />
+          </g>
+        </g>
+      </g>
+      <g transform="translate(267 97) scale(1)" data-approved-3d-decor="winter_pine">
+        <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="translate(1.919999999999999 4.6999999999999975) scale(0.92)">
+            <path d="M13 48h22l-3 10.75H16Z" fill="#bce9ff" stroke-width="2.71739130" />
+            <path d="M30 49q5 5 2 9.75h-4q4-5 2-9.75Z" fill="#89a4bc" stroke="none" stroke-width="2.71739130" />
+            <ellipse cx="24.8" cy="47" rx="12.5" ry="3.5" fill="#cdeeff" stroke-width="2.71739130" />
+            <ellipse cx="24.8" cy="47" rx="9.5" ry="1.8" fill="#866044" stroke="none" stroke-width="2.71739130" />
+            <path d="M20 42h8v9h-8Z" fill="#c8915f" stroke-width="2.71739130" />
+            <path d="M24 3 11 19h6L7 33h8L3 45h42L33 33h8L31 19h6Z" fill="#43aa8b" stroke-width="2.71739130" />
+            <path d="M24 3 37 19h-6l10 14h-8l12 12H25q5-10 3-17l-3-7q3-8-1-18Z" fill="#3b7b71" stroke="none" stroke-width="2.71739130" />
+            <path d="M24 3 11 19h9l4-5 4 5h9Z" fill="#fff8ef" stroke-width="2.71739130" />
+            <path d="m10 33 5-6 9 4 8-4 6 6H27l-3-2-3 2Z" fill="#fff8ef" stroke="none" stroke-width="2.71739130" />
+            <circle cx="18" cy="38" r="2" fill="#ffc94d" stroke="none" stroke-width="2.71739130" />
+            <circle cx="31" cy="23" r="2" fill="#7ec8ff" stroke="none" stroke-width="2.71739130" />
+            <path d="M12.3 47q12.5 5 25 0v2q-12.5 5-25 0Z" fill="#bce9ff" stroke-width="2.71739130" />
+            <path d="M20 53h8" fill="none" stroke="#fff8ef" stroke-width="2.71739130" />
+          </g>
+        </g>
+      </g>
+      <g transform="translate(127 24) scale(0.7)" data-approved-3d-decor="winter_wallart">
+        <g transform="translate(2.400000 1.760000) scale(0.92)" data-role="fixed-wall-anchor">
+          <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-role="original-front">
+            <g transform="translate(2.2283 1.5326)" data-role="frame-thickness">
+              <rect x="1.25" y="1.25" width="57.5" height="41.5" rx="4" fill="#916a54" stroke-width="2.71739130" />
+            </g>
+            <rect x="1.25" y="1.25" width="57.5" height="41.5" rx="4" fill="#c8915f" data-role="frame-front" stroke-width="2.71739130" />
+            <rect x="6" y="6" width="48" height="32" rx="2" fill="#bce9ff" stroke-width="2.71739130" />
+            <path d="M8 30q16-12 30-3t14-3v12H8Z" fill="#fff8ef" stroke="none" stroke-width="2.71739130" />
+            <path d="M29 11 20 27h5l-6 9h22l-6-9h5Z" fill="#43aa8b" stroke-width="2.71739130" />
+            <path d="M29 11 24 20h10Z" fill="#fff8ef" stroke-width="2.71739130" />
+            <circle cx="44" cy="14" r="3" fill="#fff0b5" stroke="none" stroke-width="2.71739130" />
+            <path d="M6 5h20" fill="none" stroke="#e6b481" stroke-width="2.71739130" />
+          </g>
+        </g>
+      </g>
+      <g transform="translate(187 0) scale(0.75)" data-approved-3d-decor="winter_mobile">
+        <g transform="translate(4.2 0) scale(0.9)">
+          <g stroke="#2b2340" stroke-width="2.777778" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21q33-20 66 0" fill="none" stroke="#916a54" stroke-width="3" transform="translate(1.4 1.4)" />
+            <path d="M42 1.25v11M9 21q33-20 66 0M11 21v15m31-24v13m31-4v15" fill="none" stroke="#c8915f" stroke-width="2.777778" />
+            <circle cx="42" cy="12" r="3" fill="#b58f48" transform="translate(1.4 1.4)" />
+            <circle cx="42" cy="12" r="3" fill="#ffc94d" />
+            <g transform="translate(11 46) scale(0.9)">
+              <path d="M0-10v20M-9-5 9 5M-9 5 9-5M-3-7 0-4 3-7M-3 7 0 4 3 7" fill="none" stroke="#2b2340" stroke-width="4.6" transform="translate(1 1)" />
+              <path d="M0-10v20M-9-5 9 5M-9 5 9-5M-3-7 0-4 3-7M-3 7 0 4 3 7" fill="none" stroke="#7ec8ff" stroke-width="2.777778" />
+            </g>
+            <g transform="translate(42 35) scale(0.9)">
+              <path d="M0-10v20M-9-5 9 5M-9 5 9-5M-3-7 0-4 3-7M-3 7 0 4 3 7" fill="none" stroke="#2b2340" stroke-width="4.6" transform="translate(1 1)" />
+              <path d="M0-10v20M-9-5 9 5M-9 5 9-5M-3-7 0-4 3-7M-3 7 0 4 3 7" fill="none" stroke="#6fd3b5" stroke-width="2.777778" />
+            </g>
+            <g transform="translate(73 46) scale(0.9)">
+              <path d="M0-10v20M-9-5 9 5M-9 5 9-5M-3-7 0-4 3-7M-3 7 0 4 3 7" fill="none" stroke="#2b2340" stroke-width="4.6" transform="translate(1 1)" />
+              <path d="M0-10v20M-9-5 9 5M-9 5 9-5M-3-7 0-4 3-7M-3 7 0 4 3 7" fill="none" stroke="#7ec8ff" stroke-width="2.777778" />
+            </g>
+          </g>
+        </g>
+      </g>
+      <path d="M145 135l-5 21m43-21 5 21" fill="none" stroke="#c8915f" stroke-width="3" vector-effect="non-scaling-stroke" />
+      <ellipse cx="164" cy="135.0" rx="32" ry="7" fill="#a5816a" vector-effect="non-scaling-stroke" />
+      <ellipse cx="164" cy="132" rx="32" ry="7" fill="#e6b481" vector-effect="non-scaling-stroke" />
+      <g transform="translate(152 104) scale(0.4)" data-approved-3d-decor="winter_snowglobe">
+        <g transform="translate(1.25 5.6000000000000005) scale(0.9)">
+          <g stroke="#2b2340" stroke-width="2.777778" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="26" cy="23" r="20" fill="#bce9ff" />
+            <path d="M38 7q11 7 8 20-1 9-9 14 6-15 1-34Z" fill="#89a4bc" stroke="none" opacity=".32" />
+            <path d="M9 34q18-10 34 0l-3 7H12Z" fill="#fff8ef" />
+            <path d="M26 12 17 28h5l-6 9h20l-6-9h5Z" fill="#43aa8b" />
+            <path d="M26 12 21 21h10Z" fill="#fff8ef" />
+            <circle cx="14" cy="17" r="1.5" fill="#fff8ef" stroke="none" />
+            <circle cx="36" cy="23" r="1.5" fill="#fff8ef" stroke="none" />
+            <path d="M13 22q0-9 7-12" fill="none" stroke="#fff8ef" stroke-width="2.777778" />
+            <ellipse cx="27" cy="41" rx="13" ry="2.4" fill="#d6ac87" />
+            <path d="M13 41h26l5 13.75H8Z" fill="#c8915f" />
+            <path d="M46.0 52.0L49.0 49.0V49.75Q49.0 51.75 47.0 51.75L44.0 54.75Q46.0 54.75 46.0 52.75Z" fill="#a5816a" />
+            <path d="M6 52.0Q6 50 8.0 50H44.0Q46.0 50 46.0 52.0L49.0 49.0Q49.0 47 47.0 47H11.0Q9 47 9 49.0Z" fill="#ecc7a0" />
+            <rect x="6" y="50" width="40" height="4.75" rx="2" fill="#e6b481" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

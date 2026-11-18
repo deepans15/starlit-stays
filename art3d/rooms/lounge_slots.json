@@ -1,0 +1,1805 @@
+{
+  "notes": "Apply only in the 3D test copy. All y/scale/phase/anchor/frame/fps/z values stay unchanged. Front furniture faces narrow horizontally to clear the inner wall; character canvases/scales do not change. Use the full per-style slots, prop origins, staff and replacement foreground crops below. Do not apply another shell projection. Original metadata is untouched. Hand-held props retain their original x offset from the guest anchor rather than narrowing with furniture.",
+  "styles": {
+    "classic": {
+      "slotX": [
+        82.96,
+        110.68,
+        138.4,
+        222.4
+      ],
+      "slots": [
+        {
+          "activity": "drink",
+          "x": 82.96,
+          "y": 123,
+          "scale": 0.6,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 90.16,
+            "y": 114.6,
+            "scale": 0.33,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.4,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.199999999999999,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -9.6,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.0,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.3999999999999995,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.6,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 110.68,
+          "y": 123,
+          "scale": 0.6,
+          "phase": 0.31,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 117.88,
+            "y": 114.6,
+            "scale": 0.33,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.4,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.199999999999999,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -9.6,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.0,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.3999999999999995,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.6,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 138.4,
+          "y": 123,
+          "scale": 0.6,
+          "phase": 0.67,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 145.6,
+            "y": 114.6,
+            "scale": 0.33,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.4,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.199999999999999,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -9.6,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.0,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.3999999999999995,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.6,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 222.4,
+          "y": 134,
+          "scale": 0.65,
+          "phase": 0.9,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 230.2,
+            "y": 124.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_lounge",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 157,
+        "scale": 0.6,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    },
+    "gold": {
+      "slotX": [
+        84.64,
+        118.24,
+        199.72,
+        256.84
+      ],
+      "slots": [
+        {
+          "activity": "drink",
+          "x": 84.64,
+          "y": 134,
+          "scale": 0.65,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 92.44,
+            "y": 124.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 118.24,
+          "y": 134,
+          "scale": 0.65,
+          "phase": 0.3,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 126.04,
+            "y": 124.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink_stand",
+          "x": 199.72,
+          "y": 156,
+          "scale": 0.55,
+          "phase": 0.6,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 206.32,
+            "y": 143.9,
+            "scale": 0.30250000000000005,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.2,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -6.6000000000000005,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -8.8,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -8.25,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -4.95,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.55,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink_stand",
+          "x": 256.84,
+          "y": 156,
+          "scale": 0.55,
+          "phase": 0.9,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 263.44,
+            "y": 143.9,
+            "scale": 0.30250000000000005,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.2,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -6.6000000000000005,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -8.8,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -8.25,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -4.95,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.55,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_lounge",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 157,
+        "scale": 0.6,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 158,
+          "y": 136,
+          "width": 53,
+          "height": 2,
+          "z": 8
+        }
+      ]
+    },
+    "pink": {
+      "slotX": [
+        82.12,
+        116.56,
+        190.48,
+        254.32
+      ],
+      "slots": [
+        {
+          "activity": "drink",
+          "x": 82.12,
+          "y": 134,
+          "scale": 0.65,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 89.92,
+            "y": 124.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 116.56,
+          "y": 134,
+          "scale": 0.65,
+          "phase": 0.3,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 124.36,
+            "y": 124.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink_stand",
+          "x": 190.48,
+          "y": 156,
+          "scale": 0.58,
+          "phase": 0.6,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 197.44,
+            "y": 143.24,
+            "scale": 0.319,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.32,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -6.959999999999999,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -9.28,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -8.7,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.22,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.58,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink_stand",
+          "x": 254.32,
+          "y": 156,
+          "scale": 0.58,
+          "phase": 0.9,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 261.28,
+            "y": 143.24,
+            "scale": 0.319,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.32,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -6.959999999999999,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -9.28,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -8.7,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.22,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.58,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_lounge",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 157,
+        "scale": 0.6,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 158,
+          "y": 136,
+          "width": 53,
+          "height": 2,
+          "z": 8
+        }
+      ]
+    },
+    "halloween": {
+      "slotX": [
+        89.68,
+        239.2,
+        172.84,
+        205.6
+      ],
+      "slots": [
+        {
+          "activity": "drink",
+          "x": 89.68,
+          "y": 139,
+          "scale": 0.65,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 97.48,
+            "y": 129.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 239.2,
+          "y": 139,
+          "scale": 0.65,
+          "phase": 0.3,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 247.0,
+            "y": 129.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink_stand",
+          "x": 172.84,
+          "y": 157,
+          "scale": 0.58,
+          "phase": 0.6,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 179.8,
+            "y": 144.24,
+            "scale": 0.319,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.32,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -6.959999999999999,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -9.28,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -8.7,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.22,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.58,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink_stand",
+          "x": 205.6,
+          "y": 157,
+          "scale": 0.58,
+          "phase": 0.9,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 212.56,
+            "y": 144.24,
+            "scale": 0.319,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.32,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -6.959999999999999,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -9.28,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -8.7,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.22,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.58,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_lounge",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 157,
+        "scale": 0.6,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 158,
+          "y": 136,
+          "width": 53,
+          "height": 2,
+          "z": 8
+        }
+      ]
+    },
+    "love": {
+      "slotX": [
+        82.12,
+        116.56,
+        229.96,
+        182.92
+      ],
+      "slots": [
+        {
+          "activity": "drink",
+          "x": 82.12,
+          "y": 134,
+          "scale": 0.65,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 89.92,
+            "y": 124.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 116.56,
+          "y": 134,
+          "scale": 0.65,
+          "phase": 0.3,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 124.36,
+            "y": 124.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 229.96,
+          "y": 140,
+          "scale": 0.65,
+          "phase": 0.6,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 237.76,
+            "y": 130.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink_stand",
+          "x": 182.92,
+          "y": 156,
+          "scale": 0.58,
+          "phase": 0.9,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 189.88,
+            "y": 143.24,
+            "scale": 0.319,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.32,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -6.959999999999999,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -9.28,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -8.7,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.22,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.58,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_lounge",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 157,
+        "scale": 0.6,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 158,
+          "y": 136,
+          "width": 53,
+          "height": 2,
+          "z": 8
+        }
+      ]
+    },
+    "winter": {
+      "slotX": [
+        82.12,
+        116.56,
+        239.2,
+        182.92
+      ],
+      "slots": [
+        {
+          "activity": "drink",
+          "x": 82.12,
+          "y": 134,
+          "scale": 0.65,
+          "phase": 0,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 89.92,
+            "y": 124.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 116.56,
+          "y": 134,
+          "scale": 0.65,
+          "phase": 0.3,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 124.36,
+            "y": 124.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink",
+          "x": 239.2,
+          "y": 139,
+          "scale": 0.65,
+          "phase": 0.6,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 247.0,
+            "y": 129.9,
+            "scale": 0.35750000000000004,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.6,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -7.800000000000001,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -10.4,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -9.75,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.8500000000000005,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.65,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        },
+        {
+          "activity": "drink_stand",
+          "x": 182.92,
+          "y": 156,
+          "scale": 0.58,
+          "phase": 0.9,
+          "z": 5,
+          "prop": {
+            "key": "chars/prop_teacup",
+            "frames": 3,
+            "fps": 4,
+            "width": 32,
+            "height": 32,
+            "x": 189.88,
+            "y": 143.24,
+            "scale": 0.319,
+            "z": 9,
+            "anchor": {
+              "x": 16,
+              "y": 32
+            },
+            "followActivity": true,
+            "activityOffsets": [
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": -2.32,
+                "rotate": -3
+              },
+              {
+                "dx": 0,
+                "dy": -6.959999999999999,
+                "rotate": -6
+              },
+              {
+                "dx": 0,
+                "dy": -9.28,
+                "rotate": -12
+              },
+              {
+                "dx": 0,
+                "dy": -8.7,
+                "rotate": -10
+              },
+              {
+                "dx": 0,
+                "dy": -5.22,
+                "rotate": -4
+              },
+              {
+                "dx": 0,
+                "dy": -0.58,
+                "rotate": 0
+              },
+              {
+                "dx": 0,
+                "dy": 0.0,
+                "rotate": 0
+              }
+            ]
+          }
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_lounge",
+        "frames": 4,
+        "fps": 4,
+        "x": 291.28,
+        "y": 157,
+        "scale": 0.6,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 158,
+          "y": 136,
+          "width": 53,
+          "height": 2,
+          "z": 8
+        }
+      ]
+    }
+  },
+  "effectTransform": {
+    "scaleX": 0.84,
+    "translateX": 46,
+    "scaleY": 1,
+    "translateY": 0
+  },
+  "slotX": [
+    82.96,
+    110.68,
+    138.4,
+    222.4
+  ],
+  "staff": {
+    "key": "chars/staff_lounge",
+    "frames": 4,
+    "fps": 4,
+    "x": 291.28,
+    "y": 157,
+    "scale": 0.6,
+    "z": 9,
+    "anchor": {
+      "x": 28,
+      "y": 96
+    }
+  },
+  "foreground": [],
+  "drink": [
+    82.96,
+    110.68,
+    138.4,
+    222.4
+  ]
+}

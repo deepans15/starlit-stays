@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
+  <g transform="translate(1.25 6.0) scale(0.9)">
+    <g stroke="#2b2340" stroke-width="2.777778" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 15V9q7-10 14 0v6" fill="none" stroke="#a77a40" stroke-width="3" />
+      <path d="M32 20L36 16V16Q36 18 34 18L30 22Q32 22 32 20Z" fill="#8b6c4c" />
+      <path d="M8 20Q8 18 10 18H30Q32 18 32 20L36 16Q36 14 34 14H14Q12 14 12 16Z" fill="#cfae7d" />
+      <path d="m8 22 6-10h12l6 10Z" fill="#bf9352" />
+      <path d="M30 25L34 19V44Q34 46 32 46L28 52Q30 52 30 50Z" fill="#a68f68" />
+      <path d="M10 25Q10 23 12 23H28Q30 23 30 25L34 19Q34 17 32 17H16Q14 17 14 19Z" fill="#eed69e" />
+      <path d="M10 23h20v29H10Z" fill="#e8c97d" />
+      <path d="M15 25h10v24H15Z" fill="#fff0b5" stroke="none" />
+      <path d="M10 23v29m20-29v29M20 24v28" stroke="#9e6a38" stroke-width="2" fill="none" />
+      <path d="M32 54L36 50V52.75Q36 54.75 34 54.75L30 58.75Q32 58.75 32 56.75Z" fill="#856042" />
+      <path d="M8 54Q8 52 10 52H30Q32 52 32 54L36 50Q36 48 34 48H14Q12 48 12 50Z" fill="#c8a072" />
+      <path d="M8 52h24v6.75H8Z" fill="#b58143" />
+    </g>
+  </g>
+</svg>

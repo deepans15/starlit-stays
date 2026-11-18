@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="48" viewBox="0 0 96 48">
+  <defs>
+    <clipPath id="wall-glass">
+      <path d="M7 7h82v34H7Z" fill="#ffffff" stroke="none" stroke-width="1.00000000" />
+    </clipPath>
+  </defs>
+  <g transform="translate(3.840000 1.920000) scale(0.92)" data-role="fixed-wall-anchor">
+    <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-role="original-front">
+      <g transform="translate(2.4 1.7065)" data-role="frame-thickness">
+        <rect x="2" y="2" width="92" height="44" rx="4" fill="#a5968d" stroke-width="2.71739130" />
+      </g>
+      <rect x="2" y="2" width="92" height="44" rx="4" fill="#e7d4b6" data-role="frame-front" stroke-width="2.71739130" />
+      <path d="M7 7h82v34H7Z" fill="#bce9ff" stroke-width="2.71739130" />
+      <g clip-path="url(#wall-glass)" data-role="glass-scenery">
+        <path d="M9 30q24.0-11 43.2-4t38.400000000000006-3v12H9Z" fill="#9abec6" stroke="none" stroke-width="2.71739130" />
+        <path d="M48.0 8v32M8 24.0h80m-73-8 10-10" stroke="#fff8ef" stroke-width="2.71739130" fill="none" />
+      </g>
+    </g>
+  </g>
+</svg>

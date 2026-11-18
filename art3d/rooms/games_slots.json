@@ -1,0 +1,264 @@
+{
+  "notes": "Apply only in the 3D test copy. All y/scale/phase/anchor/frame/fps/z values stay unchanged. Front furniture faces narrow horizontally to clear the inner wall; character canvases/scales do not change. Use the full per-style slots, prop origins, staff and replacement foreground crops below. Do not apply another shell projection. Original metadata is untouched.",
+  "styles": {
+    "classic": {
+      "slotX": [
+        71.2,
+        138.4,
+        205.6
+      ],
+      "slots": [
+        {
+          "activity": "play",
+          "x": 71.2,
+          "y": 147,
+          "scale": 0.8,
+          "phase": 0,
+          "z": 5
+        },
+        {
+          "activity": "play",
+          "x": 138.4,
+          "y": 147,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "play",
+          "x": 205.6,
+          "y": 147,
+          "scale": 0.8,
+          "phase": 0.67,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_games",
+        "frames": 4,
+        "fps": 4,
+        "x": 245.92,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 57,
+          "y": 113,
+          "width": 50,
+          "height": 3,
+          "z": 7
+        },
+        {
+          "x": 124,
+          "y": 113,
+          "width": 51,
+          "height": 3,
+          "z": 7
+        },
+        {
+          "x": 191,
+          "y": 113,
+          "width": 51,
+          "height": 3,
+          "z": 7
+        }
+      ]
+    },
+    "gold": {
+      "slotX": [
+        71.2,
+        138.4,
+        205.6
+      ],
+      "slots": [
+        {
+          "activity": "play",
+          "x": 71.2,
+          "y": 147,
+          "scale": 0.8,
+          "phase": 0,
+          "z": 5
+        },
+        {
+          "activity": "play",
+          "x": 138.4,
+          "y": 147,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "play",
+          "x": 205.6,
+          "y": 147,
+          "scale": 0.8,
+          "phase": 0.67,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_games",
+        "frames": 4,
+        "fps": 4,
+        "x": 245.92,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 57,
+          "y": 113,
+          "width": 50,
+          "height": 3,
+          "z": 7
+        },
+        {
+          "x": 124,
+          "y": 113,
+          "width": 51,
+          "height": 3,
+          "z": 7
+        },
+        {
+          "x": 191,
+          "y": 113,
+          "width": 51,
+          "height": 3,
+          "z": 7
+        }
+      ]
+    },
+    "pink": {
+      "slotX": [
+        71.2,
+        138.4,
+        205.6
+      ],
+      "slots": [
+        {
+          "activity": "play",
+          "x": 71.2,
+          "y": 147,
+          "scale": 0.8,
+          "phase": 0,
+          "z": 5
+        },
+        {
+          "activity": "play",
+          "x": 138.4,
+          "y": 147,
+          "scale": 0.8,
+          "phase": 0.31,
+          "z": 5
+        },
+        {
+          "activity": "play",
+          "x": 205.6,
+          "y": 147,
+          "scale": 0.8,
+          "phase": 0.67,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_games",
+        "frames": 4,
+        "fps": 4,
+        "x": 245.92,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": [
+        {
+          "x": 57,
+          "y": 113,
+          "width": 50,
+          "height": 3,
+          "z": 7
+        },
+        {
+          "x": 124,
+          "y": 113,
+          "width": 51,
+          "height": 3,
+          "z": 7
+        },
+        {
+          "x": 191,
+          "y": 113,
+          "width": 51,
+          "height": 3,
+          "z": 7
+        }
+      ]
+    }
+  },
+  "effectTransform": {
+    "scaleX": 0.84,
+    "translateX": 46,
+    "scaleY": 1,
+    "translateY": 0
+  },
+  "slotX": [
+    71.2,
+    138.4,
+    205.6
+  ],
+  "staff": {
+    "key": "chars/staff_games",
+    "frames": 4,
+    "fps": 4,
+    "x": 245.92,
+    "y": 157,
+    "scale": 0.8,
+    "z": 9,
+    "anchor": {
+      "x": 28,
+      "y": 96
+    }
+  },
+  "foreground": [
+    {
+      "x": 57,
+      "y": 113,
+      "width": 50,
+      "height": 3,
+      "z": 7
+    },
+    {
+      "x": 124,
+      "y": 113,
+      "width": 51,
+      "height": 3,
+      "z": 7
+    },
+    {
+      "x": 191,
+      "y": 113,
+      "width": 51,
+      "height": 3,
+      "z": 7
+    }
+  ],
+  "play": [
+    71.2,
+    138.4,
+    205.6
+  ]
+}

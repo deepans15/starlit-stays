@@ -1,0 +1,80 @@
+{
+  "notes": "Apply only in the 3D test copy. All y/scale/phase/anchor/frame/fps/z values stay unchanged. Front furniture faces narrow horizontally to clear the inner wall; character canvases/scales do not change. Use the full per-style slots, prop origins, staff and replacement foreground crops below. Do not apply another shell projection. Original metadata is untouched.",
+  "styles": {
+    "classic": {
+      "slotX": [],
+      "slots": [],
+      "staff": {
+        "key": "chars/staff_maintenance",
+        "frames": 4,
+        "fps": 4,
+        "x": 114.8,
+        "y": 158,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    },
+    "gold": {
+      "slotX": [],
+      "slots": [],
+      "staff": {
+        "key": "chars/staff_maintenance",
+        "frames": 4,
+        "fps": 4,
+        "x": 114.8,
+        "y": 158,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    },
+    "pink": {
+      "slotX": [],
+      "slots": [],
+      "staff": {
+        "key": "chars/staff_maintenance",
+        "frames": 4,
+        "fps": 4,
+        "x": 114.8,
+        "y": 158,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    }
+  },
+  "effectTransform": {
+    "scaleX": 0.8,
+    "translateX": 26,
+    "scaleY": 1,
+    "translateY": 0
+  },
+  "slotX": [],
+  "staff": {
+    "key": "chars/staff_maintenance",
+    "frames": 4,
+    "fps": 4,
+    "x": 114.8,
+    "y": 158,
+    "scale": 0.8,
+    "z": 9,
+    "anchor": {
+      "x": 28,
+      "y": 96
+    }
+  },
+  "foreground": []
+}

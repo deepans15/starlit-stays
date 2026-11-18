@@ -254,6 +254,9 @@
 </style>
 </head>
 <body>
+<script>
+function toggleLook3d(){ try{ if(typeof save==='function') save(); localStorage.setItem('starlit-look3d', window.LOOK3D ? '0' : '1'); }catch(e){} location.reload(); }
+</script>
 <div id="loading"><img class="logo" src="brand/hotel.png?v=1" alt=""><div class="t">★ Starlit Stays ★</div><div class="b"><i id="loadBar"></i></div><div class="s">Opening the doors…</div></div>
 <div id="app">
   <div id="stage">
@@ -293,18 +296,25 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.120"></script>
-<script src="art/items.js?v=0.120"></script>
-<script src="art/reactions.js?v=0.120" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.120" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.120" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.120" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.120" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.120" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.120" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.120" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.120"></script>
-<script src="art/weather.js?v=0.120" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script>
+/* 3D look switch (Menu > 3D look). Saved on this device, NOT in the hotel save. Off = the original flat look. */
+window.LOOK3D = (function(){ try{ return localStorage.getItem('starlit-look3d') === '1'; }catch(e){ return false; } })();
+</script>
+<script src="art3d-list.js?v=0.121" onerror="window.STARLIT_ART3D=[];window.STARLIT_ART3D_SLOTS={}"></script>
+<script src="art3d/roofs/roofs.js?v=0.121" onerror="window.STARLIT_ROOFS=null"></script>
+<script>if(!window.LOOK3D){ window.STARLIT_ART3D = []; window.STARLIT_ART3D_SLOTS = {}; }</script>
+<script src="art/manifest.js?v=0.121"></script>
+<script src="art/items.js?v=0.121"></script>
+<script src="art/reactions.js?v=0.121" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.121" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.121" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.121" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.121" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.121" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.121" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.121" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.121"></script>
+<script src="art/weather.js?v=0.121" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -314,7 +324,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.120';
+const BUILD = '0.121';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -510,7 +520,8 @@ const artReady = new Promise(done => {
   const all = Object.entries(window.STARLIT_ART || {});
   const SHEETS = window.STARLIT_SHEETS || {};
   const sheeted = new Set(); for(const k in SHEETS) for(const f of SHEETS[k].frameKeys) sheeted.add(f);
-  const url = f => 'art/' + f + '?v=' + BUILD;
+  const ART3D = new Set(window.STARLIT_ART3D || []);   // 3D test items from art3d/ (ChatGPT); anything not drawn yet falls back to the original in art/
+  const url = f => (ART3D.has(f) ? 'art3d/' : 'art/') + f + '?v=' + BUILD;
   const loadSheet = (k, cb) => {
     const sh = SHEETS[k], img = new Image();
     img.onload = () => { sh.frameKeys.forEach((fk,i) => { ART[fk] = new SheetFrame(img, (i % sh.cols)*sh.cellW, Math.floor(i / sh.cols)*sh.cellH, sh.cellW, sh.cellH); }); if(cb) cb(); };
@@ -582,6 +593,7 @@ function migrate(s){
   s.rooms = (s.rooms||[]).filter(r=>ROOMS[r.type]);
   for(const r of s.rooms){ r.items = (r.items||[]).filter(it=>ITEMS[it.id]); for(const it of r.items) itemUid = Math.max(itemUid, (it.u||0)+1); }
   s.storage = s.storage || []; s.inv = s.inv || {};
+  s.roofStyle = s.roofStyle || 'classic'; s.roofsOwned = (s.roofsOwned && s.roofsOwned.length) ? s.roofsOwned : ['classic'];   // roof designs (0.121+): older saves keep the classic teal roof
   if(!s.xpCurve){   // levels got slower in 0.88: keep each player at the same level and the same fraction through it
     const old = k => k<=1 ? 0 : Math.floor(25*Math.pow(k-1,1.6)), xp = s.xp||0; let lv = 1; while(xp >= old(lv+1)) lv++;
     s.xp = Math.round(xpCurve(lv) + (xp-old(lv))/(old(lv+1)-old(lv))*(xpCurve(lv+1)-xpCurve(lv))); s.xpCurve = 2;
@@ -1189,18 +1201,22 @@ function draw(dt){
 
   ctx.setTransform(dpr*s,0,0,dpr*s,dpr*ox,dpr*oy);
   const p = plot(), gy = groundY(), bb = buildBounds(0);
-  // hotel sign above the tallest part of the building
-  const sx = (bb.x0 + bb.x1)/2, sy = TOP + (WORLD_F - bb.f1)*FLOOR - 30;
-  ctx.fillStyle = '#2b2340'; rr(sx - 90, sy - 13, 180, 26, 13); ctx.fill();
-  ctx.fillStyle = '#ffc94d'; ctx.font = 'bold 14px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.fillText('★ ' + (S.name||'My Hotel') + ' ★', sx, sy);
+  if(!window.LOOK3D){   // hotel sign above the tallest part of the building (the 3D look writes the name on the roof instead)
+    const sx = (bb.x0 + bb.x1)/2, sy = TOP + (WORLD_F - bb.f1)*FLOOR - 30;
+    ctx.fillStyle = '#2b2340'; rr(sx - 90, sy - 13, 180, 26, 13); ctx.fill();
+    ctx.fillStyle = '#ffc94d'; ctx.font = 'bold 14px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('★ ' + (S.name||'My Hotel') + ' ★', sx, sy);
+  }
   const cov = coverage();
   const dragId = ui.drag && ui.drag.moved ? ui.drag.room.id : null;
+  drawExtrusions(dragId);
   for(const r of S.rooms) if(r.id!==dragId){   // rooms far off screen are skipped: big hotels stay smooth on phones
     const q = visRect(r), sl = q.x*s+ox, st = q.y*s+oy;
     if(sl > W+80 || sl + q.w*s < -80 || st > H+80 || st + q.h*s < -80) continue;
     drawRoom(r, cov.covered.has(r.id)); }
   drawRoofs(dragId);
+  drawSlabs(dragId);
+  roofSign();
   // sidewalk
   ctx.fillStyle = '#5f6672'; ctx.fillRect(-2000, gy+SIDEWALK, worldW()+4000, 2000);
   ctx.fillStyle = '#9aa1ad'; ctx.fillRect(-2000, gy, worldW()+4000, SIDEWALK);
@@ -1218,7 +1234,9 @@ function draw(dt){
     drawDropSpot();
     const r = ui.drag.room;
     ctx.save(); ctx.shadowColor='rgba(43,35,64,.45)'; ctx.shadowBlur=24; ctx.shadowOffsetY=10;
-    const q = visRect(r); ctx.fillStyle='#fff'; ctx.fillRect(q.x+2,q.y+2,q.w-4,q.h-4); ctx.restore();
+    const q = visRect(r), openA = ROOM_LAYOUT[r.type] && ROOM_LAYOUT[r.type].openAir;
+    let back = 'rgba(43,35,64,.3)'; if(!openA){ try{ back = wallTone(r) || back; }catch(e){} }   // 3D copy: backing in the room's own tone, not a white card
+    ctx.fillStyle = window.LOOK3D ? back : '#fff'; ctx.fillRect(q.x+2,q.y+2,q.w-4,q.h-4); ctx.restore();
     drawRoom(r, cov.covered.has(r.id));
     drawAmenityGuests(r.id);
   }
@@ -1254,7 +1272,7 @@ function drawLobby(r, x, y, w){
   }
   const bt = time % 4, half = art('chars/clerk_blink_1') ? 'chars/clerk_blink_1' : 'chars/clerk_blink', shut = art('chars/clerk_blink_2') ? 'chars/clerk_blink_2' : 'chars/clerk_blink';
   const clerkKey = !art(shut) ? 'chars/clerk' : bt < 0.08 ? half : bt < 0.24 ? shut : bt < 0.32 ? half : 'chars/clerk';
-  if(art('rooms/lobby')){ ctx.save(); ctx.beginPath(); ctx.rect(x, y, 100, 52); ctx.clip(); sprite(clerkKey, x+16, y+FLOOR-66, 28, 48); ctx.restore(); }
+  if(art('rooms/lobby')){ ctx.save(); ctx.beginPath(); ctx.rect(x, y, 100, 52); ctx.clip(); sprite(clerkKey, x+16+(r.style && SHELL3D(r.style+'_lobby') ? 13 : 0), y+FLOOR-66, 28, 48); ctx.restore(); }
   else if(!sprite(clerkKey, x+14, y+FLOOR-62, 28, 48)) drawBean(x+28, y+FLOOR-38, {color:'#5e60ce', hat:true, alpha:1}, 0.8, true);
   if(!art('rooms/lobby')){ ctx.fillStyle='#a0522d'; rr(x+8, y+FLOOR-34, 40, 22, 4); ctx.fill(); ctx.fillStyle='#ffc94d'; ctx.beginPath(); ctx.arc(x+44, y+FLOOR-38, 4, Math.PI, 0); ctx.fill(); }
   drawElevator(x + w - 34, y + 14);
@@ -1275,6 +1293,263 @@ function drawElevator(x, y){
   ctx.fillStyle = '#ffc94d'; ctx.beginPath(); ctx.arc(dx+dw/2+8, dy+dh/2, 3, 0, Math.PI*2); ctx.fill();
 }
 const ROOM_LAYOUT = {}; for(const l of (window.STARLIT_ROOM_LAYOUTS||[])) if(l && l.id) ROOM_LAYOUT[l.id] = l;
+/* ---- 3D look (test): a gentle oblique view, as if the hotel were a block seen from slightly above and to the right ---- */
+const DEPTH = {dx:22, dy:-16};
+function shadeColor(c, k){   // k > 0 lighter, k < 0 darker
+  const m = /^#?([0-9a-f]{6})$/i.exec(c || ''); if(!m) return c;
+  const n = parseInt(m[1], 16); let r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255; const a = Math.abs(k), t = k < 0 ? 0 : 255;
+  r = Math.round(r*(1-a) + t*a); g = Math.round(g*(1-a) + t*a); b = Math.round(b*(1-a) + t*a); return `rgb(${r},${g},${b})`;
+}
+/* ---- selectable roof designs: data + tiles from art3d/roofs (Classic keeps the original procedural look) ---- */
+const ROOF_IMG = {};
+function roofStyles(){ return (window.STARLIT_ROOFS && window.STARLIT_ROOFS.styles) || []; }
+function roofStyle(){ const id = (S && S.roofStyle) || 'classic'; return roofStyles().find(s => s.id === id) || null; }
+function roofImg(p){ if(!p) return null; let i = ROOF_IMG[p]; if(!i){ i = ROOF_IMG[p] = new Image(); i.src = 'art3d/' + p + '?v=' + BUILD; } return i.complete && i.naturalWidth ? i : null; }
+function roofPattern(st, key, m){   // a repeating tile for the roof surface, mapped by the matrix m = [a,b,c,d,e,f] (art is shown at half size)
+  const img = roofImg(st.files[key]); if(!img) return null; const p = ctx.createPattern(img, 'repeat'); if(!p) return null;
+  try{ p.setTransform(new DOMMatrix(m)); }catch(e){}
+  return p;
+}
+function roofHalo(){   // outline round the hotel name: dark for light text (classic, winter), light cream for dark text (gold)
+  const c = roofSignColor(), m = /^#?([0-9a-f]{6})$/i.exec(c), n = m ? parseInt(m[1],16) : 0xffe08a, lum = (n>>16&255)*0.3 + (n>>8&255)*0.59 + (n&255)*0.11;
+  return lum < 120 ? 'rgba(255,244,214,.95)' : 'rgba(14,52,48,.9)';
+}
+function roofSignColor(){ const st = roofStyle(); return (st && st.id !== 'classic' && st.colors.sign) || '#ffe08a'; }
+function roofSign(){   // hotel name on the front gable of the highest, widest roof
+  const g = window.__roofSign; if(!g) return; const name = '★ ' + (S.name||'My Hotel') + ' ★', avail = g.half*2 - 10; let fs = 15;
+  ctx.save(); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = 'bold '+fs+'px system-ui'; const wd = ctx.measureText(name).width; if(wd > avail) fs = Math.max(8, Math.floor(fs*avail/wd));
+  ctx.font = 'bold '+fs+'px system-ui'; ctx.lineJoin = 'round'; ctx.lineWidth = 3.5; ctx.strokeStyle = roofHalo(); ctx.strokeText(name, g.x, g.y); ctx.fillStyle = roofSignColor(); ctx.fillText(name, g.x, g.y); ctx.restore();
+}
+function drawSlabs(dragId){
+  if(!window.LOOK3D) return;
+  // a stone floor slab under every room above the ground floor, so it looks built on something instead of hanging; its edge runs back along an open right side
+  const {dx, dy} = DEPTH, th = 6, occW = window.__occW || new Set();
+  ctx.save(); ctx.lineJoin = 'round'; ctx.lineWidth = 1.1; ctx.strokeStyle = 'rgba(43,35,64,.7)';
+  for(const r of S.rooms){
+    if(r.id===dragId || r.f<=0) continue;
+    const isTree = !!(ROOM_LAYOUT[r.type] && ROOM_LAYOUT[r.type].openAir);   // a treehouse's tree stands on the room below: the slab goes where the tree meets it
+    const q = visRect(r), yb = q.y + q.h, xl = q.x - 1, xr = q.x + q.w + 1, openR = !isTree && !(window.__occ3d && window.__occ3d.has(r.f+','+(r.c+ROOMS[r.type].w)));   // no end edge on a treehouse's ledge   // a treehouse next to another treehouse has nothing sticking out between them
+    // the ledge's end edge takes the room's own outer-wall colour (same lift for very dark rooms), so wall and ledge meet in one colour
+    let endCol = '#4c4160', lipCol = '#8a7aa2';
+    try{ let rgb = null; const s = String((r.wall && r.wallColor) || wallTone(r) || ''), mh = /^#?([0-9a-f]{6})$/i.exec(s), mr = /rgba?\(\s*(\d+)\D+(\d+)\D+(\d+)/i.exec(s);
+      if(mh){ const n = parseInt(mh[1],16); rgb = [n>>16&255, n>>8&255, n&255]; } else if(mr) rgb = [+mr[1], +mr[2], +mr[3]];
+      if(rgb){ if(rgb[0]*0.3 + rgb[1]*0.59 + rgb[2]*0.11 < 95){ const tc = [150,125,175]; rgb = rgb.map((v,i) => Math.round(v*0.5 + tc[i]*0.5)); }
+        endCol = `rgb(${rgb.map(v => Math.round(v*0.74)).join(',')})`; lipCol = `rgb(${rgb.map(v => Math.round(v*0.88)).join(',')})`; } }catch(e){}
+    // a real ledge: a lit top surface sticking out in front, a thick front face, a dark right end, and a shadow underneath
+    const lean = isTree ? 5 : 3, fy = yb + 1, ft = isTree ? 12 : 7, fl = xl - lean - (isTree ? 3 : 0), fr = xr - lean + (isTree ? 3 : 0);   // under a treehouse: a thicker, wider base so the tree visibly stands on the room
+    if(openR){ ctx.fillStyle = endCol; ctx.beginPath(); ctx.moveTo(xr, yb-3); ctx.lineTo(xr+dx, yb-3+dy); ctx.lineTo(xr+dx, yb+4+dy); ctx.lineTo(xr, yb+4); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = lipCol; ctx.beginPath(); ctx.moveTo(xr, yb-3); ctx.lineTo(xr+dx, yb-3+dy); ctx.lineTo(xr+dx-2, yb-1+dy); ctx.lineTo(xr, yb-1); ctx.closePath(); ctx.fill(); }   // lit top edge running back
+    { let sg = ctx.createLinearGradient(0, fy+ft, 0, fy+ft+9); sg.addColorStop(0, 'rgba(15,8,30,.4)'); sg.addColorStop(1, 'rgba(15,8,30,0)'); ctx.fillStyle = sg; ctx.fillRect(fl+2, fy+ft, fr-fl, 9); }
+    ctx.fillStyle = isTree ? '#b3a5c9' : '#9486ad'; ctx.beginPath(); ctx.moveTo(xl, yb-3); ctx.lineTo(xr, yb-3); ctx.lineTo(fr, fy); ctx.lineTo(fl, fy); ctx.closePath(); ctx.fill(); ctx.stroke();   // top surface
+    ctx.fillStyle = endCol; ctx.beginPath(); ctx.moveTo(fr, fy); ctx.lineTo(xr, yb-3); ctx.lineTo(xr, yb+4); ctx.lineTo(fr, fy+ft); ctx.closePath(); ctx.fill(); ctx.stroke();   // right end
+    let fg = ctx.createLinearGradient(0, fy, 0, fy+ft); fg.addColorStop(0, '#6a5b80'); fg.addColorStop(1, '#52466a'); ctx.fillStyle = fg; ctx.fillRect(fl, fy, fr-fl, ft); ctx.strokeRect(fl, fy, fr-fl, ft);   // front face
+    ctx.fillStyle = 'rgba(255,255,255,.28)'; ctx.fillRect(fl+1, fy+0.5, fr-fl-2, 1.3);   // lit front edge
+    if(isTree) continue;
+    const h = hOf(r.type), openTop = !(window.__occ3d && [...Array(ROOMS[r.type].w).keys()].some(i => window.__occ3d.has((r.f+h)+','+(r.c+i))));
+    if(openTop){   // nothing above: close the top with a ceiling beam and a soft shadow under it, so the room is a closed box under its roof
+      const yt = q.y;
+      let g = ctx.createLinearGradient(0, yt, 0, yt+14); g.addColorStop(0, 'rgba(25,12,45,.5)'); g.addColorStop(1, 'rgba(25,12,45,0)'); ctx.fillStyle = g; ctx.fillRect(q.x, yt+4, q.w, 12);
+      ctx.fillStyle = '#6a5b80'; ctx.fillRect(xl, yt-1, xr-xl, 6); ctx.strokeRect(xl, yt-1, xr-xl, 6);
+      ctx.fillStyle = 'rgba(255,255,255,.18)'; ctx.fillRect(xl+1, yt-0.5, xr-xl-2, 1.5);
+    }
+  }
+  ctx.restore();
+}
+function drawExtrusions(dragId){
+  if(!window.LOOK3D){ window.__occ3d = null; window.__occW = null; window.__roofSign = null; return; }   // 3D look off: original flat hotel
+  const occ = new Set();
+  for(const r of S.rooms){ if(r.id===dragId) continue; const d = ROOMS[r.type], h = hOf(r.type); for(let i=0;i<d.w;i++) for(let j=0;j<h;j++) occ.add((r.f+j)+','+(r.c+i)); }
+  window.__occ3d = occ;
+  const occW = new Set();   // walls only: an open-air treehouse is not a neighbour, so the room beside it shows its outer wall
+  for(const r of S.rooms){ if(r.id===dragId || (ROOM_LAYOUT[r.type] && ROOM_LAYOUT[r.type].openAir)) continue; const d = ROOMS[r.type], h = hOf(r.type); for(let i=0;i<d.w;i++) for(let j=0;j<h;j++) occW.add((r.f+j)+','+(r.c+i)); }
+  window.__occW = occW;
+  const {dx, dy} = DEPTH, tops = []; ctx.save(); ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(43,35,64,.7)'; ctx.lineWidth = 1.25;
+  for(const r of S.rooms){   // treehouse floor slab across the gap, drawn FIRST so every wall (e.g. the left neighbour's outer wall) stands in front of it
+    if(r.id===dragId || r.f <= 0 || !(ROOM_LAYOUT[r.type] && ROOM_LAYOUT[r.type].openAir)) continue;
+    const d = ROOMS[r.type], h = hOf(r.type), q = visRect(r), yb = q.y + q.h, y1 = yb - FLOOR_PAD - 10, x1 = q.x, x2 = q.x + q.w;
+    const cb = (r.wall && r.wallColor) || ROOM_LAYOUT[r.type].wallPalette || '#bfd5c6', sg = ctx.createLinearGradient(x2, 0, x2+dx, 0); sg.addColorStop(0, shadeColor(cb, -0.2)); sg.addColorStop(1, shadeColor(cb, -0.34));
+    const rightRoom = occ.has(r.f+','+(r.c+d.w)) || occ.has((r.f+h-1)+','+(r.c+d.w)) || occ.has((r.f+1)+','+(r.c+d.w)), xe = rightRoom ? x2 + dx + 22 : x2;   // with a room on the right the slab runs on, hidden behind that room; with nothing there it just ends
+    // the slab is a floor plane seen from above (as drawn by the user): front edge on the stone ledge, left corner slanting up and back to the right, back edge higher, running on behind the right room's roof
+    const depth = 18, tx = 26, yf = yb - 1, yk = yf - depth;
+    let fg = ctx.createLinearGradient(0, yk, 0, yf); fg.addColorStop(0, shadeColor(cb, -0.12)); fg.addColorStop(1, shadeColor(cb, -0.02));
+    ctx.fillStyle = fg; ctx.beginPath(); ctx.moveTo(x1, yf); ctx.lineTo(xe, yf); ctx.lineTo(xe+tx, yk); ctx.lineTo(x1+tx, yk); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.2)'; ctx.fillRect(x1, yf-1.5, xe-x1, 1.5);   // lit front edge
+    /* no right-hand edge on the treehouse slab (not required) */ }
+  for(const r of S.rooms){
+    if(r.id===dragId) continue;
+    const d = ROOMS[r.type], h = hOf(r.type), q = visRect(r), base = d.kind==='lobby' ? '#d8b98a' : (r.wall ? r.wallColor : d.color);
+    for(let i=0;i<d.w;i++) if(!occ.has((r.f+h)+','+(r.c+i))) tops.push({f:r.f+h-1, c:r.c+i, open:!!(ROOM_LAYOUT[r.type] && ROOM_LAYOUT[r.type].openAir)});   // nothing above this column: it gets a roof
+    const open = ROOM_LAYOUT[r.type] && ROOM_LAYOUT[r.type].openAir;   // treehouses are open-air: no side wall
+    if(open){   // treehouse: the outer wall belongs to the cabin only (not the tree under it), and is solid
+      if(!occ.has((r.f+h-1)+','+(r.c+d.w))){   // a treehouse next to another treehouse (or any room) has no outer wall between them
+        const L = ROOM_LAYOUT[r.type], k = q.w / L.width, cy = q.y, ch = (L.guestBaseline||156)*k + FLOOR_PAD, sx = q.x+q.w, cb = (r.wall && r.wallColor) || L.wallPalette || '#bfd5c6';
+        const gt = ctx.createLinearGradient(sx, 0, sx+dx, 0); gt.addColorStop(0, shadeColor(cb, -0.2)); gt.addColorStop(1, shadeColor(cb, -0.34)); ctx.fillStyle = gt;
+        ctx.beginPath(); ctx.moveTo(sx, cy); ctx.lineTo(sx+dx, cy+dy); ctx.lineTo(sx+dx, cy+ch+dy); ctx.lineTo(sx, cy+ch); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = 'rgba(255,255,255,.14)'; ctx.fillRect(sx, cy, 1.5, ch); }
+      continue; }
+    for(let j=0;j<h;j++) if(!occW.has((r.f+j)+','+(r.c+d.w))){   // side wall: nothing to the right of this floor
+      const y = q.y + (h-1-j)*FLOOR, wallBase = d.kind==='lobby' ? base : (()=>{ try{ return wallTone(r) || base; }catch(e){ return base; } })();   // outer wall = the room's own wall colour, a little darker
+      // very dark rooms (cinema): lift the outer wall so it stands out from the night sky; works for #hex and rgb() colours
+      let rgb = null; { const s = String(wallBase||''), mh = /^#?([0-9a-f]{6})$/i.exec(s), mr = /rgba?\(\s*(\d+)\D+(\d+)\D+(\d+)/i.exec(s); if(mh){ const n = parseInt(mh[1],16); rgb = [n>>16&255, n>>8&255, n&255]; } else if(mr) rgb = [+mr[1], +mr[2], +mr[3]]; }
+      if(!rgb) rgb = [120,100,150];
+      if(rgb[0]*0.3 + rgb[1]*0.59 + rgb[2]*0.11 < 95){ const t = 0.5, tc = [150,125,175]; rgb = rgb.map((v,i) => Math.round(v*(1-t) + tc[i]*t)); }
+      const dk = (k) => `rgb(${rgb.map(v => Math.round(v*(1-k))).join(',')})`;
+      const sx = q.x+q.w, g2 = ctx.createLinearGradient(sx, 0, sx+dx, 0); g2.addColorStop(0, dk(0.12)); g2.addColorStop(1, dk(0.26));
+      ctx.fillStyle = g2;
+      ctx.beginPath(); ctx.moveTo(sx, y); ctx.lineTo(sx+dx, y+dy); ctx.lineTo(sx+dx, y+FLOOR+dy); ctx.lineTo(sx, y+FLOOR); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,.14)'; ctx.fillRect(sx, y, 1.5, FLOOR);   // lit near corner
+      ctx.strokeStyle = 'rgba(25,12,45,.28)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(sx, y+FLOOR-9); ctx.lineTo(sx+dx, y+FLOOR-9+dy); ctx.stroke(); ctx.strokeStyle = 'rgba(43,35,64,.7)'; ctx.lineWidth = 1.25; }   // baseboard
+  }
+  // ---- roofs: a gabled roof with an overhang on every run of neighbouring columns (front gable, tiled slope on the right, ridge going back) ----
+  window.__roofSign = null;
+  const byFloor = new Map(), openCols = new Set(); for(const t of tops){ if(!byFloor.has(t.f)) byFloor.set(t.f, []); byFloor.get(t.f).push(t.c); if(t.open) openCols.add(t.f+','+t.c); }
+  for(const [f, cols] of byFloor){
+    cols.sort((a,b)=>a-b);
+    let i = 0;
+    while(i < cols.length){
+      let j = i; while(j+1 < cols.length && cols[j+1] === cols[j] + 1) j++;
+      const n = j - i + 1, x0 = BX + cols[i]*CELL, W = n*CELL, baseY = TOP + (WORLD_F - f - 1)*FLOOR, e = 3, Hr = Math.min(52, 22 + W*0.2), ax = x0 + W/2, ay = baseY - Hr;
+      const upperBeside = occ.has((f+1)+','+(cols[i]-1)) || occ.has((f+1)+','+(cols[j]+1));
+      if(false && upperBeside){   // (disabled at the user's request: roofs stay gabled) a room stands on part of this room's top (e.g. one guest room on a 3-wide lobby): the exposed part is a flat roof, so the upper room sits on it instead of floating beside a gable
+        const fx0 = x0 - 2, fx1 = x0 + W + 2, th = 6;
+        ctx.fillStyle = '#1f6f68'; ctx.beginPath(); ctx.moveTo(fx1, baseY-th); ctx.lineTo(fx1+dx, baseY-th+dy); ctx.lineTo(fx1+dx, baseY+dy); ctx.lineTo(fx1, baseY); ctx.closePath(); ctx.fill(); ctx.stroke();   // right edge of the slab
+        ctx.fillStyle = '#44b8a8'; ctx.beginPath(); ctx.moveTo(fx0, baseY-th); ctx.lineTo(fx1, baseY-th); ctx.lineTo(fx1+dx, baseY-th+dy); ctx.lineTo(fx0+dx, baseY-th+dy); ctx.closePath(); ctx.fill(); ctx.stroke();   // top of the roof
+        ctx.fillStyle = '#2f9a8e'; ctx.fillRect(fx0, baseY-th, fx1-fx0, th); ctx.strokeRect(fx0, baseY-th, fx1-fx0, th);   // front face
+        ctx.fillStyle = '#f3e3c2'; ctx.fillRect(fx0, baseY-2, fx1-fx0, 2);   // trim
+        i = j + 1; continue;
+      }
+      const sg = window.__roofSign, sw = (W/2 + e)*(1-0.3)*1;   // sign goes on the highest roof (the widest if several)
+      const isSign = !sg || f > sg.f || (f === sg.f && W > sg.W); if(isSign) window.__roofSign = {f, W, x:ax, y:baseY - Hr*0.3, half: sw};
+      const rs = roofStyle(), custom = !!(rs && rs.id !== 'classic'), bx = x0+W+e;
+      // right slope (the side of the roof you can see)
+      ctx.fillStyle = custom ? rs.colors.slope : '#1f6f68'; ctx.beginPath(); ctx.moveTo(bx, baseY); ctx.lineTo(ax, ay); ctx.lineTo(ax+dx, ay+dy); ctx.lineTo(bx+dx, baseY+dy); ctx.closePath(); ctx.fill();
+      if(custom){   // the style's slope tile, laid along the ridge direction and down the slope, clipped to the slope face
+        const dl = Math.hypot(dx, dy), sl = Math.hypot(ax-bx, Hr), pat = roofPattern(rs, 'slopeTile', [dx/dl*0.5, dy/dl*0.5, -(ax-bx)/sl*0.5, Hr/sl*0.5, bx, baseY]);
+        if(pat){ ctx.save(); ctx.beginPath(); ctx.moveTo(bx, baseY); ctx.lineTo(ax, ay); ctx.lineTo(ax+dx, ay+dy); ctx.lineTo(bx+dx, baseY+dy); ctx.closePath(); ctx.clip(); ctx.fillStyle = pat; ctx.fillRect(Math.min(bx, ax) - 2, ay + dy - 2, Math.abs(ax-bx) + dx + 6, Hr + Math.abs(dy) + 6); ctx.restore(); }
+      }
+      ctx.beginPath(); ctx.moveTo(bx, baseY); ctx.lineTo(ax, ay); ctx.lineTo(ax+dx, ay+dy); ctx.lineTo(bx+dx, baseY+dy); ctx.closePath(); ctx.stroke();
+      if(!custom){ ctx.strokeStyle = 'rgba(10,50,48,.45)'; ctx.lineWidth = 1; for(let k=1;k<=3;k++){ const t = k/4; ctx.beginPath(); ctx.moveTo(x0+W+e + (ax-(x0+W+e))*t, baseY - Hr*t); ctx.lineTo(x0+W+e + (ax-(x0+W+e))*t + dx, baseY - Hr*t + dy); ctx.stroke(); } }
+      ctx.strokeStyle = 'rgba(43,35,64,.7)'; ctx.lineWidth = 1.25;
+      // front gable
+      ctx.fillStyle = custom ? rs.colors.front : '#2f9a8e'; ctx.beginPath(); ctx.moveTo(x0-e, baseY); ctx.lineTo(x0+W+e, baseY); ctx.lineTo(ax, ay); ctx.closePath(); ctx.fill();
+      if(custom){ const pat = roofPattern(rs, 'frontTile', [0.5, 0, 0, 0.5, x0-e, baseY - Hr/2*0 ]);
+        if(pat){ ctx.save(); ctx.beginPath(); ctx.moveTo(x0-e, baseY); ctx.lineTo(x0+W+e, baseY); ctx.lineTo(ax, ay); ctx.closePath(); ctx.clip(); ctx.fillStyle = pat; ctx.fillRect(x0-e, ay-1, W+2*e, Hr+2); ctx.restore(); } }
+      ctx.beginPath(); ctx.moveTo(x0-e, baseY); ctx.lineTo(x0+W+e, baseY); ctx.lineTo(ax, ay); ctx.closePath(); ctx.stroke();
+      if(!custom){ ctx.strokeStyle = 'rgba(10,50,48,.35)'; ctx.lineWidth = 1; for(let k=1;k<=3;k++){ const t = k/4, yy = baseY - Hr*t, half = (W/2 + e)*(1-t); ctx.beginPath(); ctx.moveTo(ax-half, yy); ctx.lineTo(ax+half, yy); ctx.stroke(); } }
+      ctx.strokeStyle = 'rgba(43,35,64,.7)'; ctx.lineWidth = 1.25;
+      // eave trim along the bottom, a small window in a wide gable, and a ridge cap
+      ctx.fillStyle = custom ? rs.colors.trim : '#f3e3c2'; ctx.fillRect(x0-e, baseY-2, W+2*e, 3);
+      if(custom){ const pat = roofPattern(rs, 'eave', [0.5, 0, 0, 0.5, x0-e, baseY-2]); if(pat){ ctx.fillStyle = pat; ctx.fillRect(x0-e, baseY-2, W+2*e, 3); } }
+      ctx.strokeRect(x0-e, baseY-2, W+2*e, 3);
+      if(false){ ctx.fillStyle = '#ffd35a'; ctx.beginPath(); ctx.arc(ax, baseY - Hr*0.38, 6, Math.PI, 0); ctx.lineTo(ax+6, baseY-Hr*0.38+8); ctx.lineTo(ax-6, baseY-Hr*0.38+8); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+      i = j + 1;
+    }
+  }
+  ctx.restore();
+}
+/* Rooms that are one picture (chill room, gym, cinema, pool, closets...): the picture becomes the BACK WALL of a real box.
+   Its content (art, staff, guests, props) is drawn slightly smaller inside the box, with solid side walls, a ceiling and a wooden floor around it. */
+const SHELL3D = t => (window.STARLIT_ART3D||[]).includes('rooms/'+t+'.svg');   // rooms ChatGPT has redrawn with the left wall painted in: drawn as they are, no squeeze or overlay
+const BOXED = r => { if(!window.LOOK3D || SHELL3D(r.type)) return false; const k = ROOMS[r.type].kind; return (k==='amenity' || k==='service') && !(ROOM_LAYOUT[r.type] && ROOM_LAYOUT[r.type].openAir); };
+function sideOpen(r){   // is there open air beside the room (nothing in the cell to the left / right)? one open floor is enough
+  const occ = window.__occ3d; if(!occ || !r) return {l:true, r:true}; const d = ROOMS[r.type], h = hOf(r.type); let l = false, rt = false;
+  for(let j=0;j<h;j++){ if(!occ.has((r.f+j)+','+(r.c-1))) l = true; if(!occ.has((r.f+j)+','+(r.c+d.w))) rt = true; }
+  return {l, r:rt};
+}
+function leftDepth(r, w){ return ROOMS[r.type].kind==='lobby' ? 14 : Math.min(w >= 200 ? 28 : 21, w*0.14); }   // every room is a cube: the same depth of left inner wall everywhere (the right neighbour's wall shows on our right)
+const __tone = {};
+function wallTone(r){   // colour of the room's own wall: wallpaper if it has one, otherwise sampled from the room picture, so it always matches
+  if(r.wall && r.wallColor) return r.wallColor;
+  const kind = ROOMS[r.type].kind;
+  const key = 'rooms/' + (r.style ? r.style+'_' : '') + r.type, img = art(key) || art('rooms/'+r.type);
+  if(kind==='lobby' && !img) return '#d8b98a';
+  if(!img) return ROOMS[r.type].color;
+  if(__tone[key]) return __tone[key];
+  try{ const c = document.createElement('canvas'); c.width = c.height = 1; const k = c.getContext('2d'), iw = img.naturalWidth||img.width, ih = img.naturalHeight||img.height;
+    k.drawImage(img, iw*0.04, ih*0.12, iw*0.12, ih*0.3, 0, 0, 1, 1); const d = k.getImageData(0,0,1,1).data;
+    if(d[3] < 200) return ROOMS[r.type].color; return __tone[key] = '#' + [d[0],d[1],d[2]].map(v=>v.toString(16).padStart(2,'0')).join(''); }catch(e){ return ROOMS[r.type].color; }
+}
+const __ftone = {};
+function floorTone(r){   // colour of the floor in the room's picture (sampled low on the picture), so the bottom-left corner continues the same floor
+  const key = 'rooms/' + (r.style ? r.style+'_' : '') + r.type, img = art(key) || art('rooms/'+r.type); if(!img) return '#b98a5a';
+  if(__ftone[key]) return __ftone[key];
+  try{ const c = document.createElement('canvas'); c.width = c.height = 1; const k = c.getContext('2d'), iw = img.naturalWidth||img.width, ih = img.naturalHeight||img.height;
+    k.drawImage(img, iw*0.12, ih*0.955, iw*0.12, ih*0.03, 0, 0, 1, 1); const d = k.getImageData(0,0,1,1).data;
+    if(d[3] < 200) return '#b98a5a'; return __ftone[key] = '#' + [d[0],d[1],d[2]].map(v=>v.toString(16).padStart(2,'0')).join(''); }catch(e){ return '#b98a5a'; }
+}
+const FLOOR_EDGE = {lobby:10, noodle:17, fit:17, closet:17, maintenance:15, chill:15};   // px from the bottom where each picture's floor meets its back wall (measured on the left edge of the art)
+function floorEdge(r, w){ return FLOOR_EDGE[r.type] || 15; }
+function boxXf(x, y, w, h, r){ const sL = (!window.LOOK3D || SHELL3D(r.type)) ? 0 : leftDepth(r, w), vb = 0; return {sL, sR:0, vt:0, vb, sx:(w-sL)/w, sy:(h-vb)/h, ox:x+sL, oy:y}; }
+function beginBox(x, y, w, h, r){ const b = boxXf(x, y, w, h, r); ctx.save(); ctx.translate(b.ox, b.oy); ctx.scale(b.sx, b.sy); ctx.translate(-x, -y); return b; }
+function leftWall(r, x, y, w, x0, y1, yb, noFloorLine){   // inner face of the left wall in the room's wall colour, darker toward the back corner, with a corner shadow
+  const base = wallTone(r), poly = (pts) => { ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0], pts[i][1]); ctx.closePath(); ctx.fill(); };
+  let g = ctx.createLinearGradient(x, 0, x0, 0); g.addColorStop(0, shadeColor(base, -0.16)); g.addColorStop(1, shadeColor(base, -0.36)); ctx.fillStyle = g;
+  poly([[x,y],[x0,y],[x0,y1],[x,yb]]);
+  const key = 'rooms/' + (r.style ? r.style+'_' : '') + r.type, img = !r.wall && (art(key) || art('rooms/'+r.type));
+  if(img){   // no wallpaper chosen: the wall carries the picture's own wall design (tiles, brick, trees...), stretched from its left edge and shaded
+    const iw = img.naturalWidth||img.width, ih = img.naturalHeight||img.height, fe = floorEdge(r, w), hh = (y1 - y) + fe;
+    ctx.save(); ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x0,y); ctx.lineTo(x0,y1); ctx.lineTo(x,yb); ctx.closePath(); ctx.clip();
+    const topH = (yb - y) * 0.5;   // only the upper half of the picture's wall is used: furniture at the picture's left edge (chairs, shelves) must never show on the wall
+    ctx.drawImage(img, 0, 0, Math.max(2, iw*0.05), ih*0.5*(y1 - y)/Math.max(1,hh), x, y, x0 - x, topH);
+    ctx.fillStyle = shadeColor(wallTone(r), -0.12); ctx.fillRect(x, y + topH - 0.5, x0 - x, yb - y - topH + 1); ctx.restore();
+    g = ctx.createLinearGradient(x, 0, x0, 0); g.addColorStop(0, 'rgba(40,24,70,.14)'); g.addColorStop(1, 'rgba(40,24,70,.34)'); ctx.fillStyle = g; poly([[x,y],[x0,y],[x0,y1],[x,yb]]); }
+  g = ctx.createLinearGradient(x0 - 6, 0, x0 + 8, 0); g.addColorStop(0, 'rgba(25,12,45,.0)'); g.addColorStop(1, 'rgba(25,12,45,.22)'); ctx.fillStyle = g; ctx.fillRect(x0 - 6, y, 14, y1 - y);   // soft shadow in the back corner
+  { const vg = ctx.createLinearGradient(0, y, 0, y1); vg.addColorStop(0, 'rgba(43,35,64,.12)'); vg.addColorStop(1, 'rgba(43,35,64,.4)');   // the corner edge fades in from the top instead of a hard seam
+    ctx.strokeStyle = vg; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0, y1); ctx.stroke(); }
+  ctx.strokeStyle = 'rgba(43,35,64,.5)'; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(x, yb); ctx.lineTo(x0, y1); if(!noFloorLine) ctx.lineTo(x + w, y1); ctx.stroke();
+}
+function boxCorner(r, x, y, w, h){
+  if(!window.LOOK3D || SHELL3D(r.type)) return;   // back-left corner, drawn over the picture so it is not hidden: shadow falling on the back wall + the vertical edge + the floor joint
+  const b = boxXf(x, y, w, h, r), x0 = x + b.sL, y1 = y + h - floorEdge(r, w); ctx.save();
+  { const key = 'rooms/' + (r.style ? r.style+'_' : '') + r.type, img = art(key) || art('rooms/'+r.type);   // the floor under the left wall is the picture's own floor, so it follows the design exactly
+    ctx.save(); ctx.beginPath(); ctx.moveTo(x, y + h); ctx.lineTo(x0, y1); ctx.lineTo(x0 + 2, y1 + 3); ctx.lineTo(x0 + 2, y + h); ctx.closePath(); ctx.clip();
+    if(img){ const iw = img.naturalWidth||img.width, ih = img.naturalHeight||img.height, fh = y + h - y1, sy0 = ih*(1 - fh/h); ctx.drawImage(img, 0, sy0, Math.max(2, iw*0.02), ih - sy0, x, y1, x0 + 2 - x, fh); }
+    else { ctx.fillStyle = floorTone(r); ctx.fillRect(x, y1, x0 + 2 - x, y + h - y1); }
+    ctx.restore(); }
+  let g = ctx.createLinearGradient(x0, 0, x0 + 16, 0); g.addColorStop(0, 'rgba(25,12,45,.34)'); g.addColorStop(1, 'rgba(25,12,45,0)'); ctx.fillStyle = g; ctx.fillRect(x0, y, 16, y1 - y);
+  g = ctx.createLinearGradient(0, y, 0, y + 14); g.addColorStop(0, 'rgba(25,12,45,.28)'); g.addColorStop(1, 'rgba(25,12,45,0)'); ctx.fillStyle = g; ctx.fillRect(x0, y, w - b.sL, 14);   // shade where the back wall meets the ceiling
+  ctx.strokeStyle = 'rgba(43,35,64,.75)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0, y1); ctx.stroke();
+  ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x, y + h); ctx.lineTo(x0, y1); ctx.stroke();
+  ctx.restore();
+}
+function lobbyCube(r, x, y, w, h){
+  if(!window.LOOK3D) return;
+  // the lobby picture stays unscaled (clerk and queueing guests are placed on it), so the left wall and corner are laid over it
+  const x0 = x + leftDepth(r, w), y1 = y + h - floorEdge(r, w);
+  ctx.save(); let g = ctx.createLinearGradient(0, y, 0, y + h*0.4); g.addColorStop(0, 'rgba(25,12,45,.22)'); g.addColorStop(1, 'rgba(25,12,45,0)'); ctx.fillStyle = g; ctx.fillRect(x, y, w, h*0.45); ctx.restore();
+  leftWall(r, x, y, w, x0, y1, y + h, true); boxCorner(r, x, y, w, h);
+}
+function boxShell(r, x, y, w, h){
+  if(!window.LOOK3D || SHELL3D(r.type)) return;   // the picture already has its own floor, so only the left inner wall is added (no second floor)
+  const b = boxXf(x, y, w, h, r), x0 = x + b.sL, y1 = y + h - floorEdge(r, w), base = wallTone(r);
+  ctx.save(); ctx.fillStyle = shadeColor(base, -0.2); ctx.fillRect(x, y, w, h);
+  leftWall(r, x, y, w, x0, y1, y + h, true);
+  const ft = floorTone(r), fg = ctx.createLinearGradient(0, y1, 0, y + h); fg.addColorStop(0, shadeColor(ft, -0.12)); fg.addColorStop(1, ft); ctx.fillStyle = fg;   // floor continues under the left wall
+  ctx.beginPath(); ctx.moveTo(x, y + h); ctx.lineTo(x0, y1); ctx.lineTo(x0, y + h); ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+function depth3D(r, x, y, w, h, lite){
+  if(!window.LOOK3D) return;   // overlay on rooms drawn as flat pictures
+  const sL = leftDepth(r, w), fl = FLOOR_PAD, x0 = x + sL, y1 = lite ? y + h - fl - 6 : y + h - fl - 10, yb = lite ? y + h - fl + 2 : y + h - fl + 4;
+  ctx.save();
+  let g = ctx.createLinearGradient(0, y, 0, y + h*0.4); g.addColorStop(0, 'rgba(25,12,45,.30)'); g.addColorStop(1, 'rgba(25,12,45,0)'); ctx.fillStyle = g; ctx.fillRect(x, y, w, h*0.45);
+  leftWall(r, x, y, w, x0, y1, yb);
+  if(!lite){   // the inner floor seen from above: wood when the room has a wooden floor, carpet-brown otherwise; furniture stands in the middle of it
+    const wood = !!r.floor; let fg = ctx.createLinearGradient(0, y1, 0, yb); fg.addColorStop(0, wood ? '#c58f58' : '#6e4a31'); fg.addColorStop(1, wood ? '#e6b985' : '#8d6244'); ctx.fillStyle = fg;
+    ctx.beginPath(); ctx.moveTo(x, yb); ctx.lineTo(x0, y1); ctx.lineTo(x+w, y1); ctx.lineTo(x+w, yb); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = wood ? 'rgba(120,76,36,.45)' : 'rgba(40,24,14,.35)'; ctx.lineWidth = 1; ctx.beginPath();
+    for(let i=(r.id*7)%22; i<w; i+=22){ ctx.moveTo(x+i, yb); ctx.lineTo(x0 + i*(x+w-x0)/w, y1); } ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.22)'; ctx.fillRect(x, yb-1, w, 2);   // lit front edge of the floor
+    ctx.strokeStyle = 'rgba(43,35,64,.5)'; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(x, yb); ctx.lineTo(x0, y1); ctx.lineTo(x+w, y1); ctx.stroke(); }
+  ctx.restore();
+}
+function shadow3D(r, x, y, w, h){
+  if(!window.LOOK3D) return;   // soft contact shadows under furniture
+  ctx.save(); ctx.fillStyle = 'rgba(25,12,45,.26)';
+  for(const it of (r.items||[])){ const d = ITEMS[it.id]; if(!d || it.on || !(d.zone==='floor' || d.zone==='bed') || d.back) continue; const cx = x + it.x + d.w/2, cy = y + h - FLOOR_PAD + 1;
+    ctx.beginPath(); ctx.ellipse(cx, cy, d.w*0.52, 3.6, 0, 0, Math.PI*2); ctx.fill(); }
+  ctx.restore();
+}
 function drawRoom(r, covered){
   const def = ROOMS[r.type], q = visRect(r), x=q.x, y=q.y, w=q.w, h=q.h;
   const L = ROOM_LAYOUT[r.type];
@@ -1294,7 +1569,7 @@ function drawRoom(r, covered){
     pulseEdge(r,x,y,w,h); sellEdge(x,y,w,h);
     return;
   }
-  if(def.kind==='lobby'){ drawLobby(r,x,y,w); edge(x,y,w,h); pulseEdge(r,x,y,w,h); sellEdge(x,y,w,h); return; }
+  if(def.kind==='lobby'){ drawLobby(r,x,y,w); if(!SHELL3D(r.style && art('rooms/'+r.style+'_lobby') ? r.style+'_lobby' : 'lobby')) lobbyCube(r,x,y,w,h); edge(x,y,w,h); pulseEdge(r,x,y,w,h); sellEdge(x,y,w,h); return; }
   const bgArt = def.kind==='guest' && !r.wall && sprite('rooms/'+r.type, x, y, w, h);   // ChatGPT's room background until the player picks their own wallpaper / floor
   if(!bgArt){ ctx.fillStyle = r.wall ? r.wallColor : def.color; ctx.fillRect(x,y,w,h); }
   if(bgArt){}
@@ -1302,9 +1577,10 @@ function drawRoom(r, covered){
     else { ctx.fillStyle='rgba(255,255,255,.35)'; for(let i=8;i<w-4;i+=14) ctx.fillRect(x+i, y+2, 5, h-14); } }
   if(def.kind==='guest' || !bgArt) drawFloorBand(r, x, y+h-FLOOR_PAD, w);
   // guest rooms are plain: just walls, floor and whatever furniture the player puts in (a new room only has its bed)
-  if(def.kind==='guest'){ drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,h,'bed'); drawItems(r,x,y,w,h,'front'); drawGuestRoom(r,x,y,w,h,'guest'); }   // the sleeping guest stays in front of the furniture
-  else if(def.kind==='service'){ if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawCloset(r,x,y,w,h); drawStaff(r,x,y,w,h); if(r.type==='closet') drawCoverTag(x,y,w); }
+  if(def.kind==='guest'){ depth3D(r,x,y,w,h); shadow3D(r,x,y,w,h); drawItems(r,x,y,w,h,'back'); drawGuestRoom(r,x,y,w,h,'bed'); drawItems(r,x,y,w,h,'front'); drawGuestRoom(r,x,y,w,h,'guest'); }   // the sleeping guest stays in front of the furniture
+  else if(def.kind==='service'){ boxShell(r,x,y,w,h); beginBox(x,y,w,h,r); if(!((r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h)) || sprite('rooms/'+r.type, x, y, w, h))) drawCloset(r,x,y,w,h); drawStaff(r,x,y,w,h); if(r.type==='closet') drawCoverTag(x,y,w); ctx.restore();  boxCorner(r,x,y,w,h); }
   else {
+    boxShell(r,x,y,w,h); beginBox(x,y,w,h,r);
     const styled = r.style && sprite('rooms/'+r.style+'_'+r.type, x, y, w, h);
     if(styled || sprite('rooms/'+r.type, x, y, w, h)){ const base = styled ? 'rooms/'+r.style+'_'+r.type : 'rooms/'+r.type;   // themed rooms only animate with their own fx frames
       if((r.users||0) > 0){ const fx = animFrame(base, 'fx', 3, 4); if(fx!==base) sprite(fx, x, y, w, h); } }   // steam, screen and ripples only while guests are inside
@@ -1312,6 +1588,7 @@ function drawRoom(r, covered){
     drawStaff(r,x,y,w,h);
     drawItems(r,x,y,w,h,'back'); drawItems(r,x,y,w,h,'front');
     drawAmenityCount(r,x,y,w);
+    ctx.restore(); boxCorner(r,x,y,w,h);
   }
   edge(x,y,w,h);   // same frame on every room, drawn over the art so none look borderless
   ctx.font='bold 10px system-ui'; ctx.textAlign='left'; ctx.textBaseline='middle';
@@ -1590,6 +1867,7 @@ const buildMode = () => panel.style.display==='block' && (ui.panelKind==='build'
 const hideGuests = () => buildMode();   // while building or decorating, guests are only hidden (their state keeps running), so the room is easy to edit
 // a thick roof line wherever a room has open sky above it, like the original's dark building outline
 function drawRoofs(skipId){
+  if(window.LOOK3D) return;   // 3D look: the gabled roofs replace the flat dark bar
   const occ = new Set(); for(const r of S.rooms){ if(r.id===skipId) continue; const d = ROOMS[r.type]; for(let i=0;i<d.w;i++) for(let j=0;j<hOf(r.type);j++) occ.add((r.f+j)+','+(r.c+i)); }
   for(const r of S.rooms){
     if(r.id===skipId) continue;   // treehouse boxes get a roof too: their flat top is the room's top edge
@@ -1693,6 +1971,20 @@ function drawAmenity(r,x,y,w,h){
 const AMENITY_ACTIVITY_DATA = window.STARLIT_AMENITY_ANIMATIONS || null;
 const AMENITY_ACTIVITY_TYPES = new Map((AMENITY_ACTIVITY_DATA?.activities || []).map(a => [a.id, a]));
 const AMENITY_ACTIVITY_ROOMS = new Map((AMENITY_ACTIVITY_DATA?.rooms || []).map(r => [r.id, r]));
+// every other redrawn room family: full per-style slots, staff and replacement foreground crops from art3d/rooms/<family>_slots.json
+for(const [fam, d] of Object.entries(window.STARLIT_ART3D_SLOTS || {})){
+  const L = AMENITY_ACTIVITY_ROOMS.get(fam); if(!L) continue;
+  const apply = (o, st) => { if(!st) return; if(st.slots && st.slots.length) o.slots = st.slots.map(x=>({...x})); if(st.staff) o.staff = {...(o.staff||{}), ...st.staff}; if(st.foreground) o.foreground = st.foreground.map(x=>({...x})); };
+  for(const [style, st] of Object.entries(d.styles || {})){
+    if(style==='classic'){ apply(L, st); continue; }
+    L.styleOverrides = L.styleOverrides || {}; const o = L.styleOverrides[style] = L.styleOverrides[style] || {}; apply(o, st);
+  }
+}
+if(SHELL3D('chill')){   // seats, staff and seat-back crops for ChatGPT's 3D chill room (art3d/rooms/chill_slots.json)
+  const L = AMENITY_ACTIVITY_ROOMS.get('chill'), FG = [[48,132,11,20,0],[99,133,8,19,0],[117,132,11,20,1],[168,133,8,19,1],[186,132,11,20,2],[237,133,8,19,2]].map(([x,y,width,height,forSlot])=>({x,y,width,height,z:7,forSlot}));
+  const fix = o => { if(!o) return; if(o.slots) o.slots.forEach((sl,i)=>{ sl.x = [80,149,218][i] ?? sl.x; }); if(o.foreground) o.foreground = FG.map(f=>({...f})); if(o.staff) o.staff.x = 268; };
+  if(L){ fix(L); for(const k of Object.keys(L.styleOverrides||{})) fix(L.styleOverrides[k]); }
+}
 function drawAmenityGuests(onlyRoomId, excludedRoomId){
   const groups = new Map();
   for(const g of guests){
@@ -1766,6 +2058,7 @@ function drawAmenityGuests(onlyRoomId, excludedRoomId){
     draws.sort((a,b)=>a.z-b.z);
     ctx.save();
     ctx.beginPath(); ctx.rect(q.x,q.y,q.w,q.h); ctx.clip();
+    if(BOXED(room)){ const bx = boxXf(q.x,q.y,q.w,q.h,room); ctx.translate(bx.ox, bx.oy); ctx.scale(bx.sx, bx.sy); ctx.translate(-q.x, -q.y); }
     for(const d of draws){
       if(d.crop){
         const f=d.crop;
@@ -3025,6 +3318,8 @@ function openMenu(){
     <h3>Settings</h3>
     ${aboutRow()}
     <div class="item"><div class="info"><b>📋 Move your hotel</b><div class="meta">Copy a save code here and paste it into the game on another website or browser.</div></div><button class="btn alt" onclick="copySaveCode()">Copy</button><button class="btn alt" onclick="pasteSaveCode()">Paste</button></div>
+    <div class="item"><div class="info"><b>🧊 3D look</b><div class="meta">${window.LOOK3D ? 'On: rooms are cubes with 3D roofs and walls.' : 'Off: the original flat look.'} Switching reloads the game; your hotel is kept.</div></div><button class="btn" onclick="toggleLook3d()">${window.LOOK3D ? 'Turn off' : 'Turn on'}</button></div>
+    ${window.LOOK3D && roofStyles().length ? `<div class="item"><div class="info"><b>🏠 Roof</b><div class="meta">${esc((roofStyle()||{}).name || 'Classic Teal')}</div></div><button class="btn" onclick="openRoofs()">Change</button></div>` : ''}
     <div class="item"><div class="info"><b>🌄 Scenery</b><div class="meta">${S.scene==='auto' ? 'Auto (follows the clock)' : S.scene ? (SCENES.find(b=>b.id===S.scene)||{}).name||'Custom' : 'Classic city'}</div></div><button class="btn" onclick="openScenery()">Change</button></div>
     <div class="item"><div class="info"><b>Guests served</b><div class="meta">${S.served}</div></div></div>
     <div class="item"><div class="info"><b>Guest happiness</b><div class="meta">${Math.round(S.sat*100)}%</div></div></div>
@@ -3281,6 +3576,24 @@ function weatherLayer(which, W, H){
   const f = reduceMotion ? frames[0] : frames[Math.floor(time * (w.fps||8)) % frames.length]; if(!art(f)) return;
   const bw = w.width||960, bh = w.height||540, k = Math.max(W/bw, H/bh);
   ctx.drawImage(art(f), (W-bw*k)/2, (H-bh*k)/2, bw*k, bh*k);
+}
+function openRoofs(){
+  unfocus(); const lv = level(), own = S.roofsOwned || ['classic'], cur = S.roofStyle || 'classic';
+  let html = `<h2>🏠 Roof</h2><div class="sub">Choose how the roof of your hotel looks. Buy a design once and switch any time.</div>`;
+  for(const st of roofStyles()){
+    const owned = own.includes(st.id) || st.price === 0, locked = !owned && st.unlockLevel > lv, on = cur === st.id;
+    let act = on ? `<span class="meta">✓ In use</span>` : owned ? `<button class="btn" onclick="setRoof('${st.id}')">Use</button>` : locked ? `<span class="meta">🔒 Level ${st.unlockLevel}</span>` : `<button class="btn" onclick="buyRoof('${st.id}')">🪙 ${st.price.toLocaleString()}</button>`;
+    html += `<div class="item" style="${on?'border-color:#3fae8c;border-width:3px':''}"><img src="art3d/${st.files.icon}?v=${BUILD}" alt="" style="width:64px;height:64px;flex:none"><div class="info"><b>${esc(st.name)}</b><div class="meta">${esc(st.description)}</div></div>${act}</div>`;
+  }
+  showPanel(html, 'roofs');
+}
+function setRoof(id){ if(!roofStyles().some(s => s.id === id)) return; S.roofStyle = id; save(); toast('🏠 Roof changed'); openRoofs(); }
+function buyRoof(id){
+  const st = roofStyles().find(s => s.id === id); if(!st) return;
+  S.roofsOwned = S.roofsOwned || ['classic']; if(S.roofsOwned.includes(id)){ setRoof(id); return; }
+  if(st.unlockLevel > level()){ toast(`Unlocks at level ${st.unlockLevel}`); return; }
+  if(S.coins < st.price){ toast('Not enough coins'); return; }
+  S.coins -= st.price; S.roofsOwned.push(id); S.roofStyle = id; save(); toast(`🏠 ${st.name} bought!`); openRoofs();
 }
 function openScenery(){
   unfocus(); const lv = level();

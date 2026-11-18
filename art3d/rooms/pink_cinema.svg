@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="336" viewBox="0 0 320 336">
+  <defs>
+    <clipPath id="side-wall">
+      <path d="M0 0H42V198L0 216Z" fill="none" />
+    </clipPath>
+    <clipPath id="canvas">
+      <rect x="0" y="0" width="320" height="336" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#canvas)" stroke="#2b2340" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <g id="room-background">
+      <path d="M0 0h320v336H0Z" fill="#ffe8f1" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M0 301h320v35H0Z" fill="#d986aa" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M0 198h320v138H0Z" fill="#d986aa" stroke="none" />
+      <path d="M0 198h320" fill="none" stroke="#2b2340" stroke-width="2.5" />
+    </g>
+    <g id="left-inner-wall" clip-path="url(#side-wall)">
+      <path d="M0 0H42V198L0 216Z" fill="#ccbac1" stroke="none" />
+      <path d="M0 0H42V10L0 10.909090909090908Z" fill="#2b2340" opacity=".22" stroke="none" />
+    </g>
+    <g id="back-corner-shadow" stroke="none">
+      <rect x="42" y="0" width="3" height="198" fill="#2b2340" opacity="0.12" />
+      <rect x="45" y="0" width="3" height="198" fill="#2b2340" opacity="0.07" />
+      <rect x="48" y="0" width="3" height="198" fill="#2b2340" opacity="0.035" />
+      <rect x="51" y="0" width="3" height="198" fill="#2b2340" opacity="0.01" />
+    </g>
+    <path d="M42 0V198L0 216" fill="none" stroke="#2b2340" stroke-width="2.5" stroke-linecap="butt" />
+    <g id="room-furniture" transform="translate(46 0) scale(0.84 1)">
+      <g id="floor-contact-shadows" stroke="none">
+        <ellipse cx="46.5" cy="262" rx="27" ry="2.4" fill="#2b2340" opacity=".13" />
+        <ellipse cx="120.5" cy="262" rx="27" ry="2.4" fill="#2b2340" opacity=".13" />
+        <ellipse cx="194.5" cy="262" rx="27" ry="2.4" fill="#2b2340" opacity=".13" />
+        <ellipse cx="268.5" cy="262" rx="27" ry="2.4" fill="#2b2340" opacity=".13" />
+        <ellipse cx="46.5" cy="326" rx="27" ry="2.4" fill="#2b2340" opacity=".13" />
+        <ellipse cx="120.5" cy="326" rx="27" ry="2.4" fill="#2b2340" opacity=".13" />
+        <ellipse cx="194.5" cy="326" rx="27" ry="2.4" fill="#2b2340" opacity=".13" />
+      </g>
+      <g id="additional-depth-and-supports" />
+      <rect x="31" y="51" width="258" height="136" rx="7" fill="#2b2340" vector-effect="non-scaling-stroke" />
+      <path d="M280.0 60.0l2 2v116.0l-2 -2Z" fill="#b5a8b6" />
+      <path d="M40.0 176.0h240.0l2 2h-240.0Z" fill="#b5a8b6" />
+      <rect x="40" y="60" width="240" height="116" rx="3" fill="#fff0f6" vector-effect="non-scaling-stroke" />
+      <path d="M42 135q50-52 105-11t131-25v75H42Z" fill="#ffc5de" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M42 155q70-49 132-10t104-13v42H42Z" fill="#ffe0ee" stroke="none" vector-effect="non-scaling-stroke" />
+      <circle cx="220" cy="88" r="16" fill="#fff0f6" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M4 51h22v144H4Zm290 0h22v144h-22Z" fill="#ffc5de" vector-effect="non-scaling-stroke" />
+      <path d="M11 56v132m299-132v132" fill="none" stroke="#eca5c5" stroke-width="3" vector-effect="non-scaling-stroke" />
+      <path d="M14 247h292v16H14Zm0 63h292v19H14Z" fill="#b35f89" vector-effect="non-scaling-stroke" />
+      <path d="M25.0 211.0l5 -5h43.0l-5 5Z" fill="#ffd4e6" />
+      <path d="M68.0 211.0l5 -5v39.0l-5 5Z" fill="#b58ca7" />
+      <rect x="25" y="211" width="43" height="39" rx="10" fill="#ffc5de" vector-effect="non-scaling-stroke" />
+      <path d="M28.0 237.0l5 -5h37.0l-5 5Z" fill="#f1bcd4" />
+      <path d="M65.0 237.0l5 -5v17.0l-5 5Z" fill="#a87896" />
+      <rect x="28" y="237" width="37" height="17" rx="5" fill="#eca5c5" vector-effect="non-scaling-stroke" />
+      <rect x="20" y="232" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <rect x="65" y="232" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <path d="M32 220h22" fill="none" stroke="#ffe0ee" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      <path d="M99.0 211.0l5 -5h43.0l-5 5Z" fill="#ffd4e6" />
+      <path d="M142.0 211.0l5 -5v39.0l-5 5Z" fill="#b58ca7" />
+      <rect x="99" y="211" width="43" height="39" rx="10" fill="#ffc5de" vector-effect="non-scaling-stroke" />
+      <path d="M102.0 237.0l5 -5h37.0l-5 5Z" fill="#f1bcd4" />
+      <path d="M139.0 237.0l5 -5v17.0l-5 5Z" fill="#a87896" />
+      <rect x="102" y="237" width="37" height="17" rx="5" fill="#eca5c5" vector-effect="non-scaling-stroke" />
+      <rect x="94" y="232" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <rect x="139" y="232" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <path d="M106 220h22" fill="none" stroke="#ffe0ee" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      <path d="M173.0 211.0l5 -5h43.0l-5 5Z" fill="#ffd4e6" />
+      <path d="M216.0 211.0l5 -5v39.0l-5 5Z" fill="#b58ca7" />
+      <rect x="173" y="211" width="43" height="39" rx="10" fill="#ffc5de" vector-effect="non-scaling-stroke" />
+      <path d="M176.0 237.0l5 -5h37.0l-5 5Z" fill="#f1bcd4" />
+      <path d="M213.0 237.0l5 -5v17.0l-5 5Z" fill="#a87896" />
+      <rect x="176" y="237" width="37" height="17" rx="5" fill="#eca5c5" vector-effect="non-scaling-stroke" />
+      <rect x="168" y="232" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <rect x="213" y="232" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <path d="M180 220h22" fill="none" stroke="#ffe0ee" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      <path d="M247.0 211.0l5 -5h43.0l-5 5Z" fill="#ffd4e6" />
+      <path d="M290.0 211.0l5 -5v39.0l-5 5Z" fill="#b58ca7" />
+      <rect x="247" y="211" width="43" height="39" rx="10" fill="#ffc5de" vector-effect="non-scaling-stroke" />
+      <path d="M250.0 237.0l5 -5h37.0l-5 5Z" fill="#f1bcd4" />
+      <path d="M287.0 237.0l5 -5v17.0l-5 5Z" fill="#a87896" />
+      <rect x="250" y="237" width="37" height="17" rx="5" fill="#eca5c5" vector-effect="non-scaling-stroke" />
+      <rect x="242" y="232" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <rect x="287" y="232" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <path d="M254 220h22" fill="none" stroke="#ffe0ee" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      <path d="M25.0 275.0l5 -5h43.0l-5 5Z" fill="#ffd4e6" />
+      <path d="M68.0 275.0l5 -5v39.0l-5 5Z" fill="#b58ca7" />
+      <rect x="25" y="275" width="43" height="39" rx="10" fill="#ffc5de" vector-effect="non-scaling-stroke" />
+      <path d="M28.0 301.0l5 -5h37.0l-5 5Z" fill="#f1bcd4" />
+      <path d="M65.0 301.0l5 -5v17.0l-5 5Z" fill="#a87896" />
+      <rect x="28" y="301" width="37" height="17" rx="5" fill="#eca5c5" vector-effect="non-scaling-stroke" />
+      <rect x="20" y="296" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <rect x="65" y="296" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <path d="M32 284h22" fill="none" stroke="#ffe0ee" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      <path d="M99.0 275.0l5 -5h43.0l-5 5Z" fill="#ffd4e6" />
+      <path d="M142.0 275.0l5 -5v39.0l-5 5Z" fill="#b58ca7" />
+      <rect x="99" y="275" width="43" height="39" rx="10" fill="#ffc5de" vector-effect="non-scaling-stroke" />
+      <path d="M102.0 301.0l5 -5h37.0l-5 5Z" fill="#f1bcd4" />
+      <path d="M139.0 301.0l5 -5v17.0l-5 5Z" fill="#a87896" />
+      <rect x="102" y="301" width="37" height="17" rx="5" fill="#eca5c5" vector-effect="non-scaling-stroke" />
+      <rect x="94" y="296" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <rect x="139" y="296" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <path d="M106 284h22" fill="none" stroke="#ffe0ee" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      <path d="M173.0 275.0l5 -5h43.0l-5 5Z" fill="#ffd4e6" />
+      <path d="M216.0 275.0l5 -5v39.0l-5 5Z" fill="#b58ca7" />
+      <rect x="173" y="275" width="43" height="39" rx="10" fill="#ffc5de" vector-effect="non-scaling-stroke" />
+      <path d="M176.0 301.0l5 -5h37.0l-5 5Z" fill="#f1bcd4" />
+      <path d="M213.0 301.0l5 -5v17.0l-5 5Z" fill="#a87896" />
+      <rect x="176" y="301" width="37" height="17" rx="5" fill="#eca5c5" vector-effect="non-scaling-stroke" />
+      <rect x="168" y="296" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <rect x="213" y="296" width="8" height="24" rx="3" fill="#d986aa" vector-effect="non-scaling-stroke" />
+      <path d="M180 284h22" fill="none" stroke="#ffe0ee" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+    </g>
+  </g>
+</svg>

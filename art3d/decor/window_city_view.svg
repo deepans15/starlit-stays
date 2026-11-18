@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="64" viewBox="0 0 88 64">
+  <defs>
+    <clipPath id="wall-glass">
+      <path d="M7 7h74v50H7Z" fill="#ffffff" stroke="none" stroke-width="1.00000000" />
+    </clipPath>
+  </defs>
+  <g transform="translate(3.520000 2.560000) scale(0.92)" data-role="fixed-wall-anchor">
+    <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-role="original-front">
+      <g transform="translate(2.4 2.4)" data-role="frame-thickness">
+        <rect x="2" y="2" width="84" height="60" rx="4" fill="#a5968d" stroke-width="2.71739130" />
+      </g>
+      <rect x="2" y="2" width="84" height="60" rx="4" fill="#e7d4b6" data-role="frame-front" stroke-width="2.71739130" />
+      <path d="M7 7h74v50H7Z" fill="#263958" stroke-width="2.71739130" />
+      <g clip-path="url(#wall-glass)" data-role="glass-scenery">
+        <path d="M8 33h14v24H8Z" fill="#15263c" stroke="none" stroke-width="2.71739130" />
+        <path d="M11 37h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M11 45h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M11 53h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M24 24h12v33H24Z" fill="#15263c" stroke="none" stroke-width="2.71739130" />
+        <path d="M27 28h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M27 36h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M27 44h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M27 52h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M39 39h11v18H39Z" fill="#15263c" stroke="none" stroke-width="2.71739130" />
+        <path d="M42 43h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M42 51h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M53 29h12v28H53Z" fill="#15263c" stroke="none" stroke-width="2.71739130" />
+        <path d="M56 33h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M56 41h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M56 49h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M68 36h12v21H68Z" fill="#15263c" stroke="none" stroke-width="2.71739130" />
+        <path d="M71 40h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <path d="M71 48h3" stroke="#ffc94d" stroke-width="2.17391304" />
+        <circle cx="66" cy="17" r="5" fill="#fff1b8" stroke="none" stroke-width="2.71739130" />
+        <path d="M44.0 8v48M8 32.0h72m-65-8 10-10" stroke="#fff8ef" stroke-width="2.71739130" fill="none" />
+      </g>
+    </g>
+  </g>
+</svg>

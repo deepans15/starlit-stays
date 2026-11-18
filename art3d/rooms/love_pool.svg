@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="168" viewBox="0 0 480 168">
+  <defs>
+    <clipPath id="side-wall">
+      <path d="M0 0H56V93L0 111Z" fill="none" />
+    </clipPath>
+    <clipPath id="canvas">
+      <rect x="0" y="0" width="480" height="168" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#canvas)" stroke="#2b2340" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <g id="room-background">
+      <path d="M0 0h480v168H0Z" fill="#fff0f3" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M0 133h480v35H0Z" fill="#f0dce0" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M0 133h480" fill="none" stroke="#2b2340" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      <path d="M0 93h480v75H0Z" fill="#f0dce0" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M0 107h480" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M0 127h480" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M0 147h480" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M0 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M32 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M64 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M96 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M128 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M160 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M192 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M224 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M256 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M288 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M320 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M352 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M384 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M416 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M448 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M480 94v74" fill="none" stroke="#dfb5c3" stroke-width="2" vector-effect="non-scaling-stroke" />
+    </g>
+    <g id="left-inner-wall" clip-path="url(#side-wall)">
+      <path d="M0 0H56V93L0 111Z" fill="#ccc0c2" stroke="none" />
+      <path d="M0 0H56V10L0 11.935483870967742Z" fill="#2b2340" opacity=".22" stroke="none" />
+    </g>
+    <g id="back-corner-shadow" stroke="none">
+      <rect x="56" y="0" width="3" height="93" fill="#2b2340" opacity="0.12" />
+      <rect x="59" y="0" width="3" height="93" fill="#2b2340" opacity="0.07" />
+      <rect x="62" y="0" width="3" height="93" fill="#2b2340" opacity="0.035" />
+      <rect x="65" y="0" width="3" height="93" fill="#2b2340" opacity="0.01" />
+    </g>
+    <path d="M56 0V93L0 111" fill="none" stroke="#2b2340" stroke-width="2.5" stroke-linecap="butt" />
+    <g id="room-furniture" transform="translate(58 0) scale(0.88 1)">
+      <g id="floor-contact-shadows" stroke="none">
+        <ellipse cx="414" cy="154" rx="44" ry="2.4" fill="#2b2340" opacity=".13" />
+      </g>
+      <g id="additional-depth-and-supports" />
+      <path d="M13.0 103.0l5 -5h339.0l-5 5Z" fill="#fffaf3" />
+      <path d="M352.0 103.0l5 -5v55.0l-5 5Z" fill="#b5adb2" />
+      <rect x="13" y="103" width="339" height="55" rx="11" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+      <path d="M21.0 110.0l5 -5h323.0l-5 5Z" fill="#9ed6ff" />
+      <path d="M344.0 110.0l5 -5v40.0l-5 5Z" fill="#618ebc" />
+      <rect x="21" y="110" width="323" height="40" rx="7" fill="#7ec8ff" vector-effect="non-scaling-stroke" />
+      <path d="M24 136q60-13 114-2t107-1 96-2v16H24Z" fill="#61b5ea" stroke="none" vector-effect="non-scaling-stroke" />
+      <path d="M43 121q14-4 28 0t26 0" fill="none" stroke="#dff4ff" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M124 139q14-4 28 0t26 0" fill="none" stroke="#dff4ff" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M181 119q14-4 28 0t26 0" fill="none" stroke="#dff4ff" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M262 137q14-4 28 0t26 0" fill="none" stroke="#dff4ff" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <g transform="translate(28 0)" data-moved-equipment="ladder">
+        <path d="M305 136v-34q0-9 7-9t7 9v22m15 12v-34q0-9 7-9t7 9v22" fill="none" stroke="#2b2340" stroke-width="5" vector-effect="non-scaling-stroke" />
+      </g>
+      <g transform="translate(28 0)" data-moved-equipment="ladder">
+        <path d="M305 136v-34q0-9 7-9t7 9v22m15 12v-34q0-9 7-9t7 9v22" fill="none" stroke="#fff8ef" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+      </g>
+      <g transform="translate(28 0)" data-moved-equipment="ladder">
+        <path d="M306 116h28m-28 11h28" fill="none" stroke="#fff8ef" stroke-width="3" vector-effect="non-scaling-stroke" />
+      </g>
+      <path d="M380 123l-6 28m74-27 7 27" fill="none" stroke="#2b2340" stroke-width="4" vector-effect="non-scaling-stroke" />
+      <path d="M374 121h48l24-35 10 6-27 40h-55Z" fill="#ce967f" vector-effect="non-scaling-stroke" />
+      <path d="M378 116h42l22-32 8 5-24 35h-48Z" fill="#fff8ef" vector-effect="non-scaling-stroke" />
+      <path d="M384 118h34m8-8 16-24" fill="none" stroke="#ff7a90" stroke-width="4" vector-effect="non-scaling-stroke" />
+      <g>
+        <g transform="translate(83 136) scale(1.35)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        </g>
+        <g transform="translate(83 135) scale(0.65)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#7ec8ff" vector-effect="non-scaling-stroke" />
+        </g>
+        <g transform="translate(391 61) scale(0.6)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        </g>
+        <g transform="translate(425 61) scale(0.6)">
+          <path d="M0 7Q-16-4-10-12-5-18 0-11 5-18 10-12 16-4 0 7Z" fill="#ff7a90" vector-effect="non-scaling-stroke" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

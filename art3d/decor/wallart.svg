@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="44" viewBox="0 0 60 44">
+  <g transform="translate(2.400000 1.760000) scale(0.92)" data-role="fixed-wall-anchor">
+    <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-role="original-front">
+      <g transform="translate(2.2283 1.5326)" data-role="frame-thickness">
+        <rect x="1.25" y="1.25" width="57.5" height="41.5" rx="4" fill="#916a54" stroke-width="2.71739130" />
+      </g>
+      <rect x="1.25" y="1.25" width="57.5" height="41.5" rx="4" fill="#c8915f" data-role="frame-front" stroke-width="2.71739130" />
+      <rect x="6" y="6" width="48" height="32" rx="1.5" fill="#fff8ef" stroke-width="2.71739130" />
+      <path d="M10 10h40v24H10Z" fill="#c8e8ff" stroke="none" stroke-width="2.71739130" />
+      <circle cx="21" cy="18" r="5" fill="#ffc94d" stroke="none" stroke-width="2.71739130" />
+      <path d="M10 30q11-12 24-4l16-6v14H10Z" fill="#6fd3b5" stroke="none" stroke-width="2.71739130" />
+      <path d="M10 34q18-11 40-3v3Z" fill="#43aa8b" stroke="none" stroke-width="2.71739130" />
+      <path d="M5 5h22" fill="none" stroke="#e6b481" stroke-width="2.71739130" />
+    </g>
+  </g>
+</svg>

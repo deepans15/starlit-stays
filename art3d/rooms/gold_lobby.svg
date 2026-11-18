@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="168" viewBox="0 0 480 168">
+  <defs>
+    <clipPath id="side-wall">
+      <path d="M0 0H28V128L0 146Z" fill="none" />
+    </clipPath>
+    <clipPath id="canvas">
+      <rect x="0" y="0" width="480" height="168" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#canvas)" stroke="#2b2340" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <g id="room-background">
+      <path d="M0 0h480v168H0Z" fill="#fff0c7" vector-effect="non-scaling-stroke" />
+      <path d="M0 132h480v36H0Z" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+      <path d="M0 128h480v6H0Z" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+      <path d="M0 128h480" fill="none" stroke="#2b2340" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+    </g>
+    <g id="left-inner-wall" clip-path="url(#side-wall)">
+      <path d="M0 0H28V128L0 146Z" fill="#ccc09f" stroke="none" />
+      <path d="M0 0H28V10L0 11.40625Z" fill="#2b2340" opacity=".22" stroke="none" />
+    </g>
+    <g id="back-corner-shadow" stroke="none">
+      <rect x="28" y="0" width="3" height="128" fill="#2b2340" opacity="0.12" />
+      <rect x="31" y="0" width="3" height="128" fill="#2b2340" opacity="0.07" />
+      <rect x="34" y="0" width="3" height="128" fill="#2b2340" opacity="0.035" />
+      <rect x="37" y="0" width="3" height="128" fill="#2b2340" opacity="0.01" />
+    </g>
+    <path d="M28 0V128L0 146" fill="none" stroke="#2b2340" stroke-width="2.5" stroke-linecap="butt" />
+    <g id="room-furniture" transform="translate(26 0) scale(1 1)">
+      <g id="floor-contact-shadows" stroke="none">
+        <ellipse cx="77" cy="158" rx="68" ry="2.4" fill="#2b2340" opacity=".13" />
+      </g>
+      <g id="additional-depth-and-supports" />
+      <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 104h126v52H13Z" fill="#ffdc85" vector-effect="non-scaling-stroke" />
+        <path d="M127 105h12v51h-12Z" fill="#eac469" stroke="none" vector-effect="non-scaling-stroke" />
+        <rect x="8" y="98" width="136" height="10" rx="3" fill="#ffedb6" vector-effect="non-scaling-stroke" />
+        <path d="M15 101h119" fill="none" stroke="#fff6dd" vector-effect="non-scaling-stroke" />
+        <path d="M23.0 116.0l5 -5h105.0l-5 5Z" fill="#ffe5a4" />
+        <path d="M128.0 116.0l5 -5v30.0l-5 5Z" fill="#b59b6d" />
+        <rect x="23" y="116" width="105" height="30" rx="4" fill="#ffdc85" vector-effect="non-scaling-stroke" />
+        <path d="M17 157h118" fill="none" vector-effect="non-scaling-stroke" />
+      </g>
+    </g>
+  </g>
+</svg>

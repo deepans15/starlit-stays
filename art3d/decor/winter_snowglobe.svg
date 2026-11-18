@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52" height="56" viewBox="0 0 52 56">
+  <g transform="translate(1.25 5.6000000000000005) scale(0.9)">
+    <g stroke="#2b2340" stroke-width="2.777778" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="26" cy="23" r="20" fill="#bce9ff" />
+      <path d="M38 7q11 7 8 20-1 9-9 14 6-15 1-34Z" fill="#89a4bc" stroke="none" opacity=".32" />
+      <path d="M9 34q18-10 34 0l-3 7H12Z" fill="#fff8ef" />
+      <path d="M26 12 17 28h5l-6 9h20l-6-9h5Z" fill="#43aa8b" />
+      <path d="M26 12 21 21h10Z" fill="#fff8ef" />
+      <circle cx="14" cy="17" r="1.5" fill="#fff8ef" stroke="none" />
+      <circle cx="36" cy="23" r="1.5" fill="#fff8ef" stroke="none" />
+      <path d="M13 22q0-9 7-12" fill="none" stroke="#fff8ef" stroke-width="2.777778" />
+      <ellipse cx="27" cy="41" rx="13" ry="2.4" fill="#d6ac87" />
+      <path d="M13 41h26l5 13.75H8Z" fill="#c8915f" />
+      <path d="M46.0 52.0L49.0 49.0V49.75Q49.0 51.75 47.0 51.75L44.0 54.75Q46.0 54.75 46.0 52.75Z" fill="#a5816a" />
+      <path d="M6 52.0Q6 50 8.0 50H44.0Q46.0 50 46.0 52.0L49.0 49.0Q49.0 47 47.0 47H11.0Q9 47 9 49.0Z" fill="#ecc7a0" />
+      <rect x="6" y="50" width="40" height="4.75" rx="2" fill="#e6b481" />
+    </g>
+  </g>
+</svg>

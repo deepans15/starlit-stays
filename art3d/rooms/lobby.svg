@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="168" viewBox="0 0 480 168">
+  <defs>
+    <clipPath id="left-inner-wall">
+      <path d="M0 0H28V128L0 146Z" fill="#ffffff" stroke="none" />
+    </clipPath>
+    <clipPath id="room-canvas">
+      <rect x="0" y="0" width="480" height="168" />
+    </clipPath>
+    <clipPath id="back-corner-shadow">
+      <rect x="28" y="0" width="12" height="128" />
+    </clipPath>
+  </defs>
+  <path d="M0 0h480v168H0Z" fill="#28544b" stroke="none" />
+  <g>
+    <path d="M0 0h480v11H0Z" fill="#2b2340" opacity=".22" stroke="none" />
+    <path d="M0 12h480" stroke="#fff8ef" opacity=".08" stroke-width="2" fill="none" />
+    <g stroke="#a77958" stroke-width="1.2" opacity=".27" fill="none">
+      <path d="M7 12v116m3-116v116" />
+      <path d="M32 12v116m3-116v116" />
+      <path d="M57 12v116m3-116v116" />
+      <path d="M82 12v116m3-116v116" />
+      <path d="M107 12v116m3-116v116" />
+      <path d="M132 12v116m3-116v116" />
+      <path d="M157 12v116m3-116v116" />
+      <path d="M182 12v116m3-116v116" />
+      <path d="M207 12v116m3-116v116" />
+      <path d="M232 12v116m3-116v116" />
+      <path d="M257 12v116m3-116v116" />
+      <path d="M282 12v116m3-116v116" />
+      <path d="M307 12v116m3-116v116" />
+      <path d="M332 12v116m3-116v116" />
+      <path d="M357 12v116m3-116v116" />
+    </g>
+  </g>
+  <g>
+    <g stroke="#507c65" stroke-width="6" fill="none" stroke-linecap="round">
+      <path d="M35 123V48m0 25-21-21m21 35 22-22" />
+      <path d="M108 123V48m0 25-21-21m21 35 22-22" />
+      <path d="M185 123V48m0 25-21-21m21 35 22-22" />
+      <path d="M262 123V48m0 25-21-21m21 35 22-22" />
+      <path d="M325 123V48m0 25-21-21m21 35 22-22" />
+    </g>
+    <g fill="#3b6b55" stroke="none">
+      <path d="M11 57q-12-28 13-33 13-17 29 0 27 8 12 32-22 17-54 1Z" transform="translate(0 20)" />
+      <path d="M84 57q-12-28 13-33 13-17 29 0 27 8 12 32-22 17-54 1Z" transform="translate(0 20)" />
+      <path d="M161 57q-12-28 13-33 13-17 29 0 27 8 12 32-22 17-54 1Z" />
+      <path d="M238 57q-12-28 13-33 13-17 29 0 27 8 12 32-22 17-54 1Z" />
+      <path d="M301 57q-12-28 13-33 13-17 29 0 27 8 12 32-22 17-54 1Z" />
+    </g>
+    <path d="M4 124h348" stroke="#ac8b4c" stroke-width="4" fill="none" />
+  </g>
+  <path d="M0 132h480v36H0Z" fill="#554033" />
+  <path d="M0 128h480v6H0Z" fill="#554033" />
+  <path d="M0 128h480" fill="none" stroke="#2b2340" stroke-width="2.5" />
+  <g>
+    <g stroke="#2b2340" stroke-width="1" opacity=".22" fill="none">
+      <path d="M0 135h480" />
+      <path d="M0 143h480" />
+      <path d="M0 151h480" />
+      <path d="M0 159h480" />
+      <path d="M0 167h480" />
+      <path d="M12 128v40" />
+      <path d="M48 128v40" />
+      <path d="M84 128v40" />
+      <path d="M120 128v40" />
+      <path d="M156 128v40" />
+      <path d="M192 128v40" />
+      <path d="M228 128v40" />
+      <path d="M264 128v40" />
+      <path d="M300 128v40" />
+      <path d="M336 128v40" />
+      <path d="M372 128v40" />
+      <path d="M408 128v40" />
+      <path d="M444 128v40" />
+    </g>
+  </g>
+  <g clip-path="url(#left-inner-wall)" data-role="left-inner-wall">
+    <path d="M0 0H28V128L0 146Z" fill="#20433c" stroke="none" />
+    <path d="M0 0H28V11L0 12.546875Z" fill="#221c33" opacity=".22" stroke="none" />
+    <path d="M0 13.6875L28 12" fill="none" stroke="#ccc6bf" opacity=".08" stroke-width="2" />
+    <g stroke="#866146" stroke-width="1.2" opacity=".27" fill="none">
+      <path d="M5 13.386161L5 142.785714" fill="none" />
+      <path d="M6.5 13.295759L6.5 141.821429" fill="none" />
+      <path d="M17.5 12.632812L17.5 134.75" fill="none" />
+      <path d="M19 12.542411L19 133.785714" fill="none" />
+    </g>
+    <g stroke="#406351" stroke-width="6" fill="none" stroke-linecap="round">
+      <path d="M-5 143.385603L-5 55.955357" fill="none" />
+      <path d="M-5 85.098772L-15.5 63.360491" fill="none" />
+      <path d="M-5 101.419085L6 72.18192" fill="none" />
+      <path d="M31.5 120.837891L31.5 47.15625" fill="none" />
+      <path d="M31.5 71.716797L21 53.828125" fill="none" />
+      <path d="M31.5 85.470703L42.5 60.266462" fill="none" />
+    </g>
+    <path d="M-17 94.402344Q-23 61.550781 -10.5 52.507812Q-4 31.339286 4 49.303571Q17.5 54.742188 10 82.870536Q-1 106.545201 -17 94.402344Z" fill="#2f5644" stroke="none" />
+    <path d="M19.5 80.287109Q13.5 52.568359 26 44.441964Q32.5 26.389788 40.5 41.237723Q54 45.209821 46.5 68.938616Q35.5 89.496931 19.5 80.287109Z" fill="#2f5644" stroke="none" />
+    <path d="M0 141.4375L28 124" fill="none" stroke="#8a6f3d" stroke-width="4" />
+  </g>
+  <g clip-path="url(#back-corner-shadow)" data-role="back-wall-corner-shadow">
+    <rect x="28" y="0" width="3" height="128" fill="#2b2340" opacity=".12" stroke="none" />
+    <rect x="31" y="0" width="3" height="128" fill="#2b2340" opacity=".07" stroke="none" />
+    <rect x="34" y="0" width="3" height="128" fill="#2b2340" opacity=".035" stroke="none" />
+    <rect x="37" y="0" width="3" height="128" fill="#2b2340" opacity=".01" stroke="none" />
+  </g>
+  <g clip-path="url(#room-canvas)" data-role="inner-corner-and-left-floor-edge">
+    <path d="M28 0V128L0 146" fill="none" stroke="#2b2340" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="butt" />
+  </g>
+  <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 104h188v52H13Z" fill="#8d5739" />
+    <path d="M189 105h12v51h-12Z" fill="#ac754b" stroke="none" />
+    <rect x="8" y="98" width="198" height="10" rx="3" fill="#dfb36b" />
+    <path d="M15 101h181" fill="none" stroke="#fff0d7" />
+    <rect x="23" y="116" width="167" height="30" rx="4" fill="#b97e4b" />
+    <path d="M17 157h180" fill="none" />
+  </g>
+  <g>
+    <g stroke="#2b2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M30 120h150v24H30Z" fill="none" stroke="#d6ab62" stroke-width="1.5" />
+    </g>
+  </g>
+</svg>

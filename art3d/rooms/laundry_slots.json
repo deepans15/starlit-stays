@@ -1,0 +1,176 @@
+{
+  "notes": "Apply only in the 3D test copy. All y/scale/phase/anchor/frame/fps/z values stay unchanged. Front furniture faces narrow horizontally to clear the inner wall; character canvases/scales do not change. Use the full per-style slots, prop origins, staff and replacement foreground crops below. Do not apply another shell projection. Original metadata is untouched.",
+  "styles": {
+    "classic": {
+      "slotX": [
+        74.56,
+        131.68,
+        188.8
+      ],
+      "slots": [
+        {
+          "activity": "wash",
+          "x": 74.56,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.0,
+          "z": 5
+        },
+        {
+          "activity": "wash",
+          "x": 131.68,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.43,
+          "z": 5
+        },
+        {
+          "activity": "wash",
+          "x": 188.8,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.86,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_laundry",
+        "frames": 4,
+        "fps": 4,
+        "x": 285.4,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    },
+    "gold": {
+      "slotX": [
+        74.56,
+        131.68,
+        188.8
+      ],
+      "slots": [
+        {
+          "activity": "wash",
+          "x": 74.56,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.0,
+          "z": 5
+        },
+        {
+          "activity": "wash",
+          "x": 131.68,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.43,
+          "z": 5
+        },
+        {
+          "activity": "wash",
+          "x": 188.8,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.86,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_laundry",
+        "frames": 4,
+        "fps": 4,
+        "x": 285.4,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    },
+    "pink": {
+      "slotX": [
+        74.56,
+        131.68,
+        188.8
+      ],
+      "slots": [
+        {
+          "activity": "wash",
+          "x": 74.56,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.0,
+          "z": 5
+        },
+        {
+          "activity": "wash",
+          "x": 131.68,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.43,
+          "z": 5
+        },
+        {
+          "activity": "wash",
+          "x": 188.8,
+          "y": 157,
+          "scale": 0.8,
+          "phase": 0.86,
+          "z": 5
+        }
+      ],
+      "staff": {
+        "key": "chars/staff_laundry",
+        "frames": 4,
+        "fps": 4,
+        "x": 285.4,
+        "y": 157,
+        "scale": 0.8,
+        "z": 9,
+        "anchor": {
+          "x": 28,
+          "y": 96
+        }
+      },
+      "foreground": []
+    }
+  },
+  "effectTransform": {
+    "scaleX": 0.84,
+    "translateX": 46,
+    "scaleY": 1,
+    "translateY": 0
+  },
+  "slotX": [
+    74.56,
+    131.68,
+    188.8
+  ],
+  "staff": {
+    "key": "chars/staff_laundry",
+    "frames": 4,
+    "fps": 4,
+    "x": 285.4,
+    "y": 157,
+    "scale": 0.8,
+    "z": 9,
+    "anchor": {
+      "x": 28,
+      "y": 96
+    }
+  },
+  "foreground": [],
+  "wash": [
+    74.56,
+    131.68,
+    188.8
+  ]
+}
