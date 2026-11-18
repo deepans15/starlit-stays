@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Starlit Stays</title>
+<link rel="icon" type="image/png" sizes="32x32" href="brand/favicon-32.png?v=1">
+<link rel="icon" type="image/png" sizes="64x64" href="brand/favicon-64.png?v=1">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png?v=1">
+<meta name="theme-color" content="#2b2a5c">
 <style>
   :root{
     --ink:#2b2340; --paper:#fff8ef; --peach:#ffb38a; --rose:#ff7a90; --mint:#6fd3b5;
@@ -65,6 +69,8 @@
   #panel, #marks{transition:opacity .15s, transform .15s}
   #loading{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:linear-gradient(#2b2a5c,#45397a);color:#ffe8a8;font-weight:900;transition:opacity .45s}
   #loading.done{opacity:0;pointer-events:none}
+  #loading .logo{height:clamp(120px,26vh,190px);width:auto;filter:drop-shadow(0 6px 0 rgba(0,0,0,.25));animation:logoBob 1.6s ease-in-out infinite alternate}
+  @keyframes logoBob{from{transform:translateY(0)}to{transform:translateY(-8px)}}
   #loading .t{font-size:30px;letter-spacing:.5px;text-shadow:0 3px 0 rgba(0,0,0,.25)}
   #loading .b{width:min(260px,70vw);height:12px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}
   #loading .b i{display:block;height:100%;width:0;background:#ffc94d;border-radius:99px;transition:width .2s}
@@ -245,7 +251,7 @@
 </style>
 </head>
 <body>
-<div id="loading"><div class="t">★ Starlit Stays ★</div><div class="b"><i id="loadBar"></i></div><div class="s">Opening the doors…</div></div>
+<div id="loading"><img class="logo" src="brand/hotel.png?v=1" alt=""><div class="t">★ Starlit Stays ★</div><div class="b"><i id="loadBar"></i></div><div class="s">Opening the doors…</div></div>
 <div id="app">
   <div id="stage">
     <canvas id="cv"></canvas>
@@ -284,18 +290,18 @@
 <div id="tutShield"></div><div id="tutRing"></div>
 <div id="helperArrow">👇</div>
 
-<script src="art/manifest.js?v=0.116"></script>
-<script src="art/items.js?v=0.116"></script>
-<script src="art/reactions.js?v=0.116" onerror="window.STARLIT_REACTIONS=null"></script>
-<script src="art/lighting.js?v=0.116" onerror="window.STARLIT_LIGHTING=null"></script>
-<script src="art/sheets.js?v=0.116" onerror="window.STARLIT_SHEETS=null"></script>
-<script src="art/decor_animations.js?v=0.116" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
-<script src="art/furnished_rooms.js?v=0.116" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
-<script src="art/room_layouts.js?v=0.116" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
-<script src="art/walls.js?v=0.116" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
-<script src="art/amenity_animations.js?v=0.116" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
-<script src="art/backgrounds.js?v=0.116"></script>
-<script src="art/weather.js?v=0.116" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
+<script src="art/manifest.js?v=0.117"></script>
+<script src="art/items.js?v=0.117"></script>
+<script src="art/reactions.js?v=0.117" onerror="window.STARLIT_REACTIONS=null"></script>
+<script src="art/lighting.js?v=0.117" onerror="window.STARLIT_LIGHTING=null"></script>
+<script src="art/sheets.js?v=0.117" onerror="window.STARLIT_SHEETS=null"></script>
+<script src="art/decor_animations.js?v=0.117" onerror="window.STARLIT_DECOR_ANIMATIONS=null"></script>
+<script src="art/furnished_rooms.js?v=0.117" onerror="window.STARLIT_FURNISHED_ROOMS=[]"></script>
+<script src="art/room_layouts.js?v=0.117" onerror="window.STARLIT_ROOM_LAYOUTS=[]"></script>
+<script src="art/walls.js?v=0.117" onerror="window.STARLIT_WALL_PATTERNS=[]"></script>
+<script src="art/amenity_animations.js?v=0.117" onerror="window.STARLIT_AMENITY_ANIMATIONS=null"></script>
+<script src="art/backgrounds.js?v=0.117"></script>
+<script src="art/weather.js?v=0.117" onerror="window.STARLIT_WEATHER=window.STARLIT_WEATHER||[]"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -305,7 +311,7 @@
    ============================================================ */
 
 // Every new build starts a fresh hotel (saves from older builds are ignored).
-const BUILD = '0.116';
+const BUILD = '0.117';
 // Save slot stays fixed so updates keep the player's hotel. Only change SAVE_VERSION when a reset is really needed.
 const SAVE_VERSION = '0.17';
 const SAVE_KEY = 'starlit-stays-build-' + SAVE_VERSION;
@@ -3025,7 +3031,7 @@ function openMenu(){
 function resetGame(){ showPanel(`<h2>Start over?</h2><div class="sub">Your hotel and coins will be deleted. This can't be undone.</div><button class="btn warn" onclick="doReset()">Yes, delete my hotel</button>`); }
 function doReset(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} S = freshState(); guests=[]; closePanel(); askName(); renderGoalsBox(); }
 function showTutorialIntro(){
-  modal(`<h2 style="margin:0 0 6px">Welcome to ${esc(S.name)}! 🏨</h2>
+  modal(`<img src="brand/hotel.png?v=1" alt="" style="height:110px;width:auto;display:block;margin:0 auto 4px"><h2 style="margin:0 0 6px">Welcome to ${esc(S.name)}!</h2>
     <div style="font-size:14px;line-height:1.6;text-align:left;margin-top:6px">A quick tutorial (about 3 minutes) shows you how to:<br>🛏️ build rooms and open your hotel<br>🏋️ add a gym<br>🧺 keep rooms clean<br>🔧 repair breakdowns<br>🛋️ decorate your rooms</div>
     <button class="btn" style="margin-top:14px;width:100%" onclick="closeModal()">Start tutorial</button>
     <div style="margin-top:8px"><button class="oplink" onclick="skipIntro()">I already know how to play</button></div>`);
@@ -3048,7 +3054,7 @@ function closeModal(){ ui.lvlModal = false; $('modal').style.display='none'; }
 // the level-up card closes when you tap anywhere
 $('modal').addEventListener('pointerdown', ev=>{ if(ui.lvlModal){ ev.preventDefault(); closeModal(); } });
 function askName(){
-  modal(`<h2 style="margin:0">Name your hotel</h2><div style="color:#7a6e86;font-size:14px;margin-top:6px">You can change it later.</div>
+  modal(`<img src="brand/hotel.png?v=1" alt="" style="height:90px;width:auto;display:block;margin:0 auto 6px"><h2 style="margin:0">Name your hotel</h2><div style="color:#7a6e86;font-size:14px;margin-top:6px">You can change it later.</div>
     <input id="nameIn" maxlength="16" placeholder="e.g. The Lantern Inn" value="${(S.name||'').replace(/"/g,'&quot;')}">
     <button class="btn" onclick="saveName()">Save</button>`);
   setTimeout(()=>{ const i=$('nameIn'); if(i){ i.focus(); i.onkeydown=e=>{ if(e.key==='Enter') saveName(); }; } },50);
